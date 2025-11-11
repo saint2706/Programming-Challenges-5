@@ -3,8 +3,11 @@
 Time Complexity: O(n log n)
 
 · Sorting: O(n log n)
+
 · Predecessor computation: O(n log n) with binary search
+
 · DP table filling: O(n)
+
 · Backtracking: O(n)
 
 Space Complexity: O(n)
