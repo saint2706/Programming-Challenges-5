@@ -86,8 +86,11 @@ if __name__ == "__main__":
 1. Core Bloom Filter
 
 · ✅ Optimal parameter calculation using mathematical formulas
+
 · ✅ Multiple hash functions using MurmurHash3 with different seeds
+
 · ✅ Efficient bit array implementation
+
 · ✅ Add and contains operations
 
 2. False Positive Analysis
