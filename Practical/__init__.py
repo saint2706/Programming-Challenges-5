@@ -1,1 +1,1 @@
-"""Namespace package for practical examples."""
+"""Programming challenges practical solutions."""
