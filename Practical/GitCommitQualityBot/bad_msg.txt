@@ -1,0 +1,1 @@
+this is a bad commit message because it starts with lowercase and has no body

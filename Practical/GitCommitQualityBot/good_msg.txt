@@ -1,0 +1,5 @@
+Add feature X
+
+This is a good commit message.
+It has a subject line under 50 chars.
+And a body separated by a blank line.

@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "question": "What is the difference between a process and a thread?",
+        "answer": "A process is an instance of a program in execution, with its own memory space. A thread is a unit of execution within a process, sharing memory with other threads.",
+        "next_review": "2023-01-01",
+        "interval": 1,
+        "ease_factor": 2.5
+    },
+    {
+        "id": 2,
+        "question": "Explain the concept of polymorphism in OOP.",
+        "answer": "Polymorphism allows objects of different classes to be treated as objects of a common superclass. It enables a single interface to represent different underlying forms (data types).",
+        "next_review": "2023-01-01",
+        "interval": 1,
+        "ease_factor": 2.5
+    },
+    {
+        "id": 3,
+        "question": "What is a decorator?",
+        "answer": "A function that takes another function and extends its behavior without explicitly modifying it.",
+        "next_review": "2025-11-21",
+        "interval": 0,
+        "ease_factor": 2.5
+    }
+]

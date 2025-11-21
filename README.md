@@ -2,16 +2,16 @@
 
 | # | Challenge | Difficulty | Status | Implementation Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | Personal Time Tracker | (E) | | Store data in SQLite or JSON. Use `datetime` module for tracking. |
-| 2 | Terminal Habit Coach | (E) | | Use SQLite for persistence. A simple `argparse` or `click` CLI. |
-| 3 | Smart Expense Splitter | (E) | | Model as a graph problem to simplify debts (e.g., Min-Cost Max-Flow or simpler heuristics). |
-| 4 | Self-Hosted Link Shortener | (E) | | Use a simple web framework (Flask/FastAPI) and a database for mapping. Hash the original URL for a basic slug. |
-| 5 | Universal Unit Converter API | (E) | | Store conversion factors in a JSON or config file. Expose via a simple HTTP API. |
-| 6 | System Health Dashboard | (E) | | Use `psutil` library to get CPU/RAM/Disk stats. A simple web dashboard or CLI. |
-| 7 | Interview Prep CLI | (E) | | Store Q&A in JSON/YAML. Implement spaced repetition using a simple date-based algorithm. |
-| 8 | Smart Download Manager | (M) | | Use `threading` for concurrent chunks. `requests` for HTTP Range headers (pausing). `hashlib` for checksums. |
-| 9 | Encrypted Notes Vault | (M) | | Use `cryptography` library (Fernet) for symmetric encryption. `tkinter` or `PyQt` for minimal GUI. |
-| 10 | Git Commit Quality Bot | (M) | | Implement as a `pre-commit` hook. Use regex to check message format (e.g., 50-char limit for subject). |
+| 1 | Personal Time Tracker | (E) | Implemented | Store data in SQLite or JSON. Use `datetime` module for tracking. |
+| 2 | Terminal Habit Coach | (E) | Implemented | Use SQLite for persistence. A simple `argparse` or `click` CLI. |
+| 3 | Smart Expense Splitter | (E) | Implemented | Model as a graph problem to simplify debts (e.g., Min-Cost Max-Flow or simpler heuristics). |
+| 4 | Self-Hosted Link Shortener | (E) | Implemented | Use a simple web framework (Flask/FastAPI) and a database for mapping. Hash the original URL for a basic slug. |
+| 5 | Universal Unit Converter API | (E) | Implemented | Store conversion factors in a JSON or config file. Expose via a simple HTTP API. |
+| 6 | System Health Dashboard | (E) | Implemented | Use `psutil` library to get CPU/RAM/Disk stats. A simple web dashboard or CLI. |
+| 7 | Interview Prep CLI | (E) | Implemented | Store Q&A in JSON/YAML. Implement spaced repetition using a simple date-based algorithm. |
+| 8 | Smart Download Manager | (M) | Implemented | Use `threading` for concurrent chunks. `requests` for HTTP Range headers (pausing). `hashlib` for checksums. |
+| 9 | Encrypted Notes Vault | (M) | Implemented | Use `cryptography` library (Fernet) for symmetric encryption. `tkinter` or `PyQt` for minimal GUI. |
+| 10 | Git Commit Quality Bot | (M) | Implemented | Implement as a `pre-commit` hook. Use regex to check message format (e.g., 50-char limit for subject). |
 | 11 | Universal Log Analyzer | (M) | | Use regex for parsing common formats (Apache, nginx). `pandas` for aggregation. `Plotly` or `matplotlib` for dashboards. |
 | 12 | Static Site Generator | (M) | | Use `markdown` library to convert. `Jinja2` for templating. Manage posts, tags, and drafts. |
 | 13 | Media Library Organizer | (M) | | Use APIs like TMDB (movies) or MusicBrainz (music). `os` and `shutil` for file operations. |
@@ -57,16 +57,16 @@
 
 | # | Challenge | Difficulty | Status | Implementation Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | Approximate Set Membership (Bloom Filter) | (E) | | Implement a bit array and multiple hash functions (e.g., variations of `mmh3`). Test false positive rate. |
-| 2 | Advanced Interval Scheduler | (M) | | Classic DP problem. Sort by end times. `dp[i]` = max weight using intervals up to `i`. |
-| 3 | Autocomplete Engine | (M) | | Use a Trie (Prefix Tree). Store frequency in nodes for ranking. |
-| 4 | Approximate String Matching | (M) | | Implement Levenshtein distance (DP). For speed, explore BK-trees or n-gram indexing. |
-| 5 | K-d Tree & Nearest Neighbors | (M) | | Build tree by recursively splitting on median. k-NN search requires backtracking (priority queue). |
-| 6 | Consistent Hashing Library | (M) | | Map nodes/keys to a circle (e.g., `hash(key) % 360`). Virtual nodes improve distribution. |
-| 7 | Generic DP Visualizer | (M) | | Needs a UI (`tkinter`, `PyQt`, web). Pass the DP table and recurrence; step through filling it. |
-| 8 | Top-K Frequent Items in Stream | (M) | | Implement Misra-Gries or Space-Saving algorithm. A hash map is the core data structure. |
-| 9 | Randomized Algorithms Suite | (M) | | Quickselect (partitioning), Skip Lists (probabilistic linked lists), Treaps (BST + heap). |
-| 10 | Matrix Algorithm Lab | (M) | | Implement matrix as list-of-lists or `numpy`. Strassen is a recursive, divide-and-conquer algorithm. |
+| 1 | Approximate Set Membership (Bloom Filter) | (E) | Implemented | Implement a bit array and multiple hash functions (e.g., variations of `mmh3`). Test false positive rate. |
+| 2 | Advanced Interval Scheduler | (M) | Implemented | Classic DP problem. Sort by end times. `dp[i]` = max weight using intervals up to `i`. |
+| 3 | Autocomplete Engine | (M) | Implemented | Use a Trie (Prefix Tree). Store frequency in nodes for ranking. |
+| 4 | Approximate String Matching | (M) | Implemented | Implement Levenshtein distance (DP). For speed, explore BK-trees or n-gram indexing. |
+| 5 | K-d Tree & Nearest Neighbors | (M) | Implemented | Build tree by recursively splitting on median. k-NN search requires backtracking (priority queue). |
+| 6 | Consistent Hashing Library | (M) | Implemented | Map nodes/keys to a circle (e.g., `hash(key) % 360`). Virtual nodes improve distribution. |
+| 7 | Generic DP Visualizer | (M) | Implemented | Needs a UI (`tkinter`, `PyQt`, web). Pass the DP table and recurrence; step through filling it. |
+| 8 | Top-K Frequent Items in Stream | (M) | Implemented | Implement Misra-Gries or Space-Saving algorithm. A hash map is the core data structure. |
+| 9 | Randomized Algorithms Suite | (M) | Implemented | Quickselect (partitioning), Skip Lists (probabilistic linked lists), Treaps (BST + heap). |
+| 10 | Matrix Algorithm Lab | (M) | Implemented | Implement matrix as list-of-lists or `numpy`. Strassen is a recursive, divide-and-conquer algorithm. |
 | 11 | HyperLogLog Implementation | (M) | | Core is hashing items and storing the max number of leading zeros in the hash. |
 | 12 | Game Tree Search Framework | (M) | | Implement Minimax. Alpha-beta pruning is an optimization that prunes unpromising branches. |
 | 13 | Clustering Algorithms Suite | (M) | | k-means (centroids), k-medoids (data points), DBSCAN (density-based). `matplotlib` for visualization. |
