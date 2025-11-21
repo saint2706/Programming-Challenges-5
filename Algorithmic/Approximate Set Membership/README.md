@@ -1,139 +1,107 @@
-# Bloom Filter (Approximate Set Membership)
+# Approximate Set Membership (Bloom Filter)
+
+A space-efficient probabilistic data structure that is used to test whether an element is a member of a set. False positive matches are possible, but false negatives are not.
 
 ![Bloom Filter Visualization](bloom_filter_viz.gif)
 
-🔬 Advanced Testing and Benchmarking
+## 📋 Table of Contents
+- [Theory](#theory)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Complexity Analysis](#complexity-analysis)
+- [Demos](#demos)
+
+## 🧠 Theory
+
+A **Bloom filter** is a data structure designed to tell you, rapidly and memory-efficiently, whether an element is present in a set. The price for this efficiency is that a Bloom filter is a **probabilistic** data structure: it tells us that the element either *definitely is not* in the set or *may be* in the set.
+
+### How It Works
+1.  **Initialization**: Start with a bit array of size $m$ set to all 0s.
+2.  **Adding an Item**: To add an item, feed it to $k$ different hash functions. Each function maps the item to one of the $m$ array positions. Set the bits at these positions to 1.
+3.  **Checking an Item**: To check if an item is in the set, feed it to the same $k$ hash functions to get $k$ positions.
+    -   If **any** of the bits at these positions is 0, the item is **definitely not** in the set.
+    -   If **all** of the bits are 1, the item is **probably** in the set (though it might be a false positive).
+
+### Optimal Parameters
+-   **Size ($m$)**: Depends on the expected number of elements ($n$) and desired false positive rate ($p$).
+    $$m = -\frac{n \ln p}{(\ln 2)^2}$$
+-   **Hash Functions ($k$)**:
+    $$k = \frac{m}{n} \ln 2$$
+
+## 💻 Installation
+
+Ensure you have Python 3.8+ installed.
+
+1.  Clone the repository (if you haven't already).
+2.  Install dependencies:
+    ```bash
+    pip install mmh3 matplotlib numpy seaborn manim
+    ```
+
+    *Note: `manim` is only required for the animation script (`visualize_bloom_filter.py`).*
+
+## 🚀 Usage
+
+### Basic Usage
 
 ```python
-class AdvancedBloomFilterTests:
-    """Advanced testing utilities for Bloom Filter performance analysis."""
-    
-    @staticmethod
-    def stress_test_bloom_filter():
-        """Stress test the Bloom Filter with large datasets."""
-        print("🚀 STRESS TESTING BLOOM FILTER")
-        print("=" * 40)
-        
-        # Test with 1 million elements
-        large_capacity = 1000000
-        bf_large = BloomFilter(large_capacity, 0.01)
-        
-        # Generate large dataset
-        print("Generating test data...")
-        test_data = [str(i) for i in range(large_capacity)]
-        
-        # Add elements
-        print("Adding elements to Bloom Filter...")
-        for i, item in enumerate(test_data):
-            bf_large.add(item)
-            if i % 100000 == 0 and i > 0:
-                print(f"  Added {i} elements...")
-        
-        # Test false positives
-        print("Testing false positive rate...")
-        false_positives = 0
-        test_size = 10000
-        negative_test_data = [f"negative_{i}" for i in range(test_size)]
-        
-        for item in negative_test_data:
-            if bf_large.contains(item):
-                false_positives += 1
-        
-        actual_fpr = false_positives / test_size
-        print(f"Results for {large_capacity:,} elements:")
-        print(f"  Actual FPR: {actual_fpr:.6f}")
-        print(f"  Theoretical FPR: {bf_large.actual_false_positive_rate():.6f}")
-        print(f"  Bit density: {bf_large.bit_array_density():.4f}")
-        print(f"  Memory used: ~{bf_large.size / 8 / 1024 / 1024:.2f} MB")
-    
-    @staticmethod
-    def hash_function_analysis():
-        """Analyze the distribution and collision properties of hash functions."""
-        print("\n🔍 HASH FUNCTION ANALYSIS")
-        print("=" * 35)
-        
-        bf = BloomFilter(1000, 0.01)
-        test_items = [f"test_item_{i}" for i in range(1000)]
-        
-        position_distribution = defaultdict(int)
-        
-        for item in test_items:
-            positions = bf._get_hash_positions(item)
-            for pos in positions:
-                position_distribution[pos] += 1
-        
-        # Analyze distribution
-        positions_used = len(position_distribution)
-        avg_hits = sum(position_distribution.values()) / len(position_distribution)
-        max_hits = max(position_distribution.values())
-        
-        print(f"Hash Function Distribution Analysis:")
-        print(f"  Total bit positions: {bf.size}")
-        print(f"  Positions actually used: {positions_used} ({positions_used/bf.size*100:.1f}%)")
-        print(f"  Average hits per position: {avg_hits:.2f}")
-        print(f"  Maximum hits to single position: {max_hits}")
-        print(f"  Ideal distribution would be ~{len(test_items) * bf.hash_count / bf.size:.2f} hits/position")
+from bloom import BloomFilter
 
-# Run advanced tests
-if __name__ == "__main__":
-    # Run the main demonstration
-    demonstration()
-    
-    # Run advanced tests
-    advanced_tests = AdvancedBloomFilterTests()
-    advanced_tests.stress_test_bloom_filter()
-    advanced_tests.hash_function_analysis()
+# Initialize with capacity of 1000 items and 1% false positive rate
+bf = BloomFilter(capacity=1000, false_positive_rate=0.01)
+
+# Add items
+bf.add("apple")
+bf.add("banana")
+
+# Check items
+print(bf.contains("apple"))   # True (Probably present)
+print(bf.contains("carrot"))  # False (Definitely not present)
 ```
 
-📊 Key Features Implemented
+### Advanced Analysis
 
-1. Core Bloom Filter
+The module includes an analyzer to test actual performance against theoretical limits.
 
-· ✅ Optimal parameter calculation using mathematical formulas
+```python
+from bloom import BloomFilterAnalyzer
 
-· ✅ Multiple hash functions using MurmurHash3 with different seeds
+analyzer = BloomFilterAnalyzer()
+# Run comprehensive analysis across different capacities and error rates
+analyzer.comprehensive_analysis()
+```
 
-· ✅ Efficient bit array implementation
+## 📊 Complexity Analysis
 
-· ✅ Add and contains operations
+| Operation | Time Complexity | Space Complexity |
+| :--- | :--- | :--- |
+| **Add** | $O(k)$ | $O(m)$ |
+| **Check** | $O(k)$ | $O(m)$ |
 
-2. False Positive Analysis
+Where:
+-   $k$ is the number of hash functions.
+-   $m$ is the size of the bit array.
 
-· ✅ Theoretical FPR calculation
+**Note**: The space complexity is extremely low compared to storing the actual items. For example, for a 1% false positive rate, a Bloom filter requires only about **9.6 bits per element**, regardless of the size of the elements themselves.
 
-· ✅ Empirical FPR testing
+## 🎬 Demos
 
-· ✅ Comprehensive parameter sweeps
+### Running the Code Demo
+To see the Bloom Filter in action, including performance statistics and visualization plots:
 
-· ✅ Statistical analysis
+```bash
+python bloom.py
+```
 
-3. Visualization
+This will run:
+1.  **Basic Functionality Demo**: Adds items and checks membership.
+2.  **False Positive Rate Analysis**: Compares theoretical vs. actual error rates.
+3.  **Visualization**: Plots error rates and displays the bit array heatmap.
+4.  **Stress Test**: Tests with 1 million elements.
 
-· ✅ Bit array visualization
+### Generating the Animation
+To generate the explanation GIF using Manim:
 
-· ✅ FPR performance charts
-
-· ✅ Memory efficiency comparisons
-
-· ✅ Hash function distribution analysis
-
-4. Advanced Features
-
-· ✅ Stress testing with large datasets
-
-· ✅ Memory efficiency benchmarking
-
-· ✅ Hash collision analysis
-
-· ✅ Performance profiling
-
-🎯 Expected Output
-
-When you run this implementation, you'll see:
-
-1. Basic functionality demo showing add/contains operations
-2. False positive rate analysis across different parameters
-3. Beautiful visualizations of performance metrics
-4. Memory efficiency comparisons showing 10-100x savings
-5. Stress test results with 1 million elements
-6. Hash function distribution analysis
+```bash
+manim -pql visualize_bloom_filter.py BloomFilterDemo
+```

@@ -1,15 +1,23 @@
-"""Command line interface for the Terminal Habit Coach."""
+"""Command line interface for the Terminal Habit Coach.
+
+Parses arguments and dispatches commands to the service layer.
+"""
 from __future__ import annotations
 
 import argparse
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 
 from .database import HabitRepository
 from .service import TerminalHabitCoach
 
 
 def build_parser() -> argparse.ArgumentParser:
+    """Construct the CLI argument parser.
+
+    Returns:
+        argparse.ArgumentParser: The configured parser.
+    """
     parser = argparse.ArgumentParser(description="Terminal Habit Coach")
     parser.add_argument(
         "--database",
@@ -22,38 +30,63 @@ def build_parser() -> argparse.ArgumentParser:
 
     add_habit = subparsers.add_parser("add-habit", help="Register a new habit")
     add_habit.add_argument("name", help="Habit name")
-    add_habit.add_argument("--description", default="", help="Description for the habit")
-    add_habit.add_argument("--frequency", default="daily", help="Tracking frequency label")
-    add_habit.add_argument("--reminder", dest="reminder", help="Optional reminder time (HH:MM)")
+    add_habit.add_argument(
+        "--description", default="", help="Description for the habit"
+    )
+    add_habit.add_argument(
+        "--frequency", default="daily", help="Tracking frequency label"
+    )
+    add_habit.add_argument(
+        "--reminder",
+        dest="reminder",
+        help="Optional reminder time (HH:MM)",
+    )
 
     log_cmd = subparsers.add_parser("log", help="Log progress for a habit")
     log_cmd.add_argument("name", help="Habit name")
-    log_cmd.add_argument("--when", help="ISO timestamp to log (defaults to now)")
+    log_cmd.add_argument(
+        "--when", help="ISO timestamp to log (defaults to now)"
+    )
     log_cmd.add_argument("--note", help="Optional note")
 
-    status_cmd = subparsers.add_parser("status", help="Display summary table")
+    subparsers.add_parser("status", help="Display summary table")
 
-    streak_cmd = subparsers.add_parser("streaks", help="Display streak details")
+    subparsers.add_parser("streaks", help="Display streak details")
 
-    show_cmd = subparsers.add_parser("show", help="Display details for a single habit")
+    show_cmd = subparsers.add_parser(
+        "show", help="Display details for a single habit"
+    )
     show_cmd.add_argument("name", help="Habit name")
 
     return parser
 
 
 def _build_coach(db_path: Optional[Path]) -> TerminalHabitCoach:
-    repo = HabitRepository(db_path=db_path) if db_path else HabitRepository()
+    """Factory for the coach service."""
+    repo = (
+        HabitRepository(db_path=db_path) if db_path else HabitRepository()
+    )
     return TerminalHabitCoach(repository=repo)
 
 
-def main(argv: Optional[list[str]] = None) -> int:
+def main(argv: Optional[List[str]] = None) -> int:
+    """CLI entry point.
+
+    Args:
+        argv: Command line arguments.
+
+    Returns:
+        int: Exit code.
+    """
     parser = build_parser()
     args = parser.parse_args(argv)
 
     coach = _build_coach(args.database)
 
     if args.command == "add-habit":
-        coach.add_habit(args.name, args.description, args.frequency, args.reminder)
+        coach.add_habit(
+            args.name, args.description, args.frequency, args.reminder
+        )
         print(f"Added habit '{args.name}'.")
         return 0
     if args.command == "log":
@@ -69,9 +102,14 @@ def main(argv: Optional[list[str]] = None) -> int:
             print(line)
         return 0
     if args.command == "show":
-        for line in coach.habit_summary(args.name):
-            print(line)
+        try:
+            for line in coach.habit_summary(args.name):
+                print(line)
+        except ValueError as e:
+            print(f"Error: {e}")
+            return 1
         return 0
+
     parser.error("Unknown command")
     return 1
 

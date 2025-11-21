@@ -1,3 +1,9 @@
+"""Approximate String Matching algorithms and data structures.
+
+This module implements Levenshtein distance calculation and fuzzy string search
+utilities including a BK-Tree and an N-gram index for efficient candidate filtering.
+"""
+
 from __future__ import annotations
 
 from collections import defaultdict
@@ -11,7 +17,14 @@ def levenshtein_distance(source: str, target: str) -> int:
     """Compute Levenshtein edit distance via iterative dynamic programming.
 
     This implementation keeps only two rows in memory and runs in
-    ``O(len(source) * len(target))`` time.
+    O(len(source) * len(target)) time.
+
+    Args:
+        source: The source string.
+        target: The target string.
+
+    Returns:
+        int: The Levenshtein distance (min number of edits to transform source to target).
     """
     if source == target:
         return 0
@@ -38,18 +51,36 @@ def levenshtein_distance(source: str, target: str) -> int:
 
 @dataclass
 class BKTreeNode:
+    """A node in the Burkhard-Keller Tree."""
+
     term: str
     children: Dict[int, "BKTreeNode"] = field(default_factory=dict)
 
 
 class BKTree:
-    """Burkhard–Keller tree for approximate matching using any distance metric."""
+    """Burkhard–Keller tree for approximate matching using any distance metric.
+
+    A BK-Tree is a metric tree specifically designed for discrete metric spaces,
+    making it suitable for approximate string matching.
+    """
 
     def __init__(self, distance_fn: Callable[[str, str], int] = levenshtein_distance):
+        """Initialize the BK-Tree.
+
+        Args:
+            distance_fn: A function that calculates the distance between two strings.
+                         Must satisfy metric properties (triangle inequality).
+                         Defaults to Levenshtein distance.
+        """
         self.distance_fn = distance_fn
         self.root: BKTreeNode | None = None
 
     def add(self, term: str) -> None:
+        """Add a term to the BK-Tree.
+
+        Args:
+            term: The string to add to the tree.
+        """
         if self.root is None:
             self.root = BKTreeNode(term)
             return
@@ -65,10 +96,24 @@ class BKTree:
             node = node.children[dist]
 
     def build(self, terms: Iterable[str]) -> None:
+        """Build the tree from a collection of terms.
+
+        Args:
+            terms: An iterable of strings to add.
+        """
         for term in terms:
             self.add(term)
 
     def search(self, query: str, max_distance: int) -> List[Tuple[int, str]]:
+        """Search for terms within a certain distance of the query.
+
+        Args:
+            query: The search string.
+            max_distance: The maximum allowed distance (inclusive).
+
+        Returns:
+            List[Tuple[int, str]]: A sorted list of (distance, term) tuples.
+        """
         if self.root is None:
             return []
 
@@ -80,6 +125,9 @@ class BKTree:
             if distance <= max_distance:
                 matches.append((distance, node.term))
 
+            # Optimization: Only search children where the edge distance is
+            # within [distance - max_dist, distance + max_dist].
+            # This is based on the Triangle Inequality.
             lower = distance - max_distance
             upper = distance + max_distance
             for edge_distance, child in node.children.items():
@@ -91,7 +139,16 @@ class BKTree:
 class NGramIndex:
     """N-gram inverted index for pruning candidates in large corpora."""
 
-    def __init__(self, n: int = 3, distance_fn: Callable[[str, str], int] = levenshtein_distance):
+    def __init__(
+        self, n: int = 3, distance_fn: Callable[[str, str], int] = levenshtein_distance
+    ):
+        """Initialize the N-gram index.
+
+        Args:
+            n: The size of the n-grams (default: 3 for trigrams).
+            distance_fn: The distance function to use for final verification.
+                         Defaults to Levenshtein distance.
+        """
         if n < 1:
             raise ValueError("n must be positive")
         self.n = n
@@ -100,10 +157,23 @@ class NGramIndex:
         self.vocabulary: Set[str] = set()
 
     def _extract_ngrams(self, term: str) -> Set[str]:
+        """Extract n-grams from a term with padding.
+
+        Args:
+            term: The input string.
+
+        Returns:
+            Set[str]: A set of n-gram strings.
+        """
         padded = f"^{term}$"
         return {padded[i : i + self.n] for i in range(len(padded) - self.n + 1)}
 
     def add(self, term: str) -> None:
+        """Add a term to the index.
+
+        Args:
+            term: The string to add.
+        """
         if term in self.vocabulary:
             return
         self.vocabulary.add(term)
@@ -111,10 +181,24 @@ class NGramIndex:
             self.inverted_index[gram].add(term)
 
     def build(self, terms: Iterable[str]) -> None:
+        """Build the index from a collection of terms.
+
+        Args:
+            terms: An iterable of strings to add.
+        """
         for term in terms:
             self.add(term)
 
     def candidates(self, query: str, min_shared: int = 1) -> Set[str]:
+        """Find candidate terms that share at least `min_shared` n-grams.
+
+        Args:
+            query: The search query.
+            min_shared: Minimum number of shared n-grams required to be a candidate.
+
+        Returns:
+            Set[str]: A set of candidate strings.
+        """
         query_ngrams = self._extract_ngrams(query)
         counter: Dict[str, int] = defaultdict(int)
         for gram in query_ngrams:
@@ -122,7 +206,19 @@ class NGramIndex:
                 counter[term] += 1
         return {term for term, shared in counter.items() if shared >= min_shared}
 
-    def search(self, query: str, max_distance: int, min_shared: int = 1) -> List[Tuple[int, str]]:
+    def search(
+        self, query: str, max_distance: int, min_shared: int = 1
+    ) -> List[Tuple[int, str]]:
+        """Search for terms close to the query using n-gram filtering.
+
+        Args:
+            query: The search string.
+            max_distance: The maximum allowed distance (inclusive).
+            min_shared: Minimum shared n-grams for candidate pre-filtering.
+
+        Returns:
+            List[Tuple[int, str]]: A sorted list of (distance, term) tuples.
+        """
         matches: List[Tuple[int, str]] = []
         for candidate in self.candidates(query, min_shared=min_shared):
             dist = self.distance_fn(query, candidate)
@@ -139,8 +235,15 @@ def run_benchmarks(
 ) -> Dict[str, Dict[str, float]]:
     """Benchmark BK-tree and n-gram index lookup times.
 
-    Returns timing information for building and querying each structure.
-    Benchmarks intentionally keep workloads small to remain test-friendly.
+    Args:
+        corpus: A sequence of strings to search within.
+        queries: A sequence of strings to search for.
+        max_distance: The maximum edit distance for matches.
+        seed: Random seed for query sampling if queries is empty.
+
+    Returns:
+        Dict[str, Dict[str, float]]: Timing results for build and query phases
+        for each method.
     """
 
     rng = Random(seed)
