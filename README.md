@@ -12,11 +12,11 @@
 | 8 | Smart Download Manager | (M) | Implemented | Use `threading` for concurrent chunks. `requests` for HTTP Range headers (pausing). `hashlib` for checksums. |
 | 9 | Encrypted Notes Vault | (M) | Implemented | Use `cryptography` library (Fernet) for symmetric encryption. `tkinter` or `PyQt` for minimal GUI. |
 | 10 | Git Commit Quality Bot | (M) | Implemented | Implement as a `pre-commit` hook. Use regex to check message format (e.g., 50-char limit for subject). |
-| 11 | Universal Log Analyzer | (M) | | Use regex for parsing common formats (Apache, nginx). `pandas` for aggregation. `Plotly` or `matplotlib` for dashboards. |
-| 12 | Static Site Generator | (M) | | Use `markdown` library to convert. `Jinja2` for templating. Manage posts, tags, and drafts. |
-| 13 | Media Library Organizer | (M) | | Use APIs like TMDB (movies) or MusicBrainz (music). `os` and `shutil` for file operations. |
-| 14 | Password Data Breach Checker | (M) | | Use `hashlib` (SHA-1). Implement k-Anonymity by sending only the first 5 hash chars to HIBP API. |
-| 15 | Dotfiles Manager | (M) | | Core logic involves creating/managing symlinks from a central repo to home directory locations. |
+| 11 | Universal Log Analyzer | (M) | Implemented | Use regex for parsing common formats (Apache, nginx). `pandas` for aggregation. `Plotly` or `matplotlib` for dashboards. |
+| 12 | Static Site Generator | (M) | Implemented | Use `markdown` library to convert. `Jinja2` for templating. Manage posts, tags, and drafts. |
+| 13 | Media Library Organizer | (M) | Implemented | Use APIs like TMDB (movies) or MusicBrainz (music). `os` and `shutil` for file operations. |
+| 14 | Password Data Breach Checker | (M) | Implemented | Use `hashlib` (SHA-1). Implement k-Anonymity by sending only the first 5 hash chars to HIBP API. |
+| 15 | Dotfiles Manager | (M) | Implemented | Core logic involves creating/managing symlinks from a central repo to home directory locations. |
 | 16 | Markdown Knowledge Base | (M) | | Use `Whoosh` or `Elasticsearch` for full-text search. Parse links (regex or AST) to build the graph. |
 | 17 | Personal Finance Dashboard | (M) | | Use `pandas` to read and analyze CSVs. `matplotlib` or `Plotly` for visualization. |
 | 18 | Image Compression Tool | (M) | | Use `Pillow` (PIL) for image operations. Expose `quality` (lossy) and `optimize` (lossless) parameters. |

@@ -1,0 +1,1 @@
+"""Media Library Organizer package."""

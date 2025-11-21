@@ -1,0 +1,1 @@
+"""Dotfiles Manager package."""
