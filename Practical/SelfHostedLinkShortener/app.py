@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import List, Optional
 
-from fastapi import Depends, FastAPI, HTTPException, Path, status
+from fastapi import Depends, FastAPI, HTTPException, Path, Response, status
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel, HttpUrl, field_validator
 
@@ -79,7 +79,7 @@ async def get_link(slug: str = Path(..., min_length=4, max_length=32), _: None =
     return LinkResponse(**record)
 
 
-@app.delete("/links/{slug}", status_code=status.HTTP_204_NO_CONTENT)
+@app.delete("/links/{slug}")
 async def delete_link(slug: str, _: None = Depends(_ensure_db)) -> None:
     removed = database.delete_link(slug)
     if not removed:
