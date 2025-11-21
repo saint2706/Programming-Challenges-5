@@ -1,0 +1,6 @@
+[package]
+name = "game_tree_search_framework"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
