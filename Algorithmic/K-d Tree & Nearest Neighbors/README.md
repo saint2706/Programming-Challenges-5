@@ -2,6 +2,9 @@
 
 Median-split k-d tree with dimensionality-agnostic nearest-neighbor and k-NN search, plus brute-force baselines and simple benchmarks.
 
+## Visualization
+![K-d Tree Construction](kd_tree_viz.gif)
+
 ## Features
 - Median splitting with alternating axes to keep the tree balanced.
 - Bounds stored per node for branch-and-bound pruning.

@@ -1,3 +1,7 @@
+# Bloom Filter (Approximate Set Membership)
+
+![Bloom Filter Visualization](bloom_filter_viz.gif)
+
 🔬 Advanced Testing and Benchmarking
 
 ```python

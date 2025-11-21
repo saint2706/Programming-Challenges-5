@@ -2,3 +2,10 @@ __pycache__/
 *.py[cod]
 *.db
 node_modules/
+
+# Manim
+media/
+
+# OS specific
+.DS_Store
+Thumbs.db

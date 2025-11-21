@@ -104,18 +104,30 @@ class SkipListDemo(Scene):
             self.play(curr_mobj[0].animate.set_fill(YELLOW, opacity=0.5), run_time=0.3)
             path.append(curr_mobj)
             
+            # Helper for comparison
+            def is_greater(a, b):
+                if a == "inf": return True
+                if b == "inf": return False
+                if a == "-inf": return False
+                if b == "-inf": return True
+                return a > b
+
             # Find next node at this level
             next_node = None
             for n in nodes:
                 if n["val"] == curr_val:
-                    found_curr = True
                     continue
-                # This logic is a bit manual for viz, finding the next node with sufficient level
-                if n["levels"] > curr_lvl and (n["val"] == "inf" or n["val"] > curr_val):
-                    if next_node is None: # First one found
-                        next_node = n
+                
+                # Check if node exists at this level
+                if n["levels"] > curr_lvl:
+                    # Check if it's greater than current
+                    if is_greater(n["val"], curr_val):
+                        if next_node is None:
+                            next_node = n
+                        elif is_greater(next_node["val"], n["val"]):
+                             next_node = n
             
-            if next_node["val"] == "inf" or next_node["val"] > target:
+            if next_node["val"] == "inf" or is_greater(next_node["val"], target):
                 # Go down
                 if curr_lvl > 0:
                     self.play(pointer.animate.next_to(node_mobjects[(curr_val, curr_lvl-1)], UP), run_time=0.3)

@@ -26,11 +26,16 @@ class IntervalSchedulingDemo(Scene):
             x_range=[0, 12, 1],
             length=10,
             color=BLUE,
-            include_numbers=True,
+            include_numbers=False,
             label_direction=DOWN,
         )
         number_line.move_to(DOWN * 2)
         self.play(Create(number_line))
+        
+        # Add manual labels to avoid LaTeX
+        for i in range(0, 13):
+            label = Text(str(i), font_size=16).next_to(number_line.n2p(i), DOWN)
+            self.add(label)
         
         # Visualize intervals
         interval_mobjects = []

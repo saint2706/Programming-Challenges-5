@@ -1,3 +1,7 @@
+# Advanced Interval Scheduler
+
+![Interval Scheduling Visualization](interval_scheduler_viz.gif)
+
 📊 Algorithm Analysis
 
 Time Complexity: O(n log n)
