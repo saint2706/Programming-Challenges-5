@@ -1,94 +1,77 @@
 # Universal Unit Converter
 
 A FastAPI microservice that loads unit categories from a JSON/YAML configuration
-and exposes endpoints for listing supported units and converting values. The
-service supports hot reloading of the configuration file, alias resolution, and
-fallback conversions through chained relationships.
+and exposes endpoints for listing supported units and converting values.
 
-## Features
+## 📋 Features
 
-* Automatic loading of unit metadata from JSON or YAML files.
-* `/units` endpoint for discovering supported categories and unit names.
-* `/convert` endpoint that supports chained conversions when a direct factor is
-  unavailable.
-* Validation and helpful error responses for invalid categories or units.
-* File change detection so the service reloads configuration data when the
-  source is updated.
-* Conversion factor caching to avoid recomputing common conversions.
-* Automated unit and API tests.
+- **Dynamic Configuration**: Loads unit definitions from JSON or YAML files.
+- **Hot Reloading**: Automatically reloads configuration when the file changes.
+- **API Endpoints**:
+    - `/units`: Discover supported categories and units.
+    - `/convert`: Perform chained conversions (e.g., inch -> cm).
+- **Smart Resolution**: Handles aliases (e.g., "m", "meter") and transitive conversions.
 
-## Getting started
+## 💻 Getting Started
 
-1. **Install dependencies** (preferably in a virtual environment):
+### 1. Install Dependencies
+```bash
+pip install -r Practical/UniversalUnitConverter/requirements.txt
+```
 
-   ```bash
-   pip install -r Practical/UniversalUnitConverter/requirements.txt
-   ```
+### 2. Run the Service
+By default, the service uses the included `sample_units.json`.
 
-2. **Run the FastAPI app**. By default the service uses the JSON sample config
-   included in this directory. Point the `UNIT_CONFIG_PATH` environment variable
-   to a different JSON/YAML file to override.
+```bash
+# Optional: Override config path
+# export UNIT_CONFIG_PATH=config/my_units.yaml
 
-   ```bash
-   export UNIT_CONFIG_PATH=Practical/UniversalUnitConverter/config/sample_units.yaml
-   uvicorn Practical.UniversalUnitConverter.app:app --reload
-   ```
+uvicorn Practical.UniversalUnitConverter.app:app --reload
+```
 
-3. **List supported units**:
+### 3. Usage Examples
 
-   ```bash
-   curl http://localhost:8000/units | jq
-   ```
+**List Units:**
+```bash
+curl http://localhost:8000/units
+```
 
-4. **Convert values**:
+**Convert Value:**
+```bash
+curl -X POST http://localhost:8000/convert \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "category": "length",
+    "from_unit": "mile",
+    "to_unit": "kilometer",
+    "value": 5
+  }'
+```
 
-   ```bash
-   curl -X POST http://localhost:8000/convert \
-     -H 'Content-Type: application/json' \
-     -d '{
-       "category": "length",
-       "from_unit": "mile",
-       "to_unit": "centimeter",
-       "value": 0.25
-     }'
-   ```
+## ⚙️ Configuration Format
 
-## Configuration format
+The configuration file defines categories, a base unit for each, and conversion factors relative to that base.
 
-The configuration file contains a `categories` object. Each category declares a
-`base_unit`, one or more `units` with factors relative to the base, optional
-`aliases`, and optional additional `relationships` that add custom conversion
-paths.
-
-```jsonc
+```json
 {
   "categories": {
     "length": {
-      "description": "Length measurements based on the meter.",
+      "description": "Length measurements",
       "base_unit": "meter",
       "units": {
         "meter": {"to_base": 1, "aliases": ["m"]},
-        "centimeter": {"to_base": 0.01, "aliases": ["cm"]},
-        "inch": {"to_base": 0.0254, "aliases": ["in"]}
-      },
-      "relationships": [
-        {"from": "inch", "to": "centimeter", "factor": 2.54}
-      ]
+        "kilometer": {"to_base": 1000, "aliases": ["km"]},
+        "mile": {"to_base": 1609.34}
+      }
     }
   }
 }
 ```
 
-When the file changes on disk the running application will reload it and flush
-its conversion cache automatically.
+## 🧪 Tests
 
-## Tests
-
-Use `pytest` to run the conversion engine and API tests:
+Run the test suite using pytest:
 
 ```bash
 pytest Practical/UniversalUnitConverter/tests
 ```
-
-The tests spin up a FastAPI TestClient with a temporary configuration file so no
-external services are required.

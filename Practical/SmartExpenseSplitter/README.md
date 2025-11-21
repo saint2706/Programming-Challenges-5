@@ -2,34 +2,51 @@
 
 The Smart Expense Splitter showcases how to parse human-readable expense logs, build a debt graph and compute a minimal set of transactions to settle the balances.
 
-## Input format
+## 📋 Table of Contents
+- [Input Format](#input-format)
+- [Usage](#usage)
+- [Example](#example)
 
-Each expense is written as `description;amount;payer;consumer1,consumer2,...`. The amount uses decimal notation, the payer is the person who paid for the expense and the consumers list includes everyone that benefited from the purchase (the payer can be part of the consumer list as well).
+## 📝 Input Format
 
+Each expense is written as:
 ```
+description;amount;payer;consumer1,consumer2,...
+```
+
+-   **amount**: Decimal notation (e.g., 120.00).
+-   **payer**: The person who paid.
+-   **consumers**: Comma-separated list of beneficiaries (can include the payer).
+
+### Example File (`trip.txt`)
+```text
 Groceries;120.00;Alice;Alice,Bob,Carla
 Museum tickets;60.00;Bob;Alice,Bob,Carla
 Dinner;90.00;Carla;Bob,Carla
 ```
 
-## CLI usage
+## 🚀 Usage
 
 The module exposes a CLI entry point:
 
-```
+```bash
 python -m Practical.SmartExpenseSplitter.cli --file trip.txt --pretty --output plan.json
 ```
 
-You can also mix file inputs with inline `--expense` arguments.
+### Options
+-   `--file <path>`: Path to input text file.
+-   `--expense "<string>"`: Specify an expense inline. Can be used multiple times.
+-   `--pretty`: Print human-readable plan to stdout.
+-   `--output <path>`: Save plan to a JSON file.
 
-## Example scenario
+## 💡 Example
 
-Given the sample inputs above the CLI prints:
+Given the sample inputs above, the CLI calculates the net debts and outputs a minimized transaction list:
 
-```
+```text
 Optimized Settlement Plan:
  - Bob pays Alice 45.00
  - Carla pays Alice 15.00
 ```
 
-The JSON file contains the same plan ready to share with the group.
+*Note: While Bob paid 60, his share of total expenses was higher than what he paid, so he owes money. Alice paid 120, which was more than her fair share, so she receives money.*

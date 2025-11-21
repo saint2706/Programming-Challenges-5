@@ -1,4 +1,7 @@
-"""Command line interface for the Smart Expense Splitter."""
+"""Command line interface for the Smart Expense Splitter.
+
+Allows users to input expenses via file or arguments and outputs a settlement plan.
+"""
 
 from __future__ import annotations
 
@@ -9,10 +12,18 @@ from typing import List
 
 from .parser import ExpenseInputParser, load_expenses_from_file, parse_cli_expenses
 from .settlement import optimize_settlements
+from .models import Expense
 
 
 def build_argument_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Split shared expenses and minimize settlements")
+    """Construct the argument parser.
+
+    Returns:
+        argparse.ArgumentParser: The configured parser.
+    """
+    parser = argparse.ArgumentParser(
+        description="Split shared expenses and minimize settlements"
+    )
     parser.add_argument(
         "--file",
         type=str,
@@ -37,9 +48,17 @@ def build_argument_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def load_expenses_from_sources(args: argparse.Namespace) -> List:
+def load_expenses_from_sources(args: argparse.Namespace) -> List[Expense]:
+    """Load expenses from file and CLI arguments.
+
+    Args:
+        args: Parsed arguments.
+
+    Returns:
+        List[Expense]: Combined list of expenses.
+    """
     parser = ExpenseInputParser()
-    expenses = []
+    expenses: List[Expense] = []
     if args.file:
         expenses.extend(load_expenses_from_file(args.file, parser=parser))
     if args.expense:
@@ -50,6 +69,7 @@ def load_expenses_from_sources(args: argparse.Namespace) -> List:
 
 
 def main() -> None:
+    """Entry point for the CLI."""
     parser = build_argument_parser()
     args = parser.parse_args()
     expenses = load_expenses_from_sources(args)
@@ -57,7 +77,9 @@ def main() -> None:
 
     plan_dict = settlement.to_dict()
     if args.output:
-        Path(args.output).write_text(json.dumps(plan_dict, indent=2), encoding="utf-8")
+        Path(args.output).write_text(
+            json.dumps(plan_dict, indent=2), encoding="utf-8"
+        )
 
     if args.pretty or not args.output:
         if not plan_dict:
