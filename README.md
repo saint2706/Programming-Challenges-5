@@ -6,21 +6,21 @@ This repository is organized into three main categories: **Practical**, **Algori
 
 | # | Challenge | Difficulty | Status | Implementation Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | Personal Time Tracker | (E) | Implemented | Store data in SQLite or JSON. Use `datetime` module for tracking. |
-| 2 | Terminal Habit Coach | (E) | Implemented | Use SQLite for persistence. A simple `argparse` or `click` CLI. |
-| 3 | Smart Expense Splitter | (E) | Implemented | Model as a graph problem to simplify debts (e.g., Min-Cost Max-Flow or simpler heuristics). |
-| 4 | Self-Hosted Link Shortener | (E) | Implemented | Use a simple web framework (Flask/FastAPI) and a database for mapping. Hash the original URL for a basic slug. |
-| 5 | Universal Unit Converter API | (E) | Implemented | Store conversion factors in a JSON or config file. Expose via a simple HTTP API. |
-| 6 | System Health Dashboard | (E) | Implemented | Use `psutil` library to get CPU/RAM/Disk stats. A simple web dashboard or CLI. |
-| 7 | Interview Prep CLI | (E) | Implemented | Store Q&A in JSON/YAML. Implement spaced repetition using a simple date-based algorithm. |
-| 8 | Smart Download Manager | (M) | Implemented | Use `threading` for concurrent chunks. `requests` for HTTP Range headers (pausing). `hashlib` for checksums. |
-| 9 | Encrypted Notes Vault | (M) | Implemented | Use `cryptography` library (Fernet) for symmetric encryption. `tkinter` or `PyQt` for minimal GUI. |
-| 10 | Git Commit Quality Bot | (M) | Implemented | Implement as a `pre-commit` hook. Use regex to check message format (e.g., 50-char limit for subject). |
-| 11 | Universal Log Analyzer | (M) | Implemented | Use regex for parsing common formats (Apache, nginx). `pandas` for aggregation. `Plotly` or `matplotlib` for dashboards. |
-| 12 | Static Site Generator | (M) | Implemented | Use `markdown` library to convert. `Jinja2` for templating. Manage posts, tags, and drafts. |
-| 13 | Media Library Organizer | (M) | Implemented | Use APIs like TMDB (movies) or MusicBrainz (music). `os` and `shutil` for file operations. |
-| 14 | Password Data Breach Checker | (M) | Implemented | Use `hashlib` (SHA-1). Implement k-Anonymity by sending only the first 5 hash chars to HIBP API. |
-| 15 | Dotfiles Manager | (M) | Implemented | Core logic involves creating/managing symlinks from a central repo to home directory locations. |
+| 1 | Personal Time Tracker | (E) | Implemented (Python) | Store data in SQLite or JSON. Use `datetime` module for tracking. |
+| 2 | Terminal Habit Coach | (E) | Implemented (Python) | Use SQLite for persistence. A simple `argparse` or `click` CLI. |
+| 3 | Smart Expense Splitter | (E) | Implemented (Python) | Model as a graph problem to simplify debts (e.g., Min-Cost Max-Flow or simpler heuristics). |
+| 4 | Self-Hosted Link Shortener | (E) | Implemented (Python) | Use a simple web framework (Flask/FastAPI) and a database for mapping. Hash the original URL for a basic slug. |
+| 5 | Universal Unit Converter API | (E) | Implemented (Python) | Store conversion factors in a JSON or config file. Expose via a simple HTTP API. |
+| 6 | System Health Dashboard | (E) | Implemented (Python) | Use `psutil` library to get CPU/RAM/Disk stats. A simple web dashboard or CLI. |
+| 7 | Interview Prep CLI | (E) | Implemented (Python) | Store Q&A in JSON/YAML. Implement spaced repetition using a simple date-based algorithm. |
+| 8 | Smart Download Manager | (M) | Implemented (Python) | Use `threading` for concurrent chunks. `requests` for HTTP Range headers (pausing). `hashlib` for checksums. |
+| 9 | Encrypted Notes Vault | (M) | Implemented (Python) | Use `cryptography` library (Fernet) for symmetric encryption. `tkinter` or `PyQt` for minimal GUI. |
+| 10 | Git Commit Quality Bot | (M) | Implemented (Python) | Implement as a `pre-commit` hook. Use regex to check message format (e.g., 50-char limit for subject). |
+| 11 | Universal Log Analyzer | (M) | Implemented (Python) | Use regex for parsing common formats (Apache, nginx). `pandas` for aggregation. `Plotly` or `matplotlib` for dashboards. |
+| 12 | Static Site Generator | (M) | Implemented (Python) | Use `markdown` library to convert. `Jinja2` for templating. Manage posts, tags, and drafts. |
+| 13 | Media Library Organizer | (M) | Implemented (Python) | Use APIs like TMDB (movies) or MusicBrainz (music). `os` and `shutil` for file operations. |
+| 14 | Password Data Breach Checker | (M) | Implemented (Python) | Use `hashlib` (SHA-1). Implement k-Anonymity by sending only the first 5 hash chars to HIBP API. |
+| 15 | Dotfiles Manager | (M) | Implemented (Python) | Core logic involves creating/managing symlinks from a central repo to home directory locations. |
 | 16 | Markdown Knowledge Base | (M) | | Use `Whoosh` or `Elasticsearch` for full-text search. Parse links (regex or AST) to build the graph. |
 | 17 | Personal Finance Dashboard | (M) | | Use `pandas` to read and analyze CSVs. `matplotlib` or `Plotly` for visualization. |
 | 18 | Image Compression Tool | (M) | | Use `Pillow` (PIL) for image operations. Expose `quality` (lossy) and `optimize` (lossless) parameters. |
@@ -61,26 +61,26 @@ This repository is organized into three main categories: **Practical**, **Algori
 
 | # | Challenge | Difficulty | Status | Implementation Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | Approximate Set Membership (Bloom Filter) | (E) | Implemented | Implement a bit array and multiple hash functions (e.g., variations of `mmh3`). Test false positive rate. |
-| 2 | Advanced Interval Scheduler | (M) | Implemented | Classic DP problem. Sort by end times. `dp[i]` = max weight using intervals up to `i`. |
-| 3 | Autocomplete Engine | (M) | Implemented | Use a Trie (Prefix Tree). Store frequency in nodes for ranking. |
-| 4 | Approximate String Matching | (M) | Implemented | Implement Levenshtein distance (DP). For speed, explore BK-trees or n-gram indexing. |
-| 5 | K-d Tree & Nearest Neighbors | (M) | Implemented | Build tree by recursively splitting on median. k-NN search requires backtracking (priority queue). |
-| 6 | Consistent Hashing Library | (M) | Implemented | Map nodes/keys to a circle (e.g., `hash(key) % 360`). Virtual nodes improve distribution. |
-| 7 | Generic DP Visualizer | (M) | Implemented | Needs a UI (`tkinter`, `PyQt`, web). Pass the DP table and recurrence; step through filling it. |
-| 8 | Top-K Frequent Items in Stream | (M) | Implemented | Implement Misra-Gries or Space-Saving algorithm. A hash map is the core data structure. |
-| 9 | Randomized Algorithms Suite | (M) | Implemented | Quickselect (partitioning), Skip Lists (probabilistic linked lists), Treaps (BST + heap). |
-| 10 | Matrix Algorithm Lab | (M) | Implemented | Implement matrix as list-of-lists or `numpy`. Strassen is a recursive, divide-and-conquer algorithm. |
-| 11 | HyperLogLog Implementation | (M) | Implemented | Core is hashing items and storing the max number of leading zeros in the hash. |
-| 12 | Game Tree Search Framework | (M) | Implemented | Implement Minimax. Alpha-beta pruning is an optimization that prunes unpromising branches. |
-| 13 | Clustering Algorithms Suite | (M) | Implemented | k-means (centroids), k-medoids (data points), DBSCAN (density-based). `matplotlib` for visualization. |
-| 14 | Edit Distance with Custom Costs | (M) | Implemented | Standard Levenshtein DP, but use the custom costs in the recurrence relation. |
-| 15 | Online Caching Simulator | (M) | Implemented | Implement cache as a dict/hash map. LRU needs a doubly-linked list or `OrderedDict`. |
-| 16 | Text Justification Engine | (M) | Implemented | DP approach: `dp[i]` = min badness for justifying words `i` to `n`. |
-| 17 | Large Integer Arithmetic Library | (M) | Implemented | Store numbers as arrays of digits. Implement schoolbook add/subtract. Karatsuba or FFT for fast multiply. |
-| 18 | Dynamic Shortest Paths Service | (H) | Implemented | For edge weight changes, Dijkstra is too slow. Research D* Lite or algorithms for dynamic graphs. |
-| 19 | Constraint Solver (Mini-SAT) | (H) | Implemented | Implement DPLL: unit propagation, pure literal elimination, and branching. Clause representation is key. |
-| 20 | Generic Flow Library | (H) | Implemented | Start with Edmonds-Karp (BFS for augmenting paths). Min-cut from residual graph. |
+| 1 | Approximate Set Membership (Bloom Filter) | (E) | Implemented (Python) | Implement a bit array and multiple hash functions (e.g., variations of `mmh3`). Test false positive rate. |
+| 2 | Advanced Interval Scheduler | (M) | Implemented (Python) | Classic DP problem. Sort by end times. `dp[i]` = max weight using intervals up to `i`. |
+| 3 | Autocomplete Engine | (M) | Implemented (Python) | Use a Trie (Prefix Tree). Store frequency in nodes for ranking. |
+| 4 | Approximate String Matching | (M) | Implemented (Python) | Implement Levenshtein distance (DP). For speed, explore BK-trees or n-gram indexing. |
+| 5 | K-d Tree & Nearest Neighbors | (M) | Implemented (Python) | Build tree by recursively splitting on median. k-NN search requires backtracking (priority queue). |
+| 6 | Consistent Hashing Library | (M) | Implemented (Python) | Map nodes/keys to a circle (e.g., `hash(key) % 360`). Virtual nodes improve distribution. |
+| 7 | Generic DP Visualizer | (M) | Implemented (Python) | Needs a UI (`tkinter`, `PyQt`, web). Pass the DP table and recurrence; step through filling it. |
+| 8 | Top-K Frequent Items in Stream | (M) | Implemented (Python) | Implement Misra-Gries or Space-Saving algorithm. A hash map is the core data structure. |
+| 9 | Randomized Algorithms Suite | (M) | Implemented (Python) | Quickselect (partitioning), Skip Lists (probabilistic linked lists), Treaps (BST + heap). |
+| 10 | Matrix Algorithm Lab | (M) | Implemented (Python) | Implement matrix as list-of-lists or `numpy`. Strassen is a recursive, divide-and-conquer algorithm. |
+| 11 | HyperLogLog Implementation | (M) | Implemented (Rust) | Core is hashing items and storing the max number of leading zeros in the hash. |
+| 12 | Game Tree Search Framework | (M) | Implemented (Rust) | Implement Minimax. Alpha-beta pruning is an optimization that prunes unpromising branches. |
+| 13 | Clustering Algorithms Suite | (M) | Implemented (Rust) | k-means (centroids), k-medoids (data points), DBSCAN (density-based). `matplotlib` for visualization. |
+| 14 | Edit Distance with Custom Costs | (M) | Implemented (Rust) | Standard Levenshtein DP, but use the custom costs in the recurrence relation. |
+| 15 | Online Caching Simulator | (M) | Implemented (Rust) | Implement cache as a dict/hash map. LRU needs a doubly-linked list or `OrderedDict`. |
+| 16 | Text Justification Engine | (M) | Implemented (Rust) | DP approach: `dp[i]` = min badness for justifying words `i` to `n`. |
+| 17 | Large Integer Arithmetic Library | (M) | Implemented (Rust) | Store numbers as arrays of digits. Implement schoolbook add/subtract. Karatsuba or FFT for fast multiply. |
+| 18 | Dynamic Shortest Paths Service | (H) | Implemented (Rust) | For edge weight changes, Dijkstra is too slow. Research D* Lite or algorithms for dynamic graphs. |
+| 19 | Constraint Solver (Mini-SAT) | (H) | Implemented (Rust) | Implement DPLL: unit propagation, pure literal elimination, and branching. Clause representation is key. |
+| 20 | Generic Flow Library | (H) | Implemented (Rust) | Start with Edmonds-Karp (BFS for augmenting paths). Min-cut from residual graph. |
 | 21 | Persistent Data Structures Kit | (H) | | Key is "path copying." When modifying a node, copy it and its ancestors. |
 | 22 | Rope-based Text Editor Core | (H) | | Implement a binary tree where leaves are strings. Insert/delete involves splitting/merging nodes. |
 | 23 | 2D Range Query Library | (H) | | A 2D Fenwick tree (BIT) or segment tree. Can be a 1D tree where each node is another 1D tree. |
@@ -91,16 +91,16 @@ This repository is organized into three main categories: **Practical**, **Algori
 | 28 | Geometry Engine 2D | (H) | | Use `atan2` for angles. Convex hull (e.g., Graham scan). Point-in-polygon (ray casting). |
 | 29 | On-Disk B-Tree Index | (H) | | Focus on serializing/deserializing nodes (pages) to disk. Each node is a fixed-size block. |
 | 30 | Matching Engine (Order Book) | (H) | | Use two priority heaps (min-heap for asks, max-heap for bids) or sorted data structures. |
-| 31 | Multi-dimensional Knapsack Solver | (H) | | DP state becomes `dp[i][w1][w2]...`. For large W, use branch-and-bound. |
-| 32 | Lossless Compression (LZ77/78) | (H) | | LZ77 (sliding window, (offset, length) pairs). LZ78 (dictionary of seen strings). |
-| 33 | Scheduler with Deadlines & Penalties | (H) | | Sort by deadlines. DP or greedy approach with a disjoint set (for finding available slots). |
-| 34 | Parallel Sort Library | (H) | | Parallel merge sort is a good start. Use `threading` or `multiprocessing` to sort subarrays. |
-| 35 | Disjoint Set with Rollback | (H) | | DSU (Union-Find). To rollback, don't use path compression. Store a stack of changes. |
-| 36 | Temporal Event Store | (H) | | Use an interval tree to index events by their time ranges for efficient queries. |
-| 37 | Routing with Turn Penalties | (H) | | Model graph with edges as (u, v) pairs. Or, model graph with nodes as (u, v) *edges* to store turn costs. |
-| 38 | Pattern Mining in Sequences | (H) | | Apriori-based (GSP) or PrefixSpan. Involves building and mining prefix trees. |
-| 39 | Automatic Timetabler | (H) | | Model as a graph coloring problem (courses=nodes, conflicts=edges). Use heuristics (e.g., backtracking). |
-| 40 | Bin Packing Variants | (H) | | NP-hard. Implement heuristics: First Fit, Best Fit, First Fit Decreasing. |
+| 31 | Multi-dimensional Knapsack Solver | (H) | Implemented (Go) | DP state becomes `dp[i][w1][w2]...`. For large W, use branch-and-bound. |
+| 32 | Lossless Compression (LZ77/78) | (H) | Implemented (Go) | LZ77 (sliding window, (offset, length) pairs). LZ78 (dictionary of seen strings). |
+| 33 | Scheduler with Deadlines & Penalties | (H) | Implemented (Go) | Sort by deadlines. DP or greedy approach with a disjoint set (for finding available slots). |
+| 34 | Parallel Sort Library | (H) | Implemented (Go) | Parallel merge sort is a good start. Use `threading` or `multiprocessing` to sort subarrays. |
+| 35 | Disjoint Set with Rollback | (H) | Implemented (Go) | DSU (Union-Find). To rollback, don't use path compression. Store a stack of changes. |
+| 36 | Temporal Event Store | (H) | Implemented (Go) | Use an interval tree to index events by their time ranges for efficient queries. |
+| 37 | Routing with Turn Penalties | (H) | Implemented (Go) | Model graph with edges as (u, v) pairs. Or, model graph with nodes as (u, v) *edges* to store turn costs. |
+| 38 | Pattern Mining in Sequences | (H) | Implemented (Go) | Apriori-based (GSP) or PrefixSpan. Involves building and mining prefix trees. |
+| 39 | Automatic Timetabler | (H) | Implemented (Go) | Model as a graph coloring problem (courses=nodes, conflicts=edges). Use heuristics (e.g., backtracking). |
+| 40 | Bin Packing Variants | (H) | Implemented (Go) | NP-hard. Implement heuristics: First Fit, Best Fit, First Fit Decreasing. |
 | 41 | Image Seam Carving | (H) | | DP. Find lowest-energy seam (path) from top to bottom. Energy = pixel gradient. |
 | 42 | Auto-Completion with Language Model Prior | (H) | | Combine Trie search (for prefix) with n-gram probabilities (for ranking). |
 | 43 | Route Planning with Constraints | (H) | | Modify Dijkstra/A*. For "must-visit," find path segments (A->B, B->C). For "forbidden," remove nodes. |
@@ -136,16 +136,16 @@ This repository is organized into three main categories: **Practical**, **Algori
 | 18 | Genetic Algorithm Playground | (M) | | Implement: population, fitness function, selection (e.g., roulette), crossover, mutation. |
 | 19 | Particle System Engine | (M) | | Manage a list of `Particle` objects. Each has position, velocity, lifetime. Update all each frame. |
 | 20 | Queueing System Simulator | (M) | | M/M/1: Poisson arrival, exponential service time. Use a discrete event queue. Track wait times. |
-| 21 | Multiplayer Network Lag Simulator | (M) | Implemented | Intercept packets (or simulate) and use a queue with `time.sleep` to add latency/jitter. Randomly drop packets. |
-| 22 | Game Boy Emulator Core | (H) | Implemented | Sharp SM83 CPU (like Z80). Memory-mapped I/O. PPU (Pixel Processing Unit) is complex (sprites, tiles). |
-| 23 | Simple RISC CPU Simulator | (H) | Implemented | Simulate pipeline stages (Fetch, Decode, Execute, Memory, Writeback). Detect/handle data and control hazards. |
-| 24 | Network Stack Simulator | (H) | Implemented | Simulate packet loss/reordering. Implement TCP congestion control (slow start) and re-transmission. |
-| 25 | Solar System N-Body Simulation | (H) | Implemented | Calculate F_gravity = G*m1*m2/r^2 between all pairs. Use an integrator (e.g., Euler, Verlet) to update pos/vel. |
-| 26 | Warehouse Robotics Simulator | (H) | Implemented | Use A* or Dijkstra for pathfinding. Collision avoidance (e.g., locking grid cells or paths). |
-| 27 | Memory Allocator Simulator | (H) | Implemented | Implement `malloc` (find free block) and `free` (coalesce blocks). Use free lists. Visualize fragmentation. |
-| 28 | RL Environment Sandbox | (H) | Implemented | Implement OpenAI Gym-style API: `step(action)`, `reset()`. Gridworld needs a `render()` method. |
-| 29 | Stock Market Order Book Simulator | (H) | Implemented | Core is a matching engine (see Algos #20). Add agents that place market/limit orders. |
-| 30 | Air Traffic Control Simulator | (H) | Implemented | 2D/3D space. Planes have flight plans. Detect conflicts (paths too close). |
+| 21 | Multiplayer Network Lag Simulator | (M) | Implemented (C++) | Intercept packets (or simulate) and use a queue with `time.sleep` to add latency/jitter. Randomly drop packets. |
+| 22 | Game Boy Emulator Core | (H) | Implemented (C++) | Sharp SM83 CPU (like Z80). Memory-mapped I/O. PPU (Pixel Processing Unit) is complex (sprites, tiles). |
+| 23 | Simple RISC CPU Simulator | (H) | Implemented (C++) | Simulate pipeline stages (Fetch, Decode, Execute, Memory, Writeback). Detect/handle data and control hazards. |
+| 24 | Network Stack Simulator | (H) | Implemented (C++) | Simulate packet loss/reordering. Implement TCP congestion control (slow start) and re-transmission. |
+| 25 | Solar System N-Body Simulation | (H) | Implemented (C++) | Calculate F_gravity = G*m1*m2/r^2 between all pairs. Use an integrator (e.g., Euler, Verlet) to update pos/vel. |
+| 26 | Warehouse Robotics Simulator | (H) | Implemented (C++) | Use A* or Dijkstra for pathfinding. Collision avoidance (e.g., locking grid cells or paths). |
+| 27 | Memory Allocator Simulator | (H) | Implemented (C++) | Implement `malloc` (find free block) and `free` (coalesce blocks). Use free lists. Visualize fragmentation. |
+| 28 | RL Environment Sandbox | (H) | Implemented (C++) | Implement OpenAI Gym-style API: `step(action)`, `reset()`. Gridworld needs a `render()` method. |
+| 29 | Stock Market Order Book Simulator | (H) | Implemented (C++) | Core is a matching engine (see Algos #20). Add agents that place market/limit orders. |
+| 30 | Air Traffic Control Simulator | (H) | Implemented (C++) | 2D/3D space. Planes have flight plans. Detect conflicts (paths too close). |
 | 31 | Voxel-based Terrain Engine | (H) | | Render world in "chunks." Use Perlin noise for terrain generation. Greedy meshing for optimization. |
 | 32 | Ray Tracer | (H) | | For each pixel, cast a ray. Find closest intersection (sphere, plane). Recurse for reflection/shadows. |
 | 33 | City Power Grid Simulator | (H) | | Model as a graph. Nodes=stations/users, Edges=lines. Simulate power flow and cascading failures. |
