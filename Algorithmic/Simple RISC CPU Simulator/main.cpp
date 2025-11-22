@@ -28,6 +28,11 @@ class RiscPipelineSimulator {
             return;
         }
 
+        if (pc >= program.size()) {
+            halted = true;
+            return;
+        }
+
         write_back();
         mem();
         execute();
@@ -50,10 +55,6 @@ class RiscPipelineSimulator {
     std::optional<std::pair<Instruction, int32_t>> mem_wb;
 
     void fetch() {
-        if (pc >= program.size()) {
-            halted = true;
-            return;
-        }
         if_id = program[pc++];
     }
 
@@ -71,6 +72,8 @@ class RiscPipelineSimulator {
         id_ex.reset();
 
         auto reg_val = [&](uint8_t idx) {
+            if (idx >= registers.size())
+                throw std::runtime_error("register index out of range");
             if (mem_wb && mem_wb->first.dst == idx)
                 return mem_wb->second; // forwarding
             if (ex_mem && ex_mem->first.dst == idx)

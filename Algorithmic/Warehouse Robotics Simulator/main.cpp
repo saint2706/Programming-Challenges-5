@@ -4,8 +4,10 @@
 #include <limits>
 #include <queue>
 #include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
+#include <stdexcept>
 
 struct Node {
     int x, y;
@@ -26,10 +28,10 @@ class GridMap {
     }
 
     std::vector<Node> neighbors(const Node &n) const {
-        static const int dx[] = {1, -1, 0, 0};
-        static const int dy[] = {0, 0, 1, -1};
+        static const int dx[] = {1, -1, 0, 0, 1, 1, -1, -1};
+        static const int dy[] = {0, 0, 1, -1, 1, -1, 1, -1};
         std::vector<Node> result;
-        for (int k = 0; k < 4; ++k) {
+        for (int k = 0; k < 8; ++k) {
             int nx = n.x + dx[k];
             int ny = n.y + dy[k];
             if (is_free(nx, ny)) {
@@ -51,6 +53,9 @@ class AStarPlanner {
     explicit AStarPlanner(const GridMap &map) : map(map) {}
 
     std::vector<Node> plan(const Node &start, const Node &goal) const {
+        if (!map.is_free(start.x, start.y) || !map.is_free(goal.x, goal.y))
+            throw std::invalid_argument("start or goal blocked");
+
         using Pair = std::pair<double, Node>;
         auto cmp = [](const Pair &a, const Pair &b) { return a.first > b.first; };
         std::priority_queue<Pair, std::vector<Pair>, decltype(cmp)> open(cmp);
@@ -60,15 +65,21 @@ class AStarPlanner {
         g_score[start] = 0.0;
         open.emplace(heuristic(start, goal), start);
 
+        std::unordered_set<Node, NodeHash> closed;
+
         while (!open.empty()) {
             Node current = open.top().second;
             if (current == goal) {
                 return reconstruct_path(came_from, current);
             }
             open.pop();
+            if (closed.count(current))
+                continue;
+            closed.insert(current);
 
             for (const auto &neighbor : map.neighbors(current)) {
-                double tentative = g_score[current] + 1.0;
+                double step_cost = (neighbor.x != current.x && neighbor.y != current.y) ? std::sqrt(2.0) : 1.0;
+                double tentative = g_score[current] + step_cost;
                 if (!g_score.count(neighbor) || tentative < g_score[neighbor]) {
                     came_from[neighbor] = current;
                     g_score[neighbor] = tentative;
@@ -84,7 +95,10 @@ class AStarPlanner {
     const GridMap &map;
 
     static double heuristic(const Node &a, const Node &b) {
-        return std::abs(a.x - b.x) + std::abs(a.y - b.y);
+        // Octile distance
+        int dx = std::abs(a.x - b.x);
+        int dy = std::abs(a.y - b.y);
+        return (dx + dy) + (std::sqrt(2.0) - 2) * std::min(dx, dy);
     }
 
     static std::vector<Node> reconstruct_path(const std::unordered_map<Node, Node, NodeHash> &came_from,
@@ -107,6 +121,7 @@ int main() {
     GridMap map(10, 10);
     map.add_obstacle(4, 5);
     map.add_obstacle(4, 6);
+    map.add_obstacle(5, 6);
     AStarPlanner planner(map);
     auto path = planner.plan({0, 0}, {7, 7});
     for (auto node : path) {
