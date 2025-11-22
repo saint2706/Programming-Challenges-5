@@ -1,3 +1,7 @@
+# Repository Structure and Challenges
+
+This repository is organized into three main categories: **Practical**, **Algorithmic**, and **Emulation/Modeling**. Below is the status of all challenges.
+
 ## 1. Practical Challenges
 
 | # | Challenge | Difficulty | Status | Implementation Notes |
@@ -67,16 +71,16 @@
 | 8 | Top-K Frequent Items in Stream | (M) | Implemented | Implement Misra-Gries or Space-Saving algorithm. A hash map is the core data structure. |
 | 9 | Randomized Algorithms Suite | (M) | Implemented | Quickselect (partitioning), Skip Lists (probabilistic linked lists), Treaps (BST + heap). |
 | 10 | Matrix Algorithm Lab | (M) | Implemented | Implement matrix as list-of-lists or `numpy`. Strassen is a recursive, divide-and-conquer algorithm. |
-| 11 | HyperLogLog Implementation | (M) | | Core is hashing items and storing the max number of leading zeros in the hash. |
-| 12 | Game Tree Search Framework | (M) | | Implement Minimax. Alpha-beta pruning is an optimization that prunes unpromising branches. |
-| 13 | Clustering Algorithms Suite | (M) | | k-means (centroids), k-medoids (data points), DBSCAN (density-based). `matplotlib` for visualization. |
-| 14 | Edit Distance with Custom Costs | (M) | | Standard Levenshtein DP, but use the custom costs in the recurrence relation. |
-| 15 | Online Caching Simulator | (M) | | Implement cache as a dict/hash map. LRU needs a doubly-linked list or `OrderedDict`. |
-| 16 | Text Justification Engine | (M) | | DP approach: `dp[i]` = min badness for justifying words `i` to `n`. |
-| 17 | Large Integer Arithmetic Library | (M) | | Store numbers as arrays of digits. Implement schoolbook add/subtract. Karatsuba or FFT for fast multiply. |
-| 18 | Dynamic Shortest Paths Service | (H) | | For edge weight changes, Dijkstra is too slow. Research D* Lite or algorithms for dynamic graphs. |
-| 19 | Constraint Solver (Mini-SAT) | (H) | | Implement DPLL: unit propagation, pure literal elimination, and branching. Clause representation is key. |
-| 20 | Generic Flow Library | (H) | | Start with Edmonds-Karp (BFS for augmenting paths). Min-cut from residual graph. |
+| 11 | HyperLogLog Implementation | (M) | Implemented | Core is hashing items and storing the max number of leading zeros in the hash. |
+| 12 | Game Tree Search Framework | (M) | Implemented | Implement Minimax. Alpha-beta pruning is an optimization that prunes unpromising branches. |
+| 13 | Clustering Algorithms Suite | (M) | Implemented | k-means (centroids), k-medoids (data points), DBSCAN (density-based). `matplotlib` for visualization. |
+| 14 | Edit Distance with Custom Costs | (M) | Implemented | Standard Levenshtein DP, but use the custom costs in the recurrence relation. |
+| 15 | Online Caching Simulator | (M) | Implemented | Implement cache as a dict/hash map. LRU needs a doubly-linked list or `OrderedDict`. |
+| 16 | Text Justification Engine | (M) | Implemented | DP approach: `dp[i]` = min badness for justifying words `i` to `n`. |
+| 17 | Large Integer Arithmetic Library | (M) | Implemented | Store numbers as arrays of digits. Implement schoolbook add/subtract. Karatsuba or FFT for fast multiply. |
+| 18 | Dynamic Shortest Paths Service | (H) | Implemented | For edge weight changes, Dijkstra is too slow. Research D* Lite or algorithms for dynamic graphs. |
+| 19 | Constraint Solver (Mini-SAT) | (H) | Implemented | Implement DPLL: unit propagation, pure literal elimination, and branching. Clause representation is key. |
+| 20 | Generic Flow Library | (H) | Implemented | Start with Edmonds-Karp (BFS for augmenting paths). Min-cut from residual graph. |
 | 21 | Persistent Data Structures Kit | (H) | | Key is "path copying." When modifying a node, copy it and its ancestors. |
 | 22 | Rope-based Text Editor Core | (H) | | Implement a binary tree where leaves are strings. Insert/delete involves splitting/merging nodes. |
 | 23 | 2D Range Query Library | (H) | | A 2D Fenwick tree (BIT) or segment tree. Can be a 1D tree where each node is another 1D tree. |
@@ -132,16 +136,16 @@
 | 18 | Genetic Algorithm Playground | (M) | | Implement: population, fitness function, selection (e.g., roulette), crossover, mutation. |
 | 19 | Particle System Engine | (M) | | Manage a list of `Particle` objects. Each has position, velocity, lifetime. Update all each frame. |
 | 20 | Queueing System Simulator | (M) | | M/M/1: Poisson arrival, exponential service time. Use a discrete event queue. Track wait times. |
-| 21 | Multiplayer Network Lag Simulator | (M) | | Intercept packets (or simulate) and use a queue with `time.sleep` to add latency/jitter. Randomly drop packets. |
-| 22 | Game Boy Emulator Core | (H) | | Sharp SM83 CPU (like Z80). Memory-mapped I/O. PPU (Pixel Processing Unit) is complex (sprites, tiles). |
-| 23 | Simple RISC CPU Simulator | (H) | | Simulate pipeline stages (Fetch, Decode, Execute, Memory, Writeback). Detect/handle data and control hazards. |
-| 24 | Network Stack Simulator | (H) | | Simulate packet loss/reordering. Implement TCP congestion control (slow start) and re-transmission. |
-| 25 | Solar System N-Body Simulation | (H) | | Calculate F_gravity = G*m1*m2/r^2 between all pairs. Use an integrator (e.g., Euler, Verlet) to update pos/vel. |
-| 26 | Warehouse Robotics Simulator | (H) | | Use A* or Dijkstra for pathfinding. Collision avoidance (e.g., locking grid cells or paths). |
-| 27 | Memory Allocator Simulator | (H) | | Implement `malloc` (find free block) and `free` (coalesce blocks). Use free lists. Visualize fragmentation. |
-| 28 | RL Environment Sandbox | (H) | | Implement OpenAI Gym-style API: `step(action)`, `reset()`. Gridworld needs a `render()` method. |
-| 29 | Stock Market Order Book Simulator | (H) | | Core is a matching engine (see Algos #20). Add agents that place market/limit orders. |
-| 30 | Air Traffic Control Simulator | (H) | | 2D/3D space. Planes have flight plans. Detect conflicts (paths too close). |
+| 21 | Multiplayer Network Lag Simulator | (M) | Implemented | Intercept packets (or simulate) and use a queue with `time.sleep` to add latency/jitter. Randomly drop packets. |
+| 22 | Game Boy Emulator Core | (H) | Implemented | Sharp SM83 CPU (like Z80). Memory-mapped I/O. PPU (Pixel Processing Unit) is complex (sprites, tiles). |
+| 23 | Simple RISC CPU Simulator | (H) | Implemented | Simulate pipeline stages (Fetch, Decode, Execute, Memory, Writeback). Detect/handle data and control hazards. |
+| 24 | Network Stack Simulator | (H) | Implemented | Simulate packet loss/reordering. Implement TCP congestion control (slow start) and re-transmission. |
+| 25 | Solar System N-Body Simulation | (H) | Implemented | Calculate F_gravity = G*m1*m2/r^2 between all pairs. Use an integrator (e.g., Euler, Verlet) to update pos/vel. |
+| 26 | Warehouse Robotics Simulator | (H) | Implemented | Use A* or Dijkstra for pathfinding. Collision avoidance (e.g., locking grid cells or paths). |
+| 27 | Memory Allocator Simulator | (H) | Implemented | Implement `malloc` (find free block) and `free` (coalesce blocks). Use free lists. Visualize fragmentation. |
+| 28 | RL Environment Sandbox | (H) | Implemented | Implement OpenAI Gym-style API: `step(action)`, `reset()`. Gridworld needs a `render()` method. |
+| 29 | Stock Market Order Book Simulator | (H) | Implemented | Core is a matching engine (see Algos #20). Add agents that place market/limit orders. |
+| 30 | Air Traffic Control Simulator | (H) | Implemented | 2D/3D space. Planes have flight plans. Detect conflicts (paths too close). |
 | 31 | Voxel-based Terrain Engine | (H) | | Render world in "chunks." Use Perlin noise for terrain generation. Greedy meshing for optimization. |
 | 32 | Ray Tracer | (H) | | For each pixel, cast a ray. Find closest intersection (sphere, plane). Recurse for reflection/shadows. |
 | 33 | City Power Grid Simulator | (H) | | Model as a graph. Nodes=stations/users, Edges=lines. Simulate power flow and cascading failures. |

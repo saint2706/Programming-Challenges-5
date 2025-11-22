@@ -38,9 +38,44 @@ impl KMeans {
         }
 
         let mut rng = rand::rng();
-        let mut centroids: Vec<Point> = (0..self.k)
-            .map(|_| points[rng.random_range(0..points.len())].clone())
-            .collect();
+        let mut centroids = Vec::with_capacity(self.k);
+
+        // K-Means++ Initialization
+        if !points.is_empty() {
+            // 1. Choose first centroid randomly
+            centroids.push(points[rng.random_range(0..points.len())].clone());
+
+            // 2. Choose remaining k-1 centroids
+            for _ in 1..self.k {
+                let mut dists = Vec::with_capacity(points.len());
+                let mut sum_sq_dist = 0.0;
+
+                for p in points {
+                    let mut min_dist_sq = f64::MAX;
+                    for c in &centroids {
+                        let d = p.distance(c);
+                        let d_sq = d * d;
+                        if d_sq < min_dist_sq {
+                            min_dist_sq = d_sq;
+                        }
+                    }
+                    dists.push(min_dist_sq);
+                    sum_sq_dist += min_dist_sq;
+                }
+
+                // Roulette wheel selection
+                let mut r = rng.random_range(0.0..sum_sq_dist);
+                let mut next_centroid_idx = 0;
+                for (i, &d_sq) in dists.iter().enumerate() {
+                    r -= d_sq;
+                    if r <= 0.0 {
+                        next_centroid_idx = i;
+                        break;
+                    }
+                }
+                centroids.push(points[next_centroid_idx].clone());
+            }
+        }
 
         let mut assignments = vec![0; points.len()];
 
