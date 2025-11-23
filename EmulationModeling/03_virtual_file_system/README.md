@@ -47,7 +47,8 @@ Virtual File System initialized. Type 'help' for commands.
 
 ### File Operations
 ```bash
-# Create a file with optional content
+# Create an empty file or update with content (custom implementation)
+# Note: Unlike Unix touch, this supports inline content as second argument
 touch myfile.txt "Hello, World!"
 
 # Read file contents

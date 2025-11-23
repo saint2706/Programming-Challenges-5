@@ -52,6 +52,10 @@ Avg Wait: 5.75
 Avg TA:   11.25
 ```
 
+Where:
+- **Arr**: Arrival Time - when process enters ready queue
+- **TA**: Turnaround Time - completion time minus arrival time
+
 ## 📊 Scheduling Algorithms
 
 ### FCFS (First-Come-First-Served)

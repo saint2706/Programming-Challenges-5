@@ -46,6 +46,20 @@ python main.py
 
 The simulator runs memory access traces and reports hit/miss statistics for different cache configurations.
 
+### Example Configuration
+```python
+# Configure a 4-way set-associative cache
+cache = Cache(
+    size=1024,           # Total cache size in bytes
+    block_size=64,       # Bytes per cache line
+    associativity=4      # 4-way set-associative
+)
+
+# Run trace
+for address in memory_accesses:
+    cache.access(address)
+```
+
 ## 🗂 Cache Policies
 
 ### Mapping Strategies

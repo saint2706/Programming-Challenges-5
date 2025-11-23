@@ -1,6 +1,6 @@
 # Epidemic Spread Model
 
-An agent-based SIR (Susceptible-Infected-Recovered) model for simulating disease spread with visualization.
+An agent-based SIR (Susceptible-Infected-Recovered) model for simulating disease spread with a visualization.
 
 ## 📋 Table of Contents
 - [Theory](#theory)

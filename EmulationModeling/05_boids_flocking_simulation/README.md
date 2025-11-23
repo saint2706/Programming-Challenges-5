@@ -35,6 +35,8 @@ python main.py
 
 The simulation creates 50 boids that move according to flocking rules. Each boid is rendered as a small triangle pointing in its direction of travel.
 
+To change the number of boids, edit the `Flock(50, WIDTH, HEIGHT)` line in `main.py` to your desired count.
+
 ## 📐 The Three Rules
 
 ### 1. Separation
