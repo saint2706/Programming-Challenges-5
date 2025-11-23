@@ -1,6 +1,6 @@
 # Repository Structure and Challenges
 
-This repository is organized into three main categories: **Practical**, **Algorithmic**, and **Emulation/Modeling**. Below is the status of all challenges.
+This repository contains programming challenges across five categories: **Practical**, **Algorithmic**, **Emulation/Modeling**, **Artificial Intelligence**, and **Game Development**. Below is the status of all challenges.
 
 ## 1. Practical Challenges
 
@@ -116,16 +116,16 @@ This repository is organized into three main categories: **Practical**, **Algori
 
 | # | Challenge | Difficulty | Status | Implementation Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | Cellular Automata Lab | (E) | | Use a 2D array for the grid. The core logic is a function that computes the next state from neighbors. |
-| 2 | Chip-8 Emulator | (M) | | Implement 35 opcodes, 4K RAM, 16 registers. `pygame` or `tkinter` for 64x32 display. |
-| 3 | Virtual File System | (M) | | Use a tree-like class structure (Node, File, Directory). Serialize the root to a single file (e.g., `pickle` or JSON). |
-| 4 | Traffic Intersection Simulator | (M) | | Discrete event simulation. Events: `car_arrives`, `light_changes`. Use a `queue` for cars. |
-| 5 | Boids Flocking Simulation | (M) | | Each 'boid' agent follows 3 rules: separation, alignment, cohesion. Update all positions each tick. |
-| 6 | Elevator System Model | (M) | | Model elevators and floors as objects. Use a discrete event queue. Test different scheduling algos (e.g., SCAN). |
-| 7 | Operating System Process Scheduler | (M) | | Simulate a process queue and a clock. Implement algorithms (RR, SJF) by deciding which process runs next. |
-| 8 | Cache Simulator | (M) | | Simulate memory addresses. Map address to cache set/line. Implement LRU/FIFO replacement. |
-| 9 | Epidemic Spread Model | (M) | | SIR model: agents are (S)usceptible, (I)nfected, or (R)ecovered. `p_infection` and `recovery_time` are key params. |
-| 10 | Neural Network From Scratch + Visualizer | (M) | | Implement `numpy`-based layers (Linear, ReLU). Backpropagation is manual chain rule. `matplotlib` to show loss. |
+| 1 | Cellular Automata Lab | (E) | Implemented (Python) | Use a 2D array for the grid. The core logic is a function that computes the next state from neighbors. |
+| 2 | Chip-8 Emulator | (M) | Implemented (Python) | Implement 35 opcodes, 4K RAM, 16 registers. `pygame` or `tkinter` for 64x32 display. |
+| 3 | Virtual File System | (M) | Implemented (Python) | Use a tree-like class structure (Node, File, Directory). Serialize the root to a single file (e.g., `pickle` or JSON). |
+| 4 | Traffic Intersection Simulator | (M) | Implemented (Python) | Discrete event simulation. Events: `car_arrives`, `light_changes`. Use a `queue` for cars. |
+| 5 | Boids Flocking Simulation | (M) | Implemented (Python) | Each 'boid' agent follows 3 rules: separation, alignment, cohesion. Update all positions each tick. |
+| 6 | Elevator System Model | (M) | Implemented (Python) | Model elevators and floors as objects. Use a discrete event queue. Test different scheduling algos (e.g., SCAN). |
+| 7 | Operating System Process Scheduler | (M) | Implemented (Python) | Simulate a process queue and a clock. Implement algorithms (RR, SJF) by deciding which process runs next. |
+| 8 | Cache Simulator | (M) | Implemented (Python) | Simulate memory addresses. Map address to cache set/line. Implement LRU/FIFO replacement. |
+| 9 | Epidemic Spread Model | (M) | Implemented (Python) | SIR model: agents are (S)usceptible, (I)nfected, or (R)ecovered. `p_infection` and `recovery_time` are key params. |
+| 10 | Neural Network From Scratch + Visualizer | (M) | Implemented (Python) | Implement `numpy`-based layers (Linear, ReLU). Backpropagation is manual chain rule. `matplotlib` to show loss. |
 | 11 | Pedestrian Crowd Simulation | (M) | | Social forces model: agents have a goal and are "repelled" by obstacles and other agents. |
 | 12 | DNS Resolver Simulation | (M) | | Simulate root, TLD, and authoritative servers (e.g., as dicts). Implement recursive queries and a cache (dict with TTL). |
 | 13 | Music Synthesizer | (M) | | Use `numpy` to generate wave arrays (sine, square, saw). `pyaudio` to play. ADSR envelope shapes the volume. |
