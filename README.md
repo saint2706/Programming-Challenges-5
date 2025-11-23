@@ -101,16 +101,16 @@ This repository is organized into three main categories: **Practical**, **Algori
 | 38 | Pattern Mining in Sequences | (H) | Implemented (Go) | Apriori-based (GSP) or PrefixSpan. Involves building and mining prefix trees. |
 | 39 | Automatic Timetabler | (H) | Implemented (Go) | Model as a graph coloring problem (courses=nodes, conflicts=edges). Use heuristics (e.g., backtracking). |
 | 40 | Bin Packing Variants | (H) | Implemented (Go) | NP-hard. Implement heuristics: First Fit, Best Fit, First Fit Decreasing. |
-| 41 | Image Seam Carving | (H) | | DP. Find lowest-energy seam (path) from top to bottom. Energy = pixel gradient. |
-| 42 | Auto-Completion with Language Model Prior | (H) | | Combine Trie search (for prefix) with n-gram probabilities (for ranking). |
-| 43 | Route Planning with Constraints | (H) | | Modify Dijkstra/A*. For "must-visit," find path segments (A->B, B->C). For "forbidden," remove nodes. |
-| 44 | Polygon Triangulation | (H) | | Ear clipping algorithm (O(n^2)) is feasible. Find a convex vertex ("ear") and clip it. |
-| 45 | Subsequence Automaton | (H) | | Build an automaton in O(n*k) (k=alphabet size) where `next[i][c]` = first occurrence of `c` after pos `i`. |
-| 46 | Dynamic Connectivity Structure | (I) | | Requires complex data structures like a link-cut tree or a fully dynamic graph algorithm. |
-| 47 | Regex Engine | (I) | | Convert regex to NFA (Thompson's construction), then NFA to DFA (subset construction). |
-| 48 | Versioned Key–Value Store (LSM-tree) | (I) | | Implement an in-memory memtable (e.g., skiplist) and on-disk SSTables. Compaction merges SSTables. |
-| 49 | Map Label Placement | (I) | | NP-hard. Heuristics like simulated annealing or greedy placement (e.g., place most constrained labels first). |
-| 50 | Multidimensional Index (R-Tree) | (I) | | Tree of Minimum Bounding Rectangles (MBRs). Splitting nodes (e.g., quadratic or linear split) is the hard part. |
+| 41 | Image Seam Carving | (H) | Implemented (Python) | DP. Find lowest-energy seam (path) from top to bottom. Energy = pixel gradient. |
+| 42 | Auto-Completion with Language Model Prior | (H) | Implemented (Python) | Combine Trie search (for prefix) with n-gram probabilities (for ranking). |
+| 43 | Route Planning with Constraints | (H) | Implemented (Python) | Modify Dijkstra/A*. For "must-visit," find path segments (A->B, B->C). For "forbidden," remove nodes. |
+| 44 | Polygon Triangulation | (H) | Implemented (Python) | Ear clipping algorithm (O(n^2)) is feasible. Find a convex vertex ("ear") and clip it. |
+| 45 | Subsequence Automaton | (H) | Implemented (Python) | Build an automaton in O(n*k) (k=alphabet size) where `next[i][c]` = first occurrence of `c` after pos `i`. |
+| 46 | Dynamic Connectivity Structure | (I) | Implemented (Python) | Requires complex data structures like a link-cut tree or a fully dynamic graph algorithm. |
+| 47 | Regex Engine | (I) | Implemented (Python) | Convert regex to NFA (Thompson's construction), then NFA to DFA (subset construction). |
+| 48 | Versioned Key–Value Store (LSM-tree) | (I) | Implemented (Python) | Implement an in-memory memtable (e.g., skiplist) and on-disk SSTables. Compaction merges SSTables. |
+| 49 | Map Label Placement | (I) | Implemented (Python) | NP-hard. Heuristics like simulated annealing or greedy placement (e.g., place most constrained labels first). |
+| 50 | Multidimensional Index (R-Tree) | (I) | Implemented (Python) | Tree of Minimum Bounding Rectangles (MBRs). Splitting nodes (e.g., quadratic or linear split) is the hard part. |
 
 ## 3. Emulation / Modeling Challenges
 
