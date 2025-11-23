@@ -1,6 +1,6 @@
 # Repository Structure and Challenges
 
-This repository is organized into three main categories: **Practical**, **Algorithmic**, and **Emulation/Modeling**. Below is the status of all challenges.
+This repository contains programming challenges across five categories: **Practical**, **Algorithmic**, **Emulation/Modeling**, **Artificial Intelligence**, and **Game Development**. Below is the status of all challenges.
 
 ## 1. Practical Challenges
 
