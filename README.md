@@ -81,16 +81,16 @@ This repository is organized into three main categories: **Practical**, **Algori
 | 18 | Dynamic Shortest Paths Service | (H) | Implemented (Rust) | For edge weight changes, Dijkstra is too slow. Research D* Lite or algorithms for dynamic graphs. |
 | 19 | Constraint Solver (Mini-SAT) | (H) | Implemented (Rust) | Implement DPLL: unit propagation, pure literal elimination, and branching. Clause representation is key. |
 | 20 | Generic Flow Library | (H) | Implemented (Rust) | Start with Edmonds-Karp (BFS for augmenting paths). Min-cut from residual graph. |
-| 21 | Persistent Data Structures Kit | (H) | | Key is "path copying." When modifying a node, copy it and its ancestors. |
-| 22 | Rope-based Text Editor Core | (H) | | Implement a binary tree where leaves are strings. Insert/delete involves splitting/merging nodes. |
-| 23 | 2D Range Query Library | (H) | | A 2D Fenwick tree (BIT) or segment tree. Can be a 1D tree where each node is another 1D tree. |
-| 24 | Suffix Automaton Toolkit | (H) | | Complex state machine. Each path from root = a suffix. Online O(n) construction is possible. |
-| 25 | Streaming Quantiles | (H) | | CKMS or KLL algorithms. Maintain a compact summary of the stream, not all data. |
-| 26 | Suffix Array + LCP | (H) | | Build suffix array (e.g., O(n log n) or O(n)). Kasai's algorithm for O(n) LCP array. |
-| 27 | Graph Isomorphism Checker (Heuristic) | (H) | | No known poly-time algorithm. Use heuristics like Weisfeiler-Lehman (color refinement). |
-| 28 | Geometry Engine 2D | (H) | | Use `atan2` for angles. Convex hull (e.g., Graham scan). Point-in-polygon (ray casting). |
-| 29 | On-Disk B-Tree Index | (H) | | Focus on serializing/deserializing nodes (pages) to disk. Each node is a fixed-size block. |
-| 30 | Matching Engine (Order Book) | (H) | | Use two priority heaps (min-heap for asks, max-heap for bids) or sorted data structures. |
+| 21 | Persistent Data Structures Kit | (H) | Implemented (Go) | Key is "path copying." When modifying a node, copy it and its ancestors. |
+| 22 | Rope-based Text Editor Core | (H) | Implemented (Go) | Implement a binary tree where leaves are strings. Insert/delete involves splitting/merging nodes. |
+| 23 | 2D Range Query Library | (H) | Implemented (Go) | A 2D Fenwick tree (BIT) or segment tree. Can be a 1D tree where each node is another 1D tree. |
+| 24 | Suffix Automaton Toolkit | (H) | Implemented (Go) | Complex state machine. Each path from root = a suffix. Online O(n) construction is possible. |
+| 25 | Streaming Quantiles | (H) | Implemented (Go) | CKMS or KLL algorithms. Maintain a compact summary of the stream, not all data. |
+| 26 | Suffix Array + LCP | (H) | Implemented (Go) | Build suffix array (e.g., O(n log n) or O(n)). Kasai's algorithm for O(n) LCP array. |
+| 27 | Graph Isomorphism Checker (Heuristic) | (H) | Implemented (Go) | No known poly-time algorithm. Use heuristics like Weisfeiler-Lehman (color refinement). |
+| 28 | Geometry Engine 2D | (H) | Implemented (Go) | Use `atan2` for angles. Convex hull (e.g., Graham scan). Point-in-polygon (ray casting). |
+| 29 | On-Disk B-Tree Index | (H) | Implemented (Go) | Focus on serializing/deserializing nodes (pages) to disk. Each node is a fixed-size block. |
+| 30 | Matching Engine (Order Book) | (H) | Implemented (Go) | Use two priority heaps (min-heap for asks, max-heap for bids) or sorted data structures. |
 | 31 | Multi-dimensional Knapsack Solver | (H) | Implemented (Go) | DP state becomes `dp[i][w1][w2]...`. For large W, use branch-and-bound. |
 | 32 | Lossless Compression (LZ77/78) | (H) | Implemented (Go) | LZ77 (sliding window, (offset, length) pairs). LZ78 (dictionary of seen strings). |
 | 33 | Scheduler with Deadlines & Penalties | (H) | Implemented (Go) | Sort by deadlines. DP or greedy approach with a disjoint set (for finding available slots). |
