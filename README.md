@@ -227,16 +227,16 @@ This repository contains programming challenges across five categories: **Practi
 
 | # | Challenge | Difficulty | Status | Implementation Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | Snake with Polished UX | (E) | | Manage snake as a `deque` or list of (x, y) coords. Game state in a 2D array. |
-| 2 | Breakout/Arkanoid Clone | (E) | | Simple AABB (Axis-Aligned Bounding Box) collision detection. Ball velocity `(vx, vy)`. |
-| 3 | Puzzle Slider Game (15-puzzle) | (E) | | Store grid in 2D array. `click` event swaps tile with empty space. Check for win condition. |
-| 4 | Text Adventure Engine | (E) | | Define rooms/items in JSON. Parser for commands ("go north", "take key"). |
-| 5 | Educational Math Game | (E) | | Generate `a + b = ?` questions. Track correct/incorrect. Increase `a`, `b` as difficulty rises. |
-| 6 | Typing Game | (E) | | List of words. `pygame` or web canvas to render them falling. Check user input string match. |
-| 7 | Tetris with Ghost Piece & Hold | (M) | | 2D array for board. Represent pieces (tetrominoes) as 4x4 matrices. Wall-kicks and rotation (SRS) are key. |
-| 8 | 2048 Variant | (M) | | 2D array. Core logic: "squash" a line (e.g., `[2, 0, 2, 4] -> [4, 4, 0, 0]`). Add new tiles randomly. |
-| 9 | Platformer Prototype | (M) | | Physics: `velocity_y += gravity`. AABB collision. `is_on_ground` flag for jumping. |
-| 10 | Top-Down Shooter | (M) | | Player movement (WASD). Rotate player sprite towards mouse. Spawn/move bullets. AABB for hits. |
+| 1 | [Snake with Polished UX](GameDev/01_Snake) | (E) | Implemented (Python) | Manage snake as a `deque` or list of (x, y) coords. Game state in a 2D array. |
+| 2 | [Breakout/Arkanoid Clone](GameDev/02_Breakout) | (E) | Implemented (Python) | Simple AABB (Axis-Aligned Bounding Box) collision detection. Ball velocity `(vx, vy)`. |
+| 3 | [Puzzle Slider Game (15-puzzle)](GameDev/03_Puzzle_Slider_15) | (E) | Implemented (Python) | Store grid in 2D array. `click` event swaps tile with empty space. Check for win condition. |
+| 4 | [Text Adventure Engine](GameDev/04_Text_Adventure_Engine) | (E) | Implemented (Python) | Define rooms/items in JSON. Parser for commands ("go north", "take key"). |
+| 5 | [Educational Math Game](GameDev/05_Educational_Math_Game) | (E) | Implemented (Python) | Generate `a + b = ?` questions. Track correct/incorrect. Increase `a`, `b` as difficulty rises. |
+| 6 | [Typing Game](GameDev/06_Typing_Game) | (E) | Implemented (Python) | List of words. `pygame` or web canvas to render them falling. Check user input string match. |
+| 7 | [Tetris with Ghost Piece & Hold](GameDev/07_Tetris_Ghost_Hold) | (M) | Implemented (Python) | 2D array for board. Represent pieces (tetrominoes) as 4x4 matrices. Wall-kicks and rotation (SRS) are key. |
+| 8 | [2048 Variant](GameDev/08_2048_Variant) | (M) | Implemented (Python) | 2D array. Core logic: "squash" a line (e.g., `[2, 0, 2, 4] -> [4, 4, 0, 0]`). Add new tiles randomly. |
+| 9 | [Platformer Prototype](GameDev/09_Platformer_Prototype) | (M) | Implemented (Python) | Physics: `velocity_y += gravity`. AABB collision. `is_on_ground` flag for jumping. |
+| 10 | [Top-Down Shooter](GameDev/10_TopDown_Shooter) | (M) | Implemented (Python) | Player movement (WASD). Rotate player sprite towards mouse. Spawn/move bullets. AABB for hits. |
 | 11 | Turn-Based Strategy Microgame | (M) | | Grid-based map. Unit class (HP, move, attack). Simple AI: move towards player, attack if in range. |
 | 12 | Card Game Engine | (M) | | `Card` class, `Deck` class, `Player` class. Game state machine for turns (draw, play, discard). |
 | 13 | Physics Puzzle Game | (M) | | Use a 2D physics engine (`Box2D` via `pygame`, or `pymunk`). Design levels as JSON. |
