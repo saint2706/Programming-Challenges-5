@@ -33,8 +33,10 @@ python main.py
 
 ## 🎮 Controls
 
-- **Arrow Keys**: Change snake direction
-- **ESC/Close Window**: Quit game
+| Key | Action |
+| :--- | :--- |
+| **Arrow Keys** | Change snake direction |
+| **ESC/Close Window** | Quit game |
 
 ## 🎯 Gameplay
 

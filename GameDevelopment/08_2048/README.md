@@ -34,9 +34,11 @@ python main.py
 
 ## 🎮 Controls
 
-- **Arrow Keys**: Slide tiles in that direction
-- **R**: Restart game
-- **ESC/Close Window**: Quit game
+| Key | Action |
+| :--- | :--- |
+| **Arrow Keys** | Slide tiles in that direction |
+| **R** | Restart game |
+| **ESC/Close Window** | Quit game |
 
 ## 🎯 Gameplay
 

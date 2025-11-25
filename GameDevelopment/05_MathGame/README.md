@@ -33,10 +33,12 @@ python main.py
 
 ## 🎮 Controls
 
-- **Number Keys (0-9)**: Type your answer
-- **Backspace**: Delete last character
-- **Enter**: Submit answer
-- **ESC/Close Window**: Quit game
+| Key | Action |
+| :--- | :--- |
+| **Number Keys (0-9)** | Type your answer |
+| **Backspace** | Delete last character |
+| **Enter** | Submit answer |
+| **ESC/Close Window** | Quit game |
 
 ## 🎯 Gameplay
 

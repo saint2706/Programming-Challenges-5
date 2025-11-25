@@ -33,8 +33,10 @@ python main.py
 
 ## 🎮 Controls
 
-- **Keyboard**: Type to match falling words
-- **ESC/Close Window**: Quit game
+| Key | Action |
+| :--- | :--- |
+| **Keyboard** | Type to match falling words |
+| **ESC/Close Window** | Quit game |
 
 ## 🎯 Gameplay
 

@@ -33,9 +33,11 @@ python main.py
 
 ## 🎮 Controls
 
-- **Mouse Click**: Slide a tile into the empty space
-- **R**: Reshuffle the puzzle
-- **ESC/Close Window**: Quit game
+| Key | Action |
+| :--- | :--- |
+| **Mouse Click** | Slide a tile into the empty space |
+| **R** | Reshuffle the puzzle |
+| **ESC/Close Window** | Quit game |
 
 ## 🎯 Gameplay
 

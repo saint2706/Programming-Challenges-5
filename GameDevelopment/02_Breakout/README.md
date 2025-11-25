@@ -33,9 +33,11 @@ python main.py
 
 ## 🎮 Controls
 
-- **Left/Right Arrow Keys** or **A/D**: Move paddle
-- **Space**: Launch ball (if applicable)
-- **ESC/Close Window**: Quit game
+| Key | Action |
+| :--- | :--- |
+| **Left/Right Arrow Keys** or **A/D** | Move paddle |
+| **Space** | Launch ball (if applicable) |
+| **ESC/Close Window** | Quit game |
 
 ## 🎯 Gameplay
 
