@@ -22,7 +22,7 @@ This repository contains programming challenges across five categories: **Practi
 | 14 | Password Data Breach Checker | (M) | Implemented (Python) | Use `hashlib` (SHA-1). Implement k-Anonymity by sending only the first 5 hash chars to HIBP API. |
 | 15 | Dotfiles Manager | (M) | Implemented (Python) | Core logic involves creating/managing symlinks from a central repo to home directory locations. |
 | 16 | Markdown Knowledge Base | (M) | | Use `Whoosh` or `Elasticsearch` for full-text search. Parse links (regex or AST) to build the graph. |
-| 17 | Personal Finance Dashboard | (M) | | Use `pandas` to read and analyze CSVs. `matplotlib` or `Plotly` for visualization. |
+| 17 | Personal Finance Dashboard | (M) | Implemented (Python) | Use `pandas` to read and analyze CSVs. `matplotlib` or `Plotly` for visualization. |
 | 18 | Image Compression Tool | (M) | | Use `Pillow` (PIL) for image operations. Expose `quality` (lossy) and `optimize` (lossless) parameters. |
 | 19 | Resume/Portfolio Generator | (M) | | Use `Jinja2` to render JSON data into HTML/Markdown templates. `WeasyPrint` or `pandoc` for PDF. |
 | 20 | Pluggable Notification Hub | (M) | | Design a core `Notification` class and provider-specific subclasses (EmailProvider, SlackProvider). |
