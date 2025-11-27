@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ subject or 'Newsletter' }}</title>
+</head>
+<body>
+    <p>Hi {{ name | default('Subscriber') }},</p>
+    <p>Here are your updates from {{ company }}:</p>
+    <ul>
+        <li>Top topic interests: {{ preferences.topics | join(', ') if preferences else 'All updates' }}</li>
+        <li>Sent on {{ send_date | default(none) or now().strftime('%Y-%m-%d') }}</li>
+    </ul>
+    <p>If you would like to unsubscribe, visit <a href="{{ unsubscribe_url }}">this link</a>.</p>
+</body>
+</html>
