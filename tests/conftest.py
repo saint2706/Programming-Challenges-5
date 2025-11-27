@@ -32,6 +32,7 @@ ALGORITHMIC_MAPPINGS = {
 PRACTICAL_MAPPINGS = {
     "DotfilesManager": "Dotfiles Manager",
     "MediaLibraryOrganizer": "Media Library Organizer",
+    "PersonalAPIKeyVault": "Personal API Key Vault",
     "PasswordDataBreachChecker": "Password Data Breach Checker",
     "PersonalTimeTracker": "Personal Time Tracker",
     "SmartExpenseSplitter": "Smart Expense Splitter",

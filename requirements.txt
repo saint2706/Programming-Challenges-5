@@ -15,3 +15,10 @@ fastapi
 uvicorn
 sqlalchemy
 pydantic
+cryptography
+streamlit
+ydata-profiling
+sweetviz
+Pygments
+Pillow
+ImageHash
