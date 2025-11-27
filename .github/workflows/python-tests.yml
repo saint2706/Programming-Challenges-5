@@ -3,8 +3,29 @@ name: Python tests
 on:
   push:
     branches: [main]
+    paths:
+      - '**/*.py'
+      - 'requirements.txt'
+      - 'tests/**'
+      - 'Practical/**'
+      - 'Algorithmic/**/*.py'
+      - 'EmulationModeling/**/*.py'
+      - 'GameDevelopment/**/*.py'
+      - '.github/workflows/python-tests.yml'
   pull_request:
-    branches: ["*"]
+    paths:
+      - '**/*.py'
+      - 'requirements.txt'
+      - 'tests/**'
+      - 'Practical/**'
+      - 'Algorithmic/**/*.py'
+      - 'EmulationModeling/**/*.py'
+      - 'GameDevelopment/**/*.py'
+      - '.github/workflows/python-tests.yml'
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   tests:
@@ -22,6 +43,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+          cache-dependency-path: requirements.txt
 
       - name: Set up Python (act)
         if: ${{ env.ACT }}
@@ -30,20 +53,6 @@ jobs:
           python3 -m venv .venv
           echo "PATH=$(pwd)/.venv/bin:$PATH" >> $GITHUB_ENV
           .venv/bin/python3 --version
-
-      - name: Get pip cache directory
-        if: ${{ !env.ACT }}
-        id: pip-cache
-        run: echo "dir=$(python -m pip cache dir)" >> "$GITHUB_OUTPUT"
-
-      - name: Cache pip dependencies
-        if: ${{ !env.ACT }}
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.pip-cache.outputs.dir }}
-          key: ${{ runner.os }}-py${{ matrix.python-version }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-py${{ matrix.python-version }}-pip-
 
       - name: Install dependencies
         run: |
