@@ -1,0 +1,35 @@
+name: Rust Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        manifest:
+          - 'Algorithmic/Generic Flow Library/Cargo.toml'
+          - 'Algorithmic/Constraint Solver/Cargo.toml'
+          - 'Algorithmic/HyperLogLog Implementation/Cargo.toml'
+          - 'Algorithmic/Edit Distance with Custom Costs/Cargo.toml'
+          - 'Algorithmic/Online Caching Simulator/Cargo.toml'
+          - 'Algorithmic/Large Integer Arithmetic Library/Cargo.toml'
+          - 'Algorithmic/Dynamic Shortest Paths Service/Cargo.toml'
+          - 'Algorithmic/Clustering Algorithms Suite/Cargo.toml'
+          - 'Algorithmic/Text Justification Engine/Cargo.toml'
+          - 'Algorithmic/Game Tree Search Framework/Cargo.toml'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+          cache: true
+
+      - name: Run tests
+        run: cargo test --manifest-path "${{ matrix.manifest }}"
