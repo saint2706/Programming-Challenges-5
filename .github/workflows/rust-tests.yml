@@ -2,7 +2,21 @@ name: Rust Tests
 
 on:
   push:
+    paths:
+      - '**/*.rs'
+      - '**/Cargo.toml'
+      - '**/Cargo.lock'
+      - '.github/workflows/rust-tests.yml'
   pull_request:
+    paths:
+      - '**/*.rs'
+      - '**/Cargo.toml'
+      - '**/Cargo.lock'
+      - '.github/workflows/rust-tests.yml'
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -31,6 +45,11 @@ jobs:
         if: ${{ !env.ACT }}
         uses: actions/checkout@v4
 
+      - name: Determine manifest directory
+        if: ${{ !env.ACT }}
+        id: manifest-dir
+        run: echo "path=$(dirname '${{ matrix.manifest }}')" >> "$GITHUB_OUTPUT"
+
       - name: Install Rust
         if: ${{ !env.ACT }}
         uses: actions-rs/toolchain@v1
@@ -39,6 +58,15 @@ jobs:
           toolchain: stable
           override: true
           cache: true
+
+      - name: Cache cargo build
+        if: ${{ !env.ACT }}
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            ${{ steps.manifest-dir.outputs.path }}
+          cache-on-failure: true
+          shared-key: ${{ matrix.manifest }}
 
       - name: Run tests
         if: ${{ !env.ACT }}

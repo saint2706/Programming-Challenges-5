@@ -2,7 +2,31 @@ name: Node.js Tests
 
 on:
   push:
+    paths:
+      - '**/*.ts'
+      - '**/*.tsx'
+      - '**/*.js'
+      - '**/*.jsx'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vitest.config.*'
+      - 'tests/**'
+      - '.github/workflows/node-tests.yml'
   pull_request:
+    paths:
+      - '**/*.ts'
+      - '**/*.tsx'
+      - '**/*.js'
+      - '**/*.jsx'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vitest.config.*'
+      - 'tests/**'
+      - '.github/workflows/node-tests.yml'
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -25,6 +49,7 @@ jobs:
         with:
           node-version: lts/*
           cache: npm
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies (act)
         if: ${{ env.ACT }}
