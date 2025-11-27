@@ -1,3 +1,14 @@
+"""15-Puzzle Slider Game using Pygame.
+
+A sliding puzzle game where the player arranges numbered tiles in order
+by sliding them into the empty space. Features shuffle, move counter,
+and win detection.
+
+Controls:
+    Click: Slide adjacent tile into empty space
+    R: Shuffle and restart
+    ESC: Quit game
+"""
 import pygame
 import sys
 import random

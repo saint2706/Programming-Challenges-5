@@ -1,3 +1,13 @@
+"""2048 puzzle game variant using Pygame.
+
+A sliding tile puzzle where tiles with the same value merge when pushed
+together. The goal is to create a tile with the value 2048 or higher.
+
+Controls:
+    Arrow keys: Slide tiles
+    R: Restart game
+    ESC: Quit game
+"""
 import pygame
 import random
 import sys

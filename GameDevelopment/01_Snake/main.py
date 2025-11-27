@@ -1,3 +1,14 @@
+"""Snake game with polished UX using Pygame.
+
+A classic snake game implementation featuring smooth controls, score tracking,
+and optional custom graphics. The snake grows when eating food and the game
+ends on collision with walls or self.
+
+Controls:
+    Arrow keys: Move snake
+    R: Restart after game over
+    ESC: Quit game
+"""
 import pygame
 import random
 import sys

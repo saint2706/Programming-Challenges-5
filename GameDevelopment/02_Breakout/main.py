@@ -1,3 +1,14 @@
+"""Breakout/Arkanoid clone using Pygame.
+
+A classic brick-breaking game where the player controls a paddle to bounce
+a ball and destroy bricks. Features multiple brick rows, score tracking,
+and lives system.
+
+Controls:
+    Left/Right arrows or A/D: Move paddle
+    Space: Launch ball
+    ESC: Quit game
+"""
 import pygame
 import sys
 import os

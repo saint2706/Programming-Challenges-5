@@ -1,3 +1,14 @@
+"""Top-Down Shooter using Pygame.
+
+A twin-stick style shooter where the player moves with keyboard and aims
+with the mouse. Features enemy spawning, bullet physics, and score tracking.
+
+Controls:
+    WASD: Move player
+    Mouse: Aim
+    Left click: Shoot
+    ESC: Quit game
+"""
 import pygame
 import math
 import random

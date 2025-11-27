@@ -32,15 +32,15 @@ This repository contains programming challenges across five categories: **Practi
 | 24 | Email Newsletter Engine | (M) | Implemented (Python) | Use `smtplib` for sending. `Jinja2` for templates. Manage subscribers in a simple DB (SQLite). |
 | 25 | Document Template Filler | (M) | Implemented (Python) | For DOCX, use `python-docx`. For PDF, `PyPDF2` or `reportlab` (harder) or find a template library. |
 | 26 | Smart Calendar Merger | (M) | | Use `icalendar` library to parse `.ics` files. Implement logic to merge event lists and find overlaps. |
-| 27 | Photo De-Duplicator | (M) | | Use `Pillow` and an image hashing library (`imagehash`) for perceptual hashing (aHash, pHash). |
-| 28 | Code Snippet Manager | (M) | | Use `Pygments` for syntax highlighting. Store snippets in SQLite with tags. |
-| 29 | Dataset Explorer UI | (M) | | Use `pandas-profiling` or `sweetviz` for reports. Build a simple `Streamlit` or `Dash` UI. |
-| 30 | Offline-first PWA To-Do App | (M) | | Requires Service Workers for caching. Use `IndexedDB` or `localStorage` for client-side storage. |
-| 31 | Personal API Key Vault | (M) | | Use a master password to derive an encryption key (e.g., PBKDF2). Store encrypted keys in a local file/DB. |
-| 32 | Privacy-Friendly Analytics for Static Sites | (M) | | A simple backend (FastAPI) to log pageviews (URL, referrer). No cookies. Store in SQLite. |
-| 33 | Cross-Platform Clipboard Sync | (H) | | Requires a server (e.g., Flask) and clients. Use UDP broadcast for LAN discovery. `cryptography` for E2E. |
-| 34 | Command Palette for Your OS | (H) | | Needs a global hotkey listener. `PyQt` for the UI. Plugin system can use simple Python modules in a folder. |
-| 35 | Local Search Engine | (H) | | Use `Whoosh` (pure Python) or `Solr`/`Elasticsearch` for indexing. `Tika` for parsing docs (PDF, DOCX). |
+| 27 | Photo De-Duplicator | (M) | Implemented (Python) | Use `Pillow` and an image hashing library (`imagehash`) for perceptual hashing (aHash, pHash). |
+| 28 | Code Snippet Manager | (M) | Implemented (Python) | Use `Pygments` for syntax highlighting. Store snippets in SQLite with tags. |
+| 29 | Dataset Explorer UI | (M) | Implemented (Python) | Use `pandas-profiling` or `sweetviz` for reports. Build a simple `Streamlit` or `Dash` UI. |
+| 30 | Offline-first PWA To-Do App | (M) | Implemented (JavaScript) | Requires Service Workers for caching. Use `IndexedDB` or `localStorage` for client-side storage. |
+| 31 | Personal API Key Vault | (M) | Implemented (Python) | Use a master password to derive an encryption key (e.g., PBKDF2). Store encrypted keys in a local file/DB. |
+| 32 | Privacy-Friendly Analytics for Static Sites | (M) | Implemented (Python) | A simple backend (FastAPI) to log pageviews (URL, referrer). No cookies. Store in SQLite. |
+| 33 | Cross-Platform Clipboard Sync | (H) | Implemented (Python) | Requires a server (e.g., Flask) and clients. Use UDP broadcast for LAN discovery. `cryptography` for E2E. |
+| 34 | Command Palette for Your OS | (H) | Implemented (Python) | Needs a global hotkey listener. `PyQt` for the UI. Plugin system can use simple Python modules in a folder. |
+| 35 | Local Search Engine | (H) | Implemented (Python) | Use `Whoosh` (pure Python) or `Solr`/`Elasticsearch` for indexing. `Tika` for parsing docs (PDF, DOCX). |
 | 36 | Backup Orchestrator | (H) | | Implement rsync-like logic (check file mtime/hash). Use `zlib` or `lzma` for compression. Manage snapshots. |
 | 37 | Task Queue + Worker System | (H) | | Use Redis LISTs (LPUSH/BRPOP) for a simple queue. `Celery` is the full-featured version. |
 | 38 | CLI Email Client with Rules | (H) | | Use `imaplib` and `smtplib`. `sqlite` for offline caching. Rule engine can be simple JSON/YAML. |
@@ -178,10 +178,10 @@ This repository contains programming challenges across five categories: **Practi
 | 4 | Classic Game AI (Tic-Tac-Toe, Connect-4) | (M) | Implemented (Python) | Implement Minimax algorithm. Connect-4 is harder and may need alpha-beta pruning. |
 | 5 | Reinforcement Learning for CartPole | (M) | Implemented (Python) | Use OpenAI `Gym`. Q-learning: discretize state space. Policy Gradient: simple NN model. |
 | 6 | Genetic Algorithm for Traveling Salesman | (M) | Implemented (Python) | Chromosome = path (permutation of cities). Crossover = (e.g.,) order crossover (OX). Mutation = swap two cities. |
-| 7 | Handwritten Digit Classifier | (M) | | Use `PyTorch` or `TensorFlow`. A simple CNN: Conv -> ReLU -> Pool -> Conv -> ReLU -> Pool -> FC -> Softmax. |
-| 8 | Movie Recommender System | (M) | | Collaborative: user-item matrix (e.g., SVD). Content-based: item-feature matrix (genres, actors). |
-| 9 | Time-Series Forecasting Toolkit | (M) | | Use `statsmodels` for ARIMA. `prophet` (by Facebook) is good. RNN/LSTM (`PyTorch`) for complex patterns. |
-| 10 | Chat Log Sentiment Analyzer | (M) | | Use a pre-trained model (e.g., `VADER` or `Hugging Face transformers`). Plot sentiment over time. |
+| 7 | Handwritten Digit Classifier | (M) | Implemented (Python) | Use `PyTorch` or `TensorFlow`. A simple CNN: Conv -> ReLU -> Pool -> Conv -> ReLU -> Pool -> FC -> Softmax. |
+| 8 | Movie Recommender System | (M) | Implemented (Python) | Collaborative: user-item matrix (e.g., SVD). Content-based: item-feature matrix (genres, actors). |
+| 9 | Time-Series Forecasting Toolkit | (M) | Implemented (Python) | Use `statsmodels` for ARIMA. `prophet` (by Facebook) is good. RNN/LSTM (`PyTorch`) for complex patterns. |
+| 10 | Chat Log Sentiment Analyzer | (M) | Implemented (Python) | Use a pre-trained model (e.g., `VADER` or `Hugging Face transformers`). Plot sentiment over time. |
 | 11 | RL Agent for Gridworld with Hazards | (M) | | Q-learning. State = (x, y). Q-table `Q[s, a]` stores expected reward. Negative rewards for hazards. |
 | 12 | Neural Network Visual Debugger | (M) | | `matplotlib` or `seaborn` to plot weight heatmaps. `TensorBoard` for logging loss/activations. |
 | 13 | Auto Tagging for Images | (M) | | Use a pre-trained vision model (e.g., ResNet, ViT) and get its class predictions. |

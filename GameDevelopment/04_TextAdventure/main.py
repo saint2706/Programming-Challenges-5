@@ -1,3 +1,17 @@
+"""Text Adventure Engine.
+
+A text-based adventure game engine that loads world data from JSON files.
+Players explore rooms, collect items, and interact with the environment
+using simple text commands.
+
+Commands:
+    go/move/walk <direction>: Move to adjacent room
+    look/l [item]: Examine room or item
+    take/get/grab <item>: Pick up item
+    inventory/i/inv: Show inventory
+    help/h: Show available commands
+    quit/q: Exit game
+"""
 import json
 import os
 import sys

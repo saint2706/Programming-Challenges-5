@@ -1,3 +1,13 @@
+"""Typing Game using Pygame.
+
+A word-typing game where words fall from the top of the screen and the
+player must type them before they reach the bottom. Features progressive
+difficulty and score tracking.
+
+Controls:
+    Type letters: Match falling words
+    ESC: Quit game
+"""
 import pygame
 import sys
 import random
