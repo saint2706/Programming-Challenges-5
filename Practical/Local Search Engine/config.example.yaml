@@ -1,0 +1,22 @@
+# Directories to index
+roots:
+  - ./documents
+
+# Where the Whoosh index will be created
+index_dir: ./.local_index
+
+# Glob patterns to ignore
+ignored:
+  - "**/.git/**"
+  - "**/__pycache__/**"
+  - "*.log"
+  - "*.tmp"
+
+# Workers used for parallel parsing
+max_workers: 4
+
+# Maximum snippet length shown in search results
+snippet_length: 240
+
+# Use Apache Tika for PDF extraction fallback
+use_tika: false
