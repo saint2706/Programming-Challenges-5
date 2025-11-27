@@ -10,3 +10,4 @@ jinja2
 markdown
 mmh3
 seaborn
+nltk
