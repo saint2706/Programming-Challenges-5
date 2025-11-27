@@ -13,6 +13,9 @@ seaborn
 nltk
 fastapi
 uvicorn
+cryptography
+pyperclip
+websockets
 sqlalchemy
 pydantic
 cryptography
