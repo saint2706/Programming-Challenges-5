@@ -12,3 +12,9 @@ mmh3
 seaborn
 nltk
 cryptography
+streamlit
+ydata-profiling
+sweetviz
+Pygments
+Pillow
+ImageHash
