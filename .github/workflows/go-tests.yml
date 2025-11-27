@@ -1,0 +1,45 @@
+name: Go Module Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        module:
+          - Algorithmic/AutomaticTimetabler
+          - Algorithmic/BinPacking
+          - Algorithmic/DeadlineScheduler
+          - Algorithmic/GeometryEngine2D
+          - Algorithmic/GraphIsomorphism
+          - Algorithmic/LZCompression
+          - Algorithmic/MatchingEngine
+          - Algorithmic/MultiDimensionalKnapsack
+          - Algorithmic/OnDiskBTree
+          - Algorithmic/ParallelSort
+          - Algorithmic/PersistentDataStructures
+          - Algorithmic/RollbackDSU
+          - Algorithmic/RopeTextEditor
+          - Algorithmic/SequencePatternMining
+          - Algorithmic/StreamingQuantiles
+          - Algorithmic/SuffixArrayLCP
+          - Algorithmic/SuffixAutomaton
+          - Algorithmic/TemporalEventStore
+          - Algorithmic/TurnPenaltyRouting
+          - Algorithmic/TwoDRangeQuery
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+          cache: true
+
+      - name: Run tests
+        working-directory: ${{ matrix.module }}
+        run: go test ./...
