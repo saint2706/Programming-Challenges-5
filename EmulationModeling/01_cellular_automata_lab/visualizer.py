@@ -1,3 +1,8 @@
+"""Pygame-based visualizer for the Cellular Automata Engine.
+
+Provides interactive visualization with controls for stepping, running,
+resetting, and drawing cells manually.
+"""
 import pygame
 import numpy as np
 

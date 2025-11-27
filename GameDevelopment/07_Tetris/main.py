@@ -1,3 +1,16 @@
+"""Tetris clone with ghost piece and hold functionality using Pygame.
+
+A full-featured Tetris implementation with standard rotation system (SRS),
+wall kicks, ghost piece preview, hold piece, and scoring system.
+
+Controls:
+    Left/Right arrows: Move piece
+    Up arrow: Rotate clockwise
+    Down arrow: Soft drop
+    Space: Hard drop
+    C: Hold piece
+    ESC: Quit game
+"""
 import pygame
 import random
 import sys

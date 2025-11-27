@@ -1,3 +1,13 @@
+"""Platformer Prototype using Pygame.
+
+A side-scrolling platform game with gravity physics, collision detection,
+and multiple platforms. Features smooth movement and jump mechanics.
+
+Controls:
+    Left/Right arrows: Move player
+    Space or Up arrow: Jump
+    ESC: Quit game
+"""
 import pygame
 import sys
 

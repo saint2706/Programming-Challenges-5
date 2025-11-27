@@ -1,3 +1,8 @@
+"""Cellular Automata Lab entry point.
+
+Launches the cellular automata visualization with configurable grid dimensions
+and cell rendering size. Uses Conway's Game of Life rules (B3/S23) by default.
+"""
 import argparse
 from ca_engine import CAEngine
 from visualizer import Visualizer

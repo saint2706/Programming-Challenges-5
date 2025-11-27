@@ -1,3 +1,15 @@
+"""Educational Math Game using Pygame.
+
+An arithmetic practice game that generates random math problems with
+increasing difficulty. Tracks score and adjusts problem complexity
+based on player performance.
+
+Controls:
+    Number keys: Type answer
+    Enter: Submit answer
+    Backspace: Delete last digit
+    ESC: Quit game
+"""
 import pygame
 import sys
 import random
