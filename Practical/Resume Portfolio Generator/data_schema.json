@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Resume Portfolio Data",
+  "type": "object",
+  "required": ["personal_info", "experience", "education", "projects"],
+  "properties": {
+    "personal_info": {
+      "type": "object",
+      "required": ["name", "title", "summary", "contact"],
+      "properties": {
+        "name": {"type": "string"},
+        "title": {"type": "string"},
+        "summary": {"type": "string"},
+        "contact": {
+          "type": "object",
+          "required": ["email"],
+          "properties": {
+            "email": {"type": "string", "format": "email"},
+            "phone": {"type": "string"},
+            "location": {"type": "string"},
+            "website": {"type": "string", "format": "uri"},
+            "linkedin": {"type": "string", "format": "uri"},
+            "github": {"type": "string", "format": "uri"}
+          },
+          "additionalProperties": false
+        },
+        "skills": {
+          "type": "object",
+          "properties": {
+            "languages": {"type": "array", "items": {"type": "string"}},
+            "frameworks": {"type": "array", "items": {"type": "string"}},
+            "tools": {"type": "array", "items": {"type": "string"}},
+            "certifications": {"type": "array", "items": {"type": "string"}}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "experience": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["company", "role", "start_date", "location", "achievements"],
+        "properties": {
+          "company": {"type": "string"},
+          "role": {"type": "string"},
+          "start_date": {"type": "string"},
+          "end_date": {"type": ["string", "null"]},
+          "location": {"type": "string"},
+          "achievements": {
+            "type": "array",
+            "items": {"type": "string"}
+          },
+          "technologies": {"type": "array", "items": {"type": "string"}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "education": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["institution", "degree", "start_date", "end_date"],
+        "properties": {
+          "institution": {"type": "string"},
+          "degree": {"type": "string"},
+          "start_date": {"type": "string"},
+          "end_date": {"type": "string"},
+          "achievements": {"type": "array", "items": {"type": "string"}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "projects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "description"],
+        "properties": {
+          "name": {"type": "string"},
+          "description": {"type": "string"},
+          "technologies": {"type": "array", "items": {"type": "string"}},
+          "link": {"type": "string", "format": "uri"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

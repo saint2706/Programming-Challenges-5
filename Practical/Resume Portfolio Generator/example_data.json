@@ -1,0 +1,72 @@
+{
+  "personal_info": {
+    "name": "Alex Developer",
+    "title": "Full-Stack Engineer",
+    "summary": "Engineer focused on resilient web applications and thoughtful developer experience.",
+    "contact": {
+      "email": "alex@example.com",
+      "phone": "+1 (555) 555-1234",
+      "location": "Remote",
+      "website": "https://alex.dev",
+      "linkedin": "https://www.linkedin.com/in/alexdev",
+      "github": "https://github.com/alexdev"
+    },
+    "skills": {
+      "languages": ["Python", "TypeScript", "SQL"],
+      "frameworks": ["FastAPI", "React", "Django"],
+      "tools": ["Docker", "PostgreSQL", "AWS"],
+      "certifications": ["AWS Certified Developer"]
+    }
+  },
+  "experience": [
+    {
+      "company": "Productive Labs",
+      "role": "Senior Software Engineer",
+      "start_date": "2022",
+      "end_date": null,
+      "location": "Remote",
+      "achievements": [
+        "Led migration of critical services to asynchronous FastAPI stack, cutting latency by 40%.",
+        "Built CI/CD templates used by seven teams to standardize testing and deployment.",
+        "Mentored five engineers through promotion paths with structured growth plans."
+      ],
+      "technologies": ["FastAPI", "Redis", "PostgreSQL", "GitHub Actions"]
+    },
+    {
+      "company": "Insightful Analytics",
+      "role": "Software Engineer",
+      "start_date": "2019",
+      "end_date": "2022",
+      "location": "New York, NY",
+      "achievements": [
+        "Developed data ingestion pipelines processing 2B+ events per day with robust monitoring.",
+        "Launched client-facing dashboards with React and D3, improving retention by 12%.",
+        "Partnered with design to deliver accessible UI patterns reused across four products."
+      ],
+      "technologies": ["Python", "Airflow", "React", "Snowflake"]
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of Technology",
+      "degree": "B.S. Computer Science",
+      "start_date": "2015",
+      "end_date": "2019",
+      "achievements": ["Graduated magna cum laude", "ACM programming team captain"]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Open API Playground",
+      "description": "Developer-first portal that turns API specs into interactive learning environments.",
+      "technologies": ["FastAPI", "Next.js", "PostgreSQL"],
+      "link": "https://github.com/alexdev/open-api-playground"
+    },
+    {
+      "name": "Infra Guard",
+      "description": "CLI + dashboard for tracking uptime budgets with actionable alerts.",
+      "technologies": ["Go", "Grafana", "Prometheus"],
+      "link": "https://github.com/alexdev/infra-guard"
+    }
+  ]
+}

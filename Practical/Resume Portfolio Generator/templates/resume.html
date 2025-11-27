@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ data.personal_info.name }} - Resume</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <header class="hero">
+        <div>
+            <h1>{{ data.personal_info.name }}</h1>
+            <p class="subtitle">{{ data.personal_info.title }}</p>
+            <p class="summary">{{ data.personal_info.summary }}</p>
+        </div>
+        <div class="contact">
+            <p><strong>Email:</strong> {{ data.personal_info.contact.email }}</p>
+            {% if data.personal_info.contact.phone %}<p><strong>Phone:</strong> {{ data.personal_info.contact.phone }}</p>{% endif %}
+            {% if data.personal_info.contact.location %}<p><strong>Location:</strong> {{ data.personal_info.contact.location }}</p>{% endif %}
+            {% if data.personal_info.contact.website %}<p><strong>Website:</strong> {{ data.personal_info.contact.website }}</p>{% endif %}
+            {% if data.personal_info.contact.linkedin %}<p><strong>LinkedIn:</strong> {{ data.personal_info.contact.linkedin }}</p>{% endif %}
+            {% if data.personal_info.contact.github %}<p><strong>GitHub:</strong> {{ data.personal_info.contact.github }}</p>{% endif %}
+        </div>
+    </header>
+
+    {% if data.personal_info.skills %}
+    <section>
+        <h2>Skills</h2>
+        <div class="skills">
+            {% for category, items in data.personal_info.skills.items() %}
+                {% if items %}
+                <div>
+                    <h3>{{ category|capitalize }}</h3>
+                    <ul>
+                        {% for item in items %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
+
+    <section>
+        <h2>Experience</h2>
+        {% for job in data.experience %}
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3>{{ job.role }} • {{ job.company }}</h3>
+                    <p class="muted">{{ job.start_date }} – {{ job.end_date or "Present" }} • {{ job.location }}</p>
+                </div>
+                {% if job.technologies %}
+                <p class="tags">{{ job.technologies | join(', ') }}</p>
+                {% endif %}
+            </div>
+            <ul>
+                {% for achievement in job.achievements %}
+                <li>{{ achievement }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+    </section>
+
+    <section>
+        <h2>Education</h2>
+        {% for edu in data.education %}
+        <div class="card">
+            <div class="card-header">
+                <div>
+                    <h3>{{ edu.degree }}</h3>
+                    <p class="muted">{{ edu.institution }} • {{ edu.start_date }} – {{ edu.end_date }}</p>
+                </div>
+            </div>
+            {% if edu.achievements %}
+            <ul>
+                {% for achievement in edu.achievements %}
+                <li>{{ achievement }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </section>
+
+    <section>
+        <h2>Projects</h2>
+        <div class="projects">
+            {% for project in data.projects %}
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <h3>{{ project.name }}</h3>
+                        <p class="muted">{{ project.technologies | join(', ') }}</p>
+                    </div>
+                    {% if project.link %}
+                    <a class="link" href="{{ project.link }}">Link</a>
+                    {% endif %}
+                </div>
+                <p>{{ project.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</body>
+</html>
