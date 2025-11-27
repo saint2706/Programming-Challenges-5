@@ -146,11 +146,11 @@ This repository contains programming challenges across five categories: **Practi
 | 28 | RL Environment Sandbox | (H) | Implemented (C++) | Implement OpenAI Gym-style API: `step(action)`, `reset()`. Gridworld needs a `render()` method. |
 | 29 | Stock Market Order Book Simulator | (H) | Implemented (C++) | Core is a matching engine (see Algos #20). Add agents that place market/limit orders. |
 | 30 | Air Traffic Control Simulator | (H) | Implemented (C++) | 2D/3D space. Planes have flight plans. Detect conflicts (paths too close). |
-| 31 | Voxel-based Terrain Engine | (H) | | Render world in "chunks." Use Perlin noise for terrain generation. Greedy meshing for optimization. |
+| 31 | Voxel-based Terrain Engine | (H) | Implemented (C++) | Perlin noise heightmap, greedy meshing, frustum culling, and async chunk builds. |
 | 32 | Ray Tracer | (H) | | For each pixel, cast a ray. Find closest intersection (sphere, plane). Recurse for reflection/shadows. |
 | 33 | City Power Grid Simulator | (H) | | Model as a graph. Nodes=stations/users, Edges=lines. Simulate power flow and cascading failures. |
-| 34 | Planetary Climate Toy Model | (H) | | Energy Balance Model: `E_in` (solar) vs `E_out` (black-body radiation). Add greenhouse effect, albedo. |
-| 35 | Compiler IR Visualizer | (H) | Implemented (Python) | Recursive-descent parser builds TAC and basic blocks, outputting a Graphviz CFG. |
+| 34 | Planetary Climate Toy Model | (H) | Implemented (Python) | Energy Balance Model: `E_in` (solar) vs `E_out` (black-body radiation). Add greenhouse effect, albedo. |
+| 35 | Compiler IR Visualizer | (H) | | Use a parser generator (e.g., `ANTLR`) to build AST. Convert AST to basic blocks (e.g., 3-address code). |
 | 36 | Packet Sniffer + Playback Simulator | (H) | | Use `scapy` or `pcap` to capture. Save to `.pcap` file. Replay by sending packets with original timings. |
 | 37 | Database Transaction Simulator | (H) | | Implement 2-Phase Locking (2PL). Build a "waits-for" graph to detect deadlocks. |
 | 38 | Robot Arm Kinematics Simulator | (H) | | Forward Kinematics (FK): matrix transforms for each joint. Inverse (IK): harder, (e.g., CCD algorithm). |
