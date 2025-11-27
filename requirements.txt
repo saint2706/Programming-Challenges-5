@@ -13,3 +13,17 @@ seaborn
 nltk
 PyQt6
 keyboard
+fastapi
+uvicorn
+cryptography
+pyperclip
+websockets
+sqlalchemy
+pydantic
+cryptography
+streamlit
+ydata-profiling
+sweetviz
+Pygments
+Pillow
+ImageHash

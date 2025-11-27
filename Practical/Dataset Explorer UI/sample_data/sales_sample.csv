@@ -1,0 +1,11 @@
+order_id,date,region,salesperson,units,unit_price
+1001,2024-01-03,North,Ashley,10,19.99
+1002,2024-01-05,South,Jordan,5,24.50
+1003,2024-01-06,West,Sam,12,15.75
+1004,2024-01-09,North,Emery,20,9.99
+1005,2024-01-10,East,Taylor,7,12.50
+1006,2024-01-11,South,Jordan,3,44.00
+1007,2024-01-13,West,Sam,15,17.25
+1008,2024-01-14,East,Ashley,9,21.10
+1009,2024-01-15,North,Emery,11,18.00
+1010,2024-01-16,South,Taylor,6,26.75
