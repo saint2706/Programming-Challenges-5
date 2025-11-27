@@ -1,0 +1,789 @@
+ (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
+diff --git a/Practical/Offline-first PWA To-Do App/app.js b/Practical/Offline-first PWA To-Do App/app.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..c981f26ee2a3cf2bdfed94506e4fd5f14d6d4484
+--- /dev/null
++++ b/Practical/Offline-first PWA To-Do App/app.js	
+@@ -0,0 +1,345 @@
++const DB_NAME = 'todo-pwa';
++const DB_VERSION = 1;
++const TASK_STORE = 'tasks';
++const QUEUE_STORE = 'syncQueue';
++const SERVER_STATE_KEY = 'todo-pwa-server';
++
++const statusEl = document.getElementById('connection-status');
++const form = document.getElementById('task-form');
++const taskInput = document.getElementById('task-title');
++const listEl = document.getElementById('task-list');
++const emptyStateEl = document.getElementById('empty-state');
++const queueIndicator = document.getElementById('queue-indicator');
++const conflictPanel = document.getElementById('conflict-panel');
++const conflictLog = document.getElementById('conflict-log');
++
++function openDB() {
++  return new Promise((resolve, reject) => {
++    const req = indexedDB.open(DB_NAME, DB_VERSION);
++    req.onupgradeneeded = () => {
++      const db = req.result;
++      if (!db.objectStoreNames.contains(TASK_STORE)) {
++        const taskStore = db.createObjectStore(TASK_STORE, { keyPath: 'id' });
++        taskStore.createIndex('status', 'status');
++        taskStore.createIndex('updatedAt', 'updatedAt');
++      }
++      if (!db.objectStoreNames.contains(QUEUE_STORE)) {
++        db.createObjectStore(QUEUE_STORE, { keyPath: 'id' });
++      }
++    };
++    req.onsuccess = () => resolve(req.result);
++    req.onerror = () => reject(req.error);
++  });
++}
++
++async function withStore(storeName, mode, fn) {
++  const db = await openDB();
++  return new Promise((resolve, reject) => {
++    const tx = db.transaction(storeName, mode);
++    const store = tx.objectStore(storeName);
++    const request = fn(store, tx);
++    tx.oncomplete = () =>
++      resolve(request && typeof request === 'object' && 'result' in request ? request.result : request);
++    tx.onerror = () => reject(tx.error);
++    tx.onabort = () => reject(tx.error);
++  });
++}
++
++async function getAll(storeName) {
++  return withStore(storeName, 'readonly', (store) => store.getAll());
++}
++
++async function getTask(id) {
++  return withStore(TASK_STORE, 'readonly', (store) => store.get(id));
++}
++
++async function saveTask(task) {
++  return withStore(TASK_STORE, 'readwrite', (store) => store.put(task));
++}
++
++async function deleteTaskFromDB(id) {
++  return withStore(TASK_STORE, 'readwrite', (store) => store.delete(id));
++}
++
++async function enqueue(action, payload) {
++  const entry = {
++    id: crypto.randomUUID(),
++    action,
++    taskId: payload.id,
++    payload,
++    baseUpdatedAt: payload.updatedAt,
++    queuedAt: Date.now(),
++  };
++  await withStore(QUEUE_STORE, 'readwrite', (store) => store.put(entry));
++  updateQueueIndicator();
++  requestBackgroundSync();
++  return entry;
++}
++
++async function dequeue(id) {
++  return withStore(QUEUE_STORE, 'readwrite', (store) => store.delete(id));
++}
++
++async function getQueue() {
++  return getAll(QUEUE_STORE);
++}
++
++function loadServerTasks() {
++  try {
++    const stored = localStorage.getItem(SERVER_STATE_KEY);
++    return stored ? JSON.parse(stored) : [];
++  } catch (err) {
++    console.warn('Falling back to empty server state', err);
++    return [];
++  }
++}
++
++function persistServerTasks(tasks) {
++  localStorage.setItem(SERVER_STATE_KEY, JSON.stringify(tasks));
++}
++
++function formatDate(ts) {
++  return new Intl.DateTimeFormat([], { dateStyle: 'medium', timeStyle: 'short' }).format(ts);
++}
++
++async function requestBackgroundSync() {
++  if ('serviceWorker' in navigator && 'SyncManager' in window) {
++    try {
++      const reg = await navigator.serviceWorker.ready;
++      await reg.sync.register('sync-tasks');
++      console.log('Background sync registered');
++    } catch (err) {
++      console.warn('Background sync registration failed', err);
++    }
++  }
++}
++
++async function addTask(title) {
++  const now = Date.now();
++  const task = {
++    id: crypto.randomUUID(),
++    title: title.trim(),
++    status: 'pending',
++    createdAt: now,
++    updatedAt: now,
++    lastSyncedAt: null,
++    syncState: navigator.onLine ? 'synced' : 'pending',
++  };
++  await saveTask(task);
++  await enqueue('create', task);
++  renderTasks();
++  processQueue();
++}
++
++async function updateTask(id, updates) {
++  const existing = await getTask(id);
++  if (!existing) return;
++  const updated = {
++    ...existing,
++    ...updates,
++    updatedAt: Date.now(),
++    syncState: navigator.onLine ? 'synced' : 'pending',
++  };
++  await saveTask(updated);
++  await enqueue('update', updated);
++  renderTasks();
++  processQueue();
++}
++
++async function deleteTask(id) {
++  const existing = await getTask(id);
++  if (!existing) return;
++  await deleteTaskFromDB(id);
++  await enqueue('delete', existing);
++  renderTasks();
++  processQueue();
++}
++
++function setStatus(isOnline) {
++  statusEl.textContent = isOnline ? 'Online - syncing changes' : 'Offline - changes will sync later';
++  statusEl.classList.toggle('online', isOnline);
++  statusEl.classList.toggle('offline', !isOnline);
++}
++
++function renderConflict(message) {
++  conflictPanel.hidden = false;
++  const li = document.createElement('li');
++  li.textContent = message;
++  conflictLog.prepend(li);
++}
++
++async function syncFromServer() {
++  const serverTasks = loadServerTasks();
++  const localTasks = await getAll(TASK_STORE);
++  const serverIds = new Set(serverTasks.map((task) => task.id));
++
++  for (const task of serverTasks) {
++    const normalized = {
++      ...task,
++      lastSyncedAt: task.lastSyncedAt ?? task.updatedAt,
++      syncState: 'synced',
++    };
++    await saveTask(normalized);
++  }
++
++  for (const task of localTasks) {
++    if (!serverIds.has(task.id)) {
++      await deleteTaskFromDB(task.id);
++    }
++  }
++
++  await renderTasks();
++}
++
++async function renderTasks() {
++  const tasks = await getAll(TASK_STORE);
++  tasks.sort((a, b) => b.updatedAt - a.updatedAt);
++  listEl.innerHTML = '';
++  if (!tasks.length) {
++    emptyStateEl.hidden = false;
++    return;
++  }
++  emptyStateEl.hidden = true;
++  tasks.forEach((task) => {
++    const li = document.createElement('li');
++    li.className = 'task';
++    const info = document.createElement('div');
++    info.className = 'task-info';
++    const title = document.createElement('div');
++    title.className = 'task-title';
++    title.textContent = task.title;
++    info.append(title);
++    const meta = document.createElement('div');
++    meta.className = 'task-meta';
++    meta.textContent = `Updated ${formatDate(task.updatedAt)}`;
++    if (task.lastSyncedAt) {
++      const synced = document.createElement('span');
++      synced.textContent = `Synced ${formatDate(task.lastSyncedAt)}`;
++      meta.append(' · ', synced);
++    }
++    info.append(meta);
++
++    const actions = document.createElement('div');
++    actions.className = 'task-actions';
++
++    const statusPill = document.createElement('span');
++    statusPill.className = `status-pill ${task.syncState === 'pending' ? 'syncing' : task.status === 'completed' ? 'completed' : 'pending'}`;
++    statusPill.textContent = task.syncState === 'pending' ? 'Pending sync' : task.status === 'completed' ? 'Completed' : 'Open';
++
++    const toggleBtn = document.createElement('button');
++    toggleBtn.className = 'btn-ghost';
++    toggleBtn.textContent = task.status === 'completed' ? 'Mark open' : 'Complete';
++    toggleBtn.addEventListener('click', () => updateTask(task.id, { status: task.status === 'completed' ? 'pending' : 'completed' }));
++
++    const deleteBtn = document.createElement('button');
++    deleteBtn.className = 'btn-ghost btn-danger';
++    deleteBtn.textContent = 'Delete';
++    deleteBtn.addEventListener('click', () => deleteTask(task.id));
++
++    actions.append(statusPill, toggleBtn, deleteBtn);
++
++    li.append(info, actions);
++    listEl.append(li);
++  });
++}
++
++async function updateQueueIndicator() {
++  const queue = await getQueue();
++  queueIndicator.hidden = queue.length === 0;
++  if (!queueIndicator.hidden) {
++    queueIndicator.textContent = `${queue.length} item${queue.length === 1 ? '' : 's'} pending sync`;
++  }
++}
++
++async function processQueue() {
++  if (!navigator.onLine) return;
++  const queue = await getQueue();
++  if (!queue.length) return;
++  let serverTasks = loadServerTasks();
++
++  for (const entry of queue) {
++    try {
++      const serverIndex = serverTasks.findIndex((task) => task.id === entry.taskId);
++      const serverTask = serverIndex >= 0 ? serverTasks[serverIndex] : null;
++      const hasServerConflict =
++        entry.action !== 'delete' && serverTask && serverTask.updatedAt > entry.baseUpdatedAt;
++
++      if (hasServerConflict) {
++        await dequeue(entry.id);
++        renderConflict(
++          `Task "${serverTask.title}" kept the server copy because it was updated elsewhere.`
++        );
++        continue;
++      }
++
++      if (entry.action === 'delete') {
++        if (serverIndex >= 0) {
++          serverTasks.splice(serverIndex, 1);
++        }
++        await dequeue(entry.id);
++        continue;
++      }
++
++      const syncedTask = {
++        ...entry.payload,
++        lastSyncedAt: Date.now(),
++        syncState: 'synced',
++      };
++
++      if (serverIndex >= 0) {
++        serverTasks[serverIndex] = syncedTask;
++      } else {
++        serverTasks.push(syncedTask);
++      }
++      await dequeue(entry.id);
++    } catch (err) {
++      console.warn('Failed processing queue entry; will retry later', err);
++    }
++  }
++
++  persistServerTasks(serverTasks);
++  await syncFromServer();
++  updateQueueIndicator();
++}
++
++async function bootstrap() {
++  await openDB();
++  setStatus(navigator.onLine);
++  await syncFromServer();
++  await updateQueueIndicator();
++  processQueue();
++
++  window.addEventListener('online', () => {
++    setStatus(true);
++    processQueue();
++  });
++  window.addEventListener('offline', () => setStatus(false));
++
++  if ('serviceWorker' in navigator) {
++    try {
++      const reg = await navigator.serviceWorker.register('sw.js');
++      console.log('Service worker registered', reg);
++      navigator.serviceWorker.addEventListener('message', (event) => {
++        if (event.data === 'sync-tasks') {
++          processQueue();
++        }
++      });
++      if ('SyncManager' in window) {
++        reg.addEventListener('updatefound', () => console.log('SW update found'));
++      }
++    } catch (err) {
++      console.error('SW registration failed', err);
++    }
++  }
++}
++
++form.addEventListener('submit', (event) => {
++  event.preventDefault();
++  const title = taskInput.value.trim();
++  if (!title) return;
++  addTask(title);
++  form.reset();
++  taskInput.focus();
++});
++
++bootstrap();
+diff --git a/Practical/Offline-first PWA To-Do App/icons/icon-192.png b/Practical/Offline-first PWA To-Do App/icons/icon-192.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..f3fe7d0eb46b205a83ce8f0c637c2311795277dd
+GIT binary patch
+literal 1507
+zcmbu9YgE#A7{`BqK&1o~@q#u5^_W_jw^}JCC?c78nc1>3#9KEl-Erm}$Qzb5yd;^K
+zGRvvCBgWh^=LK^vQ#V^yy3){*E=>h1FM-IYb9(2yo%4O3=RD7w=lkaKy$}>YLvJ+Q
+z2mnC)?)45<PtnIhYN~tiXq*-R8n=DDJws9|=0-cu7<l6H7MwQkDz>JeH(S?2mirR4
+z8?%jU&*y9Q`i{YcIo|MIL`u!1?8DU3l)^=<SdDb-A6OokuXH+LED+#L2{Y998lVUX
+z9{(TFeZt9t23>Kr14L_8$vx!yI&S@P70gMt7>%+#22jk*YhHV?AX{KVLE6!?Oql*A
+zOMBeer~>xxzZCc-q=C|y=7HgQTO@-#eBgz$0vU}!C{70zYboC?XS8UFWH&kgR<vk{
+zWD*?x-F+gsbq^t$=GwbY9WQ60Tc1j=zj*Cen6UQYz<cYs$hFIk(xIyJgAvhsJTYNw
+zq83AzczDT5aU((waI2$2j^ko28KrU;&X=A7yg}7rV*|yRF_(VV@_9^tSJly9Xw~)R
+z=W%Op!r93X2;B6?l6hFTBzk1X4%XWg)P!ljI}OjL6GjR~CGR1?3)T`%3#?8H4rqZ;
+zzfGXFvoe2A)jYAwh{;?v&)g8Py|b;LBPU1*+3G5vr<oZ<6>77)#PNqW)#wFxz(e<F
+zJFjM14nI`vA;bV9+?u5B$E)68%XQcC`>mzA<Or<&!SK$<P>9&wp>+7pw?JeO1Fy?C
+zO|5IKjDdqRJ#ecO#h;mTJJOS6Zvq|_0K(;Ubn(NYWV>Ad2QQGjtve8*MDp{;zPHKp
+zKm?5l@X0v|05V88*?WOOf|Z3y6R=%FNJiuXot>CfF8EDGmpQ=7p43zJBUl(wjt@%O
+zuq$3G?BObs;fzv+BETtxBPKw#fMn>SI?=E)&>hbK#S+QBqX+_fh(&_!y+p&OBMJ?=
+zrP)CLpL=3m$e?Fh%mHqxH~QS=E0$~>Iw|f?nZk+<Z)1*BOmIEHCK<&#Nl)bRaUUY-
+zK(iBz-BT#mHdsp5u<mu2RrRw6cHJ2R(n&K*Ef{VfvB^~#NCR8x4nMogUwHzqPt~ZR
+z!@Rpn8*&%oZjUX)Di!Z6*oF-yNw3Be<y<Nt(%VyG&+Xc6*iABrW{b{@2#*CCB4n4g
+zQLaw9ZLws-aUIW*{OqUcp3*8b5s`q9Mntd7VMIl3dBqdUYKM*$YJ)yJsRm+-0|IuW
+zg_<zK5sqZ(BXfBYs*?o6-AZn;A_e!TkPLoQUi$JdhKhnYJ|d33`4twa$1Zv~aeO5T
+z!?wsHl3?r|pVeFpg)vi&GdEZt3>z+nK)agEKFy$ob7u83X*@J|{goU0b}jF2-<wc3
+z_OsLRm7JM3hdkKNX5y<2bCXJt{GFHo_`)})JsNh>|HOg7n&tq9n+~EE!h0kVQ@5iy
+z<BBHB!dMj9{&$~~t&Xxh4#dt-`1@zfzz7u-`g|78nf-3CN)5DU+p<RtU>kq3*W3)r
+z%=tEvgZ}UqmHg$~eoD^d7d7qh=HHKzeV@>4bwCr(1I)t~sq=SIfmNkApWjGHk5!sq
+zThnPGWTiRJ*871B)0|J>63MZy0jNtwF%E;<>EWalWyB$T2U>BYGyW_m(|%>zEJIMM
+zIZPDwc82h<2&E9siiNmjZ@!&GcK7RXR&J;fk5*kF#0NJ@L9CTn>lxC5W1o#*I292J
+zv>Wt{5EGIsB_401-pas{pSU2E%HrDgEJM}CkdyOl`bDD1G&x)Dj9OC%l(tu$&Cs~R
+zW6h=l!c@sO<H`P5z_94?bJWXS2c>oSTIV>Y`{h|7W`aMARfjk5r3QF6dNH#81A9w;
+A6951J
+
+literal 0
+HcmV?d00001
+
+diff --git a/Practical/Offline-first PWA To-Do App/icons/icon-512.png b/Practical/Offline-first PWA To-Do App/icons/icon-512.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..da8c680bfdb720e098bffdae636440d6e5242508
+GIT binary patch
+literal 4475
+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
+AF#rGn
+
+literal 0
+HcmV?d00001
+
+diff --git a/Practical/Offline-first PWA To-Do App/index.html b/Practical/Offline-first PWA To-Do App/index.html
+new file mode 100644
+index 0000000000000000000000000000000000000000..347f23033325e646bd6f2fb40f5946b0e05ad961
+--- /dev/null
++++ b/Practical/Offline-first PWA To-Do App/index.html	
+@@ -0,0 +1,53 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++  <meta charset="UTF-8">
++  <meta name="viewport" content="width=device-width, initial-scale=1.0">
++  <title>Offline-first PWA To-Do</title>
++  <link rel="manifest" href="manifest.json">
++  <link rel="stylesheet" href="styles.css">
++  <meta name="theme-color" content="#2563eb">
++</head>
++<body>
++  <header class="app-header">
++    <div class="title">
++      <h1>Offline-first To-Do</h1>
++      <p>Works even when you're disconnected.</p>
++    </div>
++    <div class="status" id="connection-status" aria-live="polite">Checking connection...</div>
++  </header>
++
++  <main>
++    <section class="card">
++      <h2>Add a task</h2>
++      <form id="task-form" autocomplete="off">
++        <label class="sr-only" for="task-title">Task title</label>
++        <input id="task-title" name="title" type="text" placeholder="What do you need to do?" required>
++        <button type="submit">Add</button>
++      </form>
++      <div class="helper">Offline? We'll queue changes and sync when you're back online.</div>
++    </section>
++
++    <section class="card">
++      <div class="card-header">
++        <h2>Your tasks</h2>
++        <div class="badge" id="queue-indicator" hidden>Pending sync</div>
++      </div>
++      <ul id="task-list" class="task-list" aria-live="polite"></ul>
++      <div class="empty" id="empty-state" hidden>Start by adding your first task.</div>
++    </section>
++
++    <section class="card" id="conflict-panel" hidden>
++      <h2>Conflicts resolved</h2>
++      <p>We kept the latest change when the same task was updated in multiple places.</p>
++      <ul id="conflict-log"></ul>
++    </section>
++  </main>
++
++  <footer>
++    <small>Built as an offline-first PWA demo with IndexedDB + Background Sync.</small>
++  </footer>
++
++  <script type="module" src="app.js"></script>
++</body>
++</html>
+diff --git a/Practical/Offline-first PWA To-Do App/manifest.json b/Practical/Offline-first PWA To-Do App/manifest.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..59a9c58eca67bc5b6f646243d992bdb896d25afc
+--- /dev/null
++++ b/Practical/Offline-first PWA To-Do App/manifest.json	
+@@ -0,0 +1,12 @@
++{
++  "name": "Offline-first PWA To-Do",
++  "short_name": "PWA To-Do",
++  "start_url": "./index.html",
++  "display": "standalone",
++  "background_color": "#0f172a",
++  "theme_color": "#2563eb",
++  "icons": [
++    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
++    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
++  ]
++}
+diff --git a/Practical/Offline-first PWA To-Do App/styles.css b/Practical/Offline-first PWA To-Do App/styles.css
+new file mode 100644
+index 0000000000000000000000000000000000000000..c901d7e98b8f6f13d953501e06ebb6c007b9cecd
+--- /dev/null
++++ b/Practical/Offline-first PWA To-Do App/styles.css	
+@@ -0,0 +1,180 @@
++:root {
++  --bg: #0f172a;
++  --card: #111827;
++  --text: #e2e8f0;
++  --muted: #94a3b8;
++  --accent: #2563eb;
++  --accent-2: #22c55e;
++  --danger: #ef4444;
++  --border: #1f2937;
++  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
++}
++
++* { box-sizing: border-box; }
++
++body {
++  margin: 0;
++  background: var(--bg);
++  color: var(--text);
++  min-height: 100vh;
++  display: flex;
++  flex-direction: column;
++}
++
++.app-header {
++  padding: 1.5rem clamp(1rem, 2vw, 2rem);
++  display: flex;
++  align-items: center;
++  justify-content: space-between;
++  background: radial-gradient(circle at 10% 20%, rgba(37,99,235,0.25), transparent 35%),
++              radial-gradient(circle at 80% 10%, rgba(34,197,94,0.2), transparent 25%),
++              var(--card);
++  border-bottom: 1px solid var(--border);
++}
++
++.app-header h1 {
++  margin: 0;
++  font-size: 1.75rem;
++}
++
++.app-header p { margin: .25rem 0 0; color: var(--muted); }
++
++.status {
++  padding: .4rem .75rem;
++  border-radius: 999px;
++  font-size: .9rem;
++  color: #0b1021;
++  background: var(--muted);
++  box-shadow: 0 10px 30px rgba(0,0,0,.25);
++}
++
++.status.online { background: var(--accent-2); color: #052e16; }
++.status.offline { background: #fbbf24; color: #78350f; }
++
++main {
++  width: min(900px, 95vw);
++  margin: 2rem auto;
++  flex: 1;
++  display: flex;
++  flex-direction: column;
++  gap: 1rem;
++}
++
++.card {
++  background: var(--card);
++  border: 1px solid var(--border);
++  border-radius: 16px;
++  padding: 1.25rem;
++  box-shadow: 0 20px 40px rgba(0,0,0,.35);
++}
++
++.card-header {
++  display: flex;
++  align-items: center;
++  gap: .75rem;
++}
++
++.card h2 { margin: 0 0 .75rem; }
++
++.badge {
++  padding: .3rem .65rem;
++  border-radius: 10px;
++  background: rgba(255,255,255,.08);
++  color: var(--muted);
++  font-size: .85rem;
++  border: 1px dashed rgba(255,255,255,.1);
++}
++
++form {
++  display: flex;
++  gap: .75rem;
++  align-items: center;
++}
++
++input[type="text"] {
++  flex: 1;
++  padding: .85rem 1rem;
++  border-radius: 12px;
++  border: 1px solid var(--border);
++  background: #0b1220;
++  color: var(--text);
++}
++
++button {
++  padding: .85rem 1.25rem;
++  border-radius: 12px;
++  border: none;
++  background: linear-gradient(120deg, var(--accent), #5b21b6);
++  color: #e5e7eb;
++  font-weight: 600;
++  cursor: pointer;
++  transition: transform .15s ease, box-shadow .15s ease;
++}
++
++button:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(0,0,0,.3); }
++button:active { transform: translateY(1px); }
++
++.helper { color: var(--muted); margin-top: .5rem; font-size: .95rem; }
++
++.task-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .75rem; }
++
++.task {
++  padding: .85rem 1rem;
++  border-radius: 12px;
++  background: #0c1426;
++  border: 1px solid var(--border);
++  display: grid;
++  grid-template-columns: 1fr auto;
++  align-items: center;
++  gap: .75rem;
++}
++
++.task-info { display: flex; flex-direction: column; gap: .25rem; }
++
++.task-title { font-weight: 600; }
++
++.task-meta { color: var(--muted); font-size: .85rem; display: flex; gap: .75rem; }
++
++.task-actions { display: flex; gap: .5rem; }
++
++.btn-ghost {
++  background: rgba(255,255,255,.06);
++  border: 1px solid var(--border);
++  color: var(--text);
++}
++
++.btn-danger { background: var(--danger); }
++
++.status-pill {
++  padding: .25rem .65rem;
++  border-radius: 10px;
++  font-size: .8rem;
++  color: #04112c;
++}
++
++.status-pill.pending { background: #facc15; color: #78350f; }
++.status-pill.completed { background: #22c55e; color: #052e16; }
++.status-pill.syncing { background: #38bdf8; color: #0b172a; }
++
++.empty { color: var(--muted); text-align: center; padding: 1rem; }
++
++footer { padding: 1.5rem; text-align: center; color: var(--muted); }
++
++#conflict-panel ul { margin: 0; padding-left: 1.25rem; color: #fbbf24; }
++
++.sr-only {
++  position: absolute;
++  width: 1px;
++  height: 1px;
++  padding: 0;
++  margin: -1px;
++  overflow: hidden;
++  clip: rect(0, 0, 0, 0);
++  border: 0;
++}
++
++@media (max-width: 640px) {
++  .app-header { flex-direction: column; align-items: flex-start; gap: .75rem; }
++  form { flex-direction: column; align-items: stretch; }
++  button { width: 100%; }
++}
+diff --git a/Practical/Offline-first PWA To-Do App/sw.js b/Practical/Offline-first PWA To-Do App/sw.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..886242f9356598a1f2a314128da47f53185a1d68
+--- /dev/null
++++ b/Practical/Offline-first PWA To-Do App/sw.js	
+@@ -0,0 +1,50 @@
++const CACHE_NAME = 'todo-pwa-shell-v2';
++const APP_SHELL = [
++  'index.html',
++  'styles.css',
++  'app.js',
++  'manifest.json',
++  'icons/icon-192.png',
++  'icons/icon-512.png',
++].map((path) => new URL(path, self.registration.scope).pathname);
++
++self.addEventListener('install', (event) => {
++  event.waitUntil(
++    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL)).then(() => self.skipWaiting())
++  );
++});
++
++self.addEventListener('activate', (event) => {
++  event.waitUntil(
++    caches.keys().then((keys) =>
++      Promise.all(keys.map((key) => (key !== CACHE_NAME ? caches.delete(key) : null)))
++    ).then(() => self.clients.claim())
++  );
++});
++
++self.addEventListener('fetch', (event) => {
++  if (event.request.method !== 'GET') return;
++  const url = new URL(event.request.url);
++  if (url.origin === location.origin) {
++    event.respondWith(
++      caches.match(event.request).then((cached) => {
++        if (cached) return cached;
++        return fetch(event.request).then((response) => {
++          const clone = response.clone();
++          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
++          return response;
++        }).catch(() => caches.match(APP_SHELL.find((path) => path.endsWith('index.html'))));
++      })
++    );
++  }
++});
++
++self.addEventListener('sync', (event) => {
++  if (event.tag === 'sync-tasks') {
++    event.waitUntil(
++      self.clients.matchAll().then((clients) => {
++        clients.forEach((client) => client.postMessage('sync-tasks'));
++      })
++    );
++  }
++});
+ 
+EOF
+)
