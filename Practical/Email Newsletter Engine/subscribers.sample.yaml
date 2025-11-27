@@ -1,0 +1,15 @@
+subscribers:
+  - email: "alice@example.com"
+    name: "Alice"
+    preferences:
+      topics: ["product", "engineering"]
+      unsubscribe: false
+  - email: "bob@example.com"
+    name: "Bob"
+    preferences:
+      topics: ["product"]
+      unsubscribe: true
+  - email: "carol@example.com"
+    name: "Carol"
+    preferences:
+      topics: ["community", "events"]
