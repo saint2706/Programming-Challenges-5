@@ -26,11 +26,25 @@ jobs:
           node-version: lts/*
           cache: npm
 
+      - name: Install dependencies (act)
+        if: ${{ env.ACT }}
+        run: |
+          # With --bind, node_modules should be mounted from host
+          # Skip npm ci due to SSL certificate issues in act environment
+          if [ -d node_modules/.bin ]; then
+            echo "node_modules already exists from --bind mount"
+            ls -la node_modules/.bin/ | head -10
+          else
+            echo "Warning: node_modules not found. Run 'npm ci' locally before using act --bind"
+            exit 1
+          fi
+
       - name: Install dependencies
+        if: ${{ !env.ACT }}
         run: npm ci
 
       - name: Run tests
-        run: npx vitest run
+        run: ./node_modules/.bin/vitest run
 
       - name: Upload Vitest reports
         if: ${{ always() && !env.ACT }}
