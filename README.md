@@ -132,7 +132,7 @@ This repository contains programming challenges across five categories: **Practi
 | 14 | Blockchain Simulator | (M) | Implemented (Python) | `Block` class (hash, prev_hash, data, nonce). `Blockchain` class (list of blocks). PoW = find nonce. |
 | 15 | Virtual Machine for a Toy Bytecode | (M) | Implemented (Python) | Define opcodes (PUSH, POP, ADD). Implement a stack, instruction pointer, and a loop that fetches/decodes/executes. |
 | 16 | Weather Pattern Cellular Model | (M) | | 2D grid. Rules for how pressure/wind/moisture cells interact and move. |
-| 17 | Scheduling Visual Playground | (M) | | Visualize Gantt charts for different job sets and algorithms (e.g., FCFS, Shortest Job First). |
+| 17 | Scheduling Visual Playground | (M) | Implemented (Python) | Visualize Gantt charts for different job sets and algorithms (e.g., FCFS, Shortest Job First). |
 | 18 | Genetic Algorithm Playground | (M) | | Implement: population, fitness function, selection (e.g., roulette), crossover, mutation. |
 | 19 | Particle System Engine | (M) | | Manage a list of `Particle` objects. Each has position, velocity, lifetime. Update all each frame. |
 | 20 | Queueing System Simulator | (M) | Implemented (Python) | M/M/1: Poisson arrival, exponential service time. Use a discrete event queue. Track wait times. |
