@@ -21,9 +21,9 @@ This repository contains programming challenges across five categories: **Practi
 | 13 | Media Library Organizer | (M) | Implemented (Python) | Use APIs like TMDB (movies) or MusicBrainz (music). `os` and `shutil` for file operations. |
 | 14 | Password Data Breach Checker | (M) | Implemented (Python) | Use `hashlib` (SHA-1). Implement k-Anonymity by sending only the first 5 hash chars to HIBP API. |
 | 15 | Dotfiles Manager | (M) | Implemented (Python) | Core logic involves creating/managing symlinks from a central repo to home directory locations. |
-| 16 | Markdown Knowledge Base | (M) | | Use `Whoosh` or `Elasticsearch` for full-text search. Parse links (regex or AST) to build the graph. |
+| 16 | Markdown Knowledge Base | (M) | Implemented (Python) | Use `Whoosh` or `Elasticsearch` for full-text search. Parse links (regex or AST) to build the graph. |
 | 17 | Personal Finance Dashboard | (M) | Implemented (Python) | Use `pandas` to read and analyze CSVs. `matplotlib` or `Plotly` for visualization. |
-| 18 | Image Compression Tool | (M) | | Use `Pillow` (PIL) for image operations. Expose `quality` (lossy) and `optimize` (lossless) parameters. |
+| 18 | Image Compression Tool | (M) | Implemented (Python) | Use `Pillow` (PIL) for image operations. Expose `quality` (lossy) and `optimize` (lossless) parameters. |
 | 19 | Resume/Portfolio Generator | (M) | | Use `Jinja2` to render JSON data into HTML/Markdown templates. `WeasyPrint` or `pandoc` for PDF. |
 | 20 | Pluggable Notification Hub | (M) | | Design a core `Notification` class and provider-specific subclasses (EmailProvider, SlackProvider). |
 | 21 | Data Import Wizard | (M) | | Use `pandas` to infer dtypes. `SQLAlchemy` to generate tables and insert data into SQLite. |
@@ -126,11 +126,11 @@ This repository contains programming challenges across five categories: **Practi
 | 8 | Cache Simulator | (M) | Implemented (Python) | Simulate memory addresses. Map address to cache set/line. Implement LRU/FIFO replacement. |
 | 9 | Epidemic Spread Model | (M) | Implemented (Python) | SIR model: agents are (S)usceptible, (I)nfected, or (R)ecovered. `p_infection` and `recovery_time` are key params. |
 | 10 | Neural Network From Scratch + Visualizer | (M) | Implemented (Python) | Implement `numpy`-based layers (Linear, ReLU). Backpropagation is manual chain rule. `matplotlib` to show loss. |
-| 11 | Pedestrian Crowd Simulation | (M) | | Social forces model: agents have a goal and are "repelled" by obstacles and other agents. |
-| 12 | DNS Resolver Simulation | (M) | | Simulate root, TLD, and authoritative servers (e.g., as dicts). Implement recursive queries and a cache (dict with TTL). |
-| 13 | Music Synthesizer | (M) | | Use `numpy` to generate wave arrays (sine, square, saw). `pyaudio` to play. ADSR envelope shapes the volume. |
-| 14 | Blockchain Simulator | (M) | | `Block` class (hash, prev_hash, data, nonce). `Blockchain` class (list of blocks). PoW = find nonce. |
-| 15 | Virtual Machine for a Toy Bytecode | (M) | | Define opcodes (PUSH, POP, ADD). Implement a stack, instruction pointer, and a loop that fetches/decodes/executes. |
+| 11 | Pedestrian Crowd Simulation | (M) | Implemented (Python) | Social forces model: agents have a goal and are "repelled" by obstacles and other agents. |
+| 12 | DNS Resolver Simulation | (M) | Implemented (Python) | Simulate root, TLD, and authoritative servers (e.g., as dicts). Implement recursive queries and a cache (dict with TTL). |
+| 13 | Music Synthesizer | (M) | Implemented (Python) | Use `numpy` to generate wave arrays (sine, square, saw). `pyaudio` to play. ADSR envelope shapes the volume. |
+| 14 | Blockchain Simulator | (M) | Implemented (Python) | `Block` class (hash, prev_hash, data, nonce). `Blockchain` class (list of blocks). PoW = find nonce. |
+| 15 | Virtual Machine for a Toy Bytecode | (M) | Implemented (Python) | Define opcodes (PUSH, POP, ADD). Implement a stack, instruction pointer, and a loop that fetches/decodes/executes. |
 | 16 | Weather Pattern Cellular Model | (M) | | 2D grid. Rules for how pressure/wind/moisture cells interact and move. |
 | 17 | Scheduling Visual Playground | (M) | | Visualize Gantt charts for different job sets and algorithms (e.g., FCFS, Shortest Job First). |
 | 18 | Genetic Algorithm Playground | (M) | | Implement: population, fitness function, selection (e.g., roulette), crossover, mutation. |
