@@ -12,3 +12,5 @@ mmh3
 seaborn
 nltk
 Pygments
+Pillow
+ImageHash
