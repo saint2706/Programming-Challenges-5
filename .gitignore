@@ -15,3 +15,26 @@ EmulationModeling/17_scheduling_visual_playground/sample_outputs/
 
 # Rust
 target/
+
+# Python virtual environment
+.venv/
+
+# Symlinks created by conftest.py for testing
+Algorithmic/ApproximateStringMatching
+Algorithmic/AutocompleteEngine
+Algorithmic/TopKFrequentItems
+Algorithmic/RandomizedAlgorithmsSuite
+Algorithmic/MatrixAlgorithmLab
+Practical/DotfilesManager
+Practical/MediaLibraryOrganizer
+Practical/PasswordDataBreachChecker
+Practical/PersonalTimeTracker
+Practical/SmartExpenseSplitter
+Practical/StaticSiteGenerator
+Practical/TerminalHabitCoach
+Practical/UniversalLogAnalyzer
+approximate_set_membership
+consistent_hashing
+
+# pytest cache
+.pytest_cache/

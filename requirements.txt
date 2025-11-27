@@ -1,0 +1,12 @@
+# Test dependencies for the Programming Challenges repository
+pytest>=8.0.0
+
+# Dependencies needed for tests
+numpy
+matplotlib
+pandas
+requests
+jinja2
+markdown
+mmh3
+seaborn
