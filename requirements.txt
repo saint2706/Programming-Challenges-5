@@ -11,6 +11,8 @@ markdown
 mmh3
 seaborn
 nltk
+PyQt6
+keyboard
 fastapi
 uvicorn
 cryptography
