@@ -1,0 +1,10 @@
+client_name: Ada Lovelace
+service: Data Visualization Workshop
+appointment_date: 2024-11-01
+appointment_time: 10:00 AM
+price: "$350"
+summary: >-
+  Discuss dashboard requirements and deliver a prototype overview.
+contact_email: hello@example.com
+contact_phone: +1-555-555-1234
+company_name: Example Services
