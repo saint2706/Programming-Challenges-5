@@ -24,13 +24,13 @@ This repository contains programming challenges across five categories: **Practi
 | 16 | Markdown Knowledge Base | (M) | Implemented (Python) | Use `Whoosh` or `Elasticsearch` for full-text search. Parse links (regex or AST) to build the graph. |
 | 17 | Personal Finance Dashboard | (M) | Implemented (Python) | Use `pandas` to read and analyze CSVs. `matplotlib` or `Plotly` for visualization. |
 | 18 | Image Compression Tool | (M) | Implemented (Python) | Use `Pillow` (PIL) for image operations. Expose `quality` (lossy) and `optimize` (lossless) parameters. |
-| 19 | Resume/Portfolio Generator | (M) | | Use `Jinja2` to render JSON data into HTML/Markdown templates. `WeasyPrint` or `pandoc` for PDF. |
-| 20 | Pluggable Notification Hub | (M) | | Design a core `Notification` class and provider-specific subclasses (EmailProvider, SlackProvider). |
-| 21 | Data Import Wizard | (M) | | Use `pandas` to infer dtypes. `SQLAlchemy` to generate tables and insert data into SQLite. |
-| 22 | Screen Time Tracker | (M) | | OS-specific APIs needed (e.g., `pywin32` on Windows, AppleScript on macOS) to get active window title. |
-| 23 | Smart Screenshot Tool | (M) | | Use `mss` for screen capture. `PyQt` or `tkinter` for drawing annotations. `Tesseract` (OCR) for search. |
-| 24 | Email Newsletter Engine | (M) | | Use `smtplib` for sending. `Jinja2` for templates. Manage subscribers in a simple DB (SQLite). |
-| 25 | Document Template Filler | (M) | | For DOCX, use `python-docx`. For PDF, `PyPDF2` or `reportlab` (harder) or find a template library. |
+| 19 | Resume/Portfolio Generator | (M) | Implemented (Python) | Use `Jinja2` to render JSON data into HTML/Markdown templates. `WeasyPrint` or `pandoc` for PDF. |
+| 20 | Pluggable Notification Hub | (M) | Implemented (Python) | Design a core `Notification` class and provider-specific subclasses (EmailProvider, SlackProvider). |
+| 21 | Data Import Wizard | (M) | Implemented (Python) | Use `pandas` to infer dtypes. `SQLAlchemy` to generate tables and insert data into SQLite. |
+| 22 | Screen Time Tracker | (M) | Implemented (Python) | OS-specific APIs needed (e.g., `pywin32` on Windows, AppleScript on macOS) to get active window title. |
+| 23 | Smart Screenshot Tool | (M) | Implemented (Python) | Use `mss` for screen capture. `PyQt` or `tkinter` for drawing annotations. `Tesseract` (OCR) for search. |
+| 24 | Email Newsletter Engine | (M) | Implemented (Python) | Use `smtplib` for sending. `Jinja2` for templates. Manage subscribers in a simple DB (SQLite). |
+| 25 | Document Template Filler | (M) | Implemented (Python) | For DOCX, use `python-docx`. For PDF, `PyPDF2` or `reportlab` (harder) or find a template library. |
 | 26 | Smart Calendar Merger | (M) | | Use `icalendar` library to parse `.ics` files. Implement logic to merge event lists and find overlaps. |
 | 27 | Photo De-Duplicator | (M) | | Use `Pillow` and an image hashing library (`imagehash`) for perceptual hashing (aHash, pHash). |
 | 28 | Code Snippet Manager | (M) | | Use `Pygments` for syntax highlighting. Store snippets in SQLite with tags. |
@@ -131,10 +131,10 @@ This repository contains programming challenges across five categories: **Practi
 | 13 | Music Synthesizer | (M) | Implemented (Python) | Use `numpy` to generate wave arrays (sine, square, saw). `pyaudio` to play. ADSR envelope shapes the volume. |
 | 14 | Blockchain Simulator | (M) | Implemented (Python) | `Block` class (hash, prev_hash, data, nonce). `Blockchain` class (list of blocks). PoW = find nonce. |
 | 15 | Virtual Machine for a Toy Bytecode | (M) | Implemented (Python) | Define opcodes (PUSH, POP, ADD). Implement a stack, instruction pointer, and a loop that fetches/decodes/executes. |
-| 16 | Weather Pattern Cellular Model | (M) | | 2D grid. Rules for how pressure/wind/moisture cells interact and move. |
+| 16 | Weather Pattern Cellular Model | (M) | Implemented (Python) | 2D grid. Rules for how pressure/wind/moisture cells interact and move. |
 | 17 | Scheduling Visual Playground | (M) | Implemented (Python) | Visualize Gantt charts for different job sets and algorithms (e.g., FCFS, Shortest Job First). |
-| 18 | Genetic Algorithm Playground | (M) | | Implement: population, fitness function, selection (e.g., roulette), crossover, mutation. |
-| 19 | Particle System Engine | (M) | | Manage a list of `Particle` objects. Each has position, velocity, lifetime. Update all each frame. |
+| 18 | Genetic Algorithm Playground | (M) | Implemented (Python) | Implement: population, fitness function, selection (e.g., roulette), crossover, mutation. |
+| 19 | Particle System Engine | (M) | Implemented (Python) | Manage a list of `Particle` objects. Each has position, velocity, lifetime. Update all each frame. |
 | 20 | Queueing System Simulator | (M) | Implemented (Python) | M/M/1: Poisson arrival, exponential service time. Use a discrete event queue. Track wait times. |
 | 21 | Multiplayer Network Lag Simulator | (M) | Implemented (C++) | Intercept packets (or simulate) and use a queue with `time.sleep` to add latency/jitter. Randomly drop packets. |
 | 22 | Game Boy Emulator Core | (H) | Implemented (C++) | Sharp SM83 CPU (like Z80). Memory-mapped I/O. PPU (Pixel Processing Unit) is complex (sprites, tiles). |
@@ -172,11 +172,11 @@ This repository contains programming challenges across five categories: **Practi
 
 | # | Challenge | Difficulty | Status | Implementation Notes |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | Rule-based Chatbot | (E) | | Use simple `if-elif-else` or regex pattern matching on user input. |
-| 2 | Search Algorithms Lab | (E) | | Implement BFS (use a `queue`), DFS (use a `stack` or recursion). A* needs a `priority_queue`. |
-| 3 | Spam Filter (Naive Bayes) | (E) | | Use `scikit-learn`'s `MultinomialNB`. Tokenize text and use `CountVectorizer` for features. |
-| 4 | Classic Game AI (Tic-Tac-Toe, Connect-4) | (M) | | Implement Minimax algorithm. Connect-4 is harder and may need alpha-beta pruning. |
-| 5 | Reinforcement Learning for CartPole | (M) | | Use OpenAI `Gym`. Q-learning: discretize state space. Policy Gradient: simple NN model. |
+| 1 | Rule-based Chatbot | (E) | Implemented (Python) | Use simple `if-elif-else` or regex pattern matching on user input. |
+| 2 | Search Algorithms Lab | (E) | Implemented (Python) | Implement BFS (use a `queue`), DFS (use a `stack` or recursion). A* needs a `priority_queue`. |
+| 3 | Spam Filter (Naive Bayes) | (E) | Implemented (Python) | Use `scikit-learn`'s `MultinomialNB`. Tokenize text and use `CountVectorizer` for features. |
+| 4 | Classic Game AI (Tic-Tac-Toe, Connect-4) | (M) | Implemented (Python) | Implement Minimax algorithm. Connect-4 is harder and may need alpha-beta pruning. |
+| 5 | Reinforcement Learning for CartPole | (M) | Implemented (Python) | Use OpenAI `Gym`. Q-learning: discretize state space. Policy Gradient: simple NN model. |
 | 6 | Genetic Algorithm for Traveling Salesman | (M) | | Chromosome = path (permutation of cities). Crossover = (e.g.,) order crossover (OX). Mutation = swap two cities. |
 | 7 | Handwritten Digit Classifier | (M) | | Use `PyTorch` or `TensorFlow`. A simple CNN: Conv -> ReLU -> Pool -> Conv -> ReLU -> Pool -> FC -> Softmax. |
 | 8 | Movie Recommender System | (M) | | Collaborative: user-item matrix (e.g., SVD). Content-based: item-feature matrix (genres, actors). |
