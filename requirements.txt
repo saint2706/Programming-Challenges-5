@@ -16,3 +16,12 @@ uvicorn
 cryptography
 pyperclip
 websockets
+sqlalchemy
+pydantic
+cryptography
+streamlit
+ydata-profiling
+sweetviz
+Pygments
+Pillow
+ImageHash
