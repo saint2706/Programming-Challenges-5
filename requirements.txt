@@ -11,3 +11,8 @@ markdown
 mmh3
 seaborn
 nltk
+fastapi
+uvicorn
+cryptography
+pyperclip
+websockets
