@@ -11,6 +11,9 @@ markdown
 mmh3
 seaborn
 nltk
+streamlit
+ydata-profiling
+sweetviz
 Pygments
 Pillow
 ImageHash
