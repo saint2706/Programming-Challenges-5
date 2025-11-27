@@ -1,6 +1,6 @@
 # Copilot Instructions for Programming-Challenges-5
 
-This repository contains programming challenges across five categories: Practical, Algorithmic, Emulation/Modeling, Artificial Intelligence, and Game Development. Currently, four categories have implementations.
+This repository contains programming challenges across five categories: Practical, Algorithmic, Emulation/Modeling, Artificial Intelligence, and Game Development.
 
 ## Repository Structure
 
@@ -8,9 +8,8 @@ This repository contains programming challenges across five categories: Practica
 - `Algorithmic/` - Algorithm implementations in Python, Rust, and Go
 - `EmulationModeling/` - Emulators and simulations in Python and C++
 - `GameDevelopment/` - Game implementations in Python using pygame
+- `ArtificialIntelligence/` - AI and ML implementations in Python
 - `tests/` - Test files for the implementations
-
-Note: Artificial Intelligence challenges are planned but not yet implemented.
 
 ## Languages Used
 
@@ -63,3 +62,95 @@ python -m pytest tests/
 3. Separate concerns: business logic, storage/persistence, and CLI/UI
 4. Provide clear error handling with informative messages
 5. Use dependency injection for testability (e.g., time functions, storage backends)
+
+## Additional Language Conventions
+
+### Rust
+
+- Use idiomatic Rust patterns (Result/Option for error handling, iterators over manual loops)
+- Follow Rust naming conventions (snake_case for functions/variables, CamelCase for types)
+- Include `Cargo.toml` with appropriate dependencies and metadata
+- Write unit tests using `#[cfg(test)]` module pattern
+- Use `clippy` lints and format with `rustfmt`
+
+### Go
+
+- Follow standard Go project layout conventions
+- Use `go.mod` for dependency management
+- Write tests in `*_test.go` files
+- Use `gofmt` for formatting
+- Handle errors explicitly rather than ignoring them
+- Use meaningful package names (avoid generic names like `util`)
+
+### C++
+
+- Use modern C++ features (C++17 or later when possible)
+- Include header guards or `#pragma once`
+- Use smart pointers over raw pointers for memory management
+- Prefer `const` correctness
+- Include CMakeLists.txt or Makefile for build configuration
+
+## CI/CD and Local Testing
+
+This repository uses GitHub Actions for continuous integration with separate workflows for each language:
+
+- **Python** (`python-tests.yml`): Runs pytest on Python 3.10 and 3.11
+- **Node.js** (`node-tests.yml`): Runs Vitest for JavaScript tests
+- **Go** (`go-tests.yml`): Runs `go test` for each Go module
+- **Rust** (`rust-tests.yml`): Runs `cargo test` for each Rust crate
+
+### Running Tests Locally
+
+```bash
+# Python tests
+python -m pip install -r requirements.txt
+python -m pytest tests/
+
+# JavaScript tests
+npm install
+npm run test
+
+# Go tests (from module directory)
+go test ./...
+
+# Rust tests (from crate directory)
+cargo test
+```
+
+## Error Handling Patterns
+
+- Use specific exception types rather than generic exceptions
+- Include context in error messages (what failed, why, and how to fix)
+- Log errors appropriately before re-raising or returning
+- For API endpoints, return structured error responses with appropriate HTTP status codes
+
+## Security Considerations
+
+- Never commit secrets, API keys, or credentials to the repository
+- Use environment variables for sensitive configuration
+- Validate and sanitize user inputs
+- Use parameterized queries for database operations
+- Keep dependencies updated to patch security vulnerabilities
+
+## Preferred Libraries
+
+### Python
+- Web frameworks: FastAPI, Flask
+- Data processing: pandas, numpy
+- Testing: pytest
+- Database: SQLAlchemy, SQLite
+- Cryptography: cryptography (Fernet)
+- Image processing: Pillow, imagehash
+
+### JavaScript
+- Testing: Vitest
+- Build tools: npm scripts
+
+### Rust
+- Error handling: thiserror, anyhow
+- Serialization: serde
+- CLI: clap
+
+### Go
+- Testing: built-in testing package
+- HTTP: net/http (standard library)
