@@ -149,7 +149,7 @@ This repository contains programming challenges across five categories: **Practi
 | 31 | Voxel-based Terrain Engine | (H) | | Render world in "chunks." Use Perlin noise for terrain generation. Greedy meshing for optimization. |
 | 32 | Ray Tracer | (H) | | For each pixel, cast a ray. Find closest intersection (sphere, plane). Recurse for reflection/shadows. |
 | 33 | City Power Grid Simulator | (H) | | Model as a graph. Nodes=stations/users, Edges=lines. Simulate power flow and cascading failures. |
-| 34 | Planetary Climate Toy Model | (H) | | Energy Balance Model: `E_in` (solar) vs `E_out` (black-body radiation). Add greenhouse effect, albedo. |
+| 34 | Planetary Climate Toy Model | (H) | Implemented (Python) | Energy Balance Model: `E_in` (solar) vs `E_out` (black-body radiation). Add greenhouse effect, albedo. |
 | 35 | Compiler IR Visualizer | (H) | | Use a parser generator (e.g., `ANTLR`) to build AST. Convert AST to basic blocks (e.g., 3-address code). |
 | 36 | Packet Sniffer + Playback Simulator | (H) | | Use `scapy` or `pcap` to capture. Save to `.pcap` file. Replay by sending packets with original timings. |
 | 37 | Database Transaction Simulator | (H) | | Implement 2-Phase Locking (2PL). Build a "waits-for" graph to detect deadlocks. |
