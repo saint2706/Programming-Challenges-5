@@ -18,15 +18,26 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
+        if: ${{ !env.ACT }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Set up Python (act)
+        if: ${{ env.ACT }}
+        run: |
+          # Use pre-installed Python in act environment with virtual env
+          python3 -m venv .venv
+          echo "PATH=$(pwd)/.venv/bin:$PATH" >> $GITHUB_ENV
+          .venv/bin/python3 --version
+
       - name: Get pip cache directory
+        if: ${{ !env.ACT }}
         id: pip-cache
         run: echo "dir=$(python -m pip cache dir)" >> "$GITHUB_OUTPUT"
 
       - name: Cache pip dependencies
+        if: ${{ !env.ACT }}
         uses: actions/cache@v4
         with:
           path: ${{ steps.pip-cache.outputs.dir }}
@@ -36,11 +47,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
+          python3 -m pip install --upgrade pip
           if [ -f requirements.txt ]; then
-            python -m pip install -r requirements.txt
+            python3 -m pip install -r requirements.txt
           fi
-          python -m pip install pytest
+          python3 -m pip install pytest
 
       - name: Run tests
-        run: python -m pytest tests/
+        run: python3 -m pytest tests/

@@ -31,15 +31,24 @@ jobs:
           - Algorithmic/TurnPenaltyRouting
           - Algorithmic/TwoDRangeQuery
     steps:
+      - name: Check if running in act
+        if: ${{ env.ACT }}
+        run: |
+          echo "Skipping Go tests in act environment (Go not pre-installed)"
+          exit 0
+
       - name: Checkout repository
+        if: ${{ !env.ACT }}
         uses: actions/checkout@v4
 
       - name: Setup Go
+        if: ${{ !env.ACT }}
         uses: actions/setup-go@v5
         with:
           go-version: '1.21'
           cache: true
 
       - name: Run tests
+        if: ${{ !env.ACT }}
         working-directory: ${{ matrix.module }}
         run: go test ./...

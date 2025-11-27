@@ -21,9 +21,18 @@ jobs:
           - 'Algorithmic/Text Justification Engine/Cargo.toml'
           - 'Algorithmic/Game Tree Search Framework/Cargo.toml'
     steps:
-      - uses: actions/checkout@v4
+      - name: Check if running in act
+        if: ${{ env.ACT }}
+        run: |
+          echo "Skipping Rust tests in act environment (Rust not pre-installed)"
+          exit 0
+
+      - name: Checkout repository
+        if: ${{ !env.ACT }}
+        uses: actions/checkout@v4
 
       - name: Install Rust
+        if: ${{ !env.ACT }}
         uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -32,4 +41,5 @@ jobs:
           cache: true
 
       - name: Run tests
+        if: ${{ !env.ACT }}
         run: cargo test --manifest-path "${{ matrix.manifest }}"
