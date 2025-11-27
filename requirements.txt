@@ -11,6 +11,10 @@ markdown
 mmh3
 seaborn
 nltk
+fastapi
+uvicorn
+sqlalchemy
+pydantic
 cryptography
 streamlit
 ydata-profiling
