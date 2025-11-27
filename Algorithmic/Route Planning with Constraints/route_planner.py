@@ -17,7 +17,14 @@ class Graph:
         self.adj: Dict[str, List[Tuple[str, float]]] = {}
 
     def add_edge(self, u: str, v: str, weight: float, directed: bool = False):
-        """Add an edge to the graph."""
+        """Add an edge to the graph.
+
+        Args:
+            u: Source node.
+            v: Destination node.
+            weight: Edge weight/cost.
+            directed: If True, add only u->v; otherwise add both directions.
+        """
         if u not in self.adj:
             self.adj[u] = []
         if v not in self.adj:
