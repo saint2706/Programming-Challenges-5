@@ -12,8 +12,14 @@ import random
 import matplotlib.pyplot as plt
 
 
+"""
+Module for simulating a single-server queue (M/M/1).
+"""
+
+
 @dataclass
 class Event:
+    """Represents a discrete event in the simulation."""
     time: float
     kind: str  # "arrival" or "departure"
 
@@ -23,6 +29,7 @@ class Event:
 
 @dataclass
 class SimulationResult:
+    """Container for statistics collected during the simulation."""
     end_time: float
     arrivals: int
     served: int
@@ -35,6 +42,14 @@ class SimulationResult:
 
 
 class QueueingSystemSimulator:
+    """
+    Simulates an M/M/1 queue using a discrete-event approach.
+
+    Attributes:
+        arrival_rate (float): Poisson arrival rate (lambda).
+        service_rate (float): Exponential service rate (mu).
+        random (random.Random): Random number generator instance.
+    """
     def __init__(self, arrival_rate: float, service_rate: float, seed: Optional[int] = None):
         if arrival_rate <= 0 or service_rate <= 0:
             raise ValueError("Rates must be positive")
@@ -46,12 +61,24 @@ class QueueingSystemSimulator:
         self.busy_time = 0.0
 
     def _sample_interarrival(self) -> float:
+        """Generate the next interarrival time from an exponential distribution."""
         return self.random.expovariate(self.arrival_rate)
 
     def _sample_service(self) -> float:
+        """Generate a service time from an exponential distribution."""
         return self.random.expovariate(self.service_rate)
 
     def run(self, *, max_time: Optional[float] = None, max_customers: Optional[int] = None) -> SimulationResult:
+        """
+        Execute the simulation until a stopping condition is met.
+
+        Args:
+            max_time (Optional[float]): Stop after this much simulated time.
+            max_customers (Optional[int]): Stop after serving this many customers.
+
+        Returns:
+            SimulationResult: Collected statistics and history.
+        """
         if max_time is None and max_customers is None:
             raise ValueError("Provide max_time or max_customers to bound the simulation")
 
@@ -138,6 +165,7 @@ class QueueingSystemSimulator:
 
 
 def plot_results(result: SimulationResult, output_dir: str) -> None:
+    """Generate and save plots for queue size over time and wait time distribution."""
     os.makedirs(output_dir, exist_ok=True)
 
     times, sizes = zip(*result.queue_history)
