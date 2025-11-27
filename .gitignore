@@ -10,5 +10,8 @@ media/
 .DS_Store
 Thumbs.db
 
+# Generated scheduling playground artifacts
+EmulationModeling/17_scheduling_visual_playground/sample_outputs/
+
 # Rust
 target/
