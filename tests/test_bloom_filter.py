@@ -79,6 +79,8 @@ def test_bloom_filter_analyzer():
     assert all(len(s) == 8 for s in test_data)
     
     # Test false positive rate measurement
+    # Note: test_false_positive_rate adds inserted items to the bloom filter
+    # so we provide empty bloom filter and let the method populate it
     bf = BloomFilter(capacity=100, false_positive_rate=0.1)
     inserted = analyzer.generate_test_data(50)
     test_items = analyzer.generate_test_data(100)

@@ -53,7 +53,9 @@ def create_symlink(link_path: Path, target_path: Path) -> None:
         if link_path.is_symlink():
             link_path.unlink()
         elif link_path.is_dir():
-            # Don't remove actual directories
+            # Skip if an actual directory exists - this can happen when running
+            # tests from the repo without act, or if the directory was created
+            # manually. In this case, the real directory should be used.
             return
     
     if target_path.exists():
