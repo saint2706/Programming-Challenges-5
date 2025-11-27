@@ -11,3 +11,4 @@ markdown
 mmh3
 seaborn
 nltk
+cryptography
