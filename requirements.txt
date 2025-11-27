@@ -11,3 +11,7 @@ markdown
 mmh3
 seaborn
 nltk
+fastapi
+uvicorn
+sqlalchemy
+pydantic
