@@ -1,3 +1,14 @@
+"""Smart Download Manager with multi-threaded chunk downloading.
+
+This module provides a command-line tool for downloading files with support for:
+- Multi-threaded concurrent chunk downloads for faster speeds
+- Progress bar visualization
+- MD5 checksum verification
+- HTTP Range requests for resumable downloads
+
+Usage:
+    python downloader.py <url> [-t threads] [-o output] [-c checksum]
+"""
 import argparse
 import requests
 import threading
@@ -6,7 +17,16 @@ import time
 import hashlib
 from tqdm import tqdm
 
+
 def get_file_size(url):
+    """Get the size of a remote file via HTTP HEAD request.
+
+    Args:
+        url: The URL to check.
+
+    Returns:
+        int: The file size in bytes, or 0 if unavailable.
+    """
     try:
         response = requests.head(url, allow_redirects=True)
         return int(response.headers.get('content-length', 0))
@@ -15,6 +35,16 @@ def get_file_size(url):
         return 0
 
 def download_chunk(url, start, end, filename, chunk_id, progress_bar=None):
+    """Download a specific byte range of a file.
+
+    Args:
+        url: The URL to download from.
+        start: Start byte position.
+        end: End byte position.
+        filename: Local file to write to.
+        chunk_id: Identifier for this chunk (for logging).
+        progress_bar: Optional tqdm progress bar to update.
+    """
     headers = {'Range': f'bytes={start}-{end}'}
     try:
         response = requests.get(url, headers=headers, stream=True)
@@ -29,13 +59,31 @@ def download_chunk(url, start, end, filename, chunk_id, progress_bar=None):
         print(f"Error downloading chunk {chunk_id}: {e}")
 
 def calculate_checksum(filename, algorithm='md5'):
+    """Calculate the hash checksum of a file.
+
+    Args:
+        filename: Path to the file.
+        algorithm: Hash algorithm name (default 'md5').
+
+    Returns:
+        str: Hexadecimal digest of the file hash.
+    """
     hash_func = getattr(hashlib, algorithm)()
     with open(filename, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
             hash_func.update(chunk)
     return hash_func.hexdigest()
 
+
 def download_file(url, num_threads=4, output_file=None, checksum=None):
+    """Download a file using multiple threads.
+
+    Args:
+        url: The URL to download.
+        num_threads: Number of concurrent download threads.
+        output_file: Output filename (defaults to URL basename).
+        checksum: Expected MD5 checksum for verification.
+    """
     if not output_file:
         output_file = url.split('/')[-1]
 
@@ -78,6 +126,7 @@ def download_file(url, num_threads=4, output_file=None, checksum=None):
             print(f"Checksum verification failed! Expected {checksum}, got {calculated_checksum}")
 
 def main():
+    """Entry point for the download manager CLI."""
     parser = argparse.ArgumentParser(description="Smart Download Manager")
     parser.add_argument("url", help="URL of the file to download")
     parser.add_argument("-t", "--threads", type=int, default=4, help="Number of threads (default: 4)")

@@ -1,7 +1,24 @@
+"""Elevator system model using discrete event simulation with SimPy.
+
+This module simulates an elevator system with multiple elevators using
+a SCAN-like scheduling algorithm. Supports configurable number of
+elevators, floors, and capacity.
+"""
 import simpy
 
+
 class Elevator:
+    """Simulates a single elevator with SCAN-like behavior."""
+
     def __init__(self, env, id, floors=10, capacity=8):
+        """Initialize an elevator.
+
+        Args:
+            env: SimPy environment.
+            id: Unique identifier for this elevator.
+            floors: Total number of floors in the building.
+            capacity: Maximum passenger capacity.
+        """
         self.env = env
         self.id = id
         self.floors = floors
@@ -19,6 +36,7 @@ class Elevator:
         self.travel_time_per_floor = 2
 
     def request_floor(self, floor):
+        """Add a floor to the elevator's stop list."""
         self.stops.add(floor)
         if self.direction == 0:
             if floor > self.current_floor:
@@ -27,6 +45,7 @@ class Elevator:
                 self.direction = -1
 
     def run(self):
+        """Main elevator control loop (SimPy process)."""
         while True:
             if not self.stops:
                 self.direction = 0
@@ -63,10 +82,28 @@ class Elevator:
                 self.current_floor += self.direction
 
 class Controller:
+    """Elevator dispatch controller using nearest-elevator heuristic."""
+
     def __init__(self, env, num_elevators=2, floors=10):
+        """Initialize the controller with multiple elevators.
+
+        Args:
+            env: SimPy environment.
+            num_elevators: Number of elevators to manage.
+            floors: Total number of floors.
+        """
         self.elevators = [Elevator(env, i, floors) for i in range(num_elevators)]
 
     def call_elevator(self, floor, direction):
+        """Dispatch the best elevator to answer a hall call.
+
+        Args:
+            floor: Floor where the call originated.
+            direction: Requested direction (1=up, -1=down).
+
+        Returns:
+            int: ID of the dispatched elevator.
+        """
         # Dispatch logic: find best elevator
         # Simple heuristic: find nearest elevator moving in same direction or idle
         best_elevator = None

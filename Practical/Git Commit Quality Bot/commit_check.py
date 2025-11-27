@@ -1,7 +1,27 @@
+"""Git commit message validator.
+
+This module validates commit messages against common best practices:
+- Subject line <= 50 characters
+- Subject starts with a capital letter
+- Subject does not end with a period
+- Blank line between subject and body (if body exists)
+
+Usage:
+    python commit_check.py <commit_message_file>
+"""
 import sys
 import re
 
+
 def validate_commit_message(message_file):
+    """Validate a commit message file against best practices.
+
+    Args:
+        message_file: Path to file containing the commit message.
+
+    Raises:
+        SystemExit: With code 1 if validation fails, 0 if valid.
+    """
     with open(message_file, 'r') as f:
         lines = f.readlines()
 

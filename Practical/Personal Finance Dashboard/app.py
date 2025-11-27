@@ -1,3 +1,13 @@
+"""Personal Finance Dashboard using Streamlit.
+
+A web-based dashboard for analyzing personal spending data from CSV exports.
+Supports columns like date, amount, category, and description. Features
+interactive filters and visualizations including spending trends, category
+breakdowns, and summary metrics.
+
+Run with:
+    streamlit run app.py
+"""
 import io
 
 import pandas as pd
@@ -9,6 +19,16 @@ st.set_page_config(page_title="Personal Finance Dashboard", layout="wide")
 
 
 def _rename_columns(df: pd.DataFrame) -> pd.DataFrame:
+    """Normalize column names from various CSV formats.
+
+    Maps common column name variants to standard names (date, amount, category).
+
+    Args:
+        df: DataFrame with original column names.
+
+    Returns:
+        pd.DataFrame: DataFrame with standardized column names.
+    """
     renamed = {col: col.strip().lower() for col in df.columns}
     df = df.rename(columns=renamed)
 
@@ -37,6 +57,17 @@ def _rename_columns(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def load_csv(upload: io.BytesIO) -> pd.DataFrame:
+    """Load and validate a CSV file with transaction data.
+
+    Args:
+        upload: File-like object containing CSV data.
+
+    Returns:
+        pd.DataFrame: Cleaned DataFrame with date, amount, category columns.
+
+    Raises:
+        ValueError: If required columns are missing.
+    """
     df = pd.read_csv(upload)
     df = _rename_columns(df)
 
@@ -57,6 +88,14 @@ def load_csv(upload: io.BytesIO) -> pd.DataFrame:
 
 
 def add_sidebar_filters(df: pd.DataFrame) -> pd.DataFrame:
+    """Add sidebar filters for date range and categories.
+
+    Args:
+        df: DataFrame to filter.
+
+    Returns:
+        pd.DataFrame: Filtered DataFrame based on user selections.
+    """
     st.sidebar.header("Filters")
 
     min_date, max_date = df["date"].min(), df["date"].max()
@@ -86,6 +125,7 @@ def add_sidebar_filters(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def render_metrics(df: pd.DataFrame) -> None:
+    """Display summary metrics for the filtered transactions."""
     total_spend = df["amount"].sum()
     avg_daily = df.groupby("date")["amount"].sum().mean()
     top_category = (
@@ -100,6 +140,7 @@ def render_metrics(df: pd.DataFrame) -> None:
 
 
 def render_spending_over_time(df: pd.DataFrame) -> None:
+    """Render a line chart showing spending over time."""
     daily = df.groupby("date")["amount"].sum().reset_index()
     fig = px.line(daily, x="date", y="amount", title="Spending over time")
     fig.update_traces(mode="markers+lines")
@@ -108,6 +149,7 @@ def render_spending_over_time(df: pd.DataFrame) -> None:
 
 
 def render_category_breakdown(df: pd.DataFrame) -> None:
+    """Render bar and pie charts showing spending by category."""
     grouped = df.groupby("category")["amount"].sum().sort_values(ascending=False)
     summary = grouped.reset_index(name="amount")
 
@@ -121,6 +163,7 @@ def render_category_breakdown(df: pd.DataFrame) -> None:
 
 
 def main() -> None:
+    """Main entry point for the Streamlit dashboard."""
     st.title("Personal Finance Dashboard")
     st.write(
         "Upload CSV exports from your bank, credit card, or budgeting app. "

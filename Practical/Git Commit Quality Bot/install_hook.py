@@ -1,8 +1,26 @@
+"""Git commit message hook installer.
+
+This module installs a commit-msg hook that validates commit messages
+against common best practices (50 char subject, blank line after subject,
+capitalized first letter, no trailing period).
+
+Usage:
+    python install_hook.py
+"""
 import os
 import sys
 import stat
 
+
 def install_hook():
+    """Install the commit-msg hook in the current Git repository.
+
+    Searches for a .git directory in the current directory or parent
+    directories and installs a hook that validates commit messages.
+
+    Raises:
+        SystemExit: If not in a Git repository or installation fails.
+    """
     git_dir = os.path.join(os.getcwd(), '.git')
     if not os.path.exists(git_dir):
         # Try to find .git in parent directories
