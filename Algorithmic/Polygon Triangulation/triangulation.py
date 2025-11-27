@@ -1,7 +1,15 @@
+"""Polygon triangulation using the Ear Clipping algorithm.
+
+This module provides functions to triangulate simple polygons by iteratively
+finding and removing "ear" vertices. The algorithm runs in O(n^2) time.
+"""
 import numpy as np
 from typing import List, Tuple
 
+
 class Point:
+    """2D point representation."""
+
     def __init__(self, x, y):
         self.x = x
         self.y = y

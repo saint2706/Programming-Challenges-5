@@ -1,3 +1,11 @@
+"""MNIST handwritten digit classifier using a Convolutional Neural Network.
+
+This module implements a simple CNN architecture for classifying MNIST digits.
+Uses PyTorch with Conv2d layers, max pooling, and fully connected layers.
+
+Usage:
+    python mnist_cnn.py --epochs 5 --batch-size 64
+"""
 import argparse
 from typing import Tuple
 
@@ -8,6 +16,16 @@ from torchvision import datasets, transforms
 
 
 def build_dataloaders(batch_size: int, use_subset: bool, subset_size: int) -> Tuple[DataLoader, DataLoader]:
+    """Create training and test data loaders for MNIST.
+
+    Args:
+        batch_size: Number of samples per batch.
+        use_subset: If True, use only a subset of training data.
+        subset_size: Number of training samples when subset is enabled.
+
+    Returns:
+        Tuple of (train_loader, test_loader).
+    """
     transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.1307,), (0.3081,)),
@@ -26,7 +44,10 @@ def build_dataloaders(batch_size: int, use_subset: bool, subset_size: int) -> Tu
 
 
 class MnistCNN(nn.Module):
+    """Simple CNN for MNIST digit classification."""
+
     def __init__(self) -> None:
+        """Initialize the CNN architecture."""
         super().__init__()
         self.conv1 = nn.Conv2d(1, 32, kernel_size=3)
         self.conv2 = nn.Conv2d(32, 64, kernel_size=3)
@@ -36,6 +57,7 @@ class MnistCNN(nn.Module):
         self.fc2 = nn.Linear(128, 10)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """Forward pass through the network."""
         x = torch.relu(self.conv1(x))
         x = self.pool(torch.relu(self.conv2(x)))
         x = self.dropout(x)
@@ -46,6 +68,11 @@ class MnistCNN(nn.Module):
 
 
 def train_epoch(model: nn.Module, dataloader: DataLoader, criterion: nn.Module, optimizer: optim.Optimizer, device: torch.device) -> float:
+    """Train the model for one epoch.
+
+    Returns:
+        float: Average training loss for the epoch.
+    """
     model.train()
     running_loss = 0.0
     for images, labels in dataloader:
@@ -63,6 +90,11 @@ def train_epoch(model: nn.Module, dataloader: DataLoader, criterion: nn.Module, 
 
 
 def evaluate(model: nn.Module, dataloader: DataLoader, device: torch.device) -> Tuple[float, float]:
+    """Evaluate model accuracy and loss on a dataset.
+
+    Returns:
+        Tuple of (average_loss, accuracy_percentage).
+    """
     model.eval()
     correct = 0
     total = 0
@@ -85,6 +117,7 @@ def evaluate(model: nn.Module, dataloader: DataLoader, device: torch.device) -> 
 
 
 def parse_args() -> argparse.Namespace:
+    """Parse command-line arguments."""
     parser = argparse.ArgumentParser(description="Train a CNN on MNIST")
     parser.add_argument("--epochs", type=int, default=1, help="Number of training epochs")
     parser.add_argument("--batch-size", type=int, default=64, help="Batch size for data loaders")
@@ -105,6 +138,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    """Main training loop."""
     args = parse_args()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

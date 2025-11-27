@@ -1,3 +1,15 @@
+"""Encrypted Notes Vault with Tkinter GUI.
+
+A secure notes application that encrypts notes using Fernet symmetric
+encryption with a password-derived key (PBKDF2). Notes are stored
+encrypted in a JSON file and can only be accessed with the master password.
+
+Features:
+- Master password protection
+- AES encryption via Fernet
+- PBKDF2 key derivation with SHA256
+- Simple Tkinter-based GUI
+"""
 import tkinter as tk
 from tkinter import messagebox, simpledialog, scrolledtext
 import json
@@ -9,9 +21,21 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 DATA_FILE = "vault.json"
 
+
 class Security:
+    """Utility class for encryption/decryption operations."""
+
     @staticmethod
     def derive_key(password: str, salt: bytes) -> bytes:
+        """Derive an encryption key from a password using PBKDF2.
+
+        Args:
+            password: The master password.
+            salt: Random salt bytes.
+
+        Returns:
+            bytes: URL-safe base64-encoded Fernet key.
+        """
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,
@@ -22,6 +46,15 @@ class Security:
 
     @staticmethod
     def encrypt(data: dict, password: str) -> dict:
+        """Encrypt data using Fernet symmetric encryption.
+
+        Args:
+            data: Dictionary to encrypt.
+            password: Master password for key derivation.
+
+        Returns:
+            dict: Contains base64-encoded salt and encrypted data.
+        """
         salt = os.urandom(16)
         key = Security.derive_key(password, salt)
         f = Fernet(key)
@@ -34,6 +67,15 @@ class Security:
 
     @staticmethod
     def decrypt(encrypted_store: dict, password: str) -> dict:
+        """Decrypt data encrypted by the encrypt method.
+
+        Args:
+            encrypted_store: Dictionary with salt and encrypted data.
+            password: Master password for key derivation.
+
+        Returns:
+            dict: Decrypted data, or None if decryption fails.
+        """
         salt = base64.b64decode(encrypted_store["salt"])
         token = base64.b64decode(encrypted_store["data"])
         key = Security.derive_key(password, salt)
@@ -45,7 +87,14 @@ class Security:
             return None
 
 class VaultApp:
+    """Main application class for the encrypted notes vault GUI."""
+
     def __init__(self, root):
+        """Initialize the vault application.
+
+        Args:
+            root: Tkinter root window.
+        """
         self.root = root
         self.root.title("Encrypted Notes Vault")
         self.root.geometry("600x400")

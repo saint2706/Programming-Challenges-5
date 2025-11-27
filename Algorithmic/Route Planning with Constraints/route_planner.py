@@ -1,30 +1,67 @@
+"""Route planning with constraints using modified Dijkstra's algorithm.
+
+This module provides route planning capabilities with support for:
+- Required waypoints (must-visit nodes)
+- Forbidden nodes and edges
+- Shortest path computation via Dijkstra's algorithm
+"""
 import heapq
 from typing import List, Dict, Set, Tuple, Optional, Any
 
+
 class Graph:
+    """Weighted graph representation using adjacency lists."""
+
     def __init__(self):
         # Adjacency list: node -> list of (neighbor, weight)
         self.adj: Dict[str, List[Tuple[str, float]]] = {}
 
     def add_edge(self, u: str, v: str, weight: float, directed: bool = False):
-        if u not in self.adj: self.adj[u] = []
-        if v not in self.adj: self.adj[v] = []
+        """Add an edge to the graph.
+
+        Args:
+            u: Source node.
+            v: Destination node.
+            weight: Edge weight/cost.
+            directed: If True, add only u->v; otherwise add both directions.
+        """
+        if u not in self.adj:
+            self.adj[u] = []
+        if v not in self.adj:
+            self.adj[v] = []
 
         self.adj[u].append((v, weight))
         if not directed:
             self.adj[v].append((u, weight))
 
+
 class RoutePlanner:
+    """Route planner supporting constrained shortest path queries."""
+
     def __init__(self, graph: Graph):
+        """Initialize with a graph.
+
+        Args:
+            graph: The graph to plan routes on.
+        """
         self.graph = graph
 
     def dijkstra(self, start: str, end: Optional[str] = None, forbidden_nodes: Set[str] = None, forbidden_edges: Set[Tuple[str, str]] = None) -> Tuple[Dict[str, float], Dict[str, str]]:
+        """Run Dijkstra's algorithm with optional constraints.
+
+        Args:
+            start: Starting node.
+            end: Optional target node (stops early if reached).
+            forbidden_nodes: Nodes to exclude from paths.
+            forbidden_edges: Edges to exclude from paths.
+
+        Returns:
+            Tuple of (distances dict, predecessors dict).
         """
-        Standard Dijkstra.
-        Returns (distances, predecessors).
-        """
-        if forbidden_nodes is None: forbidden_nodes = set()
-        if forbidden_edges is None: forbidden_edges = set()
+        if forbidden_nodes is None:
+            forbidden_nodes = set()
+        if forbidden_edges is None:
+            forbidden_edges = set()
 
         distances = {node: float('inf') for node in self.graph.adj}
         distances[start] = 0
@@ -56,6 +93,7 @@ class RoutePlanner:
         return distances, predecessors
 
     def reconstruct_path(self, predecessors: Dict[str, str], start: str, end: str) -> List[str]:
+        """Reconstruct the path from start to end using predecessors dict."""
         path = []
         curr = end
         while curr is not None:

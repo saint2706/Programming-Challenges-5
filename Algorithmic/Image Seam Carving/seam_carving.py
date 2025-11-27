@@ -1,3 +1,9 @@
+"""Seam carving algorithm for content-aware image resizing.
+
+This module implements the seam carving algorithm which resizes images
+by intelligently removing or adding seams (paths of least importance)
+rather than scaling uniformly. Uses dynamic programming to find optimal seams.
+"""
 import numpy as np
 from PIL import Image
 from typing import Tuple, Optional
