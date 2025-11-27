@@ -177,7 +177,7 @@ This repository contains programming challenges across five categories: **Practi
 | 3 | Spam Filter (Naive Bayes) | (E) | Implemented (Python) | Use `scikit-learn`'s `MultinomialNB`. Tokenize text and use `CountVectorizer` for features. |
 | 4 | Classic Game AI (Tic-Tac-Toe, Connect-4) | (M) | Implemented (Python) | Implement Minimax algorithm. Connect-4 is harder and may need alpha-beta pruning. |
 | 5 | Reinforcement Learning for CartPole | (M) | Implemented (Python) | Use OpenAI `Gym`. Q-learning: discretize state space. Policy Gradient: simple NN model. |
-| 6 | Genetic Algorithm for Traveling Salesman | (M) | | Chromosome = path (permutation of cities). Crossover = (e.g.,) order crossover (OX). Mutation = swap two cities. |
+| 6 | Genetic Algorithm for Traveling Salesman | (M) | Implemented (Python) | Chromosome = path (permutation of cities). Crossover = (e.g.,) order crossover (OX). Mutation = swap two cities. |
 | 7 | Handwritten Digit Classifier | (M) | | Use `PyTorch` or `TensorFlow`. A simple CNN: Conv -> ReLU -> Pool -> Conv -> ReLU -> Pool -> FC -> Softmax. |
 | 8 | Movie Recommender System | (M) | | Collaborative: user-item matrix (e.g., SVD). Content-based: item-feature matrix (genres, actors). |
 | 9 | Time-Series Forecasting Toolkit | (M) | | Use `statsmodels` for ARIMA. `prophet` (by Facebook) is good. RNN/LSTM (`PyTorch`) for complex patterns. |
@@ -222,6 +222,12 @@ This repository contains programming challenges across five categories: **Practi
 | 48 | Multi-Modal Search (Text + Image) | (I) | | Use a pre-trained `CLIP` model. It maps text and images to the *same* embedding space. Search = vector search. |
 | 49 | AI Dungeon Master | (I) | | LLM for story. Hard part is state tracking: `(player_inventory, world_state)` must be fed back into context. |
 | 50 | Agentic Coding Assistant | (I) | | ReAct framework: LLM generates (Thought, Action). Action = (e.g., `read_file`, `run_test`, `edit_code`). Loop until done. |
+
+Run the Traveling Salesman genetic algorithm demo with:
+
+```
+python ArtificialIntelligence/tsp_genetic.py
+```
 
 ## 5. Game Development Challenges
 
