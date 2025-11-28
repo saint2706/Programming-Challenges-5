@@ -3,6 +3,7 @@
 A small SQLite-backed CLI for adding, searching, and exporting code snippets with tags and terminal syntax highlighting.
 
 ## Features
+
 - SQLite schema with `snippets`, `tags`, and `snippet_tags` tables (many-to-many tagging).
 - Add snippets with arbitrary tags and store their creation timestamp.
 - List, search (by keywords in title/code or by required tags), and show detailed, syntax-highlighted snippets.
@@ -10,6 +11,7 @@ A small SQLite-backed CLI for adding, searching, and exporting code snippets wit
 - Uses [Pygments](https://pygments.org/) to render highlighted code directly in the terminal.
 
 ## Installation
+
 Install dependencies (Pygments is required for highlighting):
 
 ```bash
@@ -17,6 +19,7 @@ pip install -r requirements.txt
 ```
 
 ## Usage
+
 Run commands from this directory (or provide an explicit `--db` path to place the SQLite file elsewhere):
 
 ```bash

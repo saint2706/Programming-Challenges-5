@@ -5,6 +5,7 @@ A space-efficient probabilistic data structure that is used to test whether an e
 ![Bloom Filter Visualization](bloom_filter_viz.gif)
 
 ## 📋 Table of Contents
+
 - [Theory](#theory)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -13,20 +14,22 @@ A space-efficient probabilistic data structure that is used to test whether an e
 
 ## 🧠 Theory
 
-A **Bloom filter** is a data structure designed to tell you, rapidly and memory-efficiently, whether an element is present in a set. The price for this efficiency is that a Bloom filter is a **probabilistic** data structure: it tells us that the element either *definitely is not* in the set or *may be* in the set.
+A **Bloom filter** is a data structure designed to tell you, rapidly and memory-efficiently, whether an element is present in a set. The price for this efficiency is that a Bloom filter is a **probabilistic** data structure: it tells us that the element either _definitely is not_ in the set or _may be_ in the set.
 
 ### How It Works
+
 1.  **Initialization**: Start with a bit array of size $m$ set to all 0s.
 2.  **Adding an Item**: To add an item, feed it to $k$ different hash functions. Each function maps the item to one of the $m$ array positions. Set the bits at these positions to 1.
 3.  **Checking an Item**: To check if an item is in the set, feed it to the same $k$ hash functions to get $k$ positions.
-    -   If **any** of the bits at these positions is 0, the item is **definitely not** in the set.
-    -   If **all** of the bits are 1, the item is **probably** in the set (though it might be a false positive).
+    - If **any** of the bits at these positions is 0, the item is **definitely not** in the set.
+    - If **all** of the bits are 1, the item is **probably** in the set (though it might be a false positive).
 
 ### Optimal Parameters
--   **Size ($m$)**: Depends on the expected number of elements ($n$) and desired false positive rate ($p$).
-    $$m = -\frac{n \ln p}{(\ln 2)^2}$$
--   **Hash Functions ($k$)**:
-    $$k = \frac{m}{n} \ln 2$$
+
+- **Size ($m$)**: Depends on the expected number of elements ($n$) and desired false positive rate ($p$).
+  $$m = -\frac{n \ln p}{(\ln 2)^2}$$
+- **Hash Functions ($k$)**:
+  $$k = \frac{m}{n} \ln 2$$
 
 ## 💻 Installation
 
@@ -34,11 +37,12 @@ Ensure you have Python 3.8+ installed.
 
 1.  Clone the repository (if you haven't already).
 2.  Install dependencies:
+
     ```bash
     pip install mmh3 matplotlib numpy seaborn manim
     ```
 
-    *Note: `manim` is only required for the animation script (`visualize_bloom_filter.py`).*
+    _Note: `manim` is only required for the animation script (`visualize_bloom_filter.py`)._
 
 ## 🚀 Usage
 
@@ -74,19 +78,21 @@ analyzer.comprehensive_analysis()
 ## 📊 Complexity Analysis
 
 | Operation | Time Complexity | Space Complexity |
-| :--- | :--- | :--- |
-| **Add** | $O(k)$ | $O(m)$ |
-| **Check** | $O(k)$ | $O(m)$ |
+| :-------- | :-------------- | :--------------- |
+| **Add**   | $O(k)$          | $O(m)$           |
+| **Check** | $O(k)$          | $O(m)$           |
 
 Where:
--   $k$ is the number of hash functions.
--   $m$ is the size of the bit array.
+
+- $k$ is the number of hash functions.
+- $m$ is the size of the bit array.
 
 **Note**: The space complexity is extremely low compared to storing the actual items. For example, for a 1% false positive rate, a Bloom filter requires only about **9.6 bits per element**, regardless of the size of the elements themselves.
 
 ## 🎬 Demos
 
 ### Running the Code Demo
+
 To see the Bloom Filter in action, including performance statistics and visualization plots:
 
 ```bash
@@ -94,12 +100,14 @@ python bloom.py
 ```
 
 This will run:
+
 1.  **Basic Functionality Demo**: Adds items and checks membership.
 2.  **False Positive Rate Analysis**: Compares theoretical vs. actual error rates.
 3.  **Visualization**: Plots error rates and displays the bit array heatmap.
 4.  **Stress Test**: Tests with 1 million elements.
 
 ### Generating the Animation
+
 To generate the explanation GIF using Manim:
 
 ```bash

@@ -1,9 +1,4 @@
-import {
-  buildHistoryFromSteps,
-  buildSteps,
-  createEmptyTable,
-  exportSnapshot,
-} from './dpLogic.js';
+import { buildHistoryFromSteps, buildSteps, createEmptyTable, exportSnapshot } from './dpLogic.js';
 
 const presetSelect = document.getElementById('preset');
 const rowsInput = document.getElementById('rows');
@@ -72,7 +67,8 @@ const renderTable = (tableState, activeStep = null) => {
       const cellDiv = document.createElement('div');
       cellDiv.className = 'cell';
       const isInit = steps.find(
-        (step, idx) => idx < currentStepIndex && step.type === 'init' && step.row === i && step.col === j,
+        (step, idx) =>
+          idx < currentStepIndex && step.type === 'init' && step.row === i && step.col === j
       );
       if (isInit) cellDiv.classList.add('init');
 

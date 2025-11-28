@@ -3,6 +3,7 @@
 A classic Snake game implementation with smooth controls and polished user experience.
 
 ## 📋 Table of Contents
+
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -19,6 +20,7 @@ A classic Snake game implementation with smooth controls and polished user exper
 ## 💻 Installation
 
 Ensure you have Python 3.8+ and pygame installed:
+
 ```bash
 pip install pygame
 ```
@@ -26,6 +28,7 @@ pip install pygame
 ## 🚀 Usage
 
 ### Running the Game
+
 ```bash
 cd GameDevelopment/01_Snake
 python main.py
@@ -33,10 +36,10 @@ python main.py
 
 ## 🎮 Controls
 
-| Key | Action |
-| :--- | :--- |
-| **Arrow Keys** | Change snake direction |
-| **ESC/Close Window** | Quit game |
+| Key                  | Action                 |
+| :------------------- | :--------------------- |
+| **Arrow Keys**       | Change snake direction |
+| **ESC/Close Window** | Quit game              |
 
 ## 🎯 Gameplay
 

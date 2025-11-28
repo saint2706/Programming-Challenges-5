@@ -3,6 +3,7 @@
 A classic sliding puzzle game where you arrange numbered tiles in order.
 
 ## 📋 Table of Contents
+
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -19,6 +20,7 @@ A classic sliding puzzle game where you arrange numbered tiles in order.
 ## 💻 Installation
 
 Ensure you have Python 3.8+ and pygame installed:
+
 ```bash
 pip install pygame
 ```
@@ -26,6 +28,7 @@ pip install pygame
 ## 🚀 Usage
 
 ### Running the Game
+
 ```bash
 cd GameDevelopment/03_PuzzleSlider
 python main.py
@@ -33,11 +36,11 @@ python main.py
 
 ## 🎮 Controls
 
-| Key | Action |
-| :--- | :--- |
-| **Mouse Click** | Slide a tile into the empty space |
-| **R** | Reshuffle the puzzle |
-| **ESC/Close Window** | Quit game |
+| Key                  | Action                            |
+| :------------------- | :-------------------------------- |
+| **Mouse Click**      | Slide a tile into the empty space |
+| **R**                | Reshuffle the puzzle              |
+| **ESC/Close Window** | Quit game                         |
 
 ## 🎯 Gameplay
 

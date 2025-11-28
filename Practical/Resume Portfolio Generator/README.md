@@ -3,12 +3,14 @@
 Generate resume-style HTML and PDF files from structured JSON data using Jinja2 templates and WeasyPrint.
 
 ## Contents
+
 - `data_schema.json`: JSON Schema describing required data fields.
 - `example_data.json`: Sample data to render a portfolio.
 - `generator.py`: CLI utility and helper class to render templates.
 - `templates/`: Jinja2 HTML and CSS assets (default `resume.html` and `style.css`).
 
 ## Usage
+
 1. Install dependencies:
    ```bash
    pip install jinja2 weasyprint

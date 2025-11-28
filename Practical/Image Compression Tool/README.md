@@ -3,6 +3,7 @@
 A lightweight Pillow-based utility to compress images with configurable JPEG quality and an optional lossless optimization pass. The script supports compressing a single image or batch processing a folder.
 
 ## Requirements
+
 - Python 3.9+
 - [Pillow](https://python-pillow.org/)
 

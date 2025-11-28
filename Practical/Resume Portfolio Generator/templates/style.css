@@ -17,12 +17,18 @@ body {
   margin: 0 auto;
   padding: 2.5rem;
   max-width: 900px;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family:
+    'Inter',
+    system-ui,
+    -apple-system,
+    sans-serif;
   background: var(--bg);
   color: var(--text);
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   margin: 0 0 0.25rem 0;
 }
 

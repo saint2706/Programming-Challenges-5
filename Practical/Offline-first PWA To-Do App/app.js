@@ -39,7 +39,9 @@ async function withStore(storeName, mode, fn) {
     const store = tx.objectStore(storeName);
     const request = fn(store, tx);
     tx.oncomplete = () =>
-      resolve(request && typeof request === 'object' && 'result' in request ? request.result : request);
+      resolve(
+        request && typeof request === 'object' && 'result' in request ? request.result : request
+      );
     tx.onerror = () => reject(tx.error);
     tx.onabort = () => reject(tx.error);
   });
@@ -156,7 +158,9 @@ async function deleteTask(id) {
 }
 
 function setStatus(isOnline) {
-  statusEl.textContent = isOnline ? 'Online - syncing changes' : 'Offline - changes will sync later';
+  statusEl.textContent = isOnline
+    ? 'Online - syncing changes'
+    : 'Offline - changes will sync later';
   statusEl.classList.toggle('online', isOnline);
   statusEl.classList.toggle('offline', !isOnline);
 }
@@ -224,12 +228,19 @@ async function renderTasks() {
 
     const statusPill = document.createElement('span');
     statusPill.className = `status-pill ${task.syncState === 'pending' ? 'syncing' : task.status === 'completed' ? 'completed' : 'pending'}`;
-    statusPill.textContent = task.syncState === 'pending' ? 'Pending sync' : task.status === 'completed' ? 'Completed' : 'Open';
+    statusPill.textContent =
+      task.syncState === 'pending'
+        ? 'Pending sync'
+        : task.status === 'completed'
+          ? 'Completed'
+          : 'Open';
 
     const toggleBtn = document.createElement('button');
     toggleBtn.className = 'btn-ghost';
     toggleBtn.textContent = task.status === 'completed' ? 'Mark open' : 'Complete';
-    toggleBtn.addEventListener('click', () => updateTask(task.id, { status: task.status === 'completed' ? 'pending' : 'completed' }));
+    toggleBtn.addEventListener('click', () =>
+      updateTask(task.id, { status: task.status === 'completed' ? 'pending' : 'completed' })
+    );
 
     const deleteBtn = document.createElement('button');
     deleteBtn.className = 'btn-ghost btn-danger';

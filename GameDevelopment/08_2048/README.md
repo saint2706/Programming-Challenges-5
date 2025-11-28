@@ -3,6 +3,7 @@
 The classic 2048 sliding puzzle game with smooth animations.
 
 ## 📋 Table of Contents
+
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -20,6 +21,7 @@ The classic 2048 sliding puzzle game with smooth animations.
 ## 💻 Installation
 
 Ensure you have Python 3.8+ and pygame installed:
+
 ```bash
 pip install pygame
 ```
@@ -27,6 +29,7 @@ pip install pygame
 ## 🚀 Usage
 
 ### Running the Game
+
 ```bash
 cd GameDevelopment/08_2048
 python main.py
@@ -34,11 +37,11 @@ python main.py
 
 ## 🎮 Controls
 
-| Key | Action |
-| :--- | :--- |
-| **Arrow Keys** | Slide tiles in that direction |
-| **R** | Restart game |
-| **ESC/Close Window** | Quit game |
+| Key                  | Action                        |
+| :------------------- | :---------------------------- |
+| **Arrow Keys**       | Slide tiles in that direction |
+| **R**                | Restart game                  |
+| **ESC/Close Window** | Quit game                     |
 
 ## 🎯 Gameplay
 

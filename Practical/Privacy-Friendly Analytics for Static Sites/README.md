@@ -19,6 +19,7 @@ The server creates the SQLite schema automatically on startup.
 ## API
 
 ### `POST /pageviews`
+
 Payload (JSON):
 
 ```json
@@ -35,45 +36,48 @@ Payload (JSON):
 - A best-effort rate limit rejects clients exceeding 120 requests per minute per IP with HTTP 429.
 
 ### `GET /health`
+
 Health probe returning `{ "status": "ok" }`.
 
 ## Beacon snippet (no cookies)
+
 Use the provided [`beacon-snippet.js`](./beacon-snippet.js) or inline the following:
 
 ```html
 <script>
-(function () {
-  const endpoint = 'https://your-domain.example.com/pageviews';
-  const payload = {
-    url: window.location.href,
-    referrer: document.referrer || null,
-    timestamp: new Date().toISOString(),
-    user_agent: navigator.userAgent,
-  };
+  (function () {
+    const endpoint = 'https://your-domain.example.com/pageviews';
+    const payload = {
+      url: window.location.href,
+      referrer: document.referrer || null,
+      timestamp: new Date().toISOString(),
+      user_agent: navigator.userAgent,
+    };
 
-  const body = JSON.stringify(payload);
+    const body = JSON.stringify(payload);
 
-  if (navigator.sendBeacon) {
-    const blob = new Blob([body], { type: 'application/json' });
-    navigator.sendBeacon(endpoint, blob);
-  } else {
-    fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body,
-      credentials: 'omit',
-      cache: 'no-store',
-      keepalive: true,
-      mode: 'cors',
-    }).catch(() => {});
-  }
-})();
+    if (navigator.sendBeacon) {
+      const blob = new Blob([body], { type: 'application/json' });
+      navigator.sendBeacon(endpoint, blob);
+    } else {
+      fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body,
+        credentials: 'omit',
+        cache: 'no-store',
+        keepalive: true,
+        mode: 'cors',
+      }).catch(() => {});
+    }
+  })();
 </script>
 ```
 
 The API allows CORS requests from any origin and does not depend on cookies.
 
 ## CLI report
+
 Aggregate page views by day and URL:
 
 ```bash

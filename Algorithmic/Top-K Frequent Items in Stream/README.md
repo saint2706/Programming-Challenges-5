@@ -5,6 +5,7 @@ Implementations of **Misra-Gries** and **Space-Saving** algorithms for finding f
 ![Misra-Gries Visualization](misra_gries_viz.gif)
 
 ## 📋 Table of Contents
+
 - [Theory](#theory)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -14,18 +15,22 @@ Implementations of **Misra-Gries** and **Space-Saving** algorithms for finding f
 ## 🧠 Theory
 
 ### Misra-Gries Algorithm
+
 Used to find items that appear more than $N/k$ times in a stream of length $N$.
--   Maintains $k-1$ counters.
--   If a new item matches a counter, increment it.
--   If not matching and space exists, add a new counter with count 1.
--   If counters are full, decrement **all** counters by 1 (effectively discarding $k$ distinct items at once).
+
+- Maintains $k-1$ counters.
+- If a new item matches a counter, increment it.
+- If not matching and space exists, add a new counter with count 1.
+- If counters are full, decrement **all** counters by 1 (effectively discarding $k$ distinct items at once).
 
 ### Space-Saving Algorithm
+
 Similar goal but provides better estimates in practice.
--   Maintains $k$ counters.
--   If a new item matches, increment.
--   If counters are full, **replace the item with the minimum count**, incrementing that count and tracking the "error" (the count of the evicted item).
--   Guarantees that the estimated count is at least the real count (overestimation).
+
+- Maintains $k$ counters.
+- If a new item matches, increment.
+- If counters are full, **replace the item with the minimum count**, incrementing that count and tracking the "error" (the count of the evicted item).
+- Guarantees that the estimated count is at least the real count (overestimation).
 
 ## 💻 Installation
 
@@ -65,14 +70,15 @@ print(ss.heavy_hitters())
 
 ## 📊 Complexity Analysis
 
-| Algorithm | Space Complexity | Time Complexity (per update) |
-| :--- | :--- | :--- |
-| **Misra-Gries** | $O(k)$ | $O(1)$ (Amortized) or $O(k)$ (Worst case) |
-| **Space-Saving** | $O(k)$ | $O(1)$ (using proper data structures) |
+| Algorithm        | Space Complexity | Time Complexity (per update)              |
+| :--------------- | :--------------- | :---------------------------------------- |
+| **Misra-Gries**  | $O(k)$           | $O(1)$ (Amortized) or $O(k)$ (Worst case) |
+| **Space-Saving** | $O(k)$           | $O(1)$ (using proper data structures)     |
 
 ## 🎬 Demos
 
 ### Generating the Animation
+
 To generate the Misra-Gries visualization:
 
 ```bash

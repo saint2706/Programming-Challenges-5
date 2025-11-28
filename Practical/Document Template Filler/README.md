@@ -27,15 +27,15 @@ Practical/Document Template Filler/
 
 1. Install dependencies
 
-    ```bash
-    pip install -r "Practical/Document Template Filler/requirements.txt"
-    ```
+   ```bash
+   pip install -r "Practical/Document Template Filler/requirements.txt"
+   ```
 
 2. Generate the sample templates (one-time)
 
-    ```bash
-    python "Practical/Document Template Filler/template_filler.py" --create-sample-templates
-    ```
+   ```bash
+   python "Practical/Document Template Filler/template_filler.py" --create-sample-templates
+   ```
 
 ## CLI usage
 

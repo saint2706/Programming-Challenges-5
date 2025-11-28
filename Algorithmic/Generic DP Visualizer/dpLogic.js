@@ -87,7 +87,7 @@ export function exportSnapshot(table, steps, currentStepIndex) {
       history: steps.slice(0, currentStepIndex),
     },
     null,
-    2,
+    2
   );
 }
 

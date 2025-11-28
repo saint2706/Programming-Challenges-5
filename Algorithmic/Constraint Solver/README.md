@@ -3,6 +3,7 @@
 A SAT solver implementing the DPLL algorithm with unit propagation, pure literal elimination, and clause learning.
 
 ## 📋 Table of Contents
+
 - [Theory](#theory)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -13,13 +14,16 @@ A SAT solver implementing the DPLL algorithm with unit propagation, pure literal
 **SAT (Boolean Satisfiability)** asks: given a Boolean formula in CNF (Conjunctive Normal Form), is there an assignment of variables that makes it true?
 
 ### DPLL Algorithm
+
 1. **Unit Propagation**: If a clause has only one literal, assign it to satisfy the clause
 2. **Pure Literal Elimination**: If a variable appears only as positive or only as negative, assign it
 3. **Branching**: Pick a variable, try both true and false
 4. **Backtracking**: If a branch leads to conflict, backtrack
 
 ### Clause Learning (CDCL)
+
 When a conflict occurs:
+
 - Analyze the conflict to find a "learned clause"
 - Add the clause to prevent repeating the same mistake
 - This dramatically improves performance
@@ -61,9 +65,9 @@ if solver.solve() {
 
 ## 📊 Complexity Analysis
 
-| Operation | Complexity |
-| :--- | :--- |
-| **Worst case** | $O(2^n)$ exponential |
-| **Practical** | Much faster with heuristics |
+| Operation      | Complexity                  |
+| :------------- | :-------------------------- |
+| **Worst case** | $O(2^n)$ exponential        |
+| **Practical**  | Much faster with heuristics |
 
 Where $n$ is the number of variables. Modern SAT solvers can handle millions of variables.

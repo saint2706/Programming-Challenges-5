@@ -15,7 +15,13 @@
 
   const simulation = d3
     .forceSimulation(GRAPH_DATA.nodes)
-    .force('link', d3.forceLink(GRAPH_DATA.links).id((d) => d.id).distance(120))
+    .force(
+      'link',
+      d3
+        .forceLink(GRAPH_DATA.links)
+        .id((d) => d.id)
+        .distance(120)
+    )
     .force('charge', d3.forceManyBody().strength(-350))
     .force('center', d3.forceCenter(width / 2, height / 2));
 

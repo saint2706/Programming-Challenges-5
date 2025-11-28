@@ -17,11 +17,11 @@ reaches equilibrium.
 - Absorbed solar energy (global mean):
   \[(1 - \alpha) \times S / 4\]
 - Outgoing longwave radiation: \[\epsilon\,\sigma T^4\]
-- Greenhouse factor: only a fraction ``(1 - g)`` of the outgoing infrared
+- Greenhouse factor: only a fraction `(1 - g)` of the outgoing infrared
   escapes to space.
 
-Where ``\alpha`` is albedo, ``S`` is the solar constant, ``g`` is the greenhouse
-factor, ``\epsilon`` is emissivity, and ``\sigma`` is the
+Where `\alpha` is albedo, `S` is the solar constant, `g` is the greenhouse
+factor, `\epsilon` is emissivity, and `\sigma` is the
 Stefan–Boltzmann constant.
 
 ## Usage
@@ -51,5 +51,5 @@ A small CLI demonstrates both models with adjustable parameters:
 python EmulationModeling/34_planetary_climate_model/demo.py --steps 5000 --zones 18 --plot
 ```
 
-The script prints equilibrium temperatures and, when ``--plot`` is provided,
-saves a ``latitudinal_profile.png`` showing the final 1D temperature structure.
+The script prints equilibrium temperatures and, when `--plot` is provided,
+saves a `latitudinal_profile.png` showing the final 1D temperature structure.

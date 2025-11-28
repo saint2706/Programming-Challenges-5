@@ -3,6 +3,7 @@
 A fast-paced typing game where words fall from the top of the screen.
 
 ## 📋 Table of Contents
+
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -19,6 +20,7 @@ A fast-paced typing game where words fall from the top of the screen.
 ## 💻 Installation
 
 Ensure you have Python 3.8+ and pygame installed:
+
 ```bash
 pip install pygame
 ```
@@ -26,6 +28,7 @@ pip install pygame
 ## 🚀 Usage
 
 ### Running the Game
+
 ```bash
 cd GameDevelopment/06_TypingGame
 python main.py
@@ -33,10 +36,10 @@ python main.py
 
 ## 🎮 Controls
 
-| Key | Action |
-| :--- | :--- |
-| **Keyboard** | Type to match falling words |
-| **ESC/Close Window** | Quit game |
+| Key                  | Action                      |
+| :------------------- | :-------------------------- |
+| **Keyboard**         | Type to match falling words |
+| **ESC/Close Window** | Quit game                   |
 
 ## 🎯 Gameplay
 

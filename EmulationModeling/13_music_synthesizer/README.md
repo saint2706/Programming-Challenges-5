@@ -3,12 +3,14 @@
 This Python script demonstrates a minimal music synthesizer that can generate sine, square, and sawtooth waveforms, shape them with an ADSR envelope, and play them through PyAudio. A small demo melody is included when running the module directly.
 
 ## Features
+
 - Waveform generation (sine, square, sawtooth) at configurable frequencies.
 - ADSR envelope control (attack, decay, sustain level, release) for shaping volume.
 - Multiple oscillators can be mixed to create richer tones.
 - Play back arbitrary melodies by providing note/duration pairs.
 
 ## Usage
+
 1. Install dependencies (NumPy and PyAudio):
    ```bash
    pip install -r ../requirements.txt
@@ -18,6 +20,7 @@ This Python script demonstrates a minimal music synthesizer that can generate si
    python synthesizer.py
    ```
 3. Import and play your own melody:
+
    ```python
    from synthesizer import play_melody, ADSR
 

@@ -3,6 +3,7 @@
 A small, configuration-driven hub for fanning out notifications to multiple providers. Providers are loaded dynamically from built-ins, Python entry points, or a plugins directory.
 
 ## Features
+
 - Abstract `NotificationProvider` with a simple `send(message, recipient)` interface.
 - Built-in mock providers: Email, Slack, and SMS.
 - Plugin discovery via entry points or a `plugins` folder.
@@ -10,6 +11,7 @@ A small, configuration-driven hub for fanning out notifications to multiple prov
 - Dispatcher that broadcasts notifications to every enabled provider.
 
 ## Package Layout
+
 - `providers/base.py`: `NotificationProvider` interface.
 - `providers/email.py`, `providers/slack.py`, `providers/sms.py`: built-in providers.
 - `providers/__init__.py`: discovery helpers for built-ins, entry points, and a plugins directory.
@@ -17,7 +19,9 @@ A small, configuration-driven hub for fanning out notifications to multiple prov
 - `dispatcher.py`: fan-out dispatcher for sending a message to all configured providers.
 
 ## Example configuration
+
 `config.yaml`:
+
 ```yaml
 providers:
   - name: email
@@ -29,14 +33,15 @@ providers:
     enabled: true
     options:
       webhook_url: https://hooks.slack.com/services/T000/B000/XXXX
-      channel: "#alerts"
+      channel: '#alerts'
   - name: sms
-    enabled: false  # disable temporarily
-plugins_dir: ./plugins  # optional, for local plugin modules
+    enabled: false # disable temporarily
+plugins_dir: ./plugins # optional, for local plugin modules
 entry_point_group: notification_providers
 ```
 
 Equivalent JSON:
+
 ```json
 {
   "providers": [
@@ -48,7 +53,10 @@ Equivalent JSON:
     {
       "name": "slack",
       "enabled": true,
-      "options": { "webhook_url": "https://hooks.slack.com/services/T000/B000/XXXX", "channel": "#alerts" }
+      "options": {
+        "webhook_url": "https://hooks.slack.com/services/T000/B000/XXXX",
+        "channel": "#alerts"
+      }
     },
     { "name": "sms", "enabled": false, "options": { "gateway": "twilio" } }
   ],
@@ -58,7 +66,9 @@ Equivalent JSON:
 ```
 
 ## Usage
+
 Because the package lives in a directory with spaces, load it via `importlib` and register the module name so plugin modules can import it:
+
 ```python
 import sys
 from importlib import util
@@ -88,7 +98,9 @@ dispatcher.notify_all(
 ```
 
 ## Writing a plugin
+
 Create a Python module in your `plugins_dir` that exposes a subclass of `NotificationProvider` via a module-level `provider` variable. The example below imports the base class through the registered module name used in the usage snippet above:
+
 ```python
 # plugins/pushbullet_plugin.py
 from pluggable_notification_hub.providers import NotificationProvider
@@ -100,8 +112,10 @@ class PushbulletProvider(NotificationProvider):
 
 provider = PushbulletProvider
 ```
+
 The hub will load the module, read the `provider` variable, and instantiate it using the options from your config file.
 
 ## Notes
+
 - The built-in providers print to stdout instead of sending real messages; replace the implementation details with API calls to your services as needed.
 - YAML support requires the optional `PyYAML` dependency. JSON parsing uses the Python standard library.

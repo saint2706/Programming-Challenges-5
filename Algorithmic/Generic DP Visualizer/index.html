@@ -1,74 +1,82 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Generic DP Visualizer</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <header>
-    <h1>Dynamic Programming Visualizer</h1>
-    <p>Enter a recurrence, choose a table size, and watch each cell fill with highlighted dependencies.</p>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generic DP Visualizer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Dynamic Programming Visualizer</h1>
+      <p>
+        Enter a recurrence, choose a table size, and watch each cell fill with highlighted
+        dependencies.
+      </p>
+    </header>
 
-  <section class="controls">
-    <div class="field">
-      <label for="preset">Sample preset</label>
-      <select id="preset"></select>
-    </div>
-    <div class="field grid">
-      <div>
-        <label for="rows">Rows</label>
-        <input id="rows" type="number" min="1" value="5" />
+    <section class="controls">
+      <div class="field">
+        <label for="preset">Sample preset</label>
+        <select id="preset"></select>
       </div>
-      <div>
-        <label for="cols">Columns</label>
-        <input id="cols" type="number" min="1" value="5" />
+      <div class="field grid">
+        <div>
+          <label for="rows">Rows</label>
+          <input id="rows" type="number" min="1" value="5" />
+        </div>
+        <div>
+          <label for="cols">Columns</label>
+          <input id="cols" type="number" min="1" value="5" />
+        </div>
+        <div>
+          <label for="base">Base value</label>
+          <input id="base" type="number" value="0" />
+        </div>
       </div>
-      <div>
-        <label for="base">Base value</label>
-        <input id="base" type="number" value="0" />
+      <div class="field">
+        <label for="recurrence">Recurrence</label>
+        <textarea id="recurrence" rows="3" placeholder="dp[i-1][j] + dp[i][j-1]"></textarea>
+        <small
+          >Use <code>i</code>, <code>j</code>, <code>dp</code> (2D array), and <code>ctx</code> for
+          preset helpers.</small
+        >
       </div>
-    </div>
-    <div class="field">
-      <label for="recurrence">Recurrence</label>
-      <textarea id="recurrence" rows="3" placeholder="dp[i-1][j] + dp[i][j-1]"></textarea>
-      <small>Use <code>i</code>, <code>j</code>, <code>dp</code> (2D array), and <code>ctx</code> for preset helpers.</small>
-    </div>
-    <div class="actions">
-      <button id="generate" class="primary">Generate steps</button>
-      <button id="snapshot">Export snapshot</button>
-    </div>
-  </section>
+      <div class="actions">
+        <button id="generate" class="primary">Generate steps</button>
+        <button id="snapshot">Export snapshot</button>
+      </div>
+    </section>
 
-  <section class="player">
-    <div class="controls-row">
-      <button id="prev">⏪ Prev</button>
-      <button id="play">▶️ Play</button>
-      <button id="pause">⏸️ Pause</button>
-      <button id="next">⏩ Next</button>
-      <button id="reset">🔁 Reset</button>
-    </div>
-    <div class="status">
-      <div id="step-label">No steps loaded.</div>
-      <div id="dependency-label"></div>
-    </div>
-  </section>
+    <section class="player">
+      <div class="controls-row">
+        <button id="prev">⏪ Prev</button>
+        <button id="play">▶️ Play</button>
+        <button id="pause">⏸️ Pause</button>
+        <button id="next">⏩ Next</button>
+        <button id="reset">🔁 Reset</button>
+      </div>
+      <div class="status">
+        <div id="step-label">No steps loaded.</div>
+        <div id="dependency-label"></div>
+      </div>
+    </section>
 
-  <section class="table-wrapper">
-    <div id="table"></div>
-  </section>
+    <section class="table-wrapper">
+      <div id="table"></div>
+    </section>
 
-  <section class="notes">
-    <h2>How this works</h2>
-    <ul>
-      <li><strong>Initialization</strong> cells use the base value and show as gray.</li>
-      <li><strong>Updates</strong> highlight the active cell in blue and its dependencies in amber.</li>
-      <li>You can pause, rewind, or jump through steps at any time.</li>
-    </ul>
-  </section>
+    <section class="notes">
+      <h2>How this works</h2>
+      <ul>
+        <li><strong>Initialization</strong> cells use the base value and show as gray.</li>
+        <li>
+          <strong>Updates</strong> highlight the active cell in blue and its dependencies in amber.
+        </li>
+        <li>You can pause, rewind, or jump through steps at any time.</li>
+      </ul>
+    </section>
 
-  <script type="module" src="app.js"></script>
-</body>
+    <script type="module" src="app.js"></script>
+  </body>
 </html>

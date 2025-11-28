@@ -3,6 +3,7 @@
 An in-memory file system implementation with Unix-like shell interface supporting standard file operations and persistence.
 
 ## 📋 Table of Contents
+
 - [Theory](#theory)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -11,13 +12,16 @@ An in-memory file system implementation with Unix-like shell interface supportin
 ## 🧠 Theory
 
 ### File System Structure
+
 A hierarchical file system with:
+
 - **Nodes**: Abstract base for files and directories
 - **Files**: Store text content
 - **Directories**: Container for files and subdirectories
 - **Tree Structure**: Root node with parent/child relationships
 
 ### Path Resolution
+
 - **Absolute paths**: Start with `/` from root
 - **Relative paths**: Start from current working directory
 - **Path traversal**: Support for `.` (current) and `..` (parent)
@@ -25,6 +29,7 @@ A hierarchical file system with:
 ## 💻 Installation
 
 Requires Python 3.8+ (no external dependencies):
+
 ```bash
 cd EmulationModeling/03_virtual_file_system
 python shell.py
@@ -33,11 +38,13 @@ python shell.py
 ## 🚀 Usage
 
 ### Starting the Shell
+
 ```bash
 python shell.py
 ```
 
 You'll see an interactive prompt:
+
 ```
 Virtual File System initialized. Type 'help' for commands.
 [/] $
@@ -46,6 +53,7 @@ Virtual File System initialized. Type 'help' for commands.
 ## 📝 Commands
 
 ### File Operations
+
 ```bash
 # Create an empty file or update with content (custom implementation)
 # Note: Unlike Unix touch, this supports inline content as second argument
@@ -59,6 +67,7 @@ rm myfile.txt
 ```
 
 ### Directory Operations
+
 ```bash
 # List directory contents
 ls
@@ -77,6 +86,7 @@ pwd
 ```
 
 ### Persistence
+
 ```bash
 # Save file system to disk
 save fs_snapshot.json

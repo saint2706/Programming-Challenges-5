@@ -8,18 +8,20 @@ and exposes endpoints for listing supported units and converting values.
 - **Dynamic Configuration**: Loads unit definitions from JSON or YAML files.
 - **Hot Reloading**: Automatically reloads configuration when the file changes.
 - **API Endpoints**:
-    - `/units`: Discover supported categories and units.
-    - `/convert`: Perform chained conversions (e.g., inch -> cm).
+  - `/units`: Discover supported categories and units.
+  - `/convert`: Perform chained conversions (e.g., inch -> cm).
 - **Smart Resolution**: Handles aliases (e.g., "m", "meter") and transitive conversions.
 
 ## 💻 Getting Started
 
 ### 1. Install Dependencies
+
 ```bash
 pip install -r Practical/UniversalUnitConverter/requirements.txt
 ```
 
 ### 2. Run the Service
+
 By default, the service uses the included `sample_units.json`.
 
 ```bash
@@ -32,11 +34,13 @@ uvicorn Practical.UniversalUnitConverter.app:app --reload
 ### 3. Usage Examples
 
 **List Units:**
+
 ```bash
 curl http://localhost:8000/units
 ```
 
 **Convert Value:**
+
 ```bash
 curl -X POST http://localhost:8000/convert \
   -H 'Content-Type: application/json' \
@@ -59,9 +63,9 @@ The configuration file defines categories, a base unit for each, and conversion 
       "description": "Length measurements",
       "base_unit": "meter",
       "units": {
-        "meter": {"to_base": 1, "aliases": ["m"]},
-        "kilometer": {"to_base": 1000, "aliases": ["km"]},
-        "mile": {"to_base": 1609.34}
+        "meter": { "to_base": 1, "aliases": ["m"] },
+        "kilometer": { "to_base": 1000, "aliases": ["km"] },
+        "mile": { "to_base": 1609.34 }
       }
     }
   }

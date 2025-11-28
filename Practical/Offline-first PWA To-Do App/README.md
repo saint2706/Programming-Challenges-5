@@ -12,14 +12,14 @@ A Progressive Web Application (PWA) demonstrating offline-first architecture wit
 
 ## Files
 
-| File | Description |
-|------|-------------|
-| `index.html` | Main HTML structure with semantic markup |
-| `app.js` | Core application logic, IndexedDB operations, and sync queue management |
-| `sw.js` | Service worker for caching and background sync |
-| `styles.css` | Responsive styling with mobile-first approach |
-| `manifest.json` | PWA manifest for installability |
-| `icons/` | App icons for various display sizes |
+| File            | Description                                                             |
+| --------------- | ----------------------------------------------------------------------- |
+| `index.html`    | Main HTML structure with semantic markup                                |
+| `app.js`        | Core application logic, IndexedDB operations, and sync queue management |
+| `sw.js`         | Service worker for caching and background sync                          |
+| `styles.css`    | Responsive styling with mobile-first approach                           |
+| `manifest.json` | PWA manifest for installability                                         |
+| `icons/`        | App icons for various display sizes                                     |
 
 ## How It Works
 

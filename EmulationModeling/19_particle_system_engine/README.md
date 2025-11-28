@@ -5,6 +5,7 @@ and NumPy-vectorized updates. Particles store position, velocity, and remaining
 lifetime and can optionally be influenced by gravity.
 
 ## Features
+
 - Simple `Particle` dataclass for clear state management.
 - `ParticleEngine.update` can use either list-based or vectorized update paths.
 - Helper to initialize random particles for quick experiments.
@@ -12,12 +13,14 @@ lifetime and can optionally be influenced by gravity.
   vectorized update path with fading particles.
 
 ## Usage
+
 ```bash
 python EmulationModeling/16_particle_system_engine/particle_engine.py
 ```
 
 To integrate into other scripts (directory name starts with a digit, so use
-``importlib``):
+`importlib`):
+
 ```python
 import importlib
 import numpy as np
