@@ -1,8 +1,18 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import random
 import pygame
 
 class Chip8:
+    """
+    Docstring for Chip8.
+    """
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.memory = [0] * 4096
         self.registers = [0] * 16  # V0 to VF
         self.I = 0
@@ -44,6 +54,9 @@ class Chip8:
             self.memory[i] = self.fontset[i]
 
     def load_rom(self, filepath):
+        """
+        Docstring for load_rom.
+        """
         with open(filepath, "rb") as f:
             rom_data = f.read()
 
@@ -53,6 +66,9 @@ class Chip8:
 
     def cycle(self):
         # Fetch opcode
+        """
+        Docstring for cycle.
+        """
         opcode = (self.memory[self.pc] << 8) | self.memory[self.pc + 1]
 
         # Decode and Execute
@@ -183,6 +199,9 @@ class Chip8:
                     self.registers[i] = self.memory[self.I + i]
 
     def update_timers(self):
+        """
+        Docstring for update_timers.
+        """
         if self.delay_timer > 0:
             self.delay_timer -= 1
         if self.sound_timer > 0:

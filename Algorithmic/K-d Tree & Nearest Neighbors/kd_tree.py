@@ -169,6 +169,9 @@ def nearest_neighbor(
     heap: List[Tuple[float, KDNode]] = []
 
     def visit(node: KDNode) -> None:
+        """
+        Docstring for visit.
+        """
         nonlocal best
         dist_sq = _squared_distance(query, node.point)
         if dist_sq < best[0]:
@@ -229,6 +232,9 @@ def k_nearest_neighbors(
     node_queue: List[Tuple[float, KDNode]] = []
 
     def consider_point(point: Point) -> None:
+        """
+        Docstring for consider_point.
+        """
         dist_sq = _squared_distance(query, point)
         if len(best_heap) < k:
             heappush(best_heap, (-dist_sq, point))
@@ -237,6 +243,9 @@ def k_nearest_neighbors(
             heappush(best_heap, (-dist_sq, point))
 
     def push_child(node: Optional[KDNode]) -> None:
+        """
+        Docstring for push_child.
+        """
         if node is None:
             return
         bound = _bounds_distance(query, node.bounds_min, node.bounds_max)

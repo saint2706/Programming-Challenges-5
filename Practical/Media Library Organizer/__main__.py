@@ -95,6 +95,9 @@ def organize_library(source_dir: str, target_dir: str, api_key: str, dry_run: bo
                     logging.warning(f"Could not identify {file}, skipping.")
 
 def main():
+    """
+    Docstring for main.
+    """
     parser = argparse.ArgumentParser(description="Media Library Organizer")
     parser.add_argument("--source", required=True, help="Source directory to scan")
     parser.add_argument("--target", required=True, help="Target directory for organized library")

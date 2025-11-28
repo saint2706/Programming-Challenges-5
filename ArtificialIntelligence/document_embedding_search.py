@@ -1,3 +1,7 @@
+"""
+Artificial Intelligence project implementation.
+"""
+
 from __future__ import annotations
 
 import importlib
@@ -43,6 +47,9 @@ class DocumentEmbeddingSearch:
         embedder: Embedder | None = None,
         annoy_trees: int = 10,
     ) -> None:
+        """
+        Docstring for __init__.
+        """
         self.backend = backend
         self.annoy_trees = annoy_trees
         self.documents: list[str] = []
@@ -68,12 +75,18 @@ class DocumentEmbeddingSearch:
         model = sentence_transformers.SentenceTransformer(model_name)
 
         def embed(texts: Sequence[str]) -> np.ndarray:
+            """
+            Docstring for embed.
+            """
             return model.encode(texts, convert_to_numpy=True, normalize_embeddings=False)
 
         return embed
 
     @staticmethod
     def _normalize_embeddings(embeddings: np.ndarray) -> np.ndarray:
+        """
+        Docstring for _normalize_embeddings.
+        """
         norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
         norms[norms == 0.0] = 1.0
         return embeddings / norms
@@ -124,6 +137,9 @@ class DocumentEmbeddingSearch:
         return self._query_annoy(query_vector, top_k)
 
     def _query_naive(self, query_vector: np.ndarray, top_k: int) -> list[SearchResult]:
+        """
+        Docstring for _query_naive.
+        """
         all_embeddings = np.vstack(self._embeddings)
         all_embeddings = self._normalize_embeddings(all_embeddings)
         scores = all_embeddings @ query_vector.T
@@ -139,6 +155,9 @@ class DocumentEmbeddingSearch:
         ]
 
     def _add_to_faiss_index(self, embeddings: np.ndarray) -> None:
+        """
+        Docstring for _add_to_faiss_index.
+        """
         if importlib.util.find_spec("faiss") is None:
             raise ImportError("Install faiss-cpu to use the FAISS backend.")
 
@@ -149,6 +168,9 @@ class DocumentEmbeddingSearch:
         self._faiss_index.add(normalized)
 
     def _query_faiss(self, query_vector: np.ndarray, top_k: int) -> list[SearchResult]:
+        """
+        Docstring for _query_faiss.
+        """
         if self._faiss_index is None:
             return []
         scores, indices = self._faiss_index.search(query_vector, top_k)
@@ -162,6 +184,9 @@ class DocumentEmbeddingSearch:
         ]
 
     def _add_to_annoy_index(self, embeddings: np.ndarray) -> None:
+        """
+        Docstring for _add_to_annoy_index.
+        """
         if importlib.util.find_spec("annoy") is None:
             raise ImportError("Install annoy to use the Annoy backend.")
 
@@ -174,6 +199,9 @@ class DocumentEmbeddingSearch:
         self._annoy_index.build(self.annoy_trees)
 
     def _query_annoy(self, query_vector: np.ndarray, top_k: int) -> list[SearchResult]:
+        """
+        Docstring for _query_annoy.
+        """
         if self._annoy_index is None:
             return []
 

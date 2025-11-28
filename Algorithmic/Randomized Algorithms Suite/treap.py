@@ -171,6 +171,9 @@ class Treap:
             TreapNode: Nodes in ascending key order.
         """
         def traverse(node: Optional[TreapNode]) -> Iterator[TreapNode]:
+            """
+            Docstring for traverse.
+            """
             if node:
                 yield from traverse(node.left)
                 yield node
@@ -185,6 +188,9 @@ class Treap:
             int: Height of the tree.
         """
         def _height(node: Optional[TreapNode]) -> int:
+            """
+            Docstring for _height.
+            """
             if node is None:
                 return 0
             return 1 + max(_height(node.left), _height(node.right))

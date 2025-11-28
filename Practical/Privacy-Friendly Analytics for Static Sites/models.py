@@ -10,6 +10,9 @@ from .db import Base
 
 
 class PageView(Base):
+    """
+    Docstring for PageView.
+    """
     __tablename__ = "pageviews"
 
     id: int = Column(Integer, primary_key=True, index=True)

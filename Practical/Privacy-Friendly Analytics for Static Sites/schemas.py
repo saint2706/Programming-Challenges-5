@@ -8,6 +8,9 @@ from pydantic import BaseModel, HttpUrl, field_validator
 
 
 class PageViewCreate(BaseModel):
+    """
+    Docstring for PageViewCreate.
+    """
     url: HttpUrl
     referrer: Optional[HttpUrl] = None
     timestamp: Optional[datetime] = None
@@ -16,12 +19,18 @@ class PageViewCreate(BaseModel):
     @field_validator("timestamp")
     @classmethod
     def timestamp_must_be_timezone_aware(cls, value: Optional[datetime]) -> Optional[datetime]:
+        """
+        Docstring for timestamp_must_be_timezone_aware.
+        """
         if value and value.tzinfo is None:
             raise ValueError("timestamp must include timezone information (ISO8601 with offset)")
         return value
 
 
 class PageViewOut(BaseModel):
+    """
+    Docstring for PageViewOut.
+    """
     id: int
     url: HttpUrl
     referrer: Optional[HttpUrl] = None
@@ -29,4 +38,7 @@ class PageViewOut(BaseModel):
     user_agent: Optional[str] = None
 
     class Config:
+        """
+        Docstring for Config.
+        """
         from_attributes = True

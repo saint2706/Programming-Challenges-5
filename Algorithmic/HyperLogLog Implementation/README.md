@@ -123,3 +123,11 @@ Actual: 1000, Estimated: 998, Error: 0.20%
 Adding 1 million unique items...
 Actual: 1000000, Estimated: 1015234, Error: 1.52%
 ```
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+cargo run --release
+```

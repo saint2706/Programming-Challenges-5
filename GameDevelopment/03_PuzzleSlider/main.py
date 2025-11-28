@@ -39,7 +39,13 @@ font = pygame.font.Font(None, 80)
 small_font = pygame.font.Font(None, 36)
 
 class Puzzle:
+    """
+    Docstring for Puzzle.
+    """
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.tiles = []
         self.empty_pos = (GRID_SIZE - 1, GRID_SIZE - 1)
         self.create_tiles()
@@ -47,6 +53,9 @@ class Puzzle:
         self.solved = False
 
     def create_tiles(self):
+        """
+        Docstring for create_tiles.
+        """
         self.tiles = []
         for y in range(GRID_SIZE):
             row = []
@@ -59,6 +68,9 @@ class Puzzle:
             self.tiles.append(row)
 
     def get_valid_moves(self):
+        """
+        Docstring for get_valid_moves.
+        """
         x, y = self.empty_pos
         moves = []
         if x > 0: moves.append((x - 1, y)) # Left
@@ -69,6 +81,9 @@ class Puzzle:
 
     def move(self, pos):
         # pos is (x, y) of the tile to move into the empty space
+        """
+        Docstring for move.
+        """
         ex, ey = self.empty_pos
         tx, ty = pos
         
@@ -83,6 +98,9 @@ class Puzzle:
 
     def shuffle(self):
         # Shuffle by making valid moves to ensure solvability
+        """
+        Docstring for shuffle.
+        """
         for _ in range(1000):
             moves = self.get_valid_moves()
             move = random.choice(moves)
@@ -90,6 +108,9 @@ class Puzzle:
         self.solved = False
 
     def check_win(self):
+        """
+        Docstring for check_win.
+        """
         count = 1
         for y in range(GRID_SIZE):
             for x in range(GRID_SIZE):
@@ -102,6 +123,9 @@ class Puzzle:
         self.solved = True
 
     def draw(self, surface):
+        """
+        Docstring for draw.
+        """
         surface.fill(BLACK)
         for y in range(GRID_SIZE):
             for x in range(GRID_SIZE):
@@ -133,6 +157,9 @@ class Puzzle:
             surface.blit(sub, sub_rect)
 
 def main():
+    """
+    Docstring for main.
+    """
     puzzle = Puzzle()
     
     running = True

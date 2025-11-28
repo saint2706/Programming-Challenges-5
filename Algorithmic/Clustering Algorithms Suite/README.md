@@ -87,3 +87,11 @@ Where:
 - $n$ = number of points
 - $k$ = number of clusters
 - $i$ = number of iterations
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+cargo run --release
+```

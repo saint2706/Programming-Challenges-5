@@ -1,0 +1,116 @@
+--- Advanced Interval Scheduler ---
+--- Approximate Set Membership ---
+--- Approximate String Matching ---
+--- Auto-Completion with Language Model Prior ---
+  [CODE] autocomplete.py missing docstrings: 2 items
+  [CODE] main.py missing docstrings: 2 items
+  [CODE] test_autocomplete.py missing docstrings: 8 items
+--- Autocomplete Engine ---
+--- AutomaticTimetabler ---
+  [README] Missing sections: ['Demos']
+--- BinPacking ---
+  [README] Missing sections: ['Demos']
+--- Clustering Algorithms Suite ---
+  [README] Missing sections: ['Demos']
+--- Consistent Hashing Library ---
+  [CODE] hash_ring.py missing docstrings: 1 items
+--- Constraint Solver ---
+  [README] Missing sections: ['Demos']
+--- DeadlineScheduler ---
+  [README] Missing sections: ['Demos']
+--- Dynamic Connectivity Structure ---
+  [CODE] main.py missing docstrings: 2 items
+  [CODE] dynamic_connectivity.py missing docstrings: 7 items
+  [CODE] test_connectivity.py missing docstrings: 7 items
+--- Dynamic Shortest Paths Service ---
+  [README] Missing sections: ['Demos']
+--- Edit Distance with Custom Costs ---
+  [README] Missing sections: ['Demos']
+--- Game Tree Search Framework ---
+--- Generic DP Visualizer ---
+--- Generic Flow Library ---
+  [README] Missing sections: ['Demos']
+--- GeometryEngine2D ---
+  [README] Missing sections: ['Demos']
+--- GraphIsomorphism ---
+  [README] Missing sections: ['Demos']
+--- HyperLogLog Implementation ---
+--- Image Seam Carving ---
+  [CODE] main.py missing docstrings: 2 items
+  [CODE] test_seam_carving.py missing docstrings: 5 items
+--- K-d Tree & Nearest Neighbors ---
+  [CODE] visualize_kd_tree.py missing docstrings: 1 items
+  [CODE] kd_tree.py missing docstrings: 3 items
+--- LZCompression ---
+  [README] Missing sections: ['Demos']
+--- Large Integer Arithmetic Library ---
+  [README] Missing sections: ['Demos']
+--- Map Label Placement ---
+  [CODE] label_placement.py missing docstrings: 8 items
+  [CODE] main.py missing docstrings: 2 items
+  [CODE] test_placement.py missing docstrings: 5 items
+--- MatchingEngine ---
+  [README] Missing sections: ['Demos']
+--- Matrix Algorithm Lab ---
+  [CODE] visualize_matrix_ops.py missing docstrings: 3 items
+  [CODE] matrix.py missing docstrings: 1 items
+--- MultiDimensionalKnapsack ---
+  [README] Missing sections: ['Demos']
+--- Multidimensional Index ---
+  [CODE] main.py missing docstrings: 2 items
+  [CODE] rtree.py missing docstrings: 25 items
+  [CODE] test_rtree.py missing docstrings: 5 items
+--- OnDiskBTree ---
+  [README] Missing sections: ['Demos']
+--- Online Caching Simulator ---
+  [README] Missing sections: ['Demos']
+--- ParallelSort ---
+  [README] Missing sections: ['Demos']
+--- PersistentDataStructures ---
+  [README] Missing sections: ['Demos']
+--- Polygon Triangulation ---
+  [CODE] main.py missing docstrings: 2 items
+  [CODE] triangulation.py missing docstrings: 4 items
+  [CODE] test_triangulation.py missing docstrings: 6 items
+--- Randomized Algorithms Suite ---
+  [CODE] treap.py missing docstrings: 2 items
+  [CODE] randomized_structures.py missing docstrings: 2 items
+  [CODE] visualize_randomized.py missing docstrings: 1 items
+--- Regex Engine ---
+  [CODE] main.py missing docstrings: 2 items
+  [CODE] regex_engine.py missing docstrings: 12 items
+  [CODE] test_regex.py missing docstrings: 8 items
+--- RollbackDSU ---
+  [README] Missing sections: ['Demos']
+--- RopeTextEditor ---
+  [README] Missing sections: ['Demos']
+--- Route Planning with Constraints ---
+  [CODE] route_planner.py missing docstrings: 1 items
+  [CODE] main.py missing docstrings: 2 items
+  [CODE] test_route_planner.py missing docstrings: 8 items
+--- SequencePatternMining ---
+  [README] Missing sections: ['Demos']
+--- StreamingQuantiles ---
+  [README] Missing sections: ['Demos']
+--- Subsequence Automaton ---
+  [README] Missing sections: ['Demos']
+  [CODE] automaton.py missing docstrings: 2 items
+  [CODE] main.py missing docstrings: 2 items
+  [CODE] test_automaton.py missing docstrings: 6 items
+--- SuffixArrayLCP ---
+  [README] Missing sections: ['Demos']
+--- SuffixAutomaton ---
+  [README] Missing sections: ['Demos']
+--- TemporalEventStore ---
+  [README] Missing sections: ['Demos']
+--- Text Justification Engine ---
+  [README] Missing sections: ['Demos']
+--- Top-K Frequent Items in Stream ---
+--- TurnPenaltyRouting ---
+  [README] Missing sections: ['Demos']
+--- TwoDRangeQuery ---
+  [README] Missing sections: ['Demos']
+--- Versioned Key-Value Store ---
+  [CODE] lsm_store.py missing docstrings: 18 items
+  [CODE] main.py missing docstrings: 2 items
+  [CODE] test_lsm.py missing docstrings: 9 items

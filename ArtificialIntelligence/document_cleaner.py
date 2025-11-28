@@ -1,3 +1,7 @@
+"""
+Artificial Intelligence project implementation.
+"""
+
 from __future__ import annotations
 
 import re
@@ -22,6 +26,9 @@ class DocumentCleaner:
     """
 
     def __init__(self, line_classifier: LineClassifier | None = None) -> None:
+        """
+        Docstring for __init__.
+        """
         self.line_classifier = line_classifier
 
     def clean(self, text: str) -> str:

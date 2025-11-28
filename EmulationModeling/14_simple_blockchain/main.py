@@ -7,6 +7,9 @@ from blockchain import Blockchain
 
 
 def run_demo() -> None:
+    """
+    Docstring for run_demo.
+    """
     blockchain = Blockchain(difficulty=3)
 
     demo_data = [

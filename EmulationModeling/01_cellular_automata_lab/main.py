@@ -8,6 +8,9 @@ from ca_engine import CAEngine
 from visualizer import Visualizer
 
 def main():
+    """
+    Docstring for main.
+    """
     parser = argparse.ArgumentParser(description="Cellular Automata Lab")
     parser.add_argument('--width', type=int, default=80, help='Grid width')
     parser.add_argument('--height', type=int, default=60, help='Grid height')

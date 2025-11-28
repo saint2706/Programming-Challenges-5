@@ -105,12 +105,18 @@ class VaultApp:
         self.check_vault()
 
     def check_vault(self):
+        """
+        Docstring for check_vault.
+        """
         if os.path.exists(DATA_FILE):
             self.login_screen()
         else:
             self.setup_screen()
 
     def setup_screen(self):
+        """
+        Docstring for setup_screen.
+        """
         self.clear_screen()
         tk.Label(self.root, text="Create Master Password", font=("Arial", 16)).pack(pady=20)
         
@@ -120,6 +126,9 @@ class VaultApp:
         tk.Button(self.root, text="Create Vault", command=self.create_vault).pack(pady=10)
 
     def create_vault(self):
+        """
+        Docstring for create_vault.
+        """
         pwd = self.pwd_entry.get()
         if not pwd:
             messagebox.showerror("Error", "Password cannot be empty")
@@ -131,6 +140,9 @@ class VaultApp:
         self.main_screen()
 
     def login_screen(self):
+        """
+        Docstring for login_screen.
+        """
         self.clear_screen()
         tk.Label(self.root, text="Enter Master Password", font=("Arial", 16)).pack(pady=20)
         
@@ -141,6 +153,9 @@ class VaultApp:
         tk.Button(self.root, text="Unlock", command=self.login).pack(pady=10)
 
     def login(self):
+        """
+        Docstring for login.
+        """
         pwd = self.pwd_entry.get()
         try:
             with open(DATA_FILE, 'r') as f:
@@ -158,12 +173,18 @@ class VaultApp:
             messagebox.showerror("Error", f"Failed to load vault: {e}")
 
     def save_vault(self):
+        """
+        Docstring for save_vault.
+        """
         if self.password:
             encrypted_store = Security.encrypt(self.notes, self.password)
             with open(DATA_FILE, 'w') as f:
                 json.dump(encrypted_store, f)
 
     def main_screen(self):
+        """
+        Docstring for main_screen.
+        """
         self.clear_screen()
         
         frame = tk.Frame(self.root)
@@ -190,20 +211,32 @@ class VaultApp:
         tk.Button(btn_frame, text="Lock Vault", command=self.login_screen).pack(side=tk.RIGHT, padx=5)
 
     def refresh_list(self):
+        """
+        Docstring for refresh_list.
+        """
         self.listbox.delete(0, tk.END)
         for note in self.notes:
             self.listbox.insert(tk.END, note['title'])
 
     def new_note(self):
+        """
+        Docstring for new_note.
+        """
         self.note_editor(None)
 
     def view_note(self, event):
+        """
+        Docstring for view_note.
+        """
         selection = self.listbox.curselection()
         if selection:
             index = selection[0]
             self.note_editor(index)
 
     def delete_note(self):
+        """
+        Docstring for delete_note.
+        """
         selection = self.listbox.curselection()
         if selection:
             index = selection[0]
@@ -212,6 +245,9 @@ class VaultApp:
             self.refresh_list()
 
     def note_editor(self, index):
+        """
+        Docstring for note_editor.
+        """
         editor = tk.Toplevel(self.root)
         editor.title("Edit Note" if index is not None else "New Note")
         editor.geometry("400x300")
@@ -230,6 +266,9 @@ class VaultApp:
             content_text.insert(tk.END, note['content'])
             
         def save():
+            """
+            Docstring for save.
+            """
             title = title_entry.get()
             content = content_text.get("1.0", tk.END).strip()
             
@@ -251,6 +290,9 @@ class VaultApp:
         tk.Button(editor, text="Save", command=save).pack(pady=10)
 
     def clear_screen(self):
+        """
+        Docstring for clear_screen.
+        """
         for widget in self.root.winfo_children():
             widget.destroy()
 

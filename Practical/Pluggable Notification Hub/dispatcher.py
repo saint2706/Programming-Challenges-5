@@ -11,6 +11,9 @@ class NotificationDispatcher:
     """Send messages to all configured providers."""
 
     def __init__(self, providers: Sequence[NotificationProvider]):
+        """
+        Docstring for __init__.
+        """
         self.providers = list(providers)
 
     def notify_all(self, message: str, recipient: str) -> None:
@@ -21,4 +24,7 @@ class NotificationDispatcher:
 
     @classmethod
     def from_providers(cls, providers: Iterable[NotificationProvider]) -> "NotificationDispatcher":
+        """
+        Docstring for from_providers.
+        """
         return cls(list(providers))

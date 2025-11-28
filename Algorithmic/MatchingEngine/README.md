@@ -52,3 +52,11 @@ The `main` program accepts JSON commands.
 | **Match Order** | $O(M \log N)$ | $O(1)$ |
 
 Where $N$ is number of orders in book, $M$ is number of matches generated.
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+go run .
+```

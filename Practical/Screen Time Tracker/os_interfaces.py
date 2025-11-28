@@ -38,11 +38,17 @@ class WindowsWindowProvider(ActiveWindowProvider):
     """Active window detection for Windows via pywin32."""
 
     def __init__(self) -> None:
+        """
+        Docstring for __init__.
+        """
         self.win32gui = _load_module("win32gui")
         self.win32process = _load_module("win32process")
         self.psutil = _load_module("psutil")
 
     def get_active_window(self) -> Optional[WindowInfo]:
+        """
+        Docstring for get_active_window.
+        """
         if self.win32gui is None:
             return None
         hwnd = self.win32gui.GetForegroundWindow()
@@ -64,6 +70,9 @@ class MacWindowProvider(ActiveWindowProvider):
     """Active window detection for macOS using AppleScript."""
 
     def get_active_window(self) -> Optional[WindowInfo]:
+        """
+        Docstring for get_active_window.
+        """
         script = (
             'tell application "System Events" to get {name of first process whose frontmost is true, '
             "name of window 1 of (first process whose frontmost is true)}"
@@ -85,6 +94,9 @@ class LinuxWindowProvider(ActiveWindowProvider):
     """Active window detection for X11 desktops using python-ewmh when available."""
 
     def __init__(self) -> None:
+        """
+        Docstring for __init__.
+        """
         self.ewmh_module = _load_module("ewmh")
         self.xlib_display = _load_module("Xlib.display")
         self.ewmh_instance = None
@@ -92,6 +104,9 @@ class LinuxWindowProvider(ActiveWindowProvider):
             self.ewmh_instance = self.ewmh_module.EWMH()
 
     def _via_ewmh(self) -> Optional[WindowInfo]:
+        """
+        Docstring for _via_ewmh.
+        """
         if not self.ewmh_instance:
             return None
         window = self.ewmh_instance.getActiveWindow()
@@ -103,6 +118,9 @@ class LinuxWindowProvider(ActiveWindowProvider):
         return WindowInfo(title=title, application=application)
 
     def _via_xprop(self) -> Optional[WindowInfo]:
+        """
+        Docstring for _via_xprop.
+        """
         window_id_proc = subprocess.run(
             ["xprop", "-root", "_NET_ACTIVE_WINDOW"], capture_output=True, text=True, check=False
         )
@@ -132,6 +150,9 @@ class LinuxWindowProvider(ActiveWindowProvider):
         return WindowInfo(title=title, application=application)
 
     def get_active_window(self) -> Optional[WindowInfo]:
+        """
+        Docstring for get_active_window.
+        """
         return self._via_ewmh() or self._via_xprop()
 
 

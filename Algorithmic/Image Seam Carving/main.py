@@ -1,3 +1,7 @@
+"""
+Implementation of the algorithm.
+"""
+
 import argparse
 import sys
 import os
@@ -5,6 +9,9 @@ from PIL import Image
 from seam_carving import seam_carve
 
 def main():
+    """
+    Docstring for main.
+    """
     parser = argparse.ArgumentParser(description="Resize an image using Seam Carving.")
     parser.add_argument("input_image", help="Path to the input image")
     parser.add_argument("output_image", help="Path to save the output image")

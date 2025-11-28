@@ -98,3 +98,11 @@ Where:
 - $k$ = number of time slots
 
 In practice, backtracking with good heuristics performs well for moderately sized problems.
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+go run .
+```

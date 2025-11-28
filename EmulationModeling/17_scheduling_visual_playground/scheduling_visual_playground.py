@@ -23,6 +23,9 @@ except ImportError:  # pragma: no cover - Plotly is optional in this environment
 
 @dataclass
 class Process:
+    """
+    Docstring for Process.
+    """
     pid: str
     arrival: int
     burst: int
@@ -56,6 +59,9 @@ def load_processes(dataset: str) -> List[Process]:
 
 
 def get_builtin_datasets() -> Dict[str, List[Dict[str, int]]]:
+    """
+    Docstring for get_builtin_datasets.
+    """
     return {
         "basic": [
             {"pid": "P1", "arrival": 0, "burst": 5},
@@ -74,6 +80,9 @@ def get_builtin_datasets() -> Dict[str, List[Dict[str, int]]]:
 
 
 def run_fcfs(processes: Iterable[Process]) -> Schedule:
+    """
+    Docstring for run_fcfs.
+    """
     time = 0
     schedule: Schedule = []
     for proc in sorted(processes, key=lambda p: p.arrival):
@@ -87,6 +96,9 @@ def run_fcfs(processes: Iterable[Process]) -> Schedule:
 
 
 def run_sjf(processes: Iterable[Process]) -> Schedule:
+    """
+    Docstring for run_sjf.
+    """
     procs = sorted(processes, key=lambda p: p.arrival)
     time = 0
     idx = 0
@@ -109,6 +121,9 @@ def run_sjf(processes: Iterable[Process]) -> Schedule:
 
 
 def run_rr(processes: Iterable[Process], quantum: int) -> Schedule:
+    """
+    Docstring for run_rr.
+    """
     if quantum <= 0:
         raise ValueError("Quantum must be positive for Round Robin scheduling.")
 
@@ -150,6 +165,9 @@ def run_rr(processes: Iterable[Process], quantum: int) -> Schedule:
 
 
 def compute_metrics(schedule: Schedule, processes: Iterable[Process]) -> Dict[str, float]:
+    """
+    Docstring for compute_metrics.
+    """
     arrivals = {p.pid: p.arrival for p in processes}
     bursts = {p.pid: p.burst for p in processes}
     completion: Dict[str, int] = {}
@@ -166,6 +184,9 @@ def compute_metrics(schedule: Schedule, processes: Iterable[Process]) -> Dict[st
 
 
 def to_gantt_blocks(schedule: Schedule) -> List[Dict[str, int]]:
+    """
+    Docstring for to_gantt_blocks.
+    """
     return [
         {"Task": pid, "Start": start, "Finish": end}
         for pid, start, end in schedule
@@ -173,6 +194,9 @@ def to_gantt_blocks(schedule: Schedule) -> List[Dict[str, int]]:
 
 
 def plot_matplotlib(schedule: Schedule, title: str, output: Optional[Path] = None) -> Path:
+    """
+    Docstring for plot_matplotlib.
+    """
     fig, ax = plt.subplots(figsize=(8, 2 + 0.3 * len(schedule)))
     colors = plt.cm.tab20.colors
     for idx, (pid, start, end) in enumerate(schedule):
@@ -192,6 +216,9 @@ def plot_matplotlib(schedule: Schedule, title: str, output: Optional[Path] = Non
 
 
 def plot_plotly(schedule: Schedule, title: str, output: Optional[Path] = None) -> Optional[Path]:
+    """
+    Docstring for plot_plotly.
+    """
     if px is None:
         print("Plotly is not installed; skipping Plotly render.", file=sys.stderr)
         return None
@@ -204,6 +231,9 @@ def plot_plotly(schedule: Schedule, title: str, output: Optional[Path] = None) -
 
 
 def run_algorithm(name: str, processes: List[Process], quantum: int) -> Tuple[Schedule, Dict[str, float]]:
+    """
+    Docstring for run_algorithm.
+    """
     if name == "fcfs":
         schedule = run_fcfs(processes)
     elif name == "sjf":
@@ -217,6 +247,9 @@ def run_algorithm(name: str, processes: List[Process], quantum: int) -> Tuple[Sc
 
 
 def comparison_plot(processes: List[Process], quantum: int, output_dir: Path) -> Path:
+    """
+    Docstring for comparison_plot.
+    """
     algorithms = ["fcfs", "sjf", "rr"]
     fig, axes = plt.subplots(len(algorithms), 1, figsize=(10, 2 * len(algorithms)))
     colors = plt.cm.tab20.colors
@@ -245,6 +278,9 @@ def comparison_plot(processes: List[Process], quantum: int, output_dir: Path) ->
 
 
 def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
+    """
+    Docstring for parse_args.
+    """
     parser = argparse.ArgumentParser(description="Visualize CPU scheduling algorithms with Gantt charts.")
     parser.add_argument("--dataset", default="basic", help="Built-in dataset name or path to JSON/CSV file.")
     parser.add_argument("--algorithm", choices=["fcfs", "sjf", "rr", "all"], default="all")
@@ -255,6 +291,9 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
 
 
 def main(argv: Optional[List[str]] = None) -> None:
+    """
+    Docstring for main.
+    """
     args = parse_args(argv)
     processes = load_processes(args.dataset)
     args.output_dir.mkdir(parents=True, exist_ok=True)

@@ -21,9 +21,15 @@ class Node:
     demand: float = 0.0
 
     def surplus(self) -> float:
+        """
+        Docstring for surplus.
+        """
         return max(0.0, self.generation - self.demand)
 
     def deficit(self) -> float:
+        """
+        Docstring for deficit.
+        """
         return max(0.0, self.demand - self.generation)
 
 
@@ -38,34 +44,58 @@ class Line:
     online: bool = True
 
     def id(self) -> str:
+        """
+        Docstring for id.
+        """
         return self.name or f"{self.a}-{self.b}"
 
     def endpoints(self) -> Tuple[str, str]:
+        """
+        Docstring for endpoints.
+        """
         return self.a, self.b
 
 
 @dataclass
 class FlowResult:
+    """
+    Docstring for FlowResult.
+    """
     flows: Dict[str, float] = field(default_factory=dict)
     unmet_demand: Dict[str, float] = field(default_factory=dict)
     failed_lines: List[str] = field(default_factory=list)
 
 
 class PowerGrid:
+    """
+    Docstring for PowerGrid.
+    """
     def __init__(self) -> None:
+        """
+        Docstring for __init__.
+        """
         self.nodes: Dict[str, Node] = {}
         self.lines: Dict[str, Line] = {}
         self.adj: Dict[str, List[str]] = {}
 
     def add_generator(self, name: str, generation: float) -> None:
+        """
+        Docstring for add_generator.
+        """
         self.nodes[name] = Node(name=name, generation=generation, demand=0.0)
         self.adj.setdefault(name, [])
 
     def add_consumer(self, name: str, demand: float) -> None:
+        """
+        Docstring for add_consumer.
+        """
         self.nodes[name] = Node(name=name, generation=0.0, demand=demand)
         self.adj.setdefault(name, [])
 
     def add_line(self, a: str, b: str, capacity: float, name: Optional[str] = None) -> None:
+        """
+        Docstring for add_line.
+        """
         if a not in self.nodes or b not in self.nodes:
             raise ValueError("Both endpoints must be added as nodes before connecting them.")
         line = Line(a=a, b=b, capacity=capacity, name=name)
@@ -74,6 +104,9 @@ class PowerGrid:
         self.adj.setdefault(b, []).append(a)
 
     def _ensure_balance(self) -> None:
+        """
+        Docstring for _ensure_balance.
+        """
         total_generation = sum(node.generation for node in self.nodes.values())
         total_demand = sum(node.demand for node in self.nodes.values())
         if total_generation == 0:
@@ -127,6 +160,9 @@ class PowerGrid:
         return path
 
     def _line_between(self, a: str, b: str) -> str:
+        """
+        Docstring for _line_between.
+        """
         for line_id, line in self.lines.items():
             if not line.online:
                 continue
@@ -135,6 +171,9 @@ class PowerGrid:
         raise KeyError(f"No line between {a} and {b}")
 
     def _route_power(self, available_lines: Set[str]) -> Tuple[Dict[str, float], Dict[str, float]]:
+        """
+        Docstring for _route_power.
+        """
         flows: Dict[str, float] = {line_id: 0.0 for line_id in available_lines}
         generators = [node for node in self.nodes.values() if node.generation > 0]
         consumers = [node for node in self.nodes.values() if node.demand > 0]
@@ -173,6 +212,9 @@ class PowerGrid:
         return flows, consumer_deficit
 
     def simulate(self, initial_failures: Optional[Set[str]] = None) -> FlowResult:
+        """
+        Docstring for simulate.
+        """
         self._ensure_balance()
         available_lines: Set[str] = {lid for lid, line in self.lines.items() if line.online}
         if initial_failures:
@@ -193,6 +235,9 @@ class PowerGrid:
                 failed_lines.append(line_id)
 
     def describe_flows(self, result: FlowResult) -> str:
+        """
+        Docstring for describe_flows.
+        """
         lines = ["Line flows:"]
         for line_id, flow in sorted(result.flows.items()):
             capacity = self.lines[line_id].capacity
@@ -213,6 +258,9 @@ class PowerGrid:
 
 
 def build_demo_grid() -> PowerGrid:
+    """
+    Docstring for build_demo_grid.
+    """
     grid = PowerGrid()
     # Generators
     grid.add_generator("G1", generation=80)
@@ -246,6 +294,9 @@ def build_demo_grid() -> PowerGrid:
 
 
 def run_demo() -> None:
+    """
+    Docstring for run_demo.
+    """
     grid = build_demo_grid()
     print("=== Healthy grid ===")
     healthy = grid.simulate()

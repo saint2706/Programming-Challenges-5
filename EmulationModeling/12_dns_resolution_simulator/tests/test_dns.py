@@ -1,3 +1,7 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import pytest
 
 from dns_simulator import (
@@ -9,17 +13,32 @@ from dns_simulator import (
 
 
 class FakeTime:
+    """
+    Docstring for FakeTime.
+    """
     def __init__(self, start: float = 0.0):
+        """
+        Docstring for __init__.
+        """
         self.now = start
 
     def advance(self, seconds: float) -> None:
+        """
+        Docstring for advance.
+        """
         self.now += seconds
 
     def __call__(self) -> float:
+        """
+        Docstring for __call__.
+        """
         return self.now
 
 
 def build_resolver_with_fake_time(fake_time: FakeTime) -> DNSResolver:
+    """
+    Docstring for build_resolver_with_fake_time.
+    """
     example_auth = AuthoritativeDNSServer("example.com")
     example_auth.add_record("example.com", "93.184.216.34", ttl=10)
 
@@ -33,6 +52,9 @@ def build_resolver_with_fake_time(fake_time: FakeTime) -> DNSResolver:
 
 
 def test_resolution_walks_hierarchy_and_caches():
+    """
+    Docstring for test_resolution_walks_hierarchy_and_caches.
+    """
     fake_time = FakeTime()
     resolver = build_resolver_with_fake_time(fake_time)
     root_server = resolver.root_server
@@ -56,6 +78,9 @@ def test_resolution_walks_hierarchy_and_caches():
 
 
 def test_cache_expires_after_ttl():
+    """
+    Docstring for test_cache_expires_after_ttl.
+    """
     fake_time = FakeTime()
     resolver = build_resolver_with_fake_time(fake_time)
     root_server = resolver.root_server

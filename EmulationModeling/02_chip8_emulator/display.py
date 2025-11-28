@@ -1,7 +1,17 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import pygame
 
 class Display:
+    """
+    Docstring for Display.
+    """
     def __init__(self, scale=10):
+        """
+        Docstring for __init__.
+        """
         self.scale = scale
         self.width = 64 * scale
         self.height = 32 * scale
@@ -14,6 +24,9 @@ class Display:
         self.COLOR_FG = (255, 255, 255)
 
     def draw(self, display_buffer):
+        """
+        Docstring for draw.
+        """
         self.screen.fill(self.COLOR_BG)
 
         for i, pixel in enumerate(display_buffer):
@@ -25,4 +38,7 @@ class Display:
         pygame.display.flip()
 
     def quit(self):
+        """
+        Docstring for quit.
+        """
         pygame.quit()

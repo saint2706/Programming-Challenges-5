@@ -1,7 +1,17 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import numpy as np
 
 class Agent:
+    """
+    Docstring for Agent.
+    """
     def __init__(self, x, y, bounds, speed=1.0):
+        """
+        Docstring for __init__.
+        """
         self.pos = np.array([x, y], dtype=np.float64)
         angle = np.random.uniform(0, 2*np.pi)
         self.vel = np.array([np.cos(angle), np.sin(angle)]) * speed
@@ -10,6 +20,9 @@ class Agent:
         self.infection_timer = 0
 
     def update(self):
+        """
+        Docstring for update.
+        """
         self.pos += self.vel
 
         # Bounce off walls
@@ -22,7 +35,13 @@ class Agent:
             self.pos[1] = np.clip(self.pos[1], 0, self.bounds[1])
 
 class SIRModel:
+    """
+    Docstring for SIRModel.
+    """
     def __init__(self, num_agents=100, width=100, height=100, infection_radius=5.0, infection_prob=0.5, recovery_time=100):
+        """
+        Docstring for __init__.
+        """
         self.width = width
         self.height = height
         self.agents = [Agent(np.random.rand()*width, np.random.rand()*height, (width, height)) for _ in range(num_agents)]
@@ -36,6 +55,9 @@ class SIRModel:
 
     def step(self):
         # Move agents
+        """
+        Docstring for step.
+        """
         for agent in self.agents:
             agent.update()
 
@@ -59,6 +81,9 @@ class SIRModel:
                         s_agent.infection_timer = self.recovery_time
 
     def get_stats(self):
+        """
+        Docstring for get_stats.
+        """
         counts = {"S": 0, "I": 0, "R": 0}
         for a in self.agents:
             counts[a.state] += 1

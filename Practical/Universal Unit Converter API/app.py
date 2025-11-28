@@ -77,6 +77,9 @@ def create_app(config_path: Optional[str] = None) -> FastAPI:
     app = FastAPI(title="Universal Unit Converter", version="1.0.0")
 
     def get_converter() -> UnitConverter:
+        """
+        Docstring for get_converter.
+        """
         return converter
 
     @app.get("/units", response_model=UnitsResponse)

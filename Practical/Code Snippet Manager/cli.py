@@ -1,3 +1,7 @@
+"""
+Project implementation.
+"""
+
 import argparse
 import json
 import sqlite3
@@ -12,13 +16,22 @@ from pygments.lexers import get_lexer_by_name, guess_lexer, TextLexer
 
 
 class SnippetStore:
+    """
+    Docstring for SnippetStore.
+    """
     def __init__(self, db_path: Path):
+        """
+        Docstring for __init__.
+        """
         self.db_path = db_path
         self.conn = sqlite3.connect(self.db_path)
         self.conn.execute("PRAGMA foreign_keys = ON;")
         self._ensure_schema()
 
     def _ensure_schema(self) -> None:
+        """
+        Docstring for _ensure_schema.
+        """
         cursor = self.conn.cursor()
         cursor.execute(
             """
@@ -63,9 +76,15 @@ class SnippetStore:
         self.conn.commit()
 
     def close(self) -> None:
+        """
+        Docstring for close.
+        """
         self.conn.close()
 
     def _get_or_create_tag_ids(self, tags: Iterable[str]) -> List[int]:
+        """
+        Docstring for _get_or_create_tag_ids.
+        """
         tag_ids: List[int] = []
         cursor = self.conn.cursor()
         for tag in tags:
@@ -89,6 +108,9 @@ class SnippetStore:
         tags: Optional[Iterable[str]] = None,
         created_at: Optional[str] = None,
     ) -> int:
+        """
+        Docstring for add_snippet.
+        """
         created_value = created_at or datetime.utcnow().isoformat()
         cursor = self.conn.cursor()
         cursor.execute(
@@ -106,6 +128,9 @@ class SnippetStore:
         return snippet_id
 
     def list_snippets(self):
+        """
+        Docstring for list_snippets.
+        """
         cursor = self.conn.cursor()
         cursor.execute(
             """
@@ -122,6 +147,9 @@ class SnippetStore:
     def search_snippets(
         self, keywords: Optional[List[str]] = None, tags: Optional[List[str]] = None
     ):
+        """
+        Docstring for search_snippets.
+        """
         keywords = keywords or []
         tags = [tag.strip() for tag in tags or [] if tag.strip()]
         params: List[str] = []
@@ -164,6 +192,9 @@ class SnippetStore:
         return cursor.fetchall()
 
     def get_snippet(self, snippet_id: int):
+        """
+        Docstring for get_snippet.
+        """
         cursor = self.conn.cursor()
         cursor.execute(
             """
@@ -179,6 +210,9 @@ class SnippetStore:
         return cursor.fetchone()
 
     def export_json(self, output_path: Path) -> None:
+        """
+        Docstring for export_json.
+        """
         cursor = self.conn.cursor()
         cursor.execute(
             """
@@ -209,6 +243,9 @@ class SnippetStore:
         output_path.write_text(json.dumps(data, indent=2))
 
     def import_json(self, input_path: Path) -> int:
+        """
+        Docstring for import_json.
+        """
         payload = json.loads(input_path.read_text())
         added = 0
         for entry in payload:
@@ -224,6 +261,9 @@ class SnippetStore:
 
 
 def highlight_code(code: str, language: str) -> str:
+    """
+    Docstring for highlight_code.
+    """
     lexer = None
     try:
         lexer = get_lexer_by_name(language)
@@ -237,6 +277,9 @@ def highlight_code(code: str, language: str) -> str:
 
 
 def read_code(args: argparse.Namespace) -> str:
+    """
+    Docstring for read_code.
+    """
     if args.code:
         return args.code
     if args.file:
@@ -247,6 +290,9 @@ def read_code(args: argparse.Namespace) -> str:
 
 
 def parse_args() -> argparse.Namespace:
+    """
+    Docstring for parse_args.
+    """
     parser = argparse.ArgumentParser(description="Manage code snippets with tagging and search.")
     parser.add_argument(
         "--db",
@@ -283,6 +329,9 @@ def parse_args() -> argparse.Namespace:
 
 
 def main():
+    """
+    Docstring for main.
+    """
     args = parse_args()
     store = SnippetStore(args.db)
     try:

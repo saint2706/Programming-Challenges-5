@@ -64,6 +64,9 @@ class ZeroDEnergyBalanceModel:
         dt: float = 86_400.0,
         initial_temperature: float = 288.0,
     ) -> None:
+        """
+        Docstring for __init__.
+        """
         self.solar_constant = solar_constant
         self.albedo = albedo
         self.greenhouse_factor = greenhouse_factor
@@ -137,6 +140,9 @@ class LatitudinalEnergyBalanceModel:
         dt: float = 86_400.0,
         initial_temperature: float = 288.0,
     ) -> None:
+        """
+        Docstring for __init__.
+        """
         if n_zones < 2:
             raise ValueError("At least two latitude zones are required.")
 

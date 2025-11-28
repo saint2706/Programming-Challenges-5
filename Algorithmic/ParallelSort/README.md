@@ -89,3 +89,11 @@ func benchmark() {
 | **Space** | $O(n)$ | $O(n)$ |
 
 **Speedup**: Theoretical maximum is $p$ (number of cores), but overhead reduces this to typically $0.5p$ to $0.8p$.
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+go run .
+```

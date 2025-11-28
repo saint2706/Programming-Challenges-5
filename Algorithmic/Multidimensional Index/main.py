@@ -1,7 +1,14 @@
+"""
+Implementation of the algorithm.
+"""
+
 from rtree import RTree, Rect
 import os
 
 def main():
+    """
+    Docstring for main.
+    """
     tree = RTree()
 
     # Data: Cities with lat/lon as (x, y)

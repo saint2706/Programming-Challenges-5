@@ -60,3 +60,11 @@ println!("Product: {}", product);
 | **Division** | $O(n^2)$ |
 
 Where $n$ is the number of digits.
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+cargo run --release
+```

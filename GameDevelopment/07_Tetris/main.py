@@ -149,7 +149,13 @@ SHAPES = [S, Z, I, O, J, L, T]
 SHAPE_COLORS = [GREEN, RED, CYAN, YELLOW, BLUE, ORANGE, MAGENTA]
 
 class Piece:
+    """
+    Docstring for Piece.
+    """
     def __init__(self, x, y, shape):
+        """
+        Docstring for __init__.
+        """
         self.x = x
         self.y = y
         self.shape = shape
@@ -157,7 +163,13 @@ class Piece:
         self.rotation = 0
 
 class Tetris:
+    """
+    Docstring for Tetris.
+    """
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.grid = [[(0, 0, 0) for _ in range(GRID_WIDTH)] for _ in range(GRID_HEIGHT)]
         self.current_piece = self.get_shape()
         self.next_piece = self.get_shape()
@@ -170,9 +182,15 @@ class Tetris:
         self.game_over = False
 
     def get_shape(self):
+        """
+        Docstring for get_shape.
+        """
         return Piece(5, 0, random.choice(SHAPES))
 
     def valid_space(self, piece, x_offset=0, y_offset=0):
+        """
+        Docstring for valid_space.
+        """
         accepted_pos = [[(j, i) for j in range(GRID_WIDTH) if self.grid[i][j] == (0, 0, 0)] for i in range(GRID_HEIGHT)]
         accepted_pos = [j for sub in accepted_pos for j in sub]
 
@@ -188,6 +206,9 @@ class Tetris:
         return True
 
     def convert_shape_format(self, piece):
+        """
+        Docstring for convert_shape_format.
+        """
         positions = []
         format = piece.shape[piece.rotation % len(piece.shape)]
 
@@ -199,12 +220,18 @@ class Tetris:
         return positions
 
     def check_lost(self):
+        """
+        Docstring for check_lost.
+        """
         for pos in self.grid[0]:
             if pos != (0, 0, 0):
                 return True
         return False
 
     def clear_rows(self):
+        """
+        Docstring for clear_rows.
+        """
         inc = 0
         for i in range(len(self.grid) - 1, -1, -1):
             row = self.grid[i]
@@ -222,6 +249,9 @@ class Tetris:
             self.fall_speed = max(0.1, 0.5 - (self.level * 0.02))
 
     def draw_grid(self, surface):
+        """
+        Docstring for draw_grid.
+        """
         for i in range(GRID_HEIGHT):
             for j in range(GRID_WIDTH):
                 pygame.draw.rect(surface, self.grid[i][j], (TOP_LEFT_X + j * BLOCK_SIZE, TOP_LEFT_Y + i * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE), 0)
@@ -235,6 +265,9 @@ class Tetris:
         pygame.draw.rect(surface, RED, (TOP_LEFT_X, TOP_LEFT_Y, PLAY_WIDTH, PLAY_HEIGHT), 4)
 
     def draw_window(self, surface):
+        """
+        Docstring for draw_window.
+        """
         surface.fill(BLACK)
         font = pygame.font.Font(None, 60)
         label = font.render('Tetris', 1, WHITE)
@@ -285,6 +318,9 @@ class Tetris:
                 pygame.draw.rect(surface, self.current_piece.color, (TOP_LEFT_X + x * BLOCK_SIZE, TOP_LEFT_Y + y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE), 0)
 
     def draw_next_shape(self, shape, surface):
+        """
+        Docstring for draw_next_shape.
+        """
         format = shape.shape[shape.rotation % len(shape.shape)]
         for i, line in enumerate(format):
             row = list(line)
@@ -293,6 +329,9 @@ class Tetris:
                     pygame.draw.rect(surface, shape.color, (TOP_LEFT_X + PLAY_WIDTH + 50 + j*BLOCK_SIZE, TOP_LEFT_Y + 30 + i*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE), 0)
 
     def draw_hold_shape(self, shape, surface):
+        """
+        Docstring for draw_hold_shape.
+        """
         format = shape.shape[shape.rotation % len(shape.shape)]
         for i, line in enumerate(format):
             row = list(line)
@@ -301,6 +340,9 @@ class Tetris:
                     pygame.draw.rect(surface, shape.color, (TOP_LEFT_X - 150 + j*BLOCK_SIZE, TOP_LEFT_Y + 30 + i*BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE), 0)
 
     def lock_piece(self):
+        """
+        Docstring for lock_piece.
+        """
         piece_pos = self.convert_shape_format(self.current_piece)
         for i, (x, y) in enumerate(piece_pos):
             if y > -1:
@@ -315,6 +357,9 @@ class Tetris:
             self.game_over = True
 
     def hold(self):
+        """
+        Docstring for hold.
+        """
         if not self.can_hold:
             return
         
@@ -333,6 +378,9 @@ class Tetris:
         self.can_hold = False
 
 def main():
+    """
+    Docstring for main.
+    """
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption('Tetris - Challenge 7')
     game = Tetris()

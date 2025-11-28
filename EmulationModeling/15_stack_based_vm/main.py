@@ -1,3 +1,7 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 from vm import Instruction, OpCode, VirtualMachine
 
 

@@ -1,14 +1,30 @@
+"""
+Implementation of the algorithm.
+"""
+
 import random
 import math
 from typing import List, Tuple, Dict, Optional
 
 class Point:
+    """
+    Docstring for Point.
+    """
     def __init__(self, x, y):
+        """
+        Docstring for __init__.
+        """
         self.x = x
         self.y = y
 
 class Label:
+    """
+    Docstring for Label.
+    """
     def __init__(self, text: str, x: float, y: float, width: float, height: float):
+        """
+        Docstring for __init__.
+        """
         self.text = text
         self.target_x = x # The point we want to label
         self.target_y = y
@@ -36,6 +52,9 @@ class Label:
         return (0,0,0,0)
 
     def set_position(self, idx: int):
+        """
+        Docstring for set_position.
+        """
         self.position_idx = idx
         self.rect = self.get_rect()
 
@@ -50,6 +69,9 @@ class MapLabeler:
     Objective: Minimize overlaps and optimize preference (e.g. TopRight is best).
     """
     def __init__(self, labels: List[Label], bounds: Tuple[float, float, float, float]):
+        """
+        Docstring for __init__.
+        """
         self.labels = labels
         self.bounds = bounds # (min_x, min_y, max_x, max_y) map bounds
 
@@ -86,6 +108,9 @@ class MapLabeler:
         return total_energy
 
     def solve(self, iterations: int = 10000, initial_temp: float = 100.0):
+        """
+        Docstring for solve.
+        """
         current_energy = self.energy()
         temp = initial_temp
 

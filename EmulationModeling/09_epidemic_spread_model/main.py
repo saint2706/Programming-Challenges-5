@@ -1,6 +1,13 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 from model import SIRModel
 
 def main():
+    """
+    Docstring for main.
+    """
     print("Running SIR Model Headless...")
     model = SIRModel(num_agents=500, width=100, height=100)
 

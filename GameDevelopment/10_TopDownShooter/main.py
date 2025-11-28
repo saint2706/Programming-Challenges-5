@@ -40,7 +40,13 @@ pygame.display.set_caption("Top-Down Shooter - Challenge 10")
 clock = pygame.time.Clock()
 
 class Player(pygame.sprite.Sprite):
+    """
+    Docstring for Player.
+    """
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         super().__init__()
         self.original_image = pygame.Surface((40, 40), pygame.SRCALPHA)
         pygame.draw.circle(self.original_image, BLUE, (20, 20), 20)
@@ -52,6 +58,9 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         # Movement
+        """
+        Docstring for update.
+        """
         keys = pygame.key.get_pressed()
         move = pygame.math.Vector2(0, 0)
         if keys[pygame.K_w]: move.y = -1
@@ -78,7 +87,13 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=self.rect.center)
 
 class Bullet(pygame.sprite.Sprite):
+    """
+    Docstring for Bullet.
+    """
     def __init__(self, x, y, angle):
+        """
+        Docstring for __init__.
+        """
         super().__init__()
         self.image = pygame.Surface((10, 10))
         self.image.fill(YELLOW)
@@ -88,13 +103,22 @@ class Bullet(pygame.sprite.Sprite):
         self.pos = pygame.math.Vector2(x, y)
 
     def update(self):
+        """
+        Docstring for update.
+        """
         self.pos += self.vel
         self.rect.center = self.pos
         if not screen.get_rect().colliderect(self.rect):
             self.kill()
 
 class Enemy(pygame.sprite.Sprite):
+    """
+    Docstring for Enemy.
+    """
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         super().__init__()
         self.image = pygame.Surface((30, 30))
         self.image.fill(RED)
@@ -119,6 +143,9 @@ class Enemy(pygame.sprite.Sprite):
 
     def update(self, player_pos):
         # Move towards player
+        """
+        Docstring for update.
+        """
         direction = player_pos - self.pos
         if direction.length() > 0:
             direction = direction.normalize() * ENEMY_SPEED
@@ -126,6 +153,9 @@ class Enemy(pygame.sprite.Sprite):
             self.rect.center = self.pos
 
 def main():
+    """
+    Docstring for main.
+    """
     player = Player()
     all_sprites = pygame.sprite.Group()
     all_sprites.add(player)

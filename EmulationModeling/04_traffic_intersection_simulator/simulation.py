@@ -1,8 +1,18 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import simpy
 import random
 
 class TrafficIntersection:
+    """
+    Docstring for TrafficIntersection.
+    """
     def __init__(self, env, green_duration=10, yellow_duration=2, red_duration=10):
+        """
+        Docstring for __init__.
+        """
         self.env = env
         self.green_duration = green_duration
         self.yellow_duration = yellow_duration
@@ -27,6 +37,9 @@ class TrafficIntersection:
         self.action = env.process(self.run())
 
     def run(self):
+        """
+        Docstring for run.
+        """
         while True:
             # NS Green, EW Red
             self.lights["NS"] = "green"
@@ -54,6 +67,9 @@ def car_generator(env, intersection, direction, arrival_rate):
         env.process(car(env, intersection, direction))
 
 def car(env, intersection, direction):
+    """
+    Docstring for car.
+    """
     arrival_time = env.now
     intersection.queue_lengths[direction] += 1
 
@@ -78,6 +94,9 @@ def car(env, intersection, direction):
         intersection.stats["total_wait_time"] += (env.now - arrival_time)
 
 def run_simulation(duration=200):
+    """
+    Docstring for run_simulation.
+    """
     env = simpy.Environment()
     intersection = TrafficIntersection(env)
 

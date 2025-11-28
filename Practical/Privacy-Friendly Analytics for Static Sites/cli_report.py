@@ -19,6 +19,9 @@ else:  # Enable running as a script despite spaces in folder name
 
 
 def ensure_schema() -> None:
+    """
+    Docstring for ensure_schema.
+    """
     if __package__:
         from .db import Base
     else:
@@ -28,12 +31,18 @@ def ensure_schema() -> None:
 
 
 def parse_date(value: str | None) -> date | None:
+    """
+    Docstring for parse_date.
+    """
     if value is None:
         return None
     return datetime.strptime(value, "%Y-%m-%d").date()
 
 
 def fetch_counts(start: date | None, end: date | None) -> Iterable[Tuple[date, str, int]]:
+    """
+    Docstring for fetch_counts.
+    """
     ensure_schema()
     with SessionLocal() as session:
         date_column = func.date(PageView.timestamp).label("day")
@@ -50,6 +59,9 @@ def fetch_counts(start: date | None, end: date | None) -> Iterable[Tuple[date, s
 
 
 def main() -> None:
+    """
+    Docstring for main.
+    """
     parser = argparse.ArgumentParser(description="Summarize page views per URL and date")
     parser.add_argument("--start-date", dest="start", help="Filter results from this date (YYYY-MM-DD)")
     parser.add_argument("--end-date", dest="end", help="Filter results up to this date (YYYY-MM-DD)")

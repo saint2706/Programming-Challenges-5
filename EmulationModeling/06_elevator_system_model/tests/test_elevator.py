@@ -1,9 +1,19 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import unittest
 import simpy
 from elevator_system import Elevator, Controller
 
 class TestElevatorSystem(unittest.TestCase):
+    """
+    Docstring for TestElevatorSystem.
+    """
     def test_elevator_move(self):
+        """
+        Docstring for test_elevator_move.
+        """
         env = simpy.Environment()
         elev = Elevator(env, 0)
 
@@ -20,6 +30,9 @@ class TestElevatorSystem(unittest.TestCase):
         self.assertEqual(elev.current_floor, 2)
 
     def test_controller_dispatch(self):
+        """
+        Docstring for test_controller_dispatch.
+        """
         env = simpy.Environment()
         ctrl = Controller(env, num_elevators=2)
 

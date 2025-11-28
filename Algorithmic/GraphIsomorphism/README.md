@@ -53,3 +53,11 @@ The `main` program accepts JSON commands.
 | :--- | :--- |
 | **WL Iteration** | $O(M)$ where $M$ is edges |
 | **Total** | $O(K \cdot M)$ where $K$ is iterations |
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+go run .
+```

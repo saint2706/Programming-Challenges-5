@@ -1,3 +1,7 @@
+"""
+Project implementation.
+"""
+
 import argparse
 import asyncio
 import json
@@ -18,6 +22,9 @@ SECRET_KEY = os.environ.get("CLIPBOARD_SECRET", "")
 
 
 def discover_server(timeout: float = 2.0) -> Optional[tuple[str, int]]:
+    """
+    Docstring for discover_server.
+    """
     message = b"DISCOVER_CLIPBOARD"
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
         sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
@@ -32,6 +39,9 @@ def discover_server(timeout: float = 2.0) -> Optional[tuple[str, int]]:
 
 
 def register_client(base_url: str, client_id: str, display_name: Optional[str]) -> None:
+    """
+    Docstring for register_client.
+    """
     try:
         requests.post(
             f"{base_url}/register",
@@ -43,6 +53,9 @@ def register_client(base_url: str, client_id: str, display_name: Optional[str]) 
 
 
 def clipboard_watcher(loop: asyncio.AbstractEventLoop, queue: asyncio.Queue, debounce: float) -> None:
+    """
+    Docstring for clipboard_watcher.
+    """
     last_text = pyperclip.paste()
     last_sent_at = 0.0
     while True:
@@ -58,6 +71,9 @@ def clipboard_watcher(loop: asyncio.AbstractEventLoop, queue: asyncio.Queue, deb
 
 
 def set_clipboard(text: str) -> None:
+    """
+    Docstring for set_clipboard.
+    """
     try:
         pyperclip.copy(text)
     except pyperclip.PyperclipException:
@@ -70,6 +86,9 @@ async def send_clipboard_updates(
     fernet: Fernet,
     client_id: str,
 ) -> None:
+    """
+    Docstring for send_clipboard_updates.
+    """
     while True:
         text = await queue.get()
         payload = json.dumps({"client_id": client_id, "content": text, "sent_at": time.time()})
@@ -77,6 +96,9 @@ async def send_clipboard_updates(
 
 
 async def receive_updates(ws: websockets.WebSocketClientProtocol, fernet: Fernet, ignore_value: str) -> None:
+    """
+    Docstring for receive_updates.
+    """
     last_text = ignore_value
     async for message in ws:
         try:
@@ -91,6 +113,9 @@ async def receive_updates(ws: websockets.WebSocketClientProtocol, fernet: Fernet
 
 
 async def connect_and_sync(host: str, port: int, client_id: str, display_name: Optional[str]) -> None:
+    """
+    Docstring for connect_and_sync.
+    """
     if not SECRET_KEY:
         raise RuntimeError("Set CLIPBOARD_SECRET to the shared Fernet key before running the client")
 
@@ -116,6 +141,9 @@ async def connect_and_sync(host: str, port: int, client_id: str, display_name: O
 
 
 def main():
+    """
+    Docstring for main.
+    """
     parser = argparse.ArgumentParser(description="Bidirectional clipboard sync client")
     parser.add_argument("--host", help="Clipboard server host (discovery used if omitted)")
     parser.add_argument("--port", type=int, default=SERVICE_PORT, help="Clipboard server port")

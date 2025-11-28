@@ -19,6 +19,9 @@ except ImportError:
 
 @dataclasses.dataclass
 class TrainingConfig:
+    """
+    Docstring for TrainingConfig.
+    """
     episodes: int = 500
     max_steps_per_episode: int = 500
     learning_rate: float = 0.1
@@ -34,6 +37,9 @@ class StateDiscretizer:
     """Convert continuous CartPole observations into discrete buckets."""
 
     def __init__(self, bins: Iterable[int]):
+        """
+        Docstring for __init__.
+        """
         self.bins = np.array(list(bins), dtype=np.int32)
         if len(self.bins) != 4:
             raise ValueError("CartPole has exactly four observation dimensions")
@@ -42,6 +48,9 @@ class StateDiscretizer:
         self.high = np.array([4.8, 5.0, 0.418, 5.0])
 
     def discretize(self, observation: np.ndarray) -> Tuple[int, ...]:
+        """
+        Docstring for discretize.
+        """
         clipped = np.clip(observation, self.low, self.high)
         ratios = (clipped - self.low) / (self.high - self.low)
         buckets = (ratios * self.bins).astype(int)
@@ -53,6 +62,9 @@ class QLearningAgent:
     """Tabular Q-learning agent with epsilon-greedy exploration."""
 
     def __init__(self, config: TrainingConfig, discretizer: StateDiscretizer, action_space: gym.Space):
+        """
+        Docstring for __init__.
+        """
         self.cfg = config
         self.discretizer = discretizer
         if not isinstance(action_space.n, (int, np.integer)):
@@ -65,21 +77,33 @@ class QLearningAgent:
             np.random.seed(config.seed)
 
     def select_action(self, state: Tuple[int, ...]) -> int:
+        """
+        Docstring for select_action.
+        """
         if random.random() < self.epsilon:
             return random.randrange(self.n_actions)
         return int(np.argmax(self.q_table[state]))
 
     def update(self, state: Tuple[int, ...], action: int, reward: float, next_state: Tuple[int, ...], done: bool) -> None:
+        """
+        Docstring for update.
+        """
         old_value = self.q_table[state + (action,)]
         next_max = 0.0 if done else float(np.max(self.q_table[next_state]))
         target = reward + self.cfg.discount_factor * next_max
         self.q_table[state + (action,)] = (1 - self.cfg.learning_rate) * old_value + self.cfg.learning_rate * target
 
     def decay_epsilon(self) -> None:
+        """
+        Docstring for decay_epsilon.
+        """
         self.epsilon = max(self.cfg.epsilon_end, self.epsilon * self.cfg.epsilon_decay)
 
 
 def run_episode(env: gym.Env, agent: QLearningAgent, cfg: TrainingConfig) -> float:
+    """
+    Docstring for run_episode.
+    """
     obs, _ = env.reset()
     state = agent.discretizer.discretize(np.array(obs, dtype=np.float32))
     total_reward = 0.0
@@ -105,6 +129,9 @@ def run_episode(env: gym.Env, agent: QLearningAgent, cfg: TrainingConfig) -> flo
 
 
 def train(config: TrainingConfig) -> None:
+    """
+    Docstring for train.
+    """
     env = gym.make("CartPole-v1")
     env.reset(seed=config.seed)
     discretizer = StateDiscretizer(config.bins)
@@ -123,6 +150,9 @@ def train(config: TrainingConfig) -> None:
 
 
 def parse_args() -> TrainingConfig:
+    """
+    Docstring for parse_args.
+    """
     parser = argparse.ArgumentParser(description="Train a CartPole-v1 agent with Q-learning")
     parser.add_argument("--episodes", type=int, default=TrainingConfig.episodes, help="Number of training episodes")
     parser.add_argument("--max-steps", type=int, default=TrainingConfig.max_steps_per_episode, help="Max steps per episode")

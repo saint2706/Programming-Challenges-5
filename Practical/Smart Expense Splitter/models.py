@@ -35,6 +35,9 @@ class Participant:
     name: str
 
     def __post_init__(self) -> None:
+        """
+        Docstring for __post_init__.
+        """
         if not self.name:
             raise ValueError("Participant name cannot be empty")
 
@@ -56,6 +59,9 @@ class Expense:
     consumers: List[Participant] = field(default_factory=list)
 
     def __post_init__(self) -> None:
+        """
+        Docstring for __post_init__.
+        """
         if self.amount <= 0:
             raise ValueError("Expense amount must be positive")
         if not self.consumers:

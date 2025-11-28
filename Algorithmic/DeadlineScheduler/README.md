@@ -81,3 +81,11 @@ Explanation: Jobs 3 and 4 missed deadlines (30 + 25 = 55)
 | **Schedule (naive)** | $O(n^2)$ |
 
 Where $n$ is the number of jobs.
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+go run .
+```

@@ -1,3 +1,7 @@
+"""
+Artificial Intelligence project implementation.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass

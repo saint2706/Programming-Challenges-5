@@ -89,6 +89,9 @@ class FaceAttendanceSystem:
         self._load_known_encodings()
 
     def _get_cascade(self) -> cv2.CascadeClassifier:
+        """
+        Docstring for _get_cascade.
+        """
         if self._cascade is None:
             cascade_path = str(
                 Path(cv2.data.haarcascades) / "haarcascade_frontalface_default.xml"
@@ -97,6 +100,9 @@ class FaceAttendanceSystem:
         return self._cascade
 
     def _load_known_encodings(self) -> None:
+        """
+        Docstring for _load_known_encodings.
+        """
         if not self.known_encodings_path.exists():
             return
         with self.known_encodings_path.open("r") as handle:
@@ -105,6 +111,9 @@ class FaceAttendanceSystem:
             self.known_encodings[name] = np.asarray(encoding, dtype=np.float32)
 
     def _save_known_encodings(self) -> None:
+        """
+        Docstring for _save_known_encodings.
+        """
         serializable = {k: v.tolist() for k, v in self.known_encodings.items()}
         self.known_encodings_path.parent.mkdir(parents=True, exist_ok=True)
         with self.known_encodings_path.open("w") as handle:
@@ -128,6 +137,9 @@ class FaceAttendanceSystem:
         return detections
 
     def _extract_face_roi(self, frame: np.ndarray, box: Detection) -> np.ndarray:
+        """
+        Docstring for _extract_face_roi.
+        """
         x, y, w, h = box
         face = frame[y : y + h, x : x + w]
         return cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
@@ -163,6 +175,9 @@ class FaceAttendanceSystem:
         return output
 
     def _annotate_frame(self, frame: np.ndarray, box: Detection, name: str) -> None:
+        """
+        Docstring for _annotate_frame.
+        """
         x, y, w, h = box
         color = (0, 255, 0) if name != "Unknown" else (0, 0, 255)
         cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)

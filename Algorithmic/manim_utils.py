@@ -1,3 +1,7 @@
+"""
+Implementation of the algorithm.
+"""
+
 from manim import *
 
 def create_array_mobject(array, cell_width=0.8, cell_height=0.8, color=BLUE):

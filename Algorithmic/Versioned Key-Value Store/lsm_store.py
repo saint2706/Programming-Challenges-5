@@ -1,3 +1,7 @@
+"""
+Implementation of the algorithm.
+"""
+
 import os
 import json
 import time
@@ -5,13 +9,22 @@ import glob
 from typing import Optional, List, Tuple
 
 class MemTable:
+    """
+    Docstring for MemTable.
+    """
     def __init__(self, limit_bytes: int = 1024):
+        """
+        Docstring for __init__.
+        """
         self.data = {}
         self.size_bytes = 0
         self.limit_bytes = limit_bytes
 
     def put(self, key: str, value: str):
         # Calculate size diff (approx)
+        """
+        Docstring for put.
+        """
         old_val = self.data.get(key)
         new_entry_size = len(key) + len(value)
 
@@ -22,17 +35,32 @@ class MemTable:
         self.size_bytes += new_entry_size
 
     def get(self, key: str) -> Optional[str]:
+        """
+        Docstring for get.
+        """
         return self.data.get(key)
 
     def is_full(self) -> bool:
+        """
+        Docstring for is_full.
+        """
         return self.size_bytes >= self.limit_bytes
 
     def clear(self):
+        """
+        Docstring for clear.
+        """
         self.data = {}
         self.size_bytes = 0
 
 class SSTable:
+    """
+    Docstring for SSTable.
+    """
     def __init__(self, filepath: str):
+        """
+        Docstring for __init__.
+        """
         self.filepath = filepath
         # We could load a sparse index here for speed
 
@@ -73,6 +101,9 @@ class SSTable:
     @staticmethod
     def create(filepath: str, data: dict):
         # Sort keys
+        """
+        Docstring for create.
+        """
         sorted_keys = sorted(data.keys())
         with open(filepath, 'w') as f:
             for k in sorted_keys:
@@ -80,7 +111,13 @@ class SSTable:
                 f.write(json.dumps(entry) + "\n")
 
 class LSMStore:
+    """
+    Docstring for LSMStore.
+    """
     def __init__(self, data_dir: str, memtable_limit: int = 100):
+        """
+        Docstring for __init__.
+        """
         self.data_dir = data_dir
         self.memtable = MemTable(limit_bytes=memtable_limit)
         self.memtable_limit = memtable_limit
@@ -90,6 +127,9 @@ class LSMStore:
 
     def _get_sstable_files(self) -> List[str]:
         # Get all .sst files, sort by timestamp (name) reverse (newest first)
+        """
+        Docstring for _get_sstable_files.
+        """
         files = glob.glob(os.path.join(self.data_dir, "sstable_*.sst"))
         # Filename format: sstable_{timestamp}.sst
         # Sort reverse
@@ -97,12 +137,18 @@ class LSMStore:
         return files
 
     def put(self, key: str, value: str):
+        """
+        Docstring for put.
+        """
         self.memtable.put(key, value)
         if self.memtable.is_full():
             self.flush()
 
     def get(self, key: str) -> Optional[str]:
         # 1. Check MemTable
+        """
+        Docstring for get.
+        """
         val = self.memtable.get(key)
         if val is not None:
             if val == "__TOMBSTONE__":
@@ -123,9 +169,15 @@ class LSMStore:
 
     def delete(self, key: str):
         # Write tombstone
+        """
+        Docstring for delete.
+        """
         self.put(key, "__TOMBSTONE__")
 
     def flush(self):
+        """
+        Docstring for flush.
+        """
         if not self.memtable.data:
             return
 
@@ -144,6 +196,9 @@ class LSMStore:
         self.memtable.clear()
 
     def compact_all(self):
+        """
+        Docstring for compact_all.
+        """
         self.flush()
         files = self._get_sstable_files() # Newest first
         files.reverse() # Oldest first

@@ -75,3 +75,11 @@ Where:
 - $n$ = number of items
 - $d$ = number of dimensions
 - $W_i$ = capacity in dimension $i$
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+go run .
+```

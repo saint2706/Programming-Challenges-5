@@ -10,6 +10,9 @@ class CacheLine:
     """Represents a single cache line."""
 
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.valid = False
         self.tag = None
         self.data = None

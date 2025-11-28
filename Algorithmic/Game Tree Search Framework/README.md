@@ -124,3 +124,11 @@ Nodes evaluated: 2,315
 Best move: (1, 1)
 Time: 0.003s
 ```
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+cargo run --release
+```

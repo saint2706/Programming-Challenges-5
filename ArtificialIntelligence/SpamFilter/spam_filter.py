@@ -11,6 +11,9 @@ from sklearn.naive_bayes import MultinomialNB
 
 @dataclass
 class SpamExample:
+    """
+    Docstring for SpamExample.
+    """
     text: str
     label: str
 
@@ -82,6 +85,9 @@ def train_manual_nb(features, labels, alpha: float = 1.0):
 
 
 def manual_predict(vectorizer: CountVectorizer, params, samples: Iterable[str]) -> List[str]:
+    """
+    Docstring for manual_predict.
+    """
     classes, log_prior, log_conditional = params
     X = vectorizer.transform(list(samples))
     log_likelihood = X @ log_conditional.T
@@ -91,6 +97,9 @@ def manual_predict(vectorizer: CountVectorizer, params, samples: Iterable[str]) 
 
 
 def main() -> None:
+    """
+    Docstring for main.
+    """
     corpus = build_corpus()
     vectorizer, features, labels = vectorize_corpus(corpus)
 

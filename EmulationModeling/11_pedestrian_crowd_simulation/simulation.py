@@ -1,3 +1,7 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 from __future__ import annotations
 
 import random
@@ -31,6 +35,9 @@ class CrowdSimulation:
         dt: float = 0.1,
         random_seed: int | None = None,
     ) -> None:
+        """
+        Docstring for __init__.
+        """
         self.width = width
         self.height = height
         self.goal_strength = goal_strength
@@ -43,6 +50,9 @@ class CrowdSimulation:
         self.agents: List[Agent] = self._create_agents(num_agents)
 
     def _create_agents(self, num_agents: int) -> List[Agent]:
+        """
+        Docstring for _create_agents.
+        """
         agents: List[Agent] = []
         for _ in range(num_agents):
             position = np.array(
@@ -58,6 +68,9 @@ class CrowdSimulation:
         return agents
 
     def _goal_force(self, agent: Agent) -> np.ndarray:
+        """
+        Docstring for _goal_force.
+        """
         direction = agent.destination - agent.position
         distance = np.linalg.norm(direction)
         if distance < 1e-8:
@@ -65,6 +78,9 @@ class CrowdSimulation:
         return (direction / distance) * self.goal_strength
 
     def _repulsive_force(self, agent: Agent, neighbors: Sequence[Agent]) -> np.ndarray:
+        """
+        Docstring for _repulsive_force.
+        """
         force = np.zeros(2)
         for other in neighbors:
             if other is agent:
@@ -79,6 +95,9 @@ class CrowdSimulation:
         return force
 
     def _update_agent(self, agent: Agent, neighbors: Sequence[Agent]) -> None:
+        """
+        Docstring for _update_agent.
+        """
         acceleration = self._goal_force(agent) + self._repulsive_force(agent, neighbors)
         agent.velocity = agent.velocity + acceleration * self.dt
 
@@ -99,18 +118,30 @@ class CrowdSimulation:
             self._update_agent(agent, current_agents)
 
     def positions(self) -> np.ndarray:
+        """
+        Docstring for positions.
+        """
         return np.array([agent.position for agent in self.agents])
 
     def destinations(self) -> np.ndarray:
+        """
+        Docstring for destinations.
+        """
         return np.array([agent.destination for agent in self.agents])
 
     def reset_destinations(self, destinations: Sequence[Sequence[float]]) -> None:
+        """
+        Docstring for reset_destinations.
+        """
         if len(destinations) != len(self.agents):
             raise ValueError("Destination count must match number of agents.")
         for agent, dest in zip(self.agents, destinations):
             agent.destination = np.array(dest, dtype=float)
 
     def reset_positions(self, positions: Sequence[Sequence[float]]) -> None:
+        """
+        Docstring for reset_positions.
+        """
         if len(positions) != len(self.agents):
             raise ValueError("Position count must match number of agents.")
         for agent, pos in zip(self.agents, positions):

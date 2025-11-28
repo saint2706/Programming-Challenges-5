@@ -1,8 +1,15 @@
+"""
+Implementation of the algorithm.
+"""
+
 import matplotlib.pyplot as plt
 import random
 from label_placement import Label, MapLabeler
 
 def main():
+    """
+    Docstring for main.
+    """
     random.seed(42)
 
     # Generate random points on a 100x100 map

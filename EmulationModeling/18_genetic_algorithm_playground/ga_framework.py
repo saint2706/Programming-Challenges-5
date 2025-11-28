@@ -18,6 +18,9 @@ FitnessFunction = Callable[[Genome], float]
 
 @dataclass
 class GAConfig:
+    """
+    Docstring for GAConfig.
+    """
     population_size: int
     genome_length: int
     bounds: Sequence[tuple[float, float]]
@@ -26,6 +29,9 @@ class GAConfig:
     mutation_scale: float
 
     def __post_init__(self) -> None:
+        """
+        Docstring for __post_init__.
+        """
         if len(self.bounds) != self.genome_length:
             raise ValueError("bounds length must match genome_length")
         if not 0 <= self.crossover_rate <= 1:
@@ -38,16 +44,28 @@ class GAConfig:
 
 @dataclass
 class Individual:
+    """
+    Docstring for Individual.
+    """
     genome: Genome
     fitness: float | None = None
 
     def evaluate(self, fitness_fn: FitnessFunction) -> float:
+        """
+        Docstring for evaluate.
+        """
         self.fitness = fitness_fn(self.genome)
         return self.fitness
 
 
 class GeneticAlgorithm:
+    """
+    Docstring for GeneticAlgorithm.
+    """
     def __init__(self, config: GAConfig, fitness_fn: FitnessFunction) -> None:
+        """
+        Docstring for __init__.
+        """
         self.config = config
         self.fitness_fn = fitness_fn
         self.population: list[Individual] = []
@@ -63,6 +81,9 @@ class GeneticAlgorithm:
             self.population.append(Individual(genome=genome))
 
     def evaluate_population(self) -> None:
+        """
+        Docstring for evaluate_population.
+        """
         for individual in self.population:
             individual.evaluate(self.fitness_fn)
 
@@ -143,5 +164,8 @@ class GeneticAlgorithm:
 
 
 def mean(iterable: Iterable[float]) -> float:
+    """
+    Docstring for mean.
+    """
     items = list(iterable)
     return sum(items) / len(items) if items else 0.0

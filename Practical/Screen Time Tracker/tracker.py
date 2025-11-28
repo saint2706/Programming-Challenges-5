@@ -20,6 +20,9 @@ class ScreenTimeTracker:
         storage: Optional[BaseStorage] = None,
         poll_interval_seconds: float = 5.0,
     ) -> None:
+        """
+        Docstring for __init__.
+        """
         self.provider = provider or get_provider_for_platform()
         self.storage = storage or SQLiteStorage()
         self.poll_interval_seconds = poll_interval_seconds
@@ -28,9 +31,15 @@ class ScreenTimeTracker:
         self._stop_event = threading.Event()
 
     def _now(self) -> datetime:
+        """
+        Docstring for _now.
+        """
         return datetime.now(timezone.utc)
 
     def _record_interval(self, current_time: datetime) -> None:
+        """
+        Docstring for _record_interval.
+        """
         if not self._last_window or not self._last_switch:
             return
         self.storage.log_interval(self._last_window.title, self._last_switch, current_time)
@@ -61,11 +70,17 @@ class ScreenTimeTracker:
             self._record_interval(self._now())
 
     def run_in_thread(self) -> threading.Thread:
+        """
+        Docstring for run_in_thread.
+        """
         thread = threading.Thread(target=self.run_forever, daemon=True)
         thread.start()
         return thread
 
     def stop(self) -> None:
+        """
+        Docstring for stop.
+        """
         self._stop_event.set()
 
 

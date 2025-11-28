@@ -58,3 +58,11 @@ let dist = ed.compute_with_costs("hello", "help");
 | **Compute** | $O(mn)$ | $O(mn)$ |
 
 Where $m$ and $n$ are the lengths of the two strings.
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+cargo run --release
+```

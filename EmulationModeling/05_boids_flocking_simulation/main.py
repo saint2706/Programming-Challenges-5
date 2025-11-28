@@ -1,8 +1,15 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import pygame
 import numpy as np
 from boids import Flock
 
 def main():
+    """
+    Docstring for main.
+    """
     WIDTH, HEIGHT = 800, 600
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))

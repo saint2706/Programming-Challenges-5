@@ -1,7 +1,14 @@
+"""
+Implementation of the algorithm.
+"""
+
 import sys
 from autocomplete import AutocompleteEngine
 
 def main():
+    """
+    Docstring for main.
+    """
     engine = AutocompleteEngine(n=2)
 
     # Simple training corpus

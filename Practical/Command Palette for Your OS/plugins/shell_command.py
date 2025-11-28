@@ -9,6 +9,9 @@ METADATA = {
 
 
 def execute(query: str) -> str:
+    """
+    Docstring for execute.
+    """
     command = query.strip()
     if not command:
         return "Enter a shell command to run."

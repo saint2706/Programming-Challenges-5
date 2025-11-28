@@ -37,6 +37,9 @@ clock = pygame.time.Clock()
 
 # Load Assets
 def load_asset(name, size=None):
+    """
+    Docstring for load_asset.
+    """
     path = os.path.join("assets", name)
     if os.path.exists(path):
         img = pygame.image.load(path).convert_alpha()
@@ -56,11 +59,20 @@ BALL_IMG = load_asset("ball.png", (BALL_SIZE, BALL_SIZE))
 BRICK_IMG = load_asset("brick.png", (BRICK_WIDTH, BRICK_HEIGHT))
 
 class Paddle:
+    """
+    Docstring for Paddle.
+    """
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.rect = pygame.Rect(SCREEN_WIDTH // 2 - PADDLE_WIDTH // 2, SCREEN_HEIGHT - 50, PADDLE_WIDTH, PADDLE_HEIGHT)
         self.speed = 8
 
     def move(self, dx):
+        """
+        Docstring for move.
+        """
         self.rect.x += dx
         if self.rect.left < 0:
             self.rect.left = 0
@@ -68,25 +80,40 @@ class Paddle:
             self.rect.right = SCREEN_WIDTH
 
     def draw(self, surface):
+        """
+        Docstring for draw.
+        """
         if PADDLE_IMG:
             surface.blit(PADDLE_IMG, self.rect)
         else:
             pygame.draw.rect(surface, BLUE, self.rect)
 
 class Ball:
+    """
+    Docstring for Ball.
+    """
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.rect = pygame.Rect(SCREEN_WIDTH // 2 - BALL_SIZE // 2, SCREEN_HEIGHT // 2, BALL_SIZE, BALL_SIZE)
         self.dx = 5 * random.choice([-1, 1])
         self.dy = -5
         self.active = False
 
     def reset(self):
+        """
+        Docstring for reset.
+        """
         self.rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
         self.dx = 5 * random.choice([-1, 1])
         self.dy = -5
         self.active = False
 
     def move(self):
+        """
+        Docstring for move.
+        """
         if not self.active:
             return
 
@@ -102,18 +129,30 @@ class Ball:
         # Bottom collision (death) handled in main loop
 
     def draw(self, surface):
+        """
+        Docstring for draw.
+        """
         if BALL_IMG:
             surface.blit(BALL_IMG, self.rect)
         else:
             pygame.draw.ellipse(surface, WHITE, self.rect)
 
 class Brick:
+    """
+    Docstring for Brick.
+    """
     def __init__(self, x, y, color):
+        """
+        Docstring for __init__.
+        """
         self.rect = pygame.Rect(x, y, BRICK_WIDTH, BRICK_HEIGHT)
         self.color = color
         self.active = True
 
     def draw(self, surface):
+        """
+        Docstring for draw.
+        """
         if not self.active:
             return
         
@@ -134,6 +173,9 @@ class Brick:
             pygame.draw.rect(surface, BLACK, self.rect, 1)
 
 def create_bricks():
+    """
+    Docstring for create_bricks.
+    """
     bricks = []
     colors = [RED, RED, YELLOW, YELLOW, GREEN, GREEN, BLUE, BLUE]
     for row in range(8):
@@ -144,6 +186,9 @@ def create_bricks():
     return bricks
 
 def main():
+    """
+    Docstring for main.
+    """
     paddle = Paddle()
     ball = Ball()
     bricks = create_bricks()

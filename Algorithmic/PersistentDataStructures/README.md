@@ -67,3 +67,11 @@ The `main` program accepts a list of JSON commands from stdin.
 | **Append** | $O(\log_B n)$ | $O(\log_B n)$ (new nodes) |
 
 Where $B$ is the branching factor (2 in the binary case, usually 32 in practical implementations).
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+go run .
+```

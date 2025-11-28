@@ -1,14 +1,27 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import json
 import pickle
 import os
 from fs_nodes import Directory, File
 
 class VirtualFileSystem:
+    """
+    Docstring for VirtualFileSystem.
+    """
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.root = Directory("/")
         self.current_dir = self.root
 
     def _resolve_path(self, path):
+        """
+        Docstring for _resolve_path.
+        """
         if path == "/":
             return self.root
 
@@ -29,6 +42,9 @@ class VirtualFileSystem:
         return node
 
     def mkdir(self, path):
+        """
+        Docstring for mkdir.
+        """
         if "/" in path:
             parent_path, name = path.rsplit("/", 1)
             parent = self._resolve_path(parent_path if parent_path else "/")
@@ -45,6 +61,9 @@ class VirtualFileSystem:
         return "Error: Invalid path."
 
     def touch(self, path, content=""):
+        """
+        Docstring for touch.
+        """
         if "/" in path:
             parent_path, name = path.rsplit("/", 1)
             parent = self._resolve_path(parent_path if parent_path else "/")
@@ -65,6 +84,9 @@ class VirtualFileSystem:
         return "Error: Invalid path."
 
     def ls(self, path=None):
+        """
+        Docstring for ls.
+        """
         target = self.current_dir
         if path:
             target = self._resolve_path(path)
@@ -76,6 +98,9 @@ class VirtualFileSystem:
         return "Error: Path not found."
 
     def cd(self, path):
+        """
+        Docstring for cd.
+        """
         target = self._resolve_path(path)
         if target and isinstance(target, Directory):
             self.current_dir = target
@@ -83,6 +108,9 @@ class VirtualFileSystem:
         return "Error: Invalid directory."
 
     def pwd(self):
+        """
+        Docstring for pwd.
+        """
         path = []
         curr = self.current_dir
         while curr != self.root:
@@ -91,12 +119,18 @@ class VirtualFileSystem:
         return "/" + "/".join(reversed(path))
 
     def cat(self, path):
+        """
+        Docstring for cat.
+        """
         target = self._resolve_path(path)
         if target and isinstance(target, File):
             return target.read()
         return "Error: File not found or is a directory."
 
     def rm(self, path):
+        """
+        Docstring for rm.
+        """
         if "/" in path:
             parent_path, name = path.rsplit("/", 1)
             parent = self._resolve_path(parent_path if parent_path else "/")
@@ -110,6 +144,9 @@ class VirtualFileSystem:
         return "Error: Failed to remove."
 
     def save_state(self, filepath):
+        """
+        Docstring for save_state.
+        """
         try:
             # Recursive dict generation
             data = self.root.to_dict()
@@ -120,6 +157,9 @@ class VirtualFileSystem:
             return f"Error saving: {e}"
 
     def load_state(self, filepath):
+        """
+        Docstring for load_state.
+        """
         if not os.path.exists(filepath):
             return "Error: Save file not found."
         try:
@@ -132,6 +172,9 @@ class VirtualFileSystem:
             return f"Error loading: {e}"
 
     def _reconstruct_from_dict(self, data, parent=None):
+        """
+        Docstring for _reconstruct_from_dict.
+        """
         if data["is_dir"]:
             node = Directory(data["name"], parent=parent)
             for child_data in data["children"]:

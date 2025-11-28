@@ -11,6 +11,9 @@ DEFAULT_ROOTS = [Path.home() / "Documents", Path.home()]
 
 
 def execute(query: str) -> str:
+    """
+    Docstring for execute.
+    """
     query = query.strip()
     if not query:
         return "Type part of a filename to search."

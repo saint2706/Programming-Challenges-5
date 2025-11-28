@@ -46,7 +46,13 @@ WORD_LIST = [
 ]
 
 class FallingWord:
+    """
+    Docstring for FallingWord.
+    """
     def __init__(self, text, speed):
+        """
+        Docstring for __init__.
+        """
         self.text = text
         self.speed = speed
         self.x = random.randint(50, SCREEN_WIDTH - 150)
@@ -55,11 +61,17 @@ class FallingWord:
         self.matched_len = 0 # How many chars matched so far
 
     def update(self):
+        """
+        Docstring for update.
+        """
         self.y += self.speed
         return self.y > SCREEN_HEIGHT
 
     def draw(self, surface):
         # Draw matched part in Green, rest in White
+        """
+        Docstring for draw.
+        """
         matched = self.text[:self.matched_len]
         rest = self.text[self.matched_len:]
         
@@ -70,7 +82,13 @@ class FallingWord:
         surface.blit(r_surf, (self.x + m_surf.get_width(), self.y))
 
 class TypingGame:
+    """
+    Docstring for TypingGame.
+    """
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.words = []
         self.score = 0
         self.lives = 5
@@ -80,12 +98,18 @@ class TypingGame:
         self.active_word_index = -1 # Index of word being typed, -1 if none
 
     def spawn_word(self):
+        """
+        Docstring for spawn_word.
+        """
         text = random.choice(WORD_LIST)
         speed = random.uniform(1, 2) + (self.difficulty * 0.1)
         self.words.append(FallingWord(text, speed))
 
     def handle_input(self, char):
         # If we have an active word, check against it
+        """
+        Docstring for handle_input.
+        """
         if self.active_word_index != -1:
             word = self.words[self.active_word_index]
             target_char = word.text[word.matched_len]
@@ -116,6 +140,9 @@ class TypingGame:
                     break
 
     def update(self):
+        """
+        Docstring for update.
+        """
         self.spawn_timer += 1
         if self.spawn_timer >= max(30, self.spawn_rate - (self.difficulty * 5)):
             self.spawn_word()
@@ -139,6 +166,9 @@ class TypingGame:
         return self.lives > 0
 
     def draw(self, surface):
+        """
+        Docstring for draw.
+        """
         surface.fill(BLACK)
         for word in self.words:
             word.draw(surface)
@@ -155,6 +185,9 @@ class TypingGame:
             surface.blit(target_text, (SCREEN_WIDTH // 2 - 50, 10))
 
 def main():
+    """
+    Docstring for main.
+    """
     game = TypingGame()
     
     running = True

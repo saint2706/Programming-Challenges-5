@@ -1,3 +1,7 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -24,6 +28,9 @@ class Event:
     kind: str  # "arrival" or "departure"
 
     def __lt__(self, other: "Event") -> bool:
+        """
+        Docstring for __lt__.
+        """
         return self.time < other.time
 
 
@@ -51,6 +58,9 @@ class QueueingSystemSimulator:
         random (random.Random): Random number generator instance.
     """
     def __init__(self, arrival_rate: float, service_rate: float, seed: Optional[int] = None):
+        """
+        Docstring for __init__.
+        """
         if arrival_rate <= 0 or service_rate <= 0:
             raise ValueError("Rates must be positive")
         self.arrival_rate = arrival_rate
@@ -193,6 +203,9 @@ def plot_results(result: SimulationResult, output_dir: str) -> None:
 
 
 def parse_args() -> argparse.Namespace:
+    """
+    Docstring for parse_args.
+    """
     parser = argparse.ArgumentParser(description="Single-server queue simulator with Poisson arrivals and exponential service.")
     parser.add_argument("--arrival-rate", type=float, default=3.0, help="Arrival rate (lambda) for the Poisson process.")
     parser.add_argument("--service-rate", type=float, default=4.0, help="Service rate (mu) for the exponential distribution.")
@@ -204,6 +217,9 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    """
+    Docstring for main.
+    """
     args = parse_args()
     simulator = QueueingSystemSimulator(
         arrival_rate=args.arrival_rate,

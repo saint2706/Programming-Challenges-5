@@ -25,14 +25,23 @@ def target_function(x: float) -> float:
 
 
 def genome_to_value(genome: list[float]) -> float:
+    """
+    Docstring for genome_to_value.
+    """
     return genome[0]
 
 
 def fitness_fn(genome: list[float]) -> float:
+    """
+    Docstring for fitness_fn.
+    """
     return target_function(genome_to_value(genome))
 
 
 def run_demo(generations: int = 60) -> list[dict[str, float]]:
+    """
+    Docstring for run_demo.
+    """
     config = GAConfig(
         population_size=40,
         genome_length=1,
@@ -50,6 +59,9 @@ def run_demo(generations: int = 60) -> list[dict[str, float]]:
 
 
 def plot_history(history: list[dict[str, float]]) -> Path:
+    """
+    Docstring for plot_history.
+    """
     best = [entry["best_fitness"] for entry in history]
     avg = [entry["avg_fitness"] for entry in history]
     fig, ax = plt.subplots(figsize=(8, 4))

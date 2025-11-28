@@ -67,3 +67,11 @@ if solver.solve() {
 | **Practical** | Much faster with heuristics |
 
 Where $n$ is the number of variables. Modern SAT solvers can handle millions of variables.
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+cargo run --release
+```

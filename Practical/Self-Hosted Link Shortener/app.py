@@ -23,16 +23,25 @@ app = FastAPI(title="Self-Hosted Link Shortener", version="1.0.0")
 
 
 def _ensure_db() -> None:
+    """
+    Docstring for _ensure_db.
+    """
     database.initialize_db()
 
 
 class LinkCreate(BaseModel):
+    """
+    Docstring for LinkCreate.
+    """
     url: HttpUrl
     custom_slug: Optional[str] = None
 
     @field_validator("custom_slug")
     @classmethod
     def validate_slug(cls, slug: Optional[str]) -> Optional[str]:
+        """
+        Docstring for validate_slug.
+        """
         if slug is None:
             return slug
         if not validate_custom_slug(slug):
@@ -43,6 +52,9 @@ class LinkCreate(BaseModel):
 
 
 class LinkResponse(BaseModel):
+    """
+    Docstring for LinkResponse.
+    """
     slug: str
     original_url: HttpUrl
     created_at: str
@@ -51,6 +63,9 @@ class LinkResponse(BaseModel):
 
 
 class StatsResponse(BaseModel):
+    """
+    Docstring for StatsResponse.
+    """
     slug: str
     hit_count: int
     created_at: str
@@ -59,6 +74,9 @@ class StatsResponse(BaseModel):
 
 @app.post("/links", response_model=LinkResponse, status_code=status.HTTP_201_CREATED)
 async def create_link(payload: LinkCreate, _: None = Depends(_ensure_db)) -> LinkResponse:
+    """
+    Docstring for create_link.
+    """
     slug = payload.custom_slug
     if slug:
         if database.slug_exists(slug):
@@ -76,12 +94,18 @@ async def create_link(payload: LinkCreate, _: None = Depends(_ensure_db)) -> Lin
 
 @app.get("/links", response_model=List[LinkResponse])
 async def list_links(limit: Optional[int] = None, _: None = Depends(_ensure_db)) -> List[LinkResponse]:
+    """
+    Docstring for list_links.
+    """
     records = database.list_links(limit=limit)
     return [LinkResponse(**record) for record in records]
 
 
 @app.get("/links/{slug}", response_model=LinkResponse)
 async def get_link(slug: str = Path(..., min_length=4, max_length=32), _: None = Depends(_ensure_db)) -> LinkResponse:
+    """
+    Docstring for get_link.
+    """
     record = database.get_link(slug)
     if not record:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Slug not found")
@@ -90,6 +114,9 @@ async def get_link(slug: str = Path(..., min_length=4, max_length=32), _: None =
 
 @app.delete("/links/{slug}")
 async def delete_link(slug: str, _: None = Depends(_ensure_db)) -> None:
+    """
+    Docstring for delete_link.
+    """
     removed = database.delete_link(slug)
     if not removed:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Slug not found")
@@ -97,6 +124,9 @@ async def delete_link(slug: str, _: None = Depends(_ensure_db)) -> None:
 
 @app.get("/{slug}")
 async def redirect(slug: str, _: None = Depends(_ensure_db)) -> RedirectResponse:
+    """
+    Docstring for redirect.
+    """
     record = database.get_link(slug)
     if not record:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Slug not found")
@@ -106,6 +136,9 @@ async def redirect(slug: str, _: None = Depends(_ensure_db)) -> RedirectResponse
 
 @app.get("/links/{slug}/stats", response_model=StatsResponse)
 async def stats(slug: str, _: None = Depends(_ensure_db)) -> StatsResponse:
+    """
+    Docstring for stats.
+    """
     record = database.get_link(slug)
     if not record:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Slug not found")

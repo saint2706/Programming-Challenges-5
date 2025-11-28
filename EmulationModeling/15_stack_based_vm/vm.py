@@ -37,6 +37,9 @@ class VirtualMachine:
     """A very small stack machine that executes a list of instructions."""
 
     def __init__(self, instructions: Sequence[Instruction]):
+        """
+        Docstring for __init__.
+        """
         self.instructions: List[Instruction] = list(instructions)
         self.ip: int = 0  # instruction pointer
         self.stack: List[Any] = []
@@ -45,14 +48,23 @@ class VirtualMachine:
 
     # Stack helpers -----------------------------------------------------
     def _pop(self) -> Any:
+        """
+        Docstring for _pop.
+        """
         if not self.stack:
             raise IndexError("Attempted to pop from an empty stack")
         return self.stack.pop()
 
     def _push(self, value: Any) -> None:
+        """
+        Docstring for _push.
+        """
         self.stack.append(value)
 
     def _binary_op(self, func) -> None:
+        """
+        Docstring for _binary_op.
+        """
         right = self._pop()
         left = self._pop()
         try:

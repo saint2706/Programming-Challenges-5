@@ -56,3 +56,11 @@ println!("Hit rate: {:.2}%", cache.hit_rate() * 100.0);
 | **FIFO** | $O(1)$ | $O(k)$ |
 
 Where $k$ is the cache capacity.
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+cargo run --release
+```

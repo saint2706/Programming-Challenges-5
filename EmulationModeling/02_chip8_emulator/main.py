@@ -1,3 +1,7 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import sys
 import time
 import pygame
@@ -6,6 +10,9 @@ from display import Display
 from keypad import Keypad
 
 def main():
+    """
+    Docstring for main.
+    """
     if len(sys.argv) < 2:
         print("Usage: python main.py <rom_path>")
         print("Running internal test ROM (IBM Logo imitation)...")

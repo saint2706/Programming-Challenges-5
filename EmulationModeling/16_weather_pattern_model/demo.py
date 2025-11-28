@@ -20,6 +20,9 @@ except ImportError:  # pragma: no cover - fallback for direct execution
 
 
 def parse_args() -> argparse.Namespace:
+    """
+    Docstring for parse_args.
+    """
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--width", type=int, default=64, help="Grid width")
     parser.add_argument("--height", type=int, default=64, help="Grid height")
@@ -43,6 +46,9 @@ def parse_args() -> argparse.Namespace:
 
 
 def render_pressure(grid: WeatherGrid, output_path: str) -> None:
+    """
+    Docstring for render_pressure.
+    """
     fig, ax = plt.subplots(figsize=(6, 5))
     im = ax.imshow(grid.pressure, cmap="coolwarm")
     fig.colorbar(im, ax=ax, shrink=0.75, label="Pressure (hPa)")
@@ -55,6 +61,9 @@ def render_pressure(grid: WeatherGrid, output_path: str) -> None:
 
 
 def main() -> None:
+    """
+    Docstring for main.
+    """
     args = parse_args()
     grid = WeatherGrid(
         width=args.width,

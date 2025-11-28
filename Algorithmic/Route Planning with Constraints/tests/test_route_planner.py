@@ -1,8 +1,18 @@
+"""
+Implementation of the algorithm.
+"""
+
 import unittest
 from route_planner import Graph, RoutePlanner
 
 class TestRoutePlanner(unittest.TestCase):
+    """
+    Docstring for TestRoutePlanner.
+    """
     def setUp(self):
+        """
+        Docstring for setUp.
+        """
         self.g = Graph()
         # A --1-- B --2-- C
         # |       |
@@ -21,6 +31,9 @@ class TestRoutePlanner(unittest.TestCase):
         self.planner = RoutePlanner(self.g)
 
     def test_basic_path(self):
+        """
+        Docstring for test_basic_path.
+        """
         path, cost = self.planner.find_route('A', 'C')
         # A -> B -> C (1 + 2 = 3)
         self.assertEqual(path, ['A', 'B', 'C'])
@@ -33,6 +46,9 @@ class TestRoutePlanner(unittest.TestCase):
         # A -> D -> E ... E is connected to B and D.
         # C is only connected to B.
         # So if B is forbidden, C is unreachable.
+        """
+        Docstring for test_forbidden_node.
+        """
         path, cost = self.planner.find_route('A', 'C', forbidden_nodes=['B'])
         self.assertEqual(path, [])
         self.assertEqual(cost, float('inf'))
@@ -44,6 +60,9 @@ class TestRoutePlanner(unittest.TestCase):
     def test_forbidden_edge(self):
         # Block A-B. Path must be A -> D -> E -> B -> C
         # Cost: 4 + 1 + 1 + 2 = 8
+        """
+        Docstring for test_forbidden_edge.
+        """
         path, cost = self.planner.find_route('A', 'C', forbidden_edges=[('A', 'B')])
         self.assertEqual(path, ['A', 'D', 'E', 'B', 'C'])
         self.assertEqual(cost, 8)
@@ -55,6 +74,9 @@ class TestRoutePlanner(unittest.TestCase):
         # Segment D->C: D->E->B->C is 1+1+2=4.
         # Total cost: 3 + 4 = 7.
         # Path: A, B, E, D, E, B, C.
+        """
+        Docstring for test_must_visit.
+        """
         path, cost = self.planner.find_route('A', 'C', must_visit=['D'])
         self.assertEqual(path, ['A', 'B', 'E', 'D', 'E', 'B', 'C'])
         self.assertEqual(cost, 7)
@@ -66,6 +88,9 @@ class TestRoutePlanner(unittest.TestCase):
         # Segment B->C: B->C (Cost 2)
         # Total Cost: 5.
         # Path: A, B, E, B, C
+        """
+        Docstring for test_must_visit_order.
+        """
         path, cost = self.planner.find_route('A', 'C', must_visit=['E', 'B'])
         self.assertEqual(path, ['A', 'B', 'E', 'B', 'C'])
 

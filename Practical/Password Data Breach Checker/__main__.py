@@ -43,6 +43,9 @@ def check_password(password: str) -> int:
     return 0
 
 def main():
+    """
+    Docstring for main.
+    """
     parser = argparse.ArgumentParser(description="Password Data Breach Checker")
     parser.add_argument("password", nargs="?", help="Password to check (leave empty for secure input)")
 

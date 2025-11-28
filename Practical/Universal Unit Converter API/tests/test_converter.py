@@ -1,3 +1,7 @@
+"""
+Project implementation.
+"""
+
 import json
 import os
 import time
@@ -15,6 +19,9 @@ from Practical.UniversalUnitConverter.unit_converter import (
 
 @pytest.fixture()
 def config_file(tmp_path: Path) -> Path:
+    """
+    Docstring for config_file.
+    """
     data = {
         "categories": {
             "length": {
@@ -35,37 +42,58 @@ def config_file(tmp_path: Path) -> Path:
 
 @pytest.fixture()
 def converter(config_file: Path) -> UnitConverter:
+    """
+    Docstring for converter.
+    """
     return UnitConverter(ConversionDataSource(config_file))
 
 
 def test_basic_conversion(converter: UnitConverter):
+    """
+    Docstring for test_basic_conversion.
+    """
     result = converter.convert("length", "centimeter", "meter", 10)
     assert pytest.approx(result.converted_value) == 0.1
 
 
 def test_alias_resolution(converter: UnitConverter):
+    """
+    Docstring for test_alias_resolution.
+    """
     result = converter.convert("length", "cm", "m", 250)
     assert pytest.approx(result.converted_value) == 2.5
 
 
 def test_chained_conversion(converter: UnitConverter):
+    """
+    Docstring for test_chained_conversion.
+    """
     result = converter.convert("length", "mile", "centimeter", 0.5)
     # 0.5 miles -> 80467 centimeters with the configured factors
     assert result.converted_value == pytest.approx(80467.0, rel=1e-6)
 
 
 def test_missing_category_raises(converter: UnitConverter):
+    """
+    Docstring for test_missing_category_raises.
+    """
     with pytest.raises(CategoryNotFound):
         converter.convert("temperature", "celsius", "kelvin", 1)
 
 
 def test_missing_unit_raises(converter: UnitConverter):
+    """
+    Docstring for test_missing_unit_raises.
+    """
     with pytest.raises(UnitNotFound):
         converter.convert("length", "parsec", "meter", 1)
 
 
 def test_reload_when_file_changes(converter: UnitConverter, config_file: Path):
     # Add a new unit to the config
+    """
+    Docstring for test_reload_when_file_changes.
+    """
     updated_data = json.loads(config_file.read_text())
     updated_data["categories"]["length"]["units"]["kilometer"] = {
         "to_base": 1000,

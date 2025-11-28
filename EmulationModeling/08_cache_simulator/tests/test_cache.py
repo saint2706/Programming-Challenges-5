@@ -1,10 +1,20 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import unittest
 from cache import Cache
 
 class TestCache(unittest.TestCase):
+    """
+    Docstring for TestCache.
+    """
     def test_direct_mapped_hit_miss(self):
         # Size=64, Block=16, Assoc=1 (Direct Mapped)
         # 4 lines. 4 sets.
+        """
+        Docstring for test_direct_mapped_hit_miss.
+        """
         cache = Cache(size=64, block_size=16, assoc=1)
 
         # Addr 0 -> Set 0. Miss.
@@ -33,6 +43,9 @@ class TestCache(unittest.TestCase):
     def test_assoc_lru(self):
         # Size=64, Block=16, Assoc=2.
         # 4 lines. 2 sets.
+        """
+        Docstring for test_assoc_lru.
+        """
         cache = Cache(size=64, block_size=16, assoc=2, policy="LRU")
 
         # Set 0 addresses: 0, 32, 64, 96... (Step 32)

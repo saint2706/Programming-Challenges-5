@@ -1,3 +1,7 @@
+"""
+Implementation of the algorithm.
+"""
+
 from typing import Dict, List, Optional
 
 class SubsequenceAutomaton:
@@ -7,6 +11,9 @@ class SubsequenceAutomaton:
     """
 
     def __init__(self, text: str):
+        """
+        Docstring for __init__.
+        """
         self.text = text
         self.alphabet = sorted(list(set(text)))
         self.next_occurrence: List[Dict[str, int]] = []

@@ -17,13 +17,22 @@ import os
 import sys
 
 class Game:
+    """
+    Docstring for Game.
+    """
     def __init__(self, world_file):
+        """
+        Docstring for __init__.
+        """
         self.world = self.load_world(world_file)
         self.current_room_id = self.world["start_room"]
         self.inventory = []
         self.running = True
 
     def load_world(self, file_path):
+        """
+        Docstring for load_world.
+        """
         try:
             with open(file_path, 'r') as f:
                 return json.load(f)
@@ -32,12 +41,21 @@ class Game:
             sys.exit(1)
 
     def get_room(self, room_id):
+        """
+        Docstring for get_room.
+        """
         return self.world["rooms"].get(room_id)
 
     def get_item_desc(self, item_id):
+        """
+        Docstring for get_item_desc.
+        """
         return self.world["items"].get(item_id, "Unknown item.")
 
     def print_room(self):
+        """
+        Docstring for print_room.
+        """
         room = self.get_room(self.current_room_id)
         print(f"\n=== {room['name']} ===")
         print(room['description'])
@@ -46,6 +64,9 @@ class Game:
         print("Exits:", ", ".join(room['exits'].keys()))
 
     def parse_command(self, command):
+        """
+        Docstring for parse_command.
+        """
         parts = command.lower().split()
         if not parts:
             return
@@ -69,6 +90,9 @@ class Game:
             print("I don't understand that command.")
 
     def cmd_go(self, direction):
+        """
+        Docstring for cmd_go.
+        """
         if not direction:
             print("Go where?")
             return
@@ -81,6 +105,9 @@ class Game:
             print("You can't go that way.")
 
     def cmd_look(self, noun):
+        """
+        Docstring for cmd_look.
+        """
         if not noun:
             self.print_room()
         else:
@@ -92,6 +119,9 @@ class Game:
                 print("You don't see that here.")
 
     def cmd_take(self, item):
+        """
+        Docstring for cmd_take.
+        """
         if not item:
             print("Take what?")
             return
@@ -105,12 +135,18 @@ class Game:
             print("That item is not here.")
 
     def cmd_inventory(self):
+        """
+        Docstring for cmd_inventory.
+        """
         if not self.inventory:
             print("You are not carrying anything.")
         else:
             print("You are carrying:", ", ".join(self.inventory))
 
     def cmd_help(self):
+        """
+        Docstring for cmd_help.
+        """
         print("Commands:")
         print("  go [direction]  - Move to another room")
         print("  look [item]     - Inspect an item or the room")
@@ -119,6 +155,9 @@ class Game:
         print("  quit            - Exit the game")
 
     def run(self):
+        """
+        Docstring for run.
+        """
         print("Welcome to the Adventure!")
         self.print_room()
         while self.running:

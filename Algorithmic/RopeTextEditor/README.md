@@ -60,3 +60,11 @@ The `main` program accepts JSON commands.
 | **Delete** | $O(\log n)$ |
 
 *Note: This naive implementation does not auto-balance the tree, so worst-case performance can degrade to $O(n)$ if constructed linearly. Production ropes (e.g., in text editors) use rebalancing (AVL/Red-Black rules).*
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+go run .
+```

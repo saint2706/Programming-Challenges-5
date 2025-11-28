@@ -9,14 +9,23 @@ import re
 # -------------------------- Lexer --------------------------
 @dataclass
 class Token:
+    """
+    Docstring for Token.
+    """
     type: str
     value: str
 
     def __repr__(self) -> str:  # pragma: no cover - debug helper
+        """
+        Docstring for __repr__.
+        """
         return f"Token({self.type}, {self.value})"
 
 
 def tokenize(source: str) -> List[Token]:
+    """
+    Docstring for tokenize.
+    """
     token_specification: List[Tuple[str, str]] = [
         ("NUMBER", r"\d+"),
         ("ID", r"[A-Za-z_][A-Za-z0-9_]*"),
@@ -48,21 +57,33 @@ def tokenize(source: str) -> List[Token]:
 # -------------------------- AST Nodes --------------------------
 @dataclass
 class Expr:
+    """
+    Docstring for Expr.
+    """
     pass
 
 
 @dataclass
 class Number(Expr):
+    """
+    Docstring for Number.
+    """
     value: int
 
 
 @dataclass
 class Var(Expr):
+    """
+    Docstring for Var.
+    """
     name: str
 
 
 @dataclass
 class BinOp(Expr):
+    """
+    Docstring for BinOp.
+    """
     left: Expr
     op: str
     right: Expr
@@ -70,17 +91,26 @@ class BinOp(Expr):
 
 @dataclass
 class Statement:
+    """
+    Docstring for Statement.
+    """
     pass
 
 
 @dataclass
 class Assign(Statement):
+    """
+    Docstring for Assign.
+    """
     target: str
     expr: Expr
 
 
 @dataclass
 class If(Statement):
+    """
+    Docstring for If.
+    """
     condition: Expr
     then_branch: List[Statement]
     else_branch: Optional[List[Statement]] = None
@@ -88,43 +118,70 @@ class If(Statement):
 
 @dataclass
 class While(Statement):
+    """
+    Docstring for While.
+    """
     condition: Expr
     body: List[Statement]
 
 
 @dataclass
 class Program:
+    """
+    Docstring for Program.
+    """
     statements: List[Statement]
 
 
 # -------------------------- Parser --------------------------
 class TinyLangParser:
+    """
+    Docstring for TinyLangParser.
+    """
     def __init__(self, source: str):
+        """
+        Docstring for __init__.
+        """
         self.tokens = tokenize(source)
         self.pos = 0
 
     @property
     def current(self) -> Token:
+        """
+        Docstring for current.
+        """
         return self.tokens[self.pos]
 
     def advance(self) -> Token:
+        """
+        Docstring for advance.
+        """
         token = self.current
         self.pos += 1
         return token
 
     def expect(self, token_type: str, value: Optional[str] = None) -> Token:
+        """
+        Docstring for expect.
+        """
         token = self.current
         if token.type != token_type or (value is not None and token.value != value):
             raise SyntaxError(f"Expected {token_type} {value or ''} but got {token.type} {token.value}")
         return self.advance()
 
     def parse(self) -> Program:
+        """
+        Docstring for parse.
+        """
         statements: List[Statement] = []
         while self.current.type != "EOF":
             statements.append(self.parse_statement())
         return Program(statements)
 
     def parse_statement(self) -> Statement:
+        """
+        Docstring for parse_statement.
+        """
         if self.current.type == "ID" and self._peek().type == "ASSIGN":
             return self.parse_assignment()
         if self.current.type == "ID" and self.current.value == "if":
@@ -134,6 +191,9 @@ class TinyLangParser:
         raise SyntaxError(f"Unexpected token in statement: {self.current}")
 
     def parse_block(self) -> List[Statement]:
+        """
+        Docstring for parse_block.
+        """
         self.expect("LBRACE")
         statements: List[Statement] = []
         while self.current.type != "RBRACE":
@@ -142,6 +202,9 @@ class TinyLangParser:
         return statements
 
     def parse_assignment(self) -> Assign:
+        """
+        Docstring for parse_assignment.
+        """
         target = self.expect("ID").value
         self.expect("ASSIGN")
         expr = self.parse_expression()
@@ -149,6 +212,9 @@ class TinyLangParser:
         return Assign(target, expr)
 
     def parse_if(self) -> If:
+        """
+        Docstring for parse_if.
+        """
         self.expect("ID", "if")
         condition = self.parse_expression()
         then_branch = self.parse_block()
@@ -159,15 +225,24 @@ class TinyLangParser:
         return If(condition, then_branch, else_branch)
 
     def parse_while(self) -> While:
+        """
+        Docstring for parse_while.
+        """
         self.expect("ID", "while")
         condition = self.parse_expression()
         body = self.parse_block()
         return While(condition, body)
 
     def parse_expression(self) -> Expr:
+        """
+        Docstring for parse_expression.
+        """
         return self.parse_equality()
 
     def parse_equality(self) -> Expr:
+        """
+        Docstring for parse_equality.
+        """
         node = self.parse_comparison()
         while self.current.type == "OP" and self.current.value in {"==", "!="}:
             op = self.advance().value
@@ -176,6 +251,9 @@ class TinyLangParser:
         return node
 
     def parse_comparison(self) -> Expr:
+        """
+        Docstring for parse_comparison.
+        """
         node = self.parse_term()
         while self.current.type == "OP" and self.current.value in {"<", "<=", ">", ">="}:
             op = self.advance().value
@@ -184,6 +262,9 @@ class TinyLangParser:
         return node
 
     def parse_term(self) -> Expr:
+        """
+        Docstring for parse_term.
+        """
         node = self.parse_factor()
         while self.current.type == "OP" and self.current.value in {"+", "-"}:
             op = self.advance().value
@@ -192,6 +273,9 @@ class TinyLangParser:
         return node
 
     def parse_factor(self) -> Expr:
+        """
+        Docstring for parse_factor.
+        """
         node = self.parse_unary()
         while self.current.type == "OP" and self.current.value in {"*", "/"}:
             op = self.advance().value
@@ -200,6 +284,9 @@ class TinyLangParser:
         return node
 
     def parse_unary(self) -> Expr:
+        """
+        Docstring for parse_unary.
+        """
         if self.current.type == "OP" and self.current.value == "-":
             self.advance()
             operand = self.parse_unary()
@@ -207,6 +294,9 @@ class TinyLangParser:
         return self.parse_primary()
 
     def parse_primary(self) -> Expr:
+        """
+        Docstring for parse_primary.
+        """
         if self.current.type == "NUMBER":
             return Number(int(self.advance().value))
         if self.current.type == "ID" and self.current.value not in {"if", "else", "while"}:
@@ -219,12 +309,18 @@ class TinyLangParser:
         raise SyntaxError(f"Unexpected token in expression: {self.current}")
 
     def _peek(self) -> Token:
+        """
+        Docstring for _peek.
+        """
         return self.tokens[self.pos + 1]
 
 
 # -------------------------- Three-address code --------------------------
 @dataclass
 class TACInstruction:
+    """
+    Docstring for TACInstruction.
+    """
     op: str
     arg1: Optional[str] = None
     arg2: Optional[str] = None
@@ -232,6 +328,9 @@ class TACInstruction:
     label: Optional[str] = None
 
     def __str__(self) -> str:
+        """
+        Docstring for __str__.
+        """
         if self.op == "label":
             return f"{self.label}:"
         if self.op == "assign":
@@ -248,25 +347,43 @@ class TACInstruction:
 
 
 class IRBuilder:
+    """
+    Docstring for IRBuilder.
+    """
     def __init__(self) -> None:
+        """
+        Docstring for __init__.
+        """
         self.temp_counter = 0
         self.label_counter = 0
         self.instructions: List[TACInstruction] = []
 
     def new_temp(self) -> str:
+        """
+        Docstring for new_temp.
+        """
         self.temp_counter += 1
         return f"t{self.temp_counter}"
 
     def new_label(self, base: str) -> str:
+        """
+        Docstring for new_label.
+        """
         self.label_counter += 1
         return f"{base}_{self.label_counter}"
 
     def build(self, program: Program) -> List[TACInstruction]:
+        """
+        Docstring for build.
+        """
         for stmt in program.statements:
             self.emit_statement(stmt)
         return self.instructions
 
     def emit_statement(self, stmt: Statement) -> None:
+        """
+        Docstring for emit_statement.
+        """
         if isinstance(stmt, Assign):
             value = self.emit_expression(stmt.expr)
             self.instructions.append(TACInstruction("assign", arg1=value, result=stmt.target))
@@ -278,6 +395,9 @@ class IRBuilder:
             raise TypeError(f"Unknown statement type: {type(stmt)}")
 
     def emit_if(self, stmt: If) -> None:
+        """
+        Docstring for emit_if.
+        """
         else_label = self.new_label("else")
         end_label = self.new_label("endif")
         condition_temp = self.emit_expression(stmt.condition)
@@ -292,6 +412,9 @@ class IRBuilder:
         self.instructions.append(TACInstruction("label", label=end_label))
 
     def emit_while(self, stmt: While) -> None:
+        """
+        Docstring for emit_while.
+        """
         start_label = self.new_label("while")
         end_label = self.new_label("endwhile")
         self.instructions.append(TACInstruction("label", label=start_label))
@@ -303,6 +426,9 @@ class IRBuilder:
         self.instructions.append(TACInstruction("label", label=end_label))
 
     def emit_expression(self, expr: Expr) -> str:
+        """
+        Docstring for emit_expression.
+        """
         if isinstance(expr, Number):
             return str(expr.value)
         if isinstance(expr, Var):
@@ -319,18 +445,27 @@ class IRBuilder:
 # -------------------------- CFG builder --------------------------
 @dataclass
 class BasicBlock:
+    """
+    Docstring for BasicBlock.
+    """
     name: str
     instructions: List[TACInstruction]
     successors: List[str]
 
 
 def build_basic_blocks(instructions: List[TACInstruction]) -> List[BasicBlock]:
+    """
+    Docstring for build_basic_blocks.
+    """
     blocks: List[BasicBlock] = []
     current_instrs: List[TACInstruction] = []
     current_label: Optional[str] = None
     unnamed_counter = 0
 
     def flush_block():
+        """
+        Docstring for flush_block.
+        """
         nonlocal current_instrs, current_label, unnamed_counter
         if not current_instrs and current_label is None:
             return
@@ -372,6 +507,9 @@ def build_basic_blocks(instructions: List[TACInstruction]) -> List[BasicBlock]:
 
 
 def cfg_to_dot(blocks: List[BasicBlock]) -> str:
+    """
+    Docstring for cfg_to_dot.
+    """
     lines = ["digraph cfg {", "  node [shape=box, fontname=Courier];"]
     for block in blocks:
         body = "\\l".join(str(instr) for instr in block.instructions) + "\\l"

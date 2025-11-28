@@ -44,6 +44,9 @@ NOTE_OFFSETS = {
 
 @dataclass
 class ADSR:
+    """
+    Docstring for ADSR.
+    """
     attack: float = 0.01
     decay: float = 0.1
     sustain_level: float = 0.8
@@ -125,6 +128,9 @@ def mix_waves(waves: Sequence[np.ndarray]) -> np.ndarray:
 
 
 def apply_adsr_envelope(wave: np.ndarray, adsr: ADSR, sample_rate: int) -> np.ndarray:
+    """
+    Docstring for apply_adsr_envelope.
+    """
     envelope = adsr.envelope(len(wave), sample_rate)
     return wave * envelope
 
@@ -159,6 +165,9 @@ def synthesize_tone(
     adsr: ADSR,
     sample_rate: int,
 ) -> np.ndarray:
+    """
+    Docstring for synthesize_tone.
+    """
     frequency = note_to_frequency(note)
     waves = [amplitude * generate_waveform(wave_type, frequency, duration, sample_rate) for wave_type, amplitude in oscillators]
     mixed = mix_waves(waves)

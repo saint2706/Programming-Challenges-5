@@ -12,16 +12,25 @@ EMPTY = " "
 
 
 def create_board() -> Board:
+    """
+    Docstring for create_board.
+    """
     return [[EMPTY for _ in range(3)] for _ in range(3)]
 
 
 def print_board(board: Board) -> None:
+    """
+    Docstring for print_board.
+    """
     rows = [" | ".join(board[r]) for r in range(3)]
     separator = "\n---------\n"
     print("\n" + separator.join(rows) + "\n")
 
 
 def check_winner(board: Board) -> Optional[str]:
+    """
+    Docstring for check_winner.
+    """
     lines = []
     lines.extend(board)  # rows
     lines.extend([[board[r][c] for r in range(3)] for c in range(3)])  # columns
@@ -37,6 +46,9 @@ def check_winner(board: Board) -> Optional[str]:
 
 
 def minimax(board: Board, player: str, maximizing: bool) -> Tuple[int, Optional[Tuple[int, int]]]:
+    """
+    Docstring for minimax.
+    """
     winner = check_winner(board)
     if winner == player:
         return 1, None
@@ -79,6 +91,9 @@ def best_move(board: Board, player: str) -> Tuple[int, int]:
 
 
 def human_turn(board: Board) -> None:
+    """
+    Docstring for human_turn.
+    """
     while True:
         try:
             raw = input("Enter your move as row,col (1-3): ")
@@ -93,11 +108,17 @@ def human_turn(board: Board) -> None:
 
 
 def ai_turn(board: Board) -> None:
+    """
+    Docstring for ai_turn.
+    """
     r, c = best_move(board, "X")
     board[r][c] = "X"
 
 
 def play_game() -> None:
+    """
+    Docstring for play_game.
+    """
     print("You are O. AI is X. AI goes first.\n")
     board = create_board()
     while True:

@@ -7,7 +7,13 @@ import pygame
 import numpy as np
 
 class Visualizer:
+    """
+    Docstring for Visualizer.
+    """
     def __init__(self, engine, cell_size=10):
+        """
+        Docstring for __init__.
+        """
         self.engine = engine
         self.cell_size = cell_size
         self.width = engine.width * cell_size
@@ -32,6 +38,9 @@ class Visualizer:
         self.COLOR_TEXT = (255, 255, 255)
 
     def handle_input(self):
+        """
+        Docstring for handle_input.
+        """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
@@ -77,6 +86,9 @@ class Visualizer:
                     self.engine.set_cell(grid_x, grid_y, self.draw_mode)
 
     def draw(self):
+        """
+        Docstring for draw.
+        """
         self.screen.fill(self.COLOR_BG)
 
         # Draw alive cells
@@ -101,6 +113,9 @@ class Visualizer:
         pygame.display.flip()
 
     def run(self):
+        """
+        Docstring for run.
+        """
         while self.running:
             self.handle_input()
 

@@ -91,3 +91,11 @@ To generate a visualization of the scheduling process (Greedy version for visual
 ```bash
 manim -pql visualize_interval_scheduler.py IntervalSchedulingDemo
 ```
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+python main.py
+```

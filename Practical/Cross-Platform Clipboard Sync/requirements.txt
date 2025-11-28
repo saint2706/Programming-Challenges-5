@@ -1,0 +1,7 @@
+cryptography
+fastapi
+pydantic
+pyperclip
+requests
+uvicorn
+websockets

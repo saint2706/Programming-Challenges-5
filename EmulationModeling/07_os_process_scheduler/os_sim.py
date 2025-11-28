@@ -1,5 +1,15 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 class Process:
+    """
+    Docstring for Process.
+    """
     def __init__(self, pid, arrival_time, burst_time, priority=0):
+        """
+        Docstring for __init__.
+        """
         self.pid = pid
         self.arrival_time = arrival_time
         self.burst_time = burst_time
@@ -12,13 +22,25 @@ class Process:
         self.turnaround_time = 0
 
     def is_finished(self):
+        """
+        Docstring for is_finished.
+        """
         return self.remaining_time <= 0
 
     def __repr__(self):
+        """
+        Docstring for __repr__.
+        """
         return f"P{self.pid}(Arr={self.arrival_time}, Burst={self.burst_time})"
 
 class Scheduler:
+    """
+    Docstring for Scheduler.
+    """
     def __init__(self, algorithm="FCFS", quantum=2):
+        """
+        Docstring for __init__.
+        """
         self.algorithm = algorithm
         self.quantum = quantum
         self.ready_queue = []
@@ -30,9 +52,15 @@ class Scheduler:
     def add_process(self, process):
         # In a real system, processes are added when time matches arrival.
         # Here we assume the kernel handles moving from new -> ready.
+        """
+        Docstring for add_process.
+        """
         self.ready_queue.append(process)
 
     def schedule(self):
+        """
+        Docstring for schedule.
+        """
         if self.algorithm == "FCFS":
             # Sort by arrival time if not already
             # Actually FCFS just takes front of queue
@@ -57,6 +85,9 @@ class Scheduler:
 
     def tick(self):
         # Update wait times for processes in ready queue
+        """
+        Docstring for tick.
+        """
         for p in self.ready_queue:
             p.wait_time += 1
 
@@ -86,15 +117,27 @@ class Scheduler:
         self.time += 1
 
 class Kernel:
+    """
+    Docstring for Kernel.
+    """
     def __init__(self, scheduler):
+        """
+        Docstring for __init__.
+        """
         self.scheduler = scheduler
         self.processes = []
         self.new_processes = [] # Processes that haven't arrived yet
 
     def load_processes(self, processes):
+        """
+        Docstring for load_processes.
+        """
         self.new_processes = sorted(processes, key=lambda p: p.arrival_time)
 
     def run(self, max_time=100):
+        """
+        Docstring for run.
+        """
         while self.time < max_time:
             # Check arrivals
             while self.new_processes and self.new_processes[0].arrival_time <= self.time:
@@ -142,4 +185,7 @@ class Kernel:
 
     @property
     def time(self):
+        """
+        Docstring for time.
+        """
         return self.scheduler.time

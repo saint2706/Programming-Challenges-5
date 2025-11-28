@@ -1,6 +1,13 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 from cache import Cache
 
 def main():
+    """
+    Docstring for main.
+    """
     print("Cache Simulator")
     print("Configuration: Size=4KB, Block=64B, Assoc=4, Policy=LRU")
 

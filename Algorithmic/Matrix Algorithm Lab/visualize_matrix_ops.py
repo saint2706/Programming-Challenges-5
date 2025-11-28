@@ -30,6 +30,9 @@ class MatrixOpsDemo(Scene):
         def create_matrix_mob(
             matrix: List[List[int]], color: Any = WHITE
         ) -> Tuple[VGroup, VGroup]:
+            """
+            Docstring for create_matrix_mob.
+            """
             rows = len(matrix)
             cols = len(matrix[0])
             group = VGroup()
@@ -95,6 +98,9 @@ class MatrixOpsDemo(Scene):
             row_idx: int, col_idx: int
         ) -> Tuple[VGroup, VGroup]:
             # Get row entries from A
+            """
+            Docstring for highlight_row_col.
+            """
             row_entries = VGroup()
             for j in range(len(A[0])):
                 idx = row_idx * len(A[0]) + j
@@ -114,6 +120,9 @@ class MatrixOpsDemo(Scene):
             return row_entries, col_entries
 
         def unhighlight(row_entries: VGroup, col_entries: VGroup) -> None:
+            """
+            Docstring for unhighlight.
+            """
             self.play(
                 row_entries.animate.set_color(BLUE),
                 col_entries.animate.set_color(GREEN),

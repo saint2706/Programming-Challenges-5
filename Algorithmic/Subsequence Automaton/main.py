@@ -1,6 +1,13 @@
+"""
+Implementation of the algorithm.
+"""
+
 from automaton import SubsequenceAutomaton
 
 def main():
+    """
+    Docstring for main.
+    """
     text = "banana"
     print(f"Text: '{text}'")
 

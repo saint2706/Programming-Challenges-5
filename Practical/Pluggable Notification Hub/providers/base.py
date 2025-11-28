@@ -12,6 +12,9 @@ class NotificationProvider(ABC):
     name: str
 
     def __init__(self, **options: Any) -> None:
+        """
+        Docstring for __init__.
+        """
         self.options: Dict[str, Any] = options
         self.name = self.__class__.__name__.replace("Provider", "")
 

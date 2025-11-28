@@ -1,9 +1,19 @@
+"""
+Implementation of the algorithm.
+"""
+
 import unittest
 from label_placement import Label, MapLabeler, intersect
 
 class TestLabelPlacement(unittest.TestCase):
+    """
+    Docstring for TestLabelPlacement.
+    """
     def test_intersection(self):
         # (0, 0, 10, 10)
+        """
+        Docstring for test_intersection.
+        """
         r1 = (0, 0, 10, 10)
         # (5, 5, 15, 15) -> Intersects
         r2 = (5, 5, 15, 15)
@@ -15,6 +25,9 @@ class TestLabelPlacement(unittest.TestCase):
 
     def test_energy_calculation(self):
         # Two labels at same point, overlapping
+        """
+        Docstring for test_energy_calculation.
+        """
         l1 = Label("A", 10, 10, 10, 10)
         l2 = Label("B", 10, 10, 10, 10)
 
@@ -35,6 +48,9 @@ class TestLabelPlacement(unittest.TestCase):
 
     def test_solve_improves_energy(self):
         # Create a crowded scenario
+        """
+        Docstring for test_solve_improves_energy.
+        """
         labels = [Label("L", 50, 50, 10, 10) for _ in range(4)]
         # All at same point, will heavily overlap
         solver = MapLabeler(labels, (0, 0, 100, 100))

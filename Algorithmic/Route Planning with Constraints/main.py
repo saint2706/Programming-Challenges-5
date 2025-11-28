@@ -1,6 +1,13 @@
+"""
+Implementation of the algorithm.
+"""
+
 from route_planner import Graph, RoutePlanner
 
 def main():
+    """
+    Docstring for main.
+    """
     g = Graph()
     # Create a grid-like graph
     # A -- B -- C

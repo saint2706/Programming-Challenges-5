@@ -99,3 +99,11 @@ Where:
 - $E$ = number of edges
 
 The increase is because we effectively create a node for each edge.
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+go run .
+```

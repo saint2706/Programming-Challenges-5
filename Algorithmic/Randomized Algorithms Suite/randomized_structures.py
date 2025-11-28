@@ -1,3 +1,7 @@
+"""
+Implementation of the algorithm.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -19,6 +23,9 @@ class QuickselectResult:
 
 
 def _partition(values: List[T], left: int, right: int, pivot_index: int, key: Callable[[T], T]) -> int:
+    """
+    Docstring for _partition.
+    """
     pivot_value = key(values[pivot_index])
     values[pivot_index], values[right] = values[right], values[pivot_index]
     store_index = left

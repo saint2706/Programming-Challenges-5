@@ -92,3 +92,11 @@ Where:
 - $n$ = input size
 - $w$ = window size (LZ77)
 - $d$ = dictionary size (LZ78)
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+python main.py
+```

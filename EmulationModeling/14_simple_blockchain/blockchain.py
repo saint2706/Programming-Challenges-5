@@ -47,12 +47,18 @@ class Blockchain:
     """Simplified blockchain with proof-of-work mining."""
 
     def __init__(self, difficulty: int = 4) -> None:
+        """
+        Docstring for __init__.
+        """
         if difficulty < 1:
             raise ValueError("Difficulty must be a positive integer")
         self.difficulty = difficulty
         self.chain: List[Block] = [self._create_genesis_block()]
 
     def _create_genesis_block(self) -> Block:
+        """
+        Docstring for _create_genesis_block.
+        """
         genesis = Block(
             index=0,
             timestamp=datetime.now(timezone.utc),
@@ -98,4 +104,7 @@ class Blockchain:
         return True
 
     def __repr__(self) -> str:  # pragma: no cover - cosmetic helper
+        """
+        Docstring for __repr__.
+        """
         return f"Blockchain<length={len(self.chain)}, difficulty={self.difficulty}>"

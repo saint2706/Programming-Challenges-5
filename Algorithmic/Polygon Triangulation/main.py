@@ -1,9 +1,16 @@
+"""
+Implementation of the algorithm.
+"""
+
 import matplotlib.pyplot as plt
 from triangulation import triangulate_polygon
 
 def main():
     # Define a simple polygon (CCW)
     # A house shape
+    """
+    Docstring for main.
+    """
     polygon = [
         (0, 0),   # Bottom-Left
         (2, 0),   # Bottom-Right

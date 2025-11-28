@@ -87,3 +87,11 @@ func main() {
 Where:
 - $n$ = number of events
 - $k$ = number of overlapping events found
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+python main.py
+```

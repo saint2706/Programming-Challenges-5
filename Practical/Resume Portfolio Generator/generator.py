@@ -15,6 +15,9 @@ class ResumePortfolioGenerator:
     """Render resume/portfolio data into HTML and PDF outputs."""
 
     def __init__(self, template_dir: Path) -> None:
+        """
+        Docstring for __init__.
+        """
         self.template_dir = template_dir
         self.env = Environment(
             loader=FileSystemLoader(template_dir),
@@ -24,16 +27,25 @@ class ResumePortfolioGenerator:
         )
 
     def load_data(self, data_path: Path) -> Dict[str, Any]:
+        """
+        Docstring for load_data.
+        """
         data = json.loads(data_path.read_text(encoding="utf-8"))
         return data
 
     def render_html(self, data: Dict[str, Any], template_name: str = "resume.html") -> str:
+        """
+        Docstring for render_html.
+        """
         template = self.env.get_template(template_name)
         return template.render(data=data)
 
     def export_html(
         self, data: Dict[str, Any], output_path: Path, template_name: str = "resume.html"
     ) -> Path:
+        """
+        Docstring for export_html.
+        """
         html = self.render_html(data, template_name=template_name)
         output_path.write_text(html, encoding="utf-8")
         return output_path
@@ -41,12 +53,18 @@ class ResumePortfolioGenerator:
     def export_pdf(
         self, data: Dict[str, Any], output_path: Path, template_name: str = "resume.html"
     ) -> Path:
+        """
+        Docstring for export_pdf.
+        """
         html = self.render_html(data, template_name=template_name)
         HTML(string=html, base_url=str(self.template_dir)).write_pdf(str(output_path))
         return output_path
 
 
 def parse_args() -> argparse.Namespace:
+    """
+    Docstring for parse_args.
+    """
     parser = argparse.ArgumentParser(description="Generate resume HTML and PDF from JSON data.")
     parser.add_argument(
         "--data",
@@ -84,6 +102,9 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    """
+    Docstring for main.
+    """
     args = parse_args()
     generator = ResumePortfolioGenerator(template_dir=Path(__file__).parent / "templates")
 

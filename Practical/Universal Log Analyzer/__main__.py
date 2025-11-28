@@ -101,6 +101,9 @@ def analyze_logs(file_path: str, output_image: str):
     print(top_paths)
 
 def main():
+    """
+    Docstring for main.
+    """
     parser = argparse.ArgumentParser(description="Universal Log Analyzer")
     parser.add_argument("logfile", help="Path to the access log file")
     parser.add_argument("--output", default="report.png", help="Path to save the output image")

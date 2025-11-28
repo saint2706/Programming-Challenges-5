@@ -32,6 +32,9 @@ class NotificationSettings:
 
     @classmethod
     def from_mapping(cls, data: Dict[str, Any]) -> "NotificationSettings":
+        """
+        Docstring for from_mapping.
+        """
         provider_configs = [
             ProviderConfig(
                 name=item.get("name", ""),

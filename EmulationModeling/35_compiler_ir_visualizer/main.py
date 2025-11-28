@@ -4,6 +4,9 @@ from ir_visualizer import TinyLangParser, IRBuilder, build_basic_blocks, cfg_to_
 
 
 def run_example() -> None:
+    """
+    Docstring for run_example.
+    """
     program_text = """
     x = 0;
     y = 1;

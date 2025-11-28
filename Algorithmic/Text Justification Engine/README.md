@@ -58,3 +58,11 @@ for line in justified {
 | **Justify** | $O(n^2)$ | $O(n)$ |
 
 Where $n$ is the number of words.
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+cargo run --release
+```

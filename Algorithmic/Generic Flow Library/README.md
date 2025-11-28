@@ -74,3 +74,11 @@ println!("Min-cut vertices: {:?}", cut);
 Where:
 - $V$ = number of vertices
 - $E$ = number of edges
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+cargo run --release
+```

@@ -32,6 +32,9 @@ class WeatherGrid:
         dt: float = 1.0,
         seed: int | None = None,
     ) -> None:
+        """
+        Docstring for __init__.
+        """
         if width <= 1 or height <= 1:
             raise ValueError("Grid must be at least 2x2")
 
@@ -48,14 +51,23 @@ class WeatherGrid:
         self.wind_x, self.wind_y = self._initialize_wind()
 
     def _initialize_pressure(self) -> np.ndarray:
+        """
+        Docstring for _initialize_pressure.
+        """
         base = 1013.25  # standard atmosphere in hPa
         perturbation = self.random.normal(loc=0.0, scale=5.0, size=(self.height, self.width))
         return base + perturbation
 
     def _initialize_humidity(self) -> np.ndarray:
+        """
+        Docstring for _initialize_humidity.
+        """
         return self.random.uniform(low=0.45, high=0.8, size=(self.height, self.width))
 
     def _initialize_wind(self) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Docstring for _initialize_wind.
+        """
         direction = self.random.uniform(low=-1.0, high=1.0, size=(self.height, self.width, 2))
         magnitude = self.random.uniform(low=0.0, high=8.0, size=(self.height, self.width, 1))
         norm = np.linalg.norm(direction, axis=2, keepdims=True)

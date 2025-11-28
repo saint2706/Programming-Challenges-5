@@ -1,6 +1,13 @@
+"""
+Implementation of the algorithm.
+"""
+
 from dynamic_connectivity import DynamicConnectivity
 
 def main():
+    """
+    Docstring for main.
+    """
     dc = DynamicConnectivity()
 
     print("Adding edges: (A, B), (B, C), (C, D), (D, E)")

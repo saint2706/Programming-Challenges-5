@@ -52,6 +52,9 @@ def generate_response(message: str) -> Optional[str]:
 
 
 def main() -> None:
+    """
+    Docstring for main.
+    """
     print("Rule-Based Chatbot (type 'goodbye' to exit)")
     while True:
         user_input = input("You: ")

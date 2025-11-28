@@ -1,11 +1,24 @@
+"""
+Implementation of the algorithm.
+"""
+
 import unittest
 from dynamic_connectivity import DynamicConnectivity
 
 class TestDynamicConnectivity(unittest.TestCase):
+    """
+    Docstring for TestDynamicConnectivity.
+    """
     def setUp(self):
+        """
+        Docstring for setUp.
+        """
         self.dc = DynamicConnectivity()
 
     def test_basic_connectivity(self):
+        """
+        Docstring for test_basic_connectivity.
+        """
         self.dc.add_edge('A', 'B')
         self.assertTrue(self.dc.connected('A', 'B'))
         self.assertFalse(self.dc.connected('A', 'C'))
@@ -15,6 +28,9 @@ class TestDynamicConnectivity(unittest.TestCase):
 
     def test_cycle_redundancy(self):
         # A-B-C
+        """
+        Docstring for test_cycle_redundancy.
+        """
         self.dc.add_edge('A', 'B')
         self.dc.add_edge('B', 'C')
         # Add cycle A-C
@@ -32,12 +48,18 @@ class TestDynamicConnectivity(unittest.TestCase):
         self.assertTrue(self.dc.connected('B', 'C')) # B->A->C
 
     def test_disconnect(self):
+        """
+        Docstring for test_disconnect.
+        """
         self.dc.add_edge('1', '2')
         self.dc.remove_edge('1', '2')
         self.assertFalse(self.dc.connected('1', '2'))
 
     def test_complex_reconnect(self):
         # Square A-B-C-D-A
+        """
+        Docstring for test_complex_reconnect.
+        """
         self.dc.add_edge('A', 'B')
         self.dc.add_edge('B', 'C')
         self.dc.add_edge('C', 'D')

@@ -9,6 +9,9 @@ class SMSProvider(NotificationProvider):
     """Send notifications via SMS."""
 
     def send(self, message: str, recipient: str) -> None:
+        """
+        Docstring for send.
+        """
         gateway = self.options.get("gateway", "twilio")
         sender_id = self.options.get("sender_id", "NotifyBot")
         print(f"[SMS] To: {recipient} | Sender: {sender_id} | Gateway: {gateway} | Message: {message}")

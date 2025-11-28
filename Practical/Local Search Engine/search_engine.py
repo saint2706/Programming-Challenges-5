@@ -23,6 +23,9 @@ SUPPORTED_EXTENSIONS = {".txt", ".md", ".rtf", ".pdf", ".docx"}
 
 @dataclass
 class SearchConfig:
+    """
+    Docstring for SearchConfig.
+    """
     roots: List[Path] = field(default_factory=lambda: [Path.cwd()])
     index_dir: Path = field(default_factory=lambda: Path.cwd() / ".local_index")
     ignored: List[str] = field(
@@ -34,6 +37,9 @@ class SearchConfig:
 
     @classmethod
     def from_file(cls, path: Optional[Path]) -> "SearchConfig":
+        """
+        Docstring for from_file.
+        """
         defaults = cls()
         if path is None:
             return defaults
@@ -50,6 +56,9 @@ class SearchConfig:
 
 
 def get_schema() -> Schema:
+    """
+    Docstring for get_schema.
+    """
     return Schema(
         path=ID(stored=True, unique=True),
         modified=DATETIME(stored=True),
@@ -58,6 +67,9 @@ def get_schema() -> Schema:
 
 
 def open_or_create_index(index_dir: Path) -> index.Index:
+    """
+    Docstring for open_or_create_index.
+    """
     index_dir.mkdir(parents=True, exist_ok=True)
     if index.exists_in(index_dir):
         return index.open_dir(index_dir)
@@ -65,6 +77,9 @@ def open_or_create_index(index_dir: Path) -> index.Index:
 
 
 def collect_files(roots: Sequence[Path], ignored: Sequence[str]) -> List[Path]:
+    """
+    Docstring for collect_files.
+    """
     files: List[Path] = []
     for root in roots:
         if not root.exists():
@@ -83,10 +98,16 @@ def collect_files(roots: Sequence[Path], ignored: Sequence[str]) -> List[Path]:
 
 
 def is_ignored(path: Path, patterns: Sequence[str]) -> bool:
+    """
+    Docstring for is_ignored.
+    """
     return any(fnmatch.fnmatch(path.as_posix(), pattern) for pattern in patterns)
 
 
 def extract_text(path: Path, use_tika: bool = False) -> str:
+    """
+    Docstring for extract_text.
+    """
     suffix = path.suffix.lower()
     if suffix in {".txt", ".md", ".rtf"}:
         return path.read_text(encoding="utf-8", errors="ignore")
@@ -98,6 +119,9 @@ def extract_text(path: Path, use_tika: bool = False) -> str:
 
 
 def extract_pdf_text(path: Path, use_tika: bool) -> str:
+    """
+    Docstring for extract_pdf_text.
+    """
     pymupdf_available = importlib.util.find_spec("fitz") is not None
     if pymupdf_available:
         import fitz  # type: ignore
@@ -129,6 +153,9 @@ def extract_pdf_text(path: Path, use_tika: bool) -> str:
 
 
 def extract_docx_text(path: Path) -> str:
+    """
+    Docstring for extract_docx_text.
+    """
     if importlib.util.find_spec("docx") is None:
         logging.error("python-docx is not installed but a .docx file was encountered")
         return ""
@@ -143,6 +170,9 @@ def extract_docx_text(path: Path) -> str:
 
 
 def parse_file(args: Tuple[Path, bool]) -> Tuple[Path, str]:
+    """
+    Docstring for parse_file.
+    """
     path, use_tika = args
     try:
         return path, extract_text(path, use_tika)
@@ -152,6 +182,9 @@ def parse_file(args: Tuple[Path, bool]) -> Tuple[Path, str]:
 
 
 def build_index(config: SearchConfig) -> None:
+    """
+    Docstring for build_index.
+    """
     ix = open_or_create_index(config.index_dir)
     files = collect_files(config.roots, config.ignored)
     logging.info("Discovered %d files to index", len(files))
@@ -170,6 +203,9 @@ def build_index(config: SearchConfig) -> None:
 
 
 def read_index_state(ix: index.Index) -> Dict[str, dt.datetime]:
+    """
+    Docstring for read_index_state.
+    """
     state: Dict[str, dt.datetime] = {}
     with ix.searcher() as searcher:
         for fields in searcher.all_stored_fields():
@@ -178,6 +214,9 @@ def read_index_state(ix: index.Index) -> Dict[str, dt.datetime]:
 
 
 def reindex(config: SearchConfig) -> None:
+    """
+    Docstring for reindex.
+    """
     ix = open_or_create_index(config.index_dir)
     indexed = read_index_state(ix)
     to_process: List[Path] = []
@@ -215,6 +254,9 @@ def reindex(config: SearchConfig) -> None:
 
 
 def search(config: SearchConfig, query_text: str, limit: int = 10) -> None:
+    """
+    Docstring for search.
+    """
     ix = open_or_create_index(config.index_dir)
     parser = MultifieldParser(["content"], schema=ix.schema, group=OrGroup.factory(0.9))
     query = parser.parse(query_text)
@@ -231,6 +273,9 @@ def search(config: SearchConfig, query_text: str, limit: int = 10) -> None:
 
 
 def parse_args() -> argparse.Namespace:
+    """
+    Docstring for parse_args.
+    """
     parser = argparse.ArgumentParser(description="Local search engine powered by Whoosh")
     parser.add_argument("command", choices=["index", "reindex", "search"], help="Action to perform")
     parser.add_argument("query", nargs="?", help="Query text for search")
@@ -241,6 +286,9 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    """
+    Docstring for main.
+    """
     args = parse_args()
     logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO, format="[%(levelname)s] %(message)s")
     config = SearchConfig.from_file(args.config)

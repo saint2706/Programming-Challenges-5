@@ -60,3 +60,11 @@ The `main` program accepts JSON commands.
 | **Query** | $O(\log N \cdot \log M)$ | $O(N \cdot M)$ |
 
 Where $N$ is rows and $M$ is columns.
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+go run .
+```

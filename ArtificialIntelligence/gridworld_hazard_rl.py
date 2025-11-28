@@ -1,3 +1,7 @@
+"""
+Artificial Intelligence project implementation.
+"""
+
 from __future__ import annotations
 
 """Tabular Q-learning in a gridworld with hazardous cells.
@@ -34,6 +38,9 @@ class Gridworld:
     goal_reward: float = 10.0
 
     def __post_init__(self) -> None:
+        """
+        Docstring for __post_init__.
+        """
         self.hazards = set(self.hazards)
         for point in (self.start, self.goal, *self.hazards):
             self._ensure_in_bounds(point)
@@ -43,6 +50,9 @@ class Gridworld:
             raise ValueError("Goal cell cannot be hazardous")
 
     def _ensure_in_bounds(self, point: Tuple[int, int]) -> None:
+        """
+        Docstring for _ensure_in_bounds.
+        """
         x, y = point
         if not (0 <= x < self.width and 0 <= y < self.height):
             raise ValueError(f"Point {point} is outside the grid")

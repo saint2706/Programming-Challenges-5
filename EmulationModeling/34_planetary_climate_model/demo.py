@@ -18,6 +18,9 @@ except ImportError:  # pragma: no cover - fallback for direct execution
 
 
 def run_zero_d(args: argparse.Namespace) -> None:
+    """
+    Docstring for run_zero_d.
+    """
     model = ZeroDEnergyBalanceModel(
         solar_constant=args.solar_constant,
         albedo=args.albedo,
@@ -35,6 +38,9 @@ def run_zero_d(args: argparse.Namespace) -> None:
 
 
 def run_latitudinal(args: argparse.Namespace) -> None:
+    """
+    Docstring for run_latitudinal.
+    """
     model = LatitudinalEnergyBalanceModel(
         n_zones=args.zones,
         solar_constant=args.solar_constant,
@@ -66,6 +72,9 @@ def run_latitudinal(args: argparse.Namespace) -> None:
 
 
 def parse_args() -> argparse.Namespace:
+    """
+    Docstring for parse_args.
+    """
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--solar-constant", type=float, default=1361.0, help="Top-of-atmosphere solar irradiance (W/m^2)")
     parser.add_argument("--albedo", type=float, default=0.3, help="Planetary Bond albedo (0-1)")
@@ -84,6 +93,9 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    """
+    Docstring for main.
+    """
     args = parse_args()
     run_zero_d(args)
     run_latitudinal(args)

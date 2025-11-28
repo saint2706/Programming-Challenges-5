@@ -1,8 +1,15 @@
+"""
+Implementation of the algorithm.
+"""
+
 import shutil
 from lsm_store import LSMStore
 import os
 
 def main():
+    """
+    Docstring for main.
+    """
     data_dir = "lsm_data"
     if os.path.exists(data_dir):
         shutil.rmtree(data_dir) # Clean start

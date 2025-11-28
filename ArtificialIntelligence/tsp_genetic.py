@@ -16,6 +16,9 @@ Route = List[int]
 
 @dataclass
 class GAConfig:
+    """
+    Docstring for GAConfig.
+    """
     population_size: int = 80
     generations: int = 200
     mutation_rate: float = 0.15
@@ -25,10 +28,16 @@ class GAConfig:
 
 
 def euclidean_distance(a: Tuple[float, float], b: Tuple[float, float]) -> float:
+    """
+    Docstring for euclidean_distance.
+    """
     return math.hypot(a[0] - b[0], a[1] - b[1])
 
 
 def route_length(route: Sequence[int], cities: Sequence[City]) -> float:
+    """
+    Docstring for route_length.
+    """
     distance = 0.0
     for idx, city_index in enumerate(route):
         next_city_index = route[(idx + 1) % len(route)]
@@ -37,20 +46,32 @@ def route_length(route: Sequence[int], cities: Sequence[City]) -> float:
 
 
 def fitness(route: Sequence[int], cities: Sequence[City]) -> float:
+    """
+    Docstring for fitness.
+    """
     return 1.0 / (route_length(route, cities) + 1e-9)
 
 
 def initial_population(size: int, num_cities: int) -> List[Route]:
+    """
+    Docstring for initial_population.
+    """
     base_route = list(range(num_cities))
     return [random.sample(base_route, num_cities) for _ in range(size)]
 
 
 def tournament_selection(population: List[Route], cities: Sequence[City], k: int) -> Route:
+    """
+    Docstring for tournament_selection.
+    """
     contenders = random.sample(population, k)
     return max(contenders, key=lambda route: fitness(route, cities))
 
 
 def order_crossover(parent1: Route, parent2: Route) -> Route:
+    """
+    Docstring for order_crossover.
+    """
     size = len(parent1)
     start, end = sorted(random.sample(range(size), 2))
     child = [None] * size  # type: ignore[list-item]
@@ -64,6 +85,9 @@ def order_crossover(parent1: Route, parent2: Route) -> Route:
 
 
 def swap_mutation(route: Route) -> Route:
+    """
+    Docstring for swap_mutation.
+    """
     mutated = route.copy()
     idx1, idx2 = random.sample(range(len(mutated)), 2)
     mutated[idx1], mutated[idx2] = mutated[idx2], mutated[idx1]
@@ -71,6 +95,9 @@ def swap_mutation(route: Route) -> Route:
 
 
 def evolve_population(population: List[Route], config: GAConfig, cities: Sequence[City]) -> List[Route]:
+    """
+    Docstring for evolve_population.
+    """
     population.sort(key=lambda r: fitness(r, cities), reverse=True)
     new_population: List[Route] = population[: config.elite_size]
 
@@ -85,6 +112,9 @@ def evolve_population(population: List[Route], config: GAConfig, cities: Sequenc
 
 
 def run_ga(cities: Sequence[City], config: GAConfig) -> Tuple[Route, float]:
+    """
+    Docstring for run_ga.
+    """
     random.seed(config.random_seed)
     population = initial_population(config.population_size, len(cities))
 
@@ -97,10 +127,16 @@ def run_ga(cities: Sequence[City], config: GAConfig) -> Tuple[Route, float]:
 
 
 def format_route(route: Sequence[int], cities: Sequence[City]) -> str:
+    """
+    Docstring for format_route.
+    """
     return " -> ".join(cities[idx][0] for idx in route)
 
 
 def main() -> None:
+    """
+    Docstring for main.
+    """
     cities: List[City] = [
         ("A", (0, 0)),
         ("B", (1, 5)),

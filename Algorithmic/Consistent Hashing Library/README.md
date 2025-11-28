@@ -71,3 +71,11 @@ To generate the Consistent Hashing visualization:
 ```bash
 manim -pql visualize_hash_ring.py ConsistentHashingDemo
 ```
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+python main.py
+```

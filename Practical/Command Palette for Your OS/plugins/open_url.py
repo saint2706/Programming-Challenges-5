@@ -10,6 +10,9 @@ METADATA = {
 
 
 def _normalise(query: str) -> str:
+    """
+    Docstring for _normalise.
+    """
     if not query:
         return "https://www.google.com"
     parsed = urlparse(query)
@@ -21,6 +24,9 @@ def _normalise(query: str) -> str:
 
 
 def execute(query: str) -> str:
+    """
+    Docstring for execute.
+    """
     url = _normalise(query.strip())
     webbrowser.open(url)
     return f"Opening {url} in your browser"

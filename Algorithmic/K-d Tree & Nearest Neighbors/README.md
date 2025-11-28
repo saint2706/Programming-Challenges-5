@@ -90,3 +90,11 @@ To visualize the partitioning process:
 ```bash
 manim -pql visualize_kd_tree.py KDTreeConstruction
 ```
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+python main.py
+```

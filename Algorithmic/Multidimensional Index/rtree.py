@@ -1,3 +1,7 @@
+"""
+Implementation of the algorithm.
+"""
+
 import json
 import os
 import math
@@ -8,39 +12,72 @@ MAX_ENTRIES = 4
 MIN_ENTRIES = 2
 
 class Rect:
+    """
+    Docstring for Rect.
+    """
     def __init__(self, x1, y1, x2, y2):
+        """
+        Docstring for __init__.
+        """
         self.x1 = x1
         self.y1 = y1
         self.x2 = x2
         self.y2 = y2
 
     def area(self):
+        """
+        Docstring for area.
+        """
         return (self.x2 - self.x1) * (self.y2 - self.y1)
 
     def contains(self, other: 'Rect') -> bool:
+        """
+        Docstring for contains.
+        """
         return (self.x1 <= other.x1 and self.x2 >= other.x2 and
                 self.y1 <= other.y1 and self.y2 >= other.y2)
 
     def intersects(self, other: 'Rect') -> bool:
+        """
+        Docstring for intersects.
+        """
         return not (self.x2 < other.x1 or self.x1 > other.x2 or
                     self.y2 < other.y1 or self.y1 > other.y2)
 
     def union(self, other: 'Rect') -> 'Rect':
+        """
+        Docstring for union.
+        """
         return Rect(min(self.x1, other.x1), min(self.y1, other.y1),
                     max(self.x2, other.x2), max(self.y2, other.y2))
 
     def to_dict(self):
+        """
+        Docstring for to_dict.
+        """
         return [self.x1, self.y1, self.x2, self.y2]
 
     @staticmethod
     def from_dict(d):
+        """
+        Docstring for from_dict.
+        """
         return Rect(d[0], d[1], d[2], d[3])
 
     def __repr__(self):
+        """
+        Docstring for __repr__.
+        """
         return f"[{self.x1}, {self.y1}, {self.x2}, {self.y2}]"
 
 class RTreeNode:
+    """
+    Docstring for RTreeNode.
+    """
     def __init__(self, is_leaf=True):
+        """
+        Docstring for __init__.
+        """
         self.is_leaf = is_leaf
         self.rects: List[Rect] = []
         self.children: List[Any] = [] # If leaf: data IDs/Objects. If node: RTreeNode objects (or IDs if disk)
@@ -48,6 +85,9 @@ class RTreeNode:
         self.mbr: Optional[Rect] = None
 
     def update_mbr(self):
+        """
+        Docstring for update_mbr.
+        """
         if not self.rects:
             self.mbr = Rect(0,0,0,0)
             return
@@ -64,9 +104,15 @@ class RTree:
     (True on-disk R-tree manages pages, but this is sufficient for the challenge scope).
     """
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.root = RTreeNode(is_leaf=True)
 
     def insert(self, rect: Rect, data: Any):
+        """
+        Docstring for insert.
+        """
         leaf = self._choose_leaf(self.root, rect)
         self._add_entry(leaf, rect, data)
 
@@ -74,11 +120,17 @@ class RTree:
             self._split_node(leaf)
 
     def search(self, query_rect: Rect) -> List[Any]:
+        """
+        Docstring for search.
+        """
         results = []
         self._search_recursive(self.root, query_rect, results)
         return results
 
     def _search_recursive(self, node: RTreeNode, query_rect: Rect, results: List[Any]):
+        """
+        Docstring for _search_recursive.
+        """
         if not node.mbr or not node.mbr.intersects(query_rect):
             # Optimization: Check root MBR first?
             # Actually, node.mbr is the MBR of *this* node's entries.
@@ -96,6 +148,9 @@ class RTree:
                     self._search_recursive(child, query_rect, results)
 
     def _choose_leaf(self, node: RTreeNode, rect: Rect) -> RTreeNode:
+        """
+        Docstring for _choose_leaf.
+        """
         if node.is_leaf:
             return node
 
@@ -118,6 +173,9 @@ class RTree:
         return self._choose_leaf(best_child, rect)
 
     def _add_entry(self, node: RTreeNode, rect: Rect, child: Any):
+        """
+        Docstring for _add_entry.
+        """
         node.rects.append(rect)
         node.children.append(child)
         node.update_mbr()
@@ -133,6 +191,9 @@ class RTree:
 
     def _adjust_tree(self, node: RTreeNode):
         # Recalculate MBR of node
+        """
+        Docstring for _adjust_tree.
+        """
         node.update_mbr()
 
         if node.parent:
@@ -148,6 +209,9 @@ class RTree:
         # Quadratic split (simplified: just split half/half by x coord sort)
         # Linear or Quadratic split is standard. Let's do a simple sort split.
 
+        """
+        Docstring for _split_node.
+        """
         entries = list(zip(node.rects, node.children))
         # Sort by x1
         entries.sort(key=lambda e: e[0].x1)
@@ -184,11 +248,17 @@ class RTree:
 
     # Serialization
     def save(self, filepath: str):
+        """
+        Docstring for save.
+        """
         data = self._serialize_node(self.root)
         with open(filepath, 'w') as f:
             json.dump(data, f, indent=2)
 
     def _serialize_node(self, node: RTreeNode):
+        """
+        Docstring for _serialize_node.
+        """
         return {
             "is_leaf": node.is_leaf,
             "rects": [r.to_dict() for r in node.rects],
@@ -199,6 +269,9 @@ class RTree:
         }
 
     def load(self, filepath: str):
+        """
+        Docstring for load.
+        """
         if not os.path.exists(filepath):
             return
         with open(filepath, 'r') as f:
@@ -206,6 +279,9 @@ class RTree:
         self.root = self._deserialize_node(data)
 
     def _deserialize_node(self, data) -> RTreeNode:
+        """
+        Docstring for _deserialize_node.
+        """
         node = RTreeNode(is_leaf=data["is_leaf"])
         node.rects = [Rect.from_dict(r) for r in data["rects"]]
         if node.is_leaf:

@@ -1,3 +1,7 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 from nn import NeuralNetwork, Linear, ReLU, Sigmoid, MSELoss
@@ -7,6 +11,9 @@ def generate_data(n_samples=200):
     # Class 0: inner circle
     # Class 1: outer ring
 
+    """
+    Docstring for generate_data.
+    """
     X = []
     y = []
 
@@ -26,6 +33,9 @@ def generate_data(n_samples=200):
     return np.array(X), np.array(y)
 
 def main():
+    """
+    Docstring for main.
+    """
     X, y = generate_data()
 
     # Model: 2 -> 16 -> 16 -> 1

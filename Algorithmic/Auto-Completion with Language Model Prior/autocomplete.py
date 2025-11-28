@@ -1,3 +1,7 @@
+"""
+Implementation of the algorithm.
+"""
+
 from typing import Dict, List, Tuple, Optional
 import collections
 import heapq
@@ -5,6 +9,9 @@ import heapq
 class TrieNode:
     """A node in the Trie."""
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.children: Dict[str, TrieNode] = {}
         self.is_end_of_word: bool = False
         self.frequency: int = 0

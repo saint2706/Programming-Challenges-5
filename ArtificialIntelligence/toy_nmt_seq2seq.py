@@ -1,3 +1,7 @@
+"""
+Artificial Intelligence project implementation.
+"""
+
 from __future__ import annotations
 
 """Toy Neural Machine Translation model with attention.
@@ -48,20 +52,35 @@ class Vocabulary:
 
     @property
     def pad_idx(self) -> int:
+        """
+        Docstring for pad_idx.
+        """
         return self.stoi["<pad>"]
 
     @property
     def sos_idx(self) -> int:
+        """
+        Docstring for sos_idx.
+        """
         return self.stoi["<sos>"]
 
     @property
     def eos_idx(self) -> int:
+        """
+        Docstring for eos_idx.
+        """
         return self.stoi["<eos>"]
 
     def numericalize(self, tokens: Sequence[str]) -> List[int]:
+        """
+        Docstring for numericalize.
+        """
         return [self.stoi[token] for token in tokens]
 
     def denumericalize(self, indices: Sequence[int]) -> List[str]:
+        """
+        Docstring for denumericalize.
+        """
         return [self.itos[idx] for idx in indices]
 
 
@@ -69,14 +88,23 @@ class SyntheticTranslationDataset(Dataset[Tuple[Tensor, Tensor]]):
     """Synthetic parallel dataset mapping digit words to reversed sequences."""
 
     def __init__(self, pairs: List[Tuple[List[str], List[str]]], vocab_src: Vocabulary, vocab_tgt: Vocabulary):
+        """
+        Docstring for __init__.
+        """
         self.pairs = pairs
         self.vocab_src = vocab_src
         self.vocab_tgt = vocab_tgt
 
     def __len__(self) -> int:
+        """
+        Docstring for __len__.
+        """
         return len(self.pairs)
 
     def __getitem__(self, idx: int) -> Tuple[Tensor, Tensor]:
+        """
+        Docstring for __getitem__.
+        """
         src_tokens, tgt_tokens = self.pairs[idx]
         src_ids = torch.tensor(self.vocab_src.numericalize(src_tokens), dtype=torch.long)
         tgt_ids = torch.tensor(
@@ -86,6 +114,9 @@ class SyntheticTranslationDataset(Dataset[Tuple[Tensor, Tensor]]):
         return src_ids, tgt_ids
 
     def collate_fn(self, batch: List[Tuple[Tensor, Tensor]]) -> Tuple[Tensor, Tensor]:
+        """
+        Docstring for collate_fn.
+        """
         src_batch, tgt_batch = zip(*batch)
         src_padded = pad_sequence(src_batch, batch_first=True, padding_value=self.vocab_src.pad_idx)
         tgt_padded = pad_sequence(tgt_batch, batch_first=True, padding_value=self.vocab_tgt.pad_idx)
@@ -96,11 +127,17 @@ class Encoder(nn.Module):
     """Encoder LSTM that returns outputs for attention and final hidden state."""
 
     def __init__(self, vocab_size: int, embed_dim: int, hidden_dim: int, num_layers: int = 1) -> None:
+        """
+        Docstring for __init__.
+        """
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, embed_dim, padding_idx=0)
         self.rnn = nn.LSTM(embed_dim, hidden_dim, num_layers=num_layers, batch_first=True)
 
     def forward(self, src: Tensor) -> Tuple[Tensor, Tuple[Tensor, Tensor]]:
+        """
+        Docstring for forward.
+        """
         embedded = self.embedding(src)
         outputs, (hidden, cell) = self.rnn(embedded)
         return outputs, (hidden, cell)
@@ -110,6 +147,9 @@ class Attention(nn.Module):
     """Dot-product attention mechanism with padding mask."""
 
     def forward(self, decoder_hidden: Tensor, encoder_outputs: Tensor, src_mask: Tensor) -> Tensor:
+        """
+        Docstring for forward.
+        """
         scores = torch.bmm(encoder_outputs, decoder_hidden.unsqueeze(2)).squeeze(2)
         scores.masked_fill_(~src_mask, float("-inf"))
         attn_weights = torch.softmax(scores, dim=1)
@@ -121,6 +161,9 @@ class Decoder(nn.Module):
     """Decoder LSTM with attention."""
 
     def __init__(self, vocab_size: int, embed_dim: int, hidden_dim: int, num_layers: int = 1) -> None:
+        """
+        Docstring for __init__.
+        """
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, embed_dim, padding_idx=0)
         self.rnn = nn.LSTM(embed_dim + hidden_dim, hidden_dim, num_layers=num_layers, batch_first=True)
@@ -135,6 +178,9 @@ class Decoder(nn.Module):
         encoder_outputs: Tensor,
         src_mask: Tensor,
     ) -> Tuple[Tensor, Tensor, Tensor]:
+        """
+        Docstring for forward.
+        """
         embedded = self.embedding(input_token.unsqueeze(1))
         context = self.attention(hidden[-1], encoder_outputs, src_mask)
         rnn_input = torch.cat([embedded, context.unsqueeze(1)], dim=2)
@@ -147,6 +193,9 @@ class Seq2Seq(nn.Module):
     """Full sequence-to-sequence model wiring encoder and decoder."""
 
     def __init__(self, encoder: Encoder, decoder: Decoder, pad_idx: int, device: torch.device) -> None:
+        """
+        Docstring for __init__.
+        """
         super().__init__()
         self.encoder = encoder
         self.decoder = decoder
@@ -154,6 +203,9 @@ class Seq2Seq(nn.Module):
         self.device = device
 
     def forward(self, src: Tensor, tgt: Tensor, teacher_forcing_ratio: float = 0.5) -> Tensor:
+        """
+        Docstring for forward.
+        """
         batch_size, tgt_len = tgt.size()
         vocab_size = self.decoder.fc_out.out_features
         outputs = torch.zeros(batch_size, tgt_len, vocab_size, device=self.device)
@@ -171,6 +223,9 @@ class Seq2Seq(nn.Module):
     def translate(
         self, src_sentence: Sequence[str], vocab_src: Vocabulary, vocab_tgt: Vocabulary, max_len: int = 15
     ) -> List[str]:
+        """
+        Docstring for translate.
+        """
         self.eval()
         with torch.no_grad():
             src_tensor = torch.tensor(vocab_src.numericalize(src_sentence), dtype=torch.long, device=self.device).unsqueeze(0)

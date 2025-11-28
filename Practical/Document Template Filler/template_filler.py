@@ -45,12 +45,18 @@ def _replace_placeholders_in_text(text: str, data: Dict[str, Any]) -> str:
 
 
 def _replace_placeholders_in_paragraph(paragraph, data: Dict[str, Any]) -> None:
+    """
+    Docstring for _replace_placeholders_in_paragraph.
+    """
     new_text = _replace_placeholders_in_text(paragraph.text, data)
     if new_text != paragraph.text:
         paragraph.text = new_text
 
 
 def _replace_placeholders_in_table(table, data: Dict[str, Any]) -> None:
+    """
+    Docstring for _replace_placeholders_in_table.
+    """
     for row in table.rows:
         for cell in row.cells:
             for paragraph in cell.paragraphs:
@@ -239,6 +245,9 @@ def generate_pdf_summary(data: Dict[str, Any], output_path: Path) -> None:
 
 
 def parse_args() -> argparse.Namespace:
+    """
+    Docstring for parse_args.
+    """
     parser = argparse.ArgumentParser(description="Fill DOCX/PDF templates using JSON or YAML data.")
     parser.add_argument("--data", required=True, type=Path, help="Path to JSON/YAML file containing fields.")
     parser.add_argument("--docx-template", type=Path, help="DOCX template path with {{placeholders}}.")
@@ -261,6 +270,9 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    """
+    Docstring for main.
+    """
     args = parse_args()
 
     if args.create_sample_templates:

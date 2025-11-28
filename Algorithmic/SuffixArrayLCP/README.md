@@ -57,3 +57,11 @@ The `main` program accepts JSON commands.
 | :--- | :--- | :--- |
 | **Suffix Array** | $O(N \log^2 N)$ | $O(N)$ |
 | **LCP Array** | $O(N)$ | $O(N)$ |
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+go run .
+```

@@ -1,3 +1,7 @@
+"""
+Project implementation.
+"""
+
 import time
 import psutil
 from rich.console import Console
@@ -12,6 +16,9 @@ from datetime import datetime
 console = Console()
 
 def get_cpu_panel():
+    """
+    Docstring for get_cpu_panel.
+    """
     cpu_percent = psutil.cpu_percent(interval=0, percpu=True)
     avg_cpu = sum(cpu_percent) / len(cpu_percent)
     
@@ -33,6 +40,9 @@ def get_cpu_panel():
     )
 
 def get_memory_panel():
+    """
+    Docstring for get_memory_panel.
+    """
     mem = psutil.virtual_memory()
     swap = psutil.swap_memory()
     
@@ -41,6 +51,9 @@ def get_memory_panel():
     table.add_column("Usage", ratio=2)
     
     def make_bar(percent):
+        """
+        Docstring for make_bar.
+        """
         color = "green" if percent < 50 else "yellow" if percent < 80 else "red"
         bar_length = 20
         filled = int(percent / 100 * bar_length)
@@ -58,6 +71,9 @@ def get_memory_panel():
     )
 
 def get_disk_panel():
+    """
+    Docstring for get_disk_panel.
+    """
     partitions = psutil.disk_partitions()
     table = Table(show_header=True, expand=True, box=None)
     table.add_column("Device")
@@ -83,6 +99,9 @@ def get_disk_panel():
     )
 
 def get_network_panel():
+    """
+    Docstring for get_network_panel.
+    """
     net_io = psutil.net_io_counters()
     table = Table(show_header=False, expand=True, box=None)
     table.add_row("Bytes Sent", f"{net_io.bytes_sent / (1024**2):.2f} MB")
@@ -97,6 +116,9 @@ def get_network_panel():
     )
 
 def get_process_panel():
+    """
+    Docstring for get_process_panel.
+    """
     processes = []
     for p in psutil.process_iter(['pid', 'name', 'cpu_percent', 'memory_percent']):
         try:
@@ -129,6 +151,9 @@ def get_process_panel():
     )
 
 def make_layout():
+    """
+    Docstring for make_layout.
+    """
     layout = Layout()
     layout.split_column(
         Layout(name="upper"),
@@ -149,6 +174,9 @@ def make_layout():
     return layout
 
 def update_layout(layout):
+    """
+    Docstring for update_layout.
+    """
     layout["cpu"].update(get_cpu_panel())
     layout["memory"].update(get_memory_panel())
     layout["disk"].update(get_disk_panel())
@@ -156,6 +184,9 @@ def update_layout(layout):
     layout["procs"].update(get_process_panel())
 
 def main():
+    """
+    Docstring for main.
+    """
     layout = make_layout()
     with Live(layout, refresh_per_second=1, screen=True):
         while True:

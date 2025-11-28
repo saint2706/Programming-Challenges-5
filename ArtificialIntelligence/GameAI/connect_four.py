@@ -12,16 +12,25 @@ Board = List[List[str]]
 
 
 def create_board() -> Board:
+    """
+    Docstring for create_board.
+    """
     return [[EMPTY for _ in range(COLS)] for _ in range(ROWS)]
 
 
 def print_board(board: Board) -> None:
+    """
+    Docstring for print_board.
+    """
     for row in board:
         print("|" + "|".join(row) + "|")
     print(" " + " ".join(str(i + 1) for i in range(COLS)))
 
 
 def drop_piece(board: Board, col: int, piece: str) -> Optional[int]:
+    """
+    Docstring for drop_piece.
+    """
     for r in range(ROWS - 1, -1, -1):
         if board[r][col] == EMPTY:
             board[r][col] = piece
@@ -30,10 +39,16 @@ def drop_piece(board: Board, col: int, piece: str) -> Optional[int]:
 
 
 def valid_moves(board: Board) -> List[int]:
+    """
+    Docstring for valid_moves.
+    """
     return [c for c in range(COLS) if board[0][c] == EMPTY]
 
 
 def check_winner(board: Board, last_row: int, last_col: int) -> Optional[str]:
+    """
+    Docstring for check_winner.
+    """
     piece = board[last_row][last_col]
     if piece == EMPTY:
         return None
@@ -58,6 +73,9 @@ def check_winner(board: Board, last_row: int, last_col: int) -> Optional[str]:
 
 
 def score_window(window: List[str], piece: str) -> int:
+    """
+    Docstring for score_window.
+    """
     opponent = "O" if piece == "X" else "X"
     score = 0
     if window.count(piece) == 4:
@@ -72,6 +90,9 @@ def score_window(window: List[str], piece: str) -> int:
 
 
 def heuristic(board: Board, piece: str) -> int:
+    """
+    Docstring for heuristic.
+    """
     score = 0
     # Center preference
     center_col = [board[r][COLS // 2] for r in range(ROWS)]
@@ -103,6 +124,9 @@ def heuristic(board: Board, piece: str) -> int:
 
 
 def alpha_beta(board: Board, depth: int, alpha: int, beta: int, maximizing: bool, player: str, last_move: Optional[Tuple[int, int]]) -> Tuple[int, Optional[int]]:
+    """
+    Docstring for alpha_beta.
+    """
     if last_move is not None:
         winner = check_winner(board, *last_move)
         if winner == player:
@@ -163,6 +187,9 @@ def best_move(board: Board, player: str, depth: int = 4) -> int:
 
 
 def human_turn(board: Board) -> Tuple[int, int]:
+    """
+    Docstring for human_turn.
+    """
     while True:
         try:
             col = int(input("Choose a column (1-7): ")) - 1
@@ -176,6 +203,9 @@ def human_turn(board: Board) -> Tuple[int, int]:
 
 
 def ai_turn(board: Board) -> Tuple[int, int]:
+    """
+    Docstring for ai_turn.
+    """
     col = best_move(board, "X")
     row = drop_piece(board, col, "X")
     if row is None:
@@ -184,6 +214,9 @@ def ai_turn(board: Board) -> Tuple[int, int]:
 
 
 def play_game() -> None:
+    """
+    Docstring for play_game.
+    """
     print("You are O. AI is X. AI goes first.\n")
     board = create_board()
     last_move: Optional[Tuple[int, int]] = None

@@ -36,10 +36,16 @@ rate_limiter = RateLimiter(limit=120, window_seconds=60)
 
 @app.on_event("startup")
 def on_startup() -> None:
+    """
+    Docstring for on_startup.
+    """
     Base.metadata.create_all(bind=engine)
 
 
 def store_pageview(payload: PageViewCreate, user_agent: str | None, request: Request) -> Optional[PageView]:
+    """
+    Docstring for store_pageview.
+    """
     client_ip = get_client_ip(request)
     rate_limiter.touch(client_ip)
 
@@ -70,6 +76,9 @@ async def record_pageview(
     response: Response,
     user_agent: Annotated[str | None, Header(default=None, convert_underscores=False)] = None,
 ):
+    """
+    Docstring for record_pageview.
+    """
     pageview = store_pageview(payload, user_agent, request)
     if pageview is None:
         response.status_code = 204
@@ -79,6 +88,9 @@ async def record_pageview(
 
 @app.get("/health")
 def healthcheck() -> dict[str, str]:
+    """
+    Docstring for healthcheck.
+    """
     return {"status": "ok"}
 
 

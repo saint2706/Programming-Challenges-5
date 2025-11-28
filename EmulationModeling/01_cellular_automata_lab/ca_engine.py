@@ -1,3 +1,7 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import numpy as np
 
 class CAEngine:
@@ -52,20 +56,35 @@ class CAEngine:
         self.generation += 1
 
     def clear(self):
+        """
+        Docstring for clear.
+        """
         self.grid.fill(0)
         self.generation = 0
 
     def set_cell(self, x, y, state):
+        """
+        Docstring for set_cell.
+        """
         if 0 <= x < self.width and 0 <= y < self.height:
             self.grid[y, x] = state
 
     def toggle_cell(self, x, y):
+        """
+        Docstring for toggle_cell.
+        """
         if 0 <= x < self.width and 0 <= y < self.height:
             self.grid[y, x] = 1 - self.grid[y, x]
 
     def set_rules(self, b_rules, s_rules):
+        """
+        Docstring for set_rules.
+        """
         self.rule_b = np.array(list(b_rules))
         self.rule_s = np.array(list(s_rules))
 
     def get_state(self):
+        """
+        Docstring for get_state.
+        """
         return self.grid

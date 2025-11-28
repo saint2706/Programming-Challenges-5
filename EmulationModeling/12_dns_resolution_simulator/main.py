@@ -9,6 +9,9 @@ from dns_simulator import (
 
 def build_demo_resolver() -> DNSResolver:
     # Create authoritative servers with records
+    """
+    Docstring for build_demo_resolver.
+    """
     example_auth = AuthoritativeDNSServer("example.com")
     example_auth.add_record("example.com", "93.184.216.34", ttl=10)
 
@@ -28,6 +31,9 @@ def build_demo_resolver() -> DNSResolver:
 
 
 def demo():
+    """
+    Docstring for demo.
+    """
     resolver = build_demo_resolver()
 
     domains = ["example.com", "api.example.com", "example.com"]

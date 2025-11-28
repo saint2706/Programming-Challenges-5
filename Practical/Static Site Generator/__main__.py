@@ -21,6 +21,9 @@ except ImportError:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """
+    Docstring for main.
+    """
     parser = argparse.ArgumentParser(description="Static Site Generator")
     parser.add_argument(
         "--input",

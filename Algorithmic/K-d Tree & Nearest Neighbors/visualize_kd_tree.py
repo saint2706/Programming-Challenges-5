@@ -70,6 +70,9 @@ class KDTreeConstruction(Scene):
             y_max: float,
             depth: int,
         ) -> None:
+            """
+            Docstring for visualize_split.
+            """
             if node is None:
                 return
 

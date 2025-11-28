@@ -130,6 +130,9 @@ class SkipListDemo(Scene):
 
             # Helper for comparison
             def is_greater(a: Any, b: Any) -> bool:
+                """
+                Docstring for is_greater.
+                """
                 if a == "inf":
                     return True
                 if b == "inf":

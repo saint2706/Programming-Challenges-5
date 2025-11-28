@@ -1,7 +1,17 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import numpy as np
 
 class Boid:
+    """
+    Docstring for Boid.
+    """
     def __init__(self, x, y, width, height):
+        """
+        Docstring for __init__.
+        """
         self.position = np.array([x, y], dtype=np.float64)
         angle = np.random.uniform(0, 2 * np.pi)
         self.velocity = np.array([np.cos(angle), np.sin(angle)], dtype=np.float64) * 3
@@ -12,6 +22,9 @@ class Boid:
         self.height = height
 
     def update(self):
+        """
+        Docstring for update.
+        """
         self.velocity += self.acceleration
 
         # Limit speed
@@ -27,9 +40,15 @@ class Boid:
         self.position[1] %= self.height
 
     def apply_force(self, force):
+        """
+        Docstring for apply_force.
+        """
         self.acceleration += force
 
     def flock(self, boids, separation_dist=25, align_dist=50, cohesion_dist=50):
+        """
+        Docstring for flock.
+        """
         sep = np.zeros(2)
         ali = np.zeros(2)
         coh = np.zeros(2)
@@ -84,19 +103,31 @@ class Boid:
         return sep * 1.5 + ali * 1.0 + coh * 1.0
 
     def _limit(self, vector, max_val):
+        """
+        Docstring for _limit.
+        """
         norm = np.linalg.norm(vector)
         if norm > max_val:
             return (vector / norm) * max_val
         return vector
 
 class Flock:
+    """
+    Docstring for Flock.
+    """
     def __init__(self, count, width, height):
+        """
+        Docstring for __init__.
+        """
         self.boids = [Boid(np.random.rand()*width, np.random.rand()*height, width, height) for _ in range(count)]
         self.width = width
         self.height = height
 
     def update(self):
         # O(N^2) - optimization possible with QuadTree or spatial hash
+        """
+        Docstring for update.
+        """
         for boid in self.boids:
             force = boid.flock(self.boids)
             boid.apply_force(force)

@@ -105,3 +105,11 @@ Where:
 - $k$ = number of iterations
 
 PrefixSpan is typically much faster in practice.
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+go run .
+```

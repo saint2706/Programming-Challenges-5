@@ -1,3 +1,7 @@
+"""
+Artificial Intelligence project implementation.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -43,6 +47,9 @@ class SmallCNN(nn.Module):
     """Simple CNN suitable for MNIST-sized images."""
 
     def __init__(self) -> None:
+        """
+        Docstring for __init__.
+        """
         super().__init__()
         self.conv1 = nn.Conv2d(1, 8, kernel_size=3, padding=1)
         self.conv2 = nn.Conv2d(8, 16, kernel_size=3, padding=1)
@@ -51,6 +58,9 @@ class SmallCNN(nn.Module):
         self.fc2 = nn.Linear(64, 10)
 
     def forward(self, x: Tensor) -> Tensor:
+        """
+        Docstring for forward.
+        """
         x = torch.relu(self.conv1(x))
         x = torch.relu(self.conv2(x))
         x = self.pool(x)
@@ -101,7 +111,13 @@ def register_activation_hooks(model: nn.Module) -> Tuple[Dict[str, Tensor], List
     handles: List[torch.utils.hooks.RemovableHandle] = []
 
     def _make_hook(name: str):
+        """
+        Docstring for _make_hook.
+        """
         def hook(_: nn.Module, __: Tensor, output: Tensor) -> None:
+            """
+            Docstring for hook.
+            """
             if name not in activations:
                 activations[name] = output.detach().cpu()
 

@@ -1,9 +1,19 @@
+"""
+Implementation of the algorithm.
+"""
+
 import unittest
 import os
 from rtree import RTree, Rect
 
 class TestRTree(unittest.TestCase):
+    """
+    Docstring for TestRTree.
+    """
     def test_basic_ops(self):
+        """
+        Docstring for test_basic_ops.
+        """
         tree = RTree()
         # Insert (0,0) to (1,1)
         tree.insert(Rect(0, 0, 1, 1), "A")
@@ -22,6 +32,9 @@ class TestRTree(unittest.TestCase):
 
     def test_split_and_structure(self):
         # Force splits (MAX_ENTRIES=4)
+        """
+        Docstring for test_split_and_structure.
+        """
         tree = RTree()
         for i in range(10):
             tree.insert(Rect(i, i, i+1, i+1), i)
@@ -42,6 +55,9 @@ class TestRTree(unittest.TestCase):
         self.assertIn(5, res)
 
     def test_serialization(self):
+        """
+        Docstring for test_serialization.
+        """
         tree = RTree()
         tree.insert(Rect(0,0,1,1), "Data")
         tree.save("test_rtree.json")

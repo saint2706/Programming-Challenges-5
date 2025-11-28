@@ -11,13 +11,22 @@ class Point:
     """2D point representation."""
 
     def __init__(self, x, y):
+        """
+        Docstring for __init__.
+        """
         self.x = x
         self.y = y
 
     def __repr__(self):
+        """
+        Docstring for __repr__.
+        """
         return f"({self.x}, {self.y})"
 
     def __eq__(self, other):
+        """
+        Docstring for __eq__.
+        """
         return self.x == other.x and self.y == other.y
 
 def is_convex(p: Point, prev_p: Point, next_p: Point) -> bool:
@@ -39,6 +48,9 @@ def is_convex(p: Point, prev_p: Point, next_p: Point) -> bool:
 def is_point_inside_triangle(pt: Point, v1: Point, v2: Point, v3: Point) -> bool:
     """Checks if point pt is inside the triangle v1-v2-v3."""
     def sign(p1, p2, p3):
+        """
+        Docstring for sign.
+        """
         return (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y)
 
     d1 = sign(pt, v1, v2)

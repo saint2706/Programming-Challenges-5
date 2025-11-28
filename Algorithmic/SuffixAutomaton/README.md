@@ -64,3 +64,11 @@ The `main` program accepts JSON commands.
 | **LCS** | $O(M)$ | $O(1)$ |
 
 Where $N$ is the length of the indexed string, $P$ is pattern length, $M$ is the other string length, and $\Sigma$ is alphabet size.
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+go run .
+```

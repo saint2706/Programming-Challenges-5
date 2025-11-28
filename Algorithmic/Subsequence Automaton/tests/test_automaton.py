@@ -1,13 +1,26 @@
+"""
+Implementation of the algorithm.
+"""
+
 import unittest
 from automaton import SubsequenceAutomaton
 
 class TestSubsequenceAutomaton(unittest.TestCase):
+    """
+    Docstring for TestSubsequenceAutomaton.
+    """
     def setUp(self):
+        """
+        Docstring for setUp.
+        """
         self.text = "abracadabra"
         self.automaton = SubsequenceAutomaton(self.text)
 
     def test_is_subsequence(self):
         # True cases
+        """
+        Docstring for test_is_subsequence.
+        """
         self.assertTrue(self.automaton.is_subsequence("abra"))
         self.assertTrue(self.automaton.is_subsequence("brac"))
         self.assertTrue(self.automaton.is_subsequence("aaaa"))
@@ -25,10 +38,16 @@ class TestSubsequenceAutomaton(unittest.TestCase):
         # 'a' -> index 0
         # 'd' -> search after 0+1=1. First 'd' is at 6.
         # 'a' -> search after 6+1=7. First 'a' is at 7.
+        """
+        Docstring for test_indices.
+        """
         indices = self.automaton.find_first_subsequence_indices("ada")
         self.assertEqual(indices, [0, 6, 7])
 
     def test_empty_text(self):
+        """
+        Docstring for test_empty_text.
+        """
         auto = SubsequenceAutomaton("")
         self.assertTrue(auto.is_subsequence(""))
         self.assertFalse(auto.is_subsequence("a"))

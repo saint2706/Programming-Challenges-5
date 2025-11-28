@@ -25,6 +25,9 @@ from jinja2 import Environment, FileSystemLoader, Template
 
 @dataclass
 class SMTPConfig:
+    """
+    Docstring for SMTPConfig.
+    """
     host: str
     port: int
     username: str
@@ -34,6 +37,9 @@ class SMTPConfig:
 
 @dataclass
 class CampaignConfig:
+    """
+    Docstring for CampaignConfig.
+    """
     sender: str
     subject: str
     template_path: Path
@@ -46,7 +52,13 @@ class CampaignConfig:
 
 
 class NewsletterEngine:
+    """
+    Docstring for NewsletterEngine.
+    """
     def __init__(self, config: CampaignConfig) -> None:
+        """
+        Docstring for __init__.
+        """
         self.config = config
         self.logger = logging.getLogger("newsletter_engine")
         self.template_env = Environment(loader=FileSystemLoader(config.template_path.parent))
@@ -54,6 +66,9 @@ class NewsletterEngine:
         self.template: Template = self.template_env.get_template(config.template_path.name)
 
     def load_subscribers(self) -> List[Dict[str, Any]]:
+        """
+        Docstring for load_subscribers.
+        """
         data = load_yaml_or_json(self.config.subscribers_path)
         subscribers = data.get("subscribers", data) if isinstance(data, dict) else data
         if not isinstance(subscribers, list):
@@ -76,16 +91,25 @@ class NewsletterEngine:
         return cleaned
 
     def render_email(self, subscriber: Dict[str, Any]) -> str:
+        """
+        Docstring for render_email.
+        """
         context = {**self.config.default_context, **subscriber}
         context.setdefault("subject", self.config.subject)
         return self.template.render(context)
 
     def send_batch(self, subscribers: Iterable[Dict[str, Any]]) -> None:
+        """
+        Docstring for send_batch.
+        """
         for subscriber in subscribers:
             html = self.render_email(subscriber)
             self.send_email(subscriber["email"], html)
 
     def send_email(self, recipient: str, html_body: str) -> None:
+        """
+        Docstring for send_email.
+        """
         message = MIMEMultipart("alternative")
         message["Subject"] = self.config.subject
         message["From"] = self.config.sender
@@ -102,6 +126,9 @@ class NewsletterEngine:
             self.logger.info("Sent newsletter to %s", recipient)
 
     def send_campaign(self) -> None:
+        """
+        Docstring for send_campaign.
+        """
         subscribers = self.load_subscribers()
         for i in range(0, len(subscribers), self.config.batch_size):
             batch = subscribers[i : i + self.config.batch_size]
@@ -114,6 +141,9 @@ class NewsletterEngine:
                 time.sleep(self.config.delay_between_batches)
 
     def schedule_campaign(self, start_time: datetime) -> Timer:
+        """
+        Docstring for schedule_campaign.
+        """
         delay = max(0, (start_time - datetime.now()).total_seconds())
         self.logger.info("Scheduling campaign in %s seconds", delay)
         timer = Timer(delay, self.send_campaign)
@@ -122,6 +152,9 @@ class NewsletterEngine:
 
 
 def load_yaml_or_json(path: Path) -> Any:
+    """
+    Docstring for load_yaml_or_json.
+    """
     with open(path, "r", encoding="utf-8") as file:
         if path.suffix.lower() in {".yaml", ".yml"}:
             return yaml.safe_load(file)
@@ -131,6 +164,9 @@ def load_yaml_or_json(path: Path) -> Any:
 
 
 def setup_logging(level: str = "INFO") -> None:
+    """
+    Docstring for setup_logging.
+    """
     logging.basicConfig(
         level=getattr(logging, level.upper(), logging.INFO),
         format="%(asctime)s [%(levelname)s] %(message)s",
@@ -138,6 +174,9 @@ def setup_logging(level: str = "INFO") -> None:
 
 
 def parse_args() -> argparse.Namespace:
+    """
+    Docstring for parse_args.
+    """
     parser = argparse.ArgumentParser(description="Send personalized newsletters")
     parser.add_argument("--config", type=Path, required=True, help="Path to campaign config YAML/JSON")
     parser.add_argument("--log-level", default="INFO", help="Logging level (INFO, DEBUG, etc.)")
@@ -150,6 +189,9 @@ def parse_args() -> argparse.Namespace:
 
 
 def build_config(config_path: Path) -> CampaignConfig:
+    """
+    Docstring for build_config.
+    """
     raw = load_yaml_or_json(config_path)
     smtp_raw = raw.get("smtp")
     if not smtp_raw:
@@ -177,6 +219,9 @@ def build_config(config_path: Path) -> CampaignConfig:
 
 
 def main() -> None:
+    """
+    Docstring for main.
+    """
     args = parse_args()
     setup_logging(args.log_level)
     config = build_config(args.config)

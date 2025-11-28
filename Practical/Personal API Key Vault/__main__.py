@@ -22,6 +22,9 @@ class ValidationError(ValueError):
 
 
 def prompt_password(prompt: str = "Master password: ") -> str:
+    """
+    Docstring for prompt_password.
+    """
     password = getpass(prompt)
     if not password:
         raise ValidationError("A master password is required")
@@ -29,6 +32,9 @@ def prompt_password(prompt: str = "Master password: ") -> str:
 
 
 def prompt_secret(prompt: str = "Secret value: ") -> str:
+    """
+    Docstring for prompt_secret.
+    """
     secret = getpass(prompt)
     if not secret:
         raise ValidationError("Secret value cannot be empty")
@@ -36,15 +42,24 @@ def prompt_secret(prompt: str = "Secret value: ") -> str:
 
 
 def load_secrets(path: Path, password: str) -> dict[str, str]:
+    """
+    Docstring for load_secrets.
+    """
     secrets = load_vault(path, password)
     return secrets
 
 
 def persist_secrets(path: Path, secrets: dict[str, str], password: str) -> None:
+    """
+    Docstring for persist_secrets.
+    """
     save_vault(path, secrets, password)
 
 
 def cmd_add(args: argparse.Namespace) -> str:
+    """
+    Docstring for cmd_add.
+    """
     password = prompt_password()
     secret_value = prompt_secret()
     secrets = load_secrets(args.vault, password)
@@ -55,6 +70,9 @@ def cmd_add(args: argparse.Namespace) -> str:
 
 
 def cmd_get(args: argparse.Namespace) -> str:
+    """
+    Docstring for cmd_get.
+    """
     password = prompt_password()
     secrets = load_secrets(args.vault, password)
     try:
@@ -68,6 +86,9 @@ def cmd_get(args: argparse.Namespace) -> str:
 
 
 def cmd_delete(args: argparse.Namespace) -> str:
+    """
+    Docstring for cmd_delete.
+    """
     password = prompt_password()
     secrets = load_secrets(args.vault, password)
     if args.name not in secrets:
@@ -80,6 +101,9 @@ def cmd_delete(args: argparse.Namespace) -> str:
 
 
 def cmd_list(args: argparse.Namespace) -> str:
+    """
+    Docstring for cmd_list.
+    """
     password = prompt_password()
     secrets = load_secrets(args.vault, password)
     names = sorted(secrets)
@@ -90,6 +114,9 @@ def cmd_list(args: argparse.Namespace) -> str:
 
 
 def build_parser() -> argparse.ArgumentParser:
+    """
+    Docstring for build_parser.
+    """
     parser = argparse.ArgumentParser(description="Personal API Key Vault")
     parser.add_argument(
         "--vault",
@@ -119,6 +146,9 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """
+    Docstring for main.
+    """
     parser = build_parser()
     args = parser.parse_args(argv)
     try:

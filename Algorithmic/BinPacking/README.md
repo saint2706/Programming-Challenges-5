@@ -105,3 +105,11 @@ bins := binpacking.Pack2D(items, binWidth, binHeight)
 | **Next Fit** | $O(n)$ | 2 × OPT |
 
 **Note**: Optimal bin packing is NP-hard, so these heuristics provide good practical solutions.
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+go run .
+```

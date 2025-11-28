@@ -66,3 +66,11 @@ Where:
 - $V$ = number of vertices
 - $E$ = number of edges
 - $k$ = number of affected vertices (typically $k \ll V$)
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+cargo run --release
+```

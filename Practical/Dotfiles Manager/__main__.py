@@ -70,6 +70,9 @@ def install_dotfiles(source_dir: str, target_dir: str, backup: bool = True, dry_
                 logging.error(f"Failed to link {target_name}: {e}")
 
 def main():
+    """
+    Docstring for main.
+    """
     parser = argparse.ArgumentParser(description="Dotfiles Manager")
     parser.add_argument("--source", default=".", help="Directory containing dotfiles")
     parser.add_argument("--target", default="~", help="Target directory (usually home)")

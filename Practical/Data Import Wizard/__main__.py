@@ -104,11 +104,17 @@ def insert_rows(engine, table: Table, df: pd.DataFrame):
 
 
 def build_table_name(csv_path: str) -> str:
+    """
+    Docstring for build_table_name.
+    """
     stem = os.path.splitext(os.path.basename(csv_path))[0]
     return stem.replace(" ", "_") or "imported_data"
 
 
 def main():
+    """
+    Docstring for main.
+    """
     parser = argparse.ArgumentParser(description="Import CSV data into SQLite with inferred schema.")
     parser.add_argument("csv", help="Path to the CSV file to import")
     parser.add_argument("--db", default="data_import.db", help="SQLite database file")

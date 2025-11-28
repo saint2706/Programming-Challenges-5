@@ -1,14 +1,24 @@
+"""
+Implementation of the algorithm.
+"""
+
 import unittest
 import numpy as np
 from PIL import Image
 from seam_carving import calculate_energy, find_vertical_seam, remove_vertical_seam
 
 class TestSeamCarving(unittest.TestCase):
+    """
+    Docstring for TestSeamCarving.
+    """
     def test_calculate_energy(self):
         # Create a simple 3x3 gradient image
         # [[0, 0, 0],
         #  [10, 10, 10],
         #  [20, 20, 20]]
+        """
+        Docstring for test_calculate_energy.
+        """
         arr = np.array([
             [0, 0, 0],
             [10, 10, 10],
@@ -26,6 +36,9 @@ class TestSeamCarving(unittest.TestCase):
 
     def test_find_vertical_seam(self):
         # Create an energy map where the path is obvious (middle column 0, others high)
+        """
+        Docstring for test_find_vertical_seam.
+        """
         energy = np.array([
             [100, 0, 100],
             [100, 0, 100],
@@ -48,6 +61,9 @@ class TestSeamCarving(unittest.TestCase):
 
     def test_remove_vertical_seam(self):
         # 3x3 image
+        """
+        Docstring for test_remove_vertical_seam.
+        """
         img = np.array([
             [1, 2, 3],
             [4, 5, 6],

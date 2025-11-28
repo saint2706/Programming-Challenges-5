@@ -37,7 +37,13 @@ pygame.display.set_caption("Platformer - Challenge 9")
 clock = pygame.time.Clock()
 
 class Player(pygame.sprite.Sprite):
+    """
+    Docstring for Player.
+    """
     def __init__(self, x, y):
+        """
+        Docstring for __init__.
+        """
         super().__init__()
         self.image = pygame.Surface((30, 50))
         self.image.fill(BLUE)
@@ -51,6 +57,9 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, platforms):
         # Apply Gravity
+        """
+        Docstring for update.
+        """
         self.vel_y += GRAVITY
         
         # Movement
@@ -96,13 +105,22 @@ class Player(pygame.sprite.Sprite):
             self.reset()
 
     def reset(self):
+        """
+        Docstring for reset.
+        """
         self.rect.x = 100
         self.rect.y = SCREEN_HEIGHT - 150
         self.vel_y = 0
         self.vel_x = 0
 
 class Platform(pygame.sprite.Sprite):
+    """
+    Docstring for Platform.
+    """
     def __init__(self, x, y, w, h, color=GREEN):
+        """
+        Docstring for __init__.
+        """
         super().__init__()
         self.image = pygame.Surface((w, h))
         self.image.fill(color)
@@ -111,15 +129,27 @@ class Platform(pygame.sprite.Sprite):
         self.rect.y = y
 
 class Camera:
+    """
+    Docstring for Camera.
+    """
     def __init__(self, width, height):
+        """
+        Docstring for __init__.
+        """
         self.camera = pygame.Rect(0, 0, width, height)
         self.width = width
         self.height = height
 
     def apply(self, entity):
+        """
+        Docstring for apply.
+        """
         return entity.rect.move(self.camera.topleft)
 
     def update(self, target):
+        """
+        Docstring for update.
+        """
         x = -target.rect.centerx + int(SCREEN_WIDTH / 2)
         y = -target.rect.centery + int(SCREEN_HEIGHT / 2)
 
@@ -133,6 +163,9 @@ class Camera:
 
 def main():
     # Level Setup
+    """
+    Docstring for main.
+    """
     all_sprites = pygame.sprite.Group()
     platforms = pygame.sprite.Group()
 

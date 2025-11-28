@@ -18,6 +18,9 @@ class HashFunction(Protocol):
     """
 
     def __call__(self, value: str) -> int:
+        """
+        Docstring for __call__.
+        """
         ...
 
 

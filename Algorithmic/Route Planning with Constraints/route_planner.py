@@ -14,6 +14,9 @@ class Graph:
 
     def __init__(self):
         # Adjacency list: node -> list of (neighbor, weight)
+        """
+        Docstring for __init__.
+        """
         self.adj: Dict[str, List[Tuple[str, float]]] = {}
 
     def add_edge(self, u: str, v: str, weight: float, directed: bool = False):

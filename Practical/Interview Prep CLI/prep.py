@@ -1,3 +1,7 @@
+"""
+Project implementation.
+"""
+
 import argparse
 import json
 import os
@@ -6,16 +10,25 @@ from datetime import datetime, timedelta
 DATA_FILE = os.path.join(os.path.dirname(__file__), 'questions.json')
 
 def load_questions():
+    """
+    Docstring for load_questions.
+    """
     if not os.path.exists(DATA_FILE):
         return []
     with open(DATA_FILE, 'r') as f:
         return json.load(f)
 
 def save_questions(questions):
+    """
+    Docstring for save_questions.
+    """
     with open(DATA_FILE, 'w') as f:
         json.dump(questions, f, indent=4)
 
 def add_question(args):
+    """
+    Docstring for add_question.
+    """
     questions = load_questions()
     new_id = max([q['id'] for q in questions], default=0) + 1
     question = {
@@ -31,6 +44,9 @@ def add_question(args):
     print(f"Question added with ID {new_id}.")
 
 def list_questions(args):
+    """
+    Docstring for list_questions.
+    """
     questions = load_questions()
     if not questions:
         print("No questions found.")
@@ -39,6 +55,9 @@ def list_questions(args):
         print(f"[{q['id']}] {q['question']} (Next review: {q['next_review']})")
 
 def review_questions(args):
+    """
+    Docstring for review_questions.
+    """
     questions = load_questions()
     today = datetime.now().strftime("%Y-%m-%d")
     due_questions = [q for q in questions if q['next_review'] <= today]
@@ -83,6 +102,9 @@ def review_questions(args):
         save_questions(questions)
 
 def main():
+    """
+    Docstring for main.
+    """
     parser = argparse.ArgumentParser(description="Interview Prep CLI with Spaced Repetition")
     subparsers = parser.add_subparsers(dest='command', required=True)
 

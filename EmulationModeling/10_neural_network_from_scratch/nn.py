@@ -51,6 +51,9 @@ class ReLU:
     """Rectified Linear Unit activation function."""
 
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.input = None
 
     def forward(self, x):
@@ -67,6 +70,9 @@ class Sigmoid:
     """Sigmoid activation function."""
 
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.output = None
 
     def forward(self, x):
@@ -95,6 +101,9 @@ class NeuralNetwork:
     """Container for stacking layers into a sequential network."""
 
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.layers = []
 
     def add(self, layer):

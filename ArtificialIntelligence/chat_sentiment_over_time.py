@@ -38,11 +38,17 @@ class SentimentScorer:
     """Score chat messages with either VADER or a Hugging Face model."""
 
     def __init__(self, model: str = "vader") -> None:
+        """
+        Docstring for __init__.
+        """
         self.model = model
         self._vader_analyzer = None
         self._hf_pipeline = None
 
     def _load_vader(self):
+        """
+        Docstring for _load_vader.
+        """
         if self._vader_analyzer is not None:
             return self._vader_analyzer
 
@@ -57,6 +63,9 @@ class SentimentScorer:
         return self._vader_analyzer
 
     def _load_huggingface(self):
+        """
+        Docstring for _load_huggingface.
+        """
         if self._hf_pipeline is not None:
             return self._hf_pipeline
 
@@ -76,17 +85,26 @@ class SentimentScorer:
         return self._hf_pipeline
 
     def score_messages(self, messages: pd.DataFrame) -> List[SentimentResult]:
+        """
+        Docstring for score_messages.
+        """
         scorer = self.model.lower()
         if scorer == "vader":
             analyzer = self._load_vader()
 
             def score_fn(text: str) -> float:
+                """
+                Docstring for score_fn.
+                """
                 return analyzer.polarity_scores(text)["compound"]
 
         else:
             pipeline = self._load_huggingface()
 
             def score_fn(text: str) -> float:
+                """
+                Docstring for score_fn.
+                """
                 result = pipeline(text)[0]
                 label = result["label"].lower()
                 score = result["score"]
@@ -107,12 +125,18 @@ class SentimentScorer:
 
 
 def load_chat_log(path: Path) -> pd.DataFrame:
+    """
+    Docstring for load_chat_log.
+    """
     df = pd.read_csv(path)
     df["timestamp"] = pd.to_datetime(df["timestamp"], utc=True)
     return df
 
 
 def aggregate_sentiment(results: Iterable[SentimentResult]) -> List[AggregatedSentiment]:
+    """
+    Docstring for aggregate_sentiment.
+    """
     df = pd.DataFrame([r.__dict__ for r in results])
     df["date"] = df["timestamp"].dt.date
     grouped = (
@@ -134,6 +158,9 @@ def aggregate_sentiment(results: Iterable[SentimentResult]) -> List[AggregatedSe
 
 
 def plot_sentiment(aggregated: List[AggregatedSentiment], output_path: Path, show: bool) -> None:
+    """
+    Docstring for plot_sentiment.
+    """
     if not aggregated:
         raise ValueError("No sentiment scores to plot.")
 
@@ -163,6 +190,9 @@ def plot_sentiment(aggregated: List[AggregatedSentiment], output_path: Path, sho
 
 
 def parse_args() -> argparse.Namespace:
+    """
+    Docstring for parse_args.
+    """
     parser = argparse.ArgumentParser(description="Plot chat sentiment over time.")
     parser.add_argument(
         "--log-path",
@@ -193,6 +223,9 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    """
+    Docstring for main.
+    """
     args = parse_args()
     messages = load_chat_log(args.log_path)
     scorer = SentimentScorer(model=args.model)

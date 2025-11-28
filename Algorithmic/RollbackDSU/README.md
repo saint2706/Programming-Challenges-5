@@ -79,3 +79,11 @@ Where:
 - $k$ = number of operations to rollback
 
 **Note**: Without path compression, find is $O(\log n)$ instead of $O(\alpha(n))$.
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+go run .
+```

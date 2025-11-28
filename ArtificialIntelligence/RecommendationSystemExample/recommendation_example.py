@@ -98,6 +98,9 @@ def content_based_recommendations(
 
 
 def main() -> None:
+    """
+    Docstring for main.
+    """
     users = ["Alice", "Bob", "Charlie", "Diana"]
     movies = ["Action Blast", "Romantic Escape", "Space Odyssey", "Comedy Night", "Drama Unfolded"]
 

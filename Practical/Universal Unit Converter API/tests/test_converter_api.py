@@ -1,3 +1,7 @@
+"""
+Project implementation.
+"""
+
 import json
 from pathlib import Path
 
@@ -9,6 +13,9 @@ from Practical.UniversalUnitConverter.app import create_app
 
 @pytest.fixture()
 def config_file(tmp_path: Path) -> Path:
+    """
+    Docstring for config_file.
+    """
     data = {
         "categories": {
             "mass": {
@@ -29,11 +36,17 @@ def config_file(tmp_path: Path) -> Path:
 
 @pytest.fixture()
 def client(config_file: Path) -> TestClient:
+    """
+    Docstring for client.
+    """
     app = create_app(str(config_file))
     return TestClient(app)
 
 
 def test_list_units(client: TestClient):
+    """
+    Docstring for test_list_units.
+    """
     response = client.get("/units")
     assert response.status_code == 200
     payload = response.json()
@@ -42,6 +55,9 @@ def test_list_units(client: TestClient):
 
 
 def test_convert_endpoint(client: TestClient):
+    """
+    Docstring for test_convert_endpoint.
+    """
     response = client.post(
         "/convert",
         json={
@@ -57,6 +73,9 @@ def test_convert_endpoint(client: TestClient):
 
 
 def test_invalid_unit_returns_error(client: TestClient):
+    """
+    Docstring for test_invalid_unit_returns_error.
+    """
     response = client.post(
         "/convert",
         json={

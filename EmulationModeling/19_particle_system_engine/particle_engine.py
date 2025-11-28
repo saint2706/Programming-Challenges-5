@@ -40,6 +40,9 @@ class ParticleEngine:
     particles: List[Particle] = field(default_factory=list)
 
     def __post_init__(self) -> None:
+        """
+        Docstring for __post_init__.
+        """
         self.gravity = np.asarray(self.gravity, dtype=float)
         if self.gravity.shape != (2,):
             raise ValueError("Gravity must be a 2D vector")
@@ -127,6 +130,9 @@ class ParticleEngine:
 # -------- Sample animation -------- #
 
 def _initialize_particles(engine: ParticleEngine, count: int = 250) -> None:
+    """
+    Docstring for _initialize_particles.
+    """
     rng = np.random.default_rng()
     positions = rng.normal(loc=0.0, scale=0.2, size=(count, 2))
     velocities = rng.normal(loc=0.0, scale=1.5, size=(count, 2))
@@ -152,12 +158,18 @@ def run_sample_animation() -> None:
     scatter = ax.scatter([], [], s=25, c=[base_color])
 
     def init():
+        """
+        Docstring for init.
+        """
         scatter.set_offsets(np.empty((0, 2)))
         scatter.set_array(np.array([]))
         return (scatter,)
 
     def update(frame: int):
         # Use a fixed timestep for stability in the animation.
+        """
+        Docstring for update.
+        """
         engine.update(dt=0.05, use_vectorized=True)
         positions = engine.positions()
         lifetimes = engine.lifetimes()

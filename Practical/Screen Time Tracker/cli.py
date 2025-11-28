@@ -11,6 +11,9 @@ from .tracker import build_tracker
 
 
 def _parse_date(value: Optional[str]) -> Optional[date]:
+    """
+    Docstring for _parse_date.
+    """
     if not value:
         return None
     if value.lower() == "today":
@@ -19,6 +22,9 @@ def _parse_date(value: Optional[str]) -> Optional[date]:
 
 
 def start_tracking(args: argparse.Namespace) -> None:
+    """
+    Docstring for start_tracking.
+    """
     tracker = build_tracker(
         backend=args.backend, path=args.path, poll_interval_seconds=args.interval
     )
@@ -26,6 +32,9 @@ def start_tracking(args: argparse.Namespace) -> None:
 
 
 def show_summary(args: argparse.Namespace) -> None:
+    """
+    Docstring for show_summary.
+    """
     target_date = _parse_date(args.date)
     storage = (
         JSONStorage(args.path or "screen_time.json")
@@ -40,6 +49,9 @@ def show_summary(args: argparse.Namespace) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
+    """
+    Docstring for build_parser.
+    """
     parser = argparse.ArgumentParser(description="Track screen time across OSes.")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -64,6 +76,9 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main() -> None:
+    """
+    Docstring for main.
+    """
     parser = build_parser()
     args = parser.parse_args()
     args.func(args)

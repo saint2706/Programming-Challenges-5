@@ -58,3 +58,11 @@ The `main` program accepts JSON commands.
 | **Space** | $O(\frac{1}{\epsilon} \log (\epsilon N))$ |
 | **Insert Time** | $O(\log S)$ (where $S$ is summary size) |
 | **Query Time** | $O(S)$ |
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+go run .
+```

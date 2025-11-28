@@ -39,6 +39,9 @@ def load_dataframe(uploaded_file: Optional[st.runtime.uploaded_file_manager.Uplo
 
 
 def render_distribution_plots(df: pd.DataFrame, numeric_columns: list[str]) -> None:
+    """
+    Docstring for render_distribution_plots.
+    """
     if not numeric_columns:
         st.info("No numeric columns available for distribution plots.")
         return
@@ -61,6 +64,9 @@ def render_distribution_plots(df: pd.DataFrame, numeric_columns: list[str]) -> N
 
 
 def render_correlation_heatmap(df: pd.DataFrame, numeric_columns: list[str]) -> None:
+    """
+    Docstring for render_correlation_heatmap.
+    """
     if len(numeric_columns) < 2:
         st.info("Need at least two numeric columns to compute correlations.")
         return
@@ -74,6 +80,9 @@ def render_correlation_heatmap(df: pd.DataFrame, numeric_columns: list[str]) -> 
 
 
 def generate_pandas_profile(df: pd.DataFrame) -> Optional[bytes]:
+    """
+    Docstring for generate_pandas_profile.
+    """
     try:
         from ydata_profiling import ProfileReport
     except ImportError:
@@ -89,6 +98,9 @@ def generate_pandas_profile(df: pd.DataFrame) -> Optional[bytes]:
 
 
 def generate_sweetviz_report(df: pd.DataFrame) -> Optional[bytes]:
+    """
+    Docstring for generate_sweetviz_report.
+    """
     try:
         import sweetviz as sv
     except ImportError:
@@ -104,6 +116,9 @@ def generate_sweetviz_report(df: pd.DataFrame) -> Optional[bytes]:
 
 
 def main() -> None:
+    """
+    Docstring for main.
+    """
     st.title("Dataset Explorer UI")
     st.write(
         "Upload a CSV or provide a file path to explore datasets, review summary statistics, and generate insights."

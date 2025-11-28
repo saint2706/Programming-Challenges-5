@@ -1,7 +1,14 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import sys
 from fs import VirtualFileSystem
 
 def main():
+    """
+    Docstring for main.
+    """
     vfs = VirtualFileSystem()
     print("Virtual File System initialized. Type 'help' for commands.")
 

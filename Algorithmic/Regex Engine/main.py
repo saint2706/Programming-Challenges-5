@@ -1,6 +1,13 @@
+"""
+Implementation of the algorithm.
+"""
+
 from regex_engine import RegexEngine
 
 def main():
+    """
+    Docstring for main.
+    """
     patterns = [
         ("a*b", ["b", "ab", "aab", "aaab", "ac"]),
         ("a|b", ["a", "b", "c"]),

@@ -1,3 +1,7 @@
+"""
+Project implementation.
+"""
+
 from __future__ import annotations
 
 import os
@@ -63,10 +67,16 @@ def load_documents() -> Dict[str, MarkdownDocument]:
 
 
 def get_elasticsearch_client() -> Elasticsearch:
+    """
+    Docstring for get_elasticsearch_client.
+    """
     return Elasticsearch(ELASTICSEARCH_URL, request_timeout=10)
 
 
 def ensure_index(client: Elasticsearch) -> None:
+    """
+    Docstring for ensure_index.
+    """
     if client.indices.exists(index=INDEX_NAME):
         return
 
@@ -83,6 +93,9 @@ def ensure_index(client: Elasticsearch) -> None:
 
 
 def index_documents(client: Elasticsearch, documents: Dict[str, MarkdownDocument]) -> None:
+    """
+    Docstring for index_documents.
+    """
     for document in documents.values():
         client.index(
             index=INDEX_NAME,
@@ -97,6 +110,9 @@ def index_documents(client: Elasticsearch, documents: Dict[str, MarkdownDocument
 
 
 def build_graph(documents: Dict[str, MarkdownDocument]) -> Dict[str, List[Dict[str, str]]]:
+    """
+    Docstring for build_graph.
+    """
     nodes = [{"id": doc.identifier, "title": doc.title} for doc in documents.values()]
     node_ids = {doc.identifier for doc in documents.values()}
 
@@ -110,6 +126,9 @@ def build_graph(documents: Dict[str, MarkdownDocument]) -> Dict[str, List[Dict[s
 
 
 def create_app() -> Flask:
+    """
+    Docstring for create_app.
+    """
     documents = load_documents()
     graph_data = build_graph(documents)
 
@@ -129,6 +148,9 @@ def create_app() -> Flask:
 
     @app.route("/")
     def home():
+        """
+        Docstring for home.
+        """
         query = request.args.get("q")
         search_results = []
         search_error = None
@@ -170,10 +192,16 @@ def create_app() -> Flask:
 
     @app.route("/graph-data")
     def graph_data_endpoint():
+        """
+        Docstring for graph_data_endpoint.
+        """
         return jsonify(app.config["graph_data"])
 
     @app.route("/document/<path:doc_id>")
     def show_document(doc_id: str):
+        """
+        Docstring for show_document.
+        """
         documents: Dict[str, MarkdownDocument] = app.config["documents"]
         document = documents.get(doc_id)
         if not document:

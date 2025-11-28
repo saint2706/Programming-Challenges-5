@@ -1,6 +1,13 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 from simulation import run_simulation
 
 def main():
+    """
+    Docstring for main.
+    """
     print("Running headless simulation...")
     stats = run_simulation(duration=1000)
     print("Simulation Complete.")

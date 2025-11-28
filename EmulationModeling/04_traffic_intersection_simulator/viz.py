@@ -1,3 +1,7 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import simpy
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -7,7 +11,13 @@ from simulation import TrafficIntersection, car_generator
 # A generator that yields state every tick?
 
 class SimVisualizer:
+    """
+    Docstring for SimVisualizer.
+    """
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.env = simpy.Environment()
         self.intersection = TrafficIntersection(self.env)
         self.env.process(car_generator(self.env, self.intersection, "NS", 0.2))
@@ -32,6 +42,9 @@ class SimVisualizer:
 
     def update(self, frame):
         # Run simulation for 1 unit of time
+        """
+        Docstring for update.
+        """
         self.env.run(until=self.env.now + 1)
 
         self.time_data.append(self.env.now)
@@ -67,6 +80,9 @@ class SimVisualizer:
         return self.line_ns, self.line_ew, *self.bars
 
     def run(self):
+        """
+        Docstring for run.
+        """
         ani = animation.FuncAnimation(self.fig, self.update, interval=50, blit=False)
         plt.show()
 

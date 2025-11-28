@@ -22,6 +22,9 @@ class ConversionDataSource:
     """
 
     def __init__(self, path: Path | str):
+        """
+        Docstring for __init__.
+        """
         self.path = Path(path)
         self._data: Optional[Dict[str, Any]] = None
         self._last_mtime: Optional[float] = None
@@ -30,6 +33,9 @@ class ConversionDataSource:
 
     @property
     def version(self) -> int:
+        """
+        Docstring for version.
+        """
         return self._version
 
     def load(self, force: bool = False) -> Dict[str, Any]:
@@ -48,6 +54,9 @@ class ConversionDataSource:
 
     # ------------------------------------------------------------------
     def _needs_reload(self) -> bool:
+        """
+        Docstring for _needs_reload.
+        """
         if self._data is None:
             return True
         try:
@@ -57,6 +66,9 @@ class ConversionDataSource:
         return self._last_mtime is None or current_mtime > self._last_mtime
 
     def _read_file(self) -> Dict[str, Any]:
+        """
+        Docstring for _read_file.
+        """
         if not self.path.exists():
             raise ConfigurationError(f"Configuration file {self.path} does not exist")
         text = self.path.read_text()

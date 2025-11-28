@@ -33,15 +33,24 @@ IMAGE_EXTENSIONS = {
 
 @dataclass
 class HashRecord:
+    """
+    Docstring for HashRecord.
+    """
     path: Path
     hash_value: imagehash.ImageHash
 
     @property
     def hex(self) -> str:
+        """
+        Docstring for hex.
+        """
         return str(self.hash_value)
 
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
+    """
+    Docstring for parse_args.
+    """
     parser = argparse.ArgumentParser(description="Find duplicate and near-duplicate photos using perceptual hashing.")
     parser.add_argument("directory", type=Path, help="Root directory to scan for images")
     parser.add_argument(
@@ -89,6 +98,9 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
 
 
 def iter_image_files(root: Path, recursive: bool = True) -> Iterable[Path]:
+    """
+    Docstring for iter_image_files.
+    """
     if not root.exists():
         raise FileNotFoundError(f"Input directory does not exist: {root}")
 
@@ -103,6 +115,9 @@ def iter_image_files(root: Path, recursive: bool = True) -> Iterable[Path]:
 
 
 def compute_hash(path: Path, hash_type: str, hash_size: int) -> imagehash.ImageHash:
+    """
+    Docstring for compute_hash.
+    """
     with Image.open(path) as img:
         if hash_type == "ahash":
             return imagehash.average_hash(img, hash_size=hash_size)
@@ -112,6 +127,9 @@ def compute_hash(path: Path, hash_type: str, hash_size: int) -> imagehash.ImageH
 
 
 def collect_hashes(directory: Path, hash_type: str, hash_size: int, recursive: bool) -> Dict[str, List[Path]]:
+    """
+    Docstring for collect_hashes.
+    """
     hash_buckets: Dict[str, List[Path]] = defaultdict(list)
     for image_path in iter_image_files(directory, recursive=recursive):
         try:
@@ -124,22 +142,34 @@ def collect_hashes(directory: Path, hash_type: str, hash_size: int, recursive: b
 
 
 def find_exact_duplicates(hash_buckets: Dict[str, List[Path]]) -> List[List[Path]]:
+    """
+    Docstring for find_exact_duplicates.
+    """
     return [paths for paths in hash_buckets.values() if len(paths) > 1]
 
 
 def build_near_duplicate_groups(records: List[HashRecord], threshold: int) -> List[List[Path]]:
+    """
+    Docstring for build_near_duplicate_groups.
+    """
     if threshold <= 0 or len(records) < 2:
         return []
 
     parent: Dict[Path, Path] = {}
 
     def find(x: Path) -> Path:
+        """
+        Docstring for find.
+        """
         parent.setdefault(x, x)
         if parent[x] != x:
             parent[x] = find(parent[x])
         return parent[x]
 
     def union(x: Path, y: Path) -> None:
+        """
+        Docstring for union.
+        """
         root_x, root_y = find(x), find(y)
         if root_x != root_y:
             parent[root_y] = root_x
@@ -157,6 +187,9 @@ def build_near_duplicate_groups(records: List[HashRecord], threshold: int) -> Li
 
 
 def report_groups(groups: List[List[Path]], label: str) -> None:
+    """
+    Docstring for report_groups.
+    """
     if not groups:
         print(f"No {label} duplicates found.")
         return
@@ -169,6 +202,9 @@ def report_groups(groups: List[List[Path]], label: str) -> None:
 
 
 def move_groups(groups: List[List[Path]], review_dir: Path, label: str) -> None:
+    """
+    Docstring for move_groups.
+    """
     review_dir.mkdir(parents=True, exist_ok=True)
     for idx, group in enumerate(groups, start=1):
         target_group_dir = review_dir / f"{label}_group_{idx}"
@@ -184,6 +220,9 @@ def move_groups(groups: List[List[Path]], review_dir: Path, label: str) -> None:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
+    """
+    Docstring for main.
+    """
     args = parse_args(argv)
 
     hash_types: List[str]

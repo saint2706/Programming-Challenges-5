@@ -53,7 +53,13 @@ font = pygame.font.Font(None, 55)
 score_font = pygame.font.Font(None, 40)
 
 class Game2048:
+    """
+    Docstring for Game2048.
+    """
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.grid = [[0] * GRID_SIZE for _ in range(GRID_SIZE)]
         self.score = 0
         self.add_new_tile()
@@ -61,12 +67,18 @@ class Game2048:
         self.game_over = False
 
     def add_new_tile(self):
+        """
+        Docstring for add_new_tile.
+        """
         empty_cells = [(r, c) for r in range(GRID_SIZE) for c in range(GRID_SIZE) if self.grid[r][c] == 0]
         if empty_cells:
             r, c = random.choice(empty_cells)
             self.grid[r][c] = 2 if random.random() < 0.9 else 4
 
     def compress(self, grid):
+        """
+        Docstring for compress.
+        """
         new_grid = [[0] * GRID_SIZE for _ in range(GRID_SIZE)]
         for r in range(GRID_SIZE):
             pos = 0
@@ -77,6 +89,9 @@ class Game2048:
         return new_grid
 
     def merge(self, grid):
+        """
+        Docstring for merge.
+        """
         for r in range(GRID_SIZE):
             for c in range(GRID_SIZE - 1):
                 if grid[r][c] != 0 and grid[r][c] == grid[r][c+1]:
@@ -86,12 +101,18 @@ class Game2048:
         return grid
 
     def reverse(self, grid):
+        """
+        Docstring for reverse.
+        """
         new_grid = []
         for r in range(GRID_SIZE):
             new_grid.append(grid[r][::-1])
         return new_grid
 
     def transpose(self, grid):
+        """
+        Docstring for transpose.
+        """
         new_grid = [[0] * GRID_SIZE for _ in range(GRID_SIZE)]
         for r in range(GRID_SIZE):
             for c in range(GRID_SIZE):
@@ -99,12 +120,18 @@ class Game2048:
         return new_grid
 
     def move_left(self):
+        """
+        Docstring for move_left.
+        """
         new_grid = self.compress(self.grid)
         new_grid = self.merge(new_grid)
         new_grid = self.compress(new_grid)
         return new_grid
 
     def move_right(self):
+        """
+        Docstring for move_right.
+        """
         new_grid = self.reverse(self.grid)
         new_grid = self.compress(new_grid)
         new_grid = self.merge(new_grid)
@@ -113,6 +140,9 @@ class Game2048:
         return new_grid
 
     def move_up(self):
+        """
+        Docstring for move_up.
+        """
         new_grid = self.transpose(self.grid)
         new_grid = self.compress(new_grid)
         new_grid = self.merge(new_grid)
@@ -121,6 +151,9 @@ class Game2048:
         return new_grid
 
     def move_down(self):
+        """
+        Docstring for move_down.
+        """
         new_grid = self.transpose(self.grid)
         new_grid = self.reverse(new_grid)
         new_grid = self.compress(new_grid)
@@ -131,6 +164,9 @@ class Game2048:
         return new_grid
 
     def move(self, direction):
+        """
+        Docstring for move.
+        """
         if self.game_over: return
 
         if direction == 'UP':
@@ -150,6 +186,9 @@ class Game2048:
 
     def check_game_over(self):
         # Check for empty cells
+        """
+        Docstring for check_game_over.
+        """
         for r in range(GRID_SIZE):
             for c in range(GRID_SIZE):
                 if self.grid[r][c] == 0:
@@ -167,6 +206,9 @@ class Game2048:
         return True
 
     def draw(self, surface):
+        """
+        Docstring for draw.
+        """
         surface.fill(BACKGROUND_COLOR)
         
         # Draw Score
@@ -202,6 +244,9 @@ class Game2048:
             surface.blit(sub, sub_rect)
 
     def reset(self):
+        """
+        Docstring for reset.
+        """
         self.grid = [[0] * GRID_SIZE for _ in range(GRID_SIZE)]
         self.score = 0
         self.add_new_tile()
@@ -209,6 +254,9 @@ class Game2048:
         self.game_over = False
 
 def main():
+    """
+    Docstring for main.
+    """
     game = Game2048()
     
     running = True

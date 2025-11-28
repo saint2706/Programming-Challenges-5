@@ -65,3 +65,11 @@ The `main` program accepts JSON commands.
 | **Convex Hull** | $O(N \log N)$ |
 | **Point in Polygon** | $O(V)$ |
 | **Area** | $O(V)$ |
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+go run .
+```

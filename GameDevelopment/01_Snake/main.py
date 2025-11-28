@@ -39,6 +39,9 @@ clock = pygame.time.Clock()
 
 # Load Assets
 def load_asset(name, scale=True):
+    """
+    Docstring for load_asset.
+    """
     path = os.path.join("assets", name)
     if os.path.exists(path):
         img = pygame.image.load(path).convert_alpha()
@@ -52,7 +55,13 @@ BODY_IMG = load_asset("snake_body.png")
 APPLE_IMG = load_asset("apple.png")
 
 class Snake:
+    """
+    Docstring for Snake.
+    """
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.length = 1
         self.positions = [((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))]
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
@@ -60,15 +69,24 @@ class Snake:
         self.score = 0
 
     def get_head_position(self):
+        """
+        Docstring for get_head_position.
+        """
         return self.positions[0]
 
     def turn(self, point):
+        """
+        Docstring for turn.
+        """
         if self.length > 1 and (point[0] * -1, point[1] * -1) == self.direction:
             return
         else:
             self.direction = point
 
     def move(self):
+        """
+        Docstring for move.
+        """
         cur = self.get_head_position()
         x, y = self.direction
         new = (((cur[0] + (x * GRID_SIZE)) % SCREEN_WIDTH), (cur[1] + (y * GRID_SIZE)) % SCREEN_HEIGHT)
@@ -91,12 +109,18 @@ class Snake:
         return True
 
     def reset(self):
+        """
+        Docstring for reset.
+        """
         self.length = 1
         self.positions = [((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))]
         self.direction = random.choice([UP, DOWN, LEFT, RIGHT])
         self.score = 0
 
     def draw(self, surface):
+        """
+        Docstring for draw.
+        """
         for index, p in enumerate(self.positions):
             r = pygame.Rect((p[0], p[1]), (GRID_SIZE, GRID_SIZE))
             if index == 0 and HEAD_IMG:
@@ -116,15 +140,27 @@ class Snake:
                 pygame.draw.rect(surface, BLACK, r, 1)
 
 class Food:
+    """
+    Docstring for Food.
+    """
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.position = (0, 0)
         self.color = RED
         self.randomize_position()
 
     def randomize_position(self):
+        """
+        Docstring for randomize_position.
+        """
         self.position = (random.randint(0, GRID_WIDTH - 1) * GRID_SIZE, random.randint(0, GRID_HEIGHT - 1) * GRID_SIZE)
 
     def draw(self, surface):
+        """
+        Docstring for draw.
+        """
         r = pygame.Rect((self.position[0], self.position[1]), (GRID_SIZE, GRID_SIZE))
         if APPLE_IMG:
             surface.blit(APPLE_IMG, r)
@@ -139,12 +175,18 @@ LEFT = (-1, 0)
 RIGHT = (1, 0)
 
 def draw_grid(surface):
+    """
+    Docstring for draw_grid.
+    """
     for y in range(0, int(SCREEN_HEIGHT), int(GRID_SIZE)):
         for x in range(0, int(SCREEN_WIDTH), int(GRID_SIZE)):
             r = pygame.Rect(x, y, GRID_SIZE, GRID_SIZE)
             pygame.draw.rect(surface, GRAY, r, 1)
 
 def main():
+    """
+    Docstring for main.
+    """
     snake = Snake()
     food = Food()
     

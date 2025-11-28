@@ -105,3 +105,11 @@ To generate the explanation GIF using Manim:
 ```bash
 manim -pql visualize_bloom_filter.py BloomFilterDemo
 ```
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+python main.py
+```

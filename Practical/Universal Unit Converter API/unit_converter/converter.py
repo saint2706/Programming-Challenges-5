@@ -13,19 +13,31 @@ class UnitConversionError(RuntimeError):
 
 
 class CategoryNotFound(UnitConversionError):
+    """
+    Docstring for CategoryNotFound.
+    """
     pass
 
 
 class UnitNotFound(UnitConversionError):
+    """
+    Docstring for UnitNotFound.
+    """
     pass
 
 
 class InvalidConfiguration(UnitConversionError):
+    """
+    Docstring for InvalidConfiguration.
+    """
     pass
 
 
 @dataclass(frozen=True)
 class ConversionResult:
+    """
+    Docstring for ConversionResult.
+    """
     category: str
     from_unit: str
     to_unit: str
@@ -34,6 +46,9 @@ class ConversionResult:
 
     @property
     def converted_value(self) -> float:
+        """
+        Docstring for converted_value.
+        """
         return self.value * self.factor
 
 
@@ -41,6 +56,9 @@ class UnitConverter:
     """Performs conversions using the metadata provided by a data source."""
 
     def __init__(self, data_source: ConversionDataSource):
+        """
+        Docstring for __init__.
+        """
         self.data_source = data_source
         self._categories: Dict[str, Dict[str, float]] = {}
         self._graphs: Dict[str, Dict[str, Dict[str, float]]] = {}
@@ -52,6 +70,9 @@ class UnitConverter:
 
     # ------------------------------------------------------------------
     def _ensure_latest(self) -> None:
+        """
+        Docstring for _ensure_latest.
+        """
         data = self.data_source.load()
         if self._data_version == self.data_source.version:
             return
@@ -60,6 +81,9 @@ class UnitConverter:
         self._data_version = self.data_source.version
 
     def _build_categories(self, data: Dict[str, Dict]) -> None:
+        """
+        Docstring for _build_categories.
+        """
         categories = data.get("categories")
         if not isinstance(categories, dict):
             raise InvalidConfiguration("Configuration must include a 'categories' mapping")
@@ -106,6 +130,9 @@ class UnitConverter:
             )
 
     def _build_graph(self, units: Dict[str, float], base_unit: str, relationships: List[Dict]) -> Dict[str, Dict[str, float]]:
+        """
+        Docstring for _build_graph.
+        """
         graph: Dict[str, Dict[str, float]] = {unit: {} for unit in units}
         base_factor = units[base_unit]
         if base_factor <= 0:
@@ -136,6 +163,9 @@ class UnitConverter:
 
     # ------------------------------------------------------------------
     def list_categories(self) -> Dict[str, Dict[str, object]]:
+        """
+        Docstring for list_categories.
+        """
         self._ensure_latest()
         response: Dict[str, Dict[str, object]] = {}
         for name, units in self._categories.items():
@@ -146,6 +176,9 @@ class UnitConverter:
         return response
 
     def convert(self, category: str, from_unit: str, to_unit: str, value: float) -> ConversionResult:
+        """
+        Docstring for convert.
+        """
         self._ensure_latest()
         canonical_category = self._categories.get(category)
         if canonical_category is None:
@@ -160,6 +193,9 @@ class UnitConverter:
         return ConversionResult(category, source, target, factor, float(value))
 
     def _resolve_unit(self, category: str, unit: str) -> str:
+        """
+        Docstring for _resolve_unit.
+        """
         if unit in self._categories[category]:
             return unit
         alias_map = self._aliases.get(category, {})
@@ -169,6 +205,9 @@ class UnitConverter:
         return resolved
 
     def _find_factor(self, category: str, source: str, target: str) -> float:
+        """
+        Docstring for _find_factor.
+        """
         if source == target:
             return 1.0
         graph = self._graphs[category]

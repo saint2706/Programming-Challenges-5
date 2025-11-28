@@ -55,3 +55,11 @@ Where $N$ is the number of items and $W$ is the capacity.
 ## 🎬 Demos
 
 See the GIF above for the generated animation.
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+python main.py
+```

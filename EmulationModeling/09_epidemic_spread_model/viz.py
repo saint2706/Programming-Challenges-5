@@ -1,9 +1,19 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from model import SIRModel
 
 class SIRVisualizer:
+    """
+    Docstring for SIRVisualizer.
+    """
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.model = SIRModel(num_agents=200, width=100, height=100, infection_prob=0.3)
 
         self.fig, (self.ax1, self.ax2) = plt.subplots(2, 1, figsize=(6, 10))
@@ -25,6 +35,9 @@ class SIRVisualizer:
         self.ax2.set_title("SIR Counts")
 
     def update(self, frame):
+        """
+        Docstring for update.
+        """
         self.model.step()
 
         # Update Scatter
@@ -57,6 +70,9 @@ class SIRVisualizer:
         return self.scatter,
 
     def run(self):
+        """
+        Docstring for run.
+        """
         ani = animation.FuncAnimation(self.fig, self.update, frames=range(1000), interval=50, blit=False)
         plt.show()
 

@@ -1,7 +1,17 @@
+"""
+Implementation of the algorithm.
+"""
+
 from typing import List, Dict, Set, Optional, Tuple
 
 class State:
+    """
+    Docstring for State.
+    """
     def __init__(self, label=None, is_final=False):
+        """
+        Docstring for __init__.
+        """
         self.label = label
         self.is_final = is_final
         # transitions: input_char -> list of next states
@@ -9,12 +19,21 @@ class State:
         self.transitions: Dict[Optional[str], List['State']] = {}
 
     def add_transition(self, char: Optional[str], state: 'State'):
+        """
+        Docstring for add_transition.
+        """
         if char not in self.transitions:
             self.transitions[char] = []
         self.transitions[char].append(state)
 
 class NFA:
+    """
+    Docstring for NFA.
+    """
     def __init__(self, start: State, end: State):
+        """
+        Docstring for __init__.
+        """
         self.start = start
         self.end = end
 
@@ -25,6 +44,9 @@ class RegexEngine:
     """
 
     def __init__(self, pattern: str):
+        """
+        Docstring for __init__.
+        """
         self.pattern = pattern
         self.nfa = self._compile_to_nfa(pattern)
 
@@ -119,6 +141,9 @@ class RegexEngine:
 
     # Thompson's Constructions
     def _literal(self, char: str) -> NFA:
+        """
+        Docstring for _literal.
+        """
         start = State()
         end = State(is_final=True)
         start.add_transition(char, end)
@@ -126,11 +151,17 @@ class RegexEngine:
 
     def _concat(self, first: NFA, second: NFA) -> NFA:
         # first.end -> second.start (epsilon)
+        """
+        Docstring for _concat.
+        """
         first.end.is_final = False
         first.end.add_transition(None, second.start)
         return NFA(first.start, second.end)
 
     def _union(self, first: NFA, second: NFA) -> NFA:
+        """
+        Docstring for _union.
+        """
         start = State()
         end = State(is_final=True)
 
@@ -148,6 +179,9 @@ class RegexEngine:
         return NFA(start, end)
 
     def _star(self, nfa: NFA) -> NFA:
+        """
+        Docstring for _star.
+        """
         start = State()
         end = State(is_final=True)
 
@@ -186,6 +220,9 @@ class RegexEngine:
         return any(s.is_final for s in current_states)
 
     def _epsilon_closure(self, states: Set[State]) -> Set[State]:
+        """
+        Docstring for _epsilon_closure.
+        """
         stack = list(states)
         closure = set(states)
 

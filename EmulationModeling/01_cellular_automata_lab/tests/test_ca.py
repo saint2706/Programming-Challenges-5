@@ -1,9 +1,19 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import unittest
 import numpy as np
 from ca_engine import CAEngine
 
 class TestCAEngine(unittest.TestCase):
+    """
+    Docstring for TestCAEngine.
+    """
     def setUp(self):
+        """
+        Docstring for setUp.
+        """
         self.engine = CAEngine(10, 10, rule_b=(3,), rule_s=(2, 3))
 
     def test_blinker_oscillator(self):

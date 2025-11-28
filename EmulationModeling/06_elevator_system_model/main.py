@@ -1,8 +1,15 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import simpy
 import random
 from elevator_system import Controller
 
 def person_generator(env, controller, floors=10):
+    """
+    Docstring for person_generator.
+    """
     i = 0
     while True:
         yield env.timeout(random.expovariate(0.1)) # Arrival rate
@@ -29,6 +36,9 @@ def person_generator(env, controller, floors=10):
 
 def person_behavior(env, elevator, start, target):
     # Wait for elevator to arrive at start
+    """
+    Docstring for person_behavior.
+    """
     while elevator.current_floor != start:
         yield env.timeout(1)
 
@@ -37,6 +47,9 @@ def person_behavior(env, elevator, start, target):
     # print(f"[{env.now:.1f}] Person entered Elev {elevator.id} at {start}, pressed {target}")
 
 def main():
+    """
+    Docstring for main.
+    """
     env = simpy.Environment()
     controller = Controller(env, num_elevators=2, floors=10)
 

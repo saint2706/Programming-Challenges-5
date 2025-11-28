@@ -38,7 +38,13 @@ font_medium = pygame.font.Font(None, 60)
 font_small = pygame.font.Font(None, 36)
 
 class MathGame:
+    """
+    Docstring for MathGame.
+    """
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.score = 0
         self.difficulty = 1
         self.question = ""
@@ -49,6 +55,9 @@ class MathGame:
         self.generate_question()
 
     def generate_question(self):
+        """
+        Docstring for generate_question.
+        """
         ops = ['+', '-']
         if self.difficulty > 2:
             ops.append('*')
@@ -73,6 +82,9 @@ class MathGame:
         self.user_input = ""
 
     def check_answer(self):
+        """
+        Docstring for check_answer.
+        """
         try:
             val = int(self.user_input)
             if val == self.answer:
@@ -90,6 +102,9 @@ class MathGame:
             pass
 
     def draw(self, surface):
+        """
+        Docstring for draw.
+        """
         surface.fill(BLACK)
         
         # Question
@@ -116,6 +131,9 @@ class MathGame:
         surface.blit(help_text, (20, SCREEN_HEIGHT - 40))
 
 def main():
+    """
+    Docstring for main.
+    """
     game = MathGame()
     
     running = True

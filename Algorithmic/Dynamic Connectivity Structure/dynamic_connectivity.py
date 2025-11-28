@@ -1,12 +1,22 @@
+"""
+Implementation of the algorithm.
+"""
+
 from typing import Dict, Set, Optional
 
 class UnionFind:
     """Standard DSU for static connectivity, used as component in simpler dynamic structures."""
     def __init__(self):
+        """
+        Docstring for __init__.
+        """
         self.parent = {}
         self.rank = {}
 
     def find(self, i):
+        """
+        Docstring for find.
+        """
         if i not in self.parent:
             self.parent[i] = i
             self.rank[i] = 0
@@ -15,6 +25,9 @@ class UnionFind:
         return self.parent[i]
 
     def union(self, i, j):
+        """
+        Docstring for union.
+        """
         root_i = self.find(i)
         root_j = self.find(j)
         if root_i != root_j:
@@ -62,6 +75,9 @@ class DynamicConnectivity:
 
     def __init__(self):
         # Adjacency list for the *entire* graph
+        """
+        Docstring for __init__.
+        """
         self.adj: Dict[str, Set[str]] = {}
 
         # Adjacency list for the *spanning forest*
@@ -72,12 +88,18 @@ class DynamicConnectivity:
         # Let's use simple BFS/DFS on the tree_adj for connectivity checks.
 
     def _add_to_adj(self, graph, u, v):
+        """
+        Docstring for _add_to_adj.
+        """
         if u not in graph: graph[u] = set()
         if v not in graph: graph[v] = set()
         graph[u].add(v)
         graph[v].add(u)
 
     def _remove_from_adj(self, graph, u, v):
+        """
+        Docstring for _remove_from_adj.
+        """
         if u in graph and v in graph[u]:
             graph[u].remove(v)
         if v in graph and u in graph[v]:

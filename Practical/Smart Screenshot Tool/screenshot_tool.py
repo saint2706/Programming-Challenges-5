@@ -30,11 +30,17 @@ class IndexStore:
     """Minimal SQLite-based index for OCR text and file metadata."""
 
     def __init__(self, base_path: Path):
+        """
+        Docstring for __init__.
+        """
         self.base_path = base_path
         self.db_path = base_path / DB_NAME
         self._ensure_database()
 
     def _ensure_database(self) -> None:
+        """
+        Docstring for _ensure_database.
+        """
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         with sqlite3.connect(self.db_path) as conn:
             conn.execute(
@@ -50,6 +56,9 @@ class IndexStore:
             conn.commit()
 
     def index_image(self, image_path: Path, ocr_text: str) -> None:
+        """
+        Docstring for index_image.
+        """
         created_at = datetime.utcnow().isoformat()
         with sqlite3.connect(self.db_path) as conn:
             conn.execute(
@@ -59,6 +68,9 @@ class IndexStore:
             conn.commit()
 
     def search(self, query: str) -> List[Tuple[str, str]]:
+        """
+        Docstring for search.
+        """
         like_query = f"%{query}%"
         with sqlite3.connect(self.db_path) as conn:
             rows = conn.execute(
@@ -73,11 +85,20 @@ class IndexStore:
         return [(path, created_at) for path, created_at in rows]
 
     def all(self) -> List[Tuple[str, str]]:
+        """
+        Docstring for all.
+        """
         return self.search("")
 
 
 class SmartScreenshotApp(tk.Tk):
+    """
+    Docstring for SmartScreenshotApp.
+    """
     def __init__(self, base_path: Path):
+        """
+        Docstring for __init__.
+        """
         super().__init__()
         self.title(APP_NAME)
 
@@ -99,6 +120,9 @@ class SmartScreenshotApp(tk.Tk):
 
     # UI SETUP
     def _build_ui(self) -> None:
+        """
+        Docstring for _build_ui.
+        """
         toolbar = tk.Frame(self)
         toolbar.pack(side=tk.TOP, fill=tk.X)
 
@@ -154,18 +178,30 @@ class SmartScreenshotApp(tk.Tk):
 
     # Toolbar handlers
     def _set_tool(self) -> None:
+        """
+        Docstring for _set_tool.
+        """
         self.tool = self.tool_var.get()
 
     def _set_width(self) -> None:
+        """
+        Docstring for _set_width.
+        """
         self.draw_width = max(1, int(self.width_var.get()))
 
     def pick_color(self) -> None:
+        """
+        Docstring for pick_color.
+        """
         color = colorchooser.askcolor(title="Pick color", initialcolor=self.draw_color)
         if color[1]:
             self.draw_color = color[1]
 
     # Canvas logic
     def capture_screen(self) -> None:
+        """
+        Docstring for capture_screen.
+        """
         self.withdraw()
         time.sleep(0.3)
         with mss.mss() as sct:
@@ -176,6 +212,9 @@ class SmartScreenshotApp(tk.Tk):
         self._render_canvas()
 
     def clear_canvas(self) -> None:
+        """
+        Docstring for clear_canvas.
+        """
         self.canvas.delete("all")
         self.preview_shape = None
         self.current_photo = None
@@ -183,6 +222,9 @@ class SmartScreenshotApp(tk.Tk):
             self._render_canvas()
 
     def on_press(self, event: tk.Event) -> None:
+        """
+        Docstring for on_press.
+        """
         if not self.current_image:
             return
         self.start_x, self.start_y = event.x, event.y
@@ -190,6 +232,9 @@ class SmartScreenshotApp(tk.Tk):
             self._place_text(event.x, event.y)
 
     def on_drag(self, event: tk.Event) -> None:
+        """
+        Docstring for on_drag.
+        """
         if not self.current_image or self.tool == "text" or self.start_x is None or self.start_y is None:
             return
 
@@ -226,6 +271,9 @@ class SmartScreenshotApp(tk.Tk):
             )
 
     def on_release(self, event: tk.Event) -> None:
+        """
+        Docstring for on_release.
+        """
         if not self.current_image or self.tool == "text" or self.start_x is None or self.start_y is None:
             return
 
@@ -244,6 +292,9 @@ class SmartScreenshotApp(tk.Tk):
         self._render_canvas()
 
     def _place_text(self, x: int, y: int) -> None:
+        """
+        Docstring for _place_text.
+        """
         if not self.current_image:
             return
         text = simpledialog.askstring("Add text", "Enter text to place:")
@@ -254,6 +305,9 @@ class SmartScreenshotApp(tk.Tk):
         self._render_canvas()
 
     def _render_canvas(self, live_only: bool = False) -> None:
+        """
+        Docstring for _render_canvas.
+        """
         if not self.current_image:
             self.canvas.delete("all")
             return
@@ -264,6 +318,9 @@ class SmartScreenshotApp(tk.Tk):
 
     # Saving & OCR
     def save_image(self) -> None:
+        """
+        Docstring for save_image.
+        """
         if not self.current_image:
             messagebox.showinfo(APP_NAME, "Capture a screenshot first.")
             return
@@ -283,6 +340,9 @@ class SmartScreenshotApp(tk.Tk):
         self.refresh_gallery()
 
     def _ocr_and_index(self, image_path: Path) -> None:
+        """
+        Docstring for _ocr_and_index.
+        """
         try:
             text = pytesseract.image_to_string(image_path)
         except Exception as exc:  # pragma: no cover - depends on local tesseract
@@ -293,6 +353,9 @@ class SmartScreenshotApp(tk.Tk):
 
     # Gallery
     def refresh_gallery(self) -> None:
+        """
+        Docstring for refresh_gallery.
+        """
         query = self.search_var.get()
         rows = self.index.search(query)
         self.gallery_list.delete(0, tk.END)
@@ -302,6 +365,9 @@ class SmartScreenshotApp(tk.Tk):
         self.gallery_paths = [Path(path) for path, _ in rows]
 
     def preview_selected(self) -> None:
+        """
+        Docstring for preview_selected.
+        """
         if not self.gallery_list.curselection():
             return
         idx = self.gallery_list.curselection()[0]
@@ -317,6 +383,9 @@ class SmartScreenshotApp(tk.Tk):
 
 
 def main() -> None:
+    """
+    Docstring for main.
+    """
     base_path = Path(__file__).resolve().parent
     app = SmartScreenshotApp(base_path)
     app.mainloop()

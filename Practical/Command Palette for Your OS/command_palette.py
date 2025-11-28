@@ -39,10 +39,16 @@ class PluginLoader:
     """Load plugins from a folder, isolating failures per plugin."""
 
     def __init__(self, plugin_dir: Path):
+        """
+        Docstring for __init__.
+        """
         self.plugin_dir = plugin_dir
         self.plugin_dir.mkdir(parents=True, exist_ok=True)
 
     def load(self) -> List[PluginDefinition]:
+        """
+        Docstring for load.
+        """
         plugins: List[PluginDefinition] = []
         for file in sorted(self.plugin_dir.glob("*.py")):
             if file.name.startswith("__"):
@@ -56,6 +62,9 @@ class PluginLoader:
         return plugins
 
     def _load_plugin(self, file: Path) -> Optional[PluginDefinition]:
+        """
+        Docstring for _load_plugin.
+        """
         spec = importlib.util.spec_from_file_location(file.stem, file)
         if not spec or not spec.loader:  # pragma: no cover - defensive
             logging.error("Could not create spec for %s", file)
@@ -91,6 +100,9 @@ class HotkeyListener(QtCore.QThread):
     hotkey_pressed = QtCore.pyqtSignal()
 
     def __init__(self, hotkey: str):
+        """
+        Docstring for __init__.
+        """
         super().__init__()
         self.hotkey = hotkey
         self._running = threading.Event()
@@ -98,6 +110,9 @@ class HotkeyListener(QtCore.QThread):
         self._registered = False
 
     def run(self) -> None:  # pragma: no cover - requires OS hooks
+        """
+        Docstring for run.
+        """
         try:
             import keyboard
         except Exception as exc:  # noqa: BLE001
@@ -122,6 +137,9 @@ class HotkeyListener(QtCore.QThread):
                 logging.warning("Failed to clean up hotkey %s", self.hotkey)
 
     def stop(self) -> None:
+        """
+        Docstring for stop.
+        """
         self._running.clear()
 
 
@@ -136,6 +154,9 @@ class CommandPaletteDialog(QtWidgets.QDialog):
     """A searchable palette that lists plugins and runs them with a query."""
 
     def __init__(self, plugins: List[PluginDefinition]):
+        """
+        Docstring for __init__.
+        """
         super().__init__()
         self.setWindowTitle("Command Palette")
         self.setModal(True)
@@ -168,16 +189,25 @@ class CommandPaletteDialog(QtWidgets.QDialog):
         self._filter_plugins("")
 
     def update_plugins(self, plugins: List[PluginDefinition]) -> None:
+        """
+        Docstring for update_plugins.
+        """
         self.plugins = plugins
         self._filter_plugins(self.input.text())
         self.status_label.setText(f"Loaded {len(plugins)} plugins")
 
     def _filter_plugins(self, text: str) -> None:
+        """
+        Docstring for _filter_plugins.
+        """
         query = text.lower().strip()
         if not query:
             self.filtered_plugins = sorted(self.plugins, key=lambda p: p.name.lower())
         else:
             def matches(plugin: PluginDefinition) -> bool:
+                """
+                Docstring for matches.
+                """
                 haystack = " ".join([plugin.name, plugin.description, " ".join(plugin.keywords)])
                 return query in haystack.lower()
 
@@ -194,6 +224,9 @@ class CommandPaletteDialog(QtWidgets.QDialog):
             self.status_label.setText("No plugins match your query")
 
     def run_selected_plugin(self) -> None:
+        """
+        Docstring for run_selected_plugin.
+        """
         row = self.list_widget.currentRow()
         if row < 0 or row >= len(self.filtered_plugins):
             self.status_label.setText("Select a plugin to run")
@@ -210,6 +243,9 @@ class CommandPaletteDialog(QtWidgets.QDialog):
         ).start()
 
     def _execute_plugin(self, plugin: PluginDefinition, query: str) -> None:
+        """
+        Docstring for _execute_plugin.
+        """
         try:
             result = plugin.execute(query)
             message = str(result) if result is not None else "Plugin executed successfully."
@@ -220,15 +256,24 @@ class CommandPaletteDialog(QtWidgets.QDialog):
 
     @QtCore.pyqtSlot(str, str)
     def _on_success(self, plugin_name: str, message: str) -> None:
+        """
+        Docstring for _on_success.
+        """
         self.status_label.setText(f"{plugin_name} completed")
         QtWidgets.QMessageBox.information(self, plugin_name, message)
 
     @QtCore.pyqtSlot(str, str)
     def _on_failure(self, plugin_name: str, message: str) -> None:
+        """
+        Docstring for _on_failure.
+        """
         self.status_label.setText(f"{plugin_name} failed")
         QtWidgets.QMessageBox.critical(self, f"Error in {plugin_name}", message)
 
     def open_palette(self) -> None:
+        """
+        Docstring for open_palette.
+        """
         self._filter_plugins(self.input.text())
         self.show()
         self.raise_()
@@ -240,6 +285,9 @@ class CommandPaletteApplication(QtCore.QObject):
     """Glue together the loader, dialog, hotkey listener, and system tray."""
 
     def __init__(self, hotkey: str = "ctrl+shift+p"):
+        """
+        Docstring for __init__.
+        """
         super().__init__()
         plugin_dir = Path(__file__).parent / "plugins"
         self.loader = PluginLoader(plugin_dir)
@@ -251,6 +299,9 @@ class CommandPaletteApplication(QtCore.QObject):
         self.hotkey_listener.start()
 
     def _build_tray_icon(self) -> QtWidgets.QSystemTrayIcon:
+        """
+        Docstring for _build_tray_icon.
+        """
         icon = QtWidgets.QApplication.style().standardIcon(QtWidgets.QStyle.StandardPixmap.SP_ComputerIcon)
         tray = QtWidgets.QSystemTrayIcon(icon)
         menu = QtWidgets.QMenu()
@@ -272,11 +323,17 @@ class CommandPaletteApplication(QtCore.QObject):
 
     @QtCore.pyqtSlot()
     def reload_plugins(self) -> None:
+        """
+        Docstring for reload_plugins.
+        """
         plugins = self.loader.load()
         self.dialog.update_plugins(plugins)
 
     @QtCore.pyqtSlot()
     def shutdown(self) -> None:
+        """
+        Docstring for shutdown.
+        """
         if self.hotkey_listener.isRunning():
             self.hotkey_listener.stop()
             self.hotkey_listener.wait(1000)
@@ -284,6 +341,9 @@ class CommandPaletteApplication(QtCore.QObject):
 
 
 def main() -> None:  # pragma: no cover - interactive GUI
+    """
+    Docstring for main.
+    """
     logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(message)s")
     app = QtWidgets.QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)

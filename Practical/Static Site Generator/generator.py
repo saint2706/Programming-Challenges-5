@@ -7,7 +7,13 @@ import markdown
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 class SiteGenerator:
+    """
+    Docstring for SiteGenerator.
+    """
     def __init__(self, input_dir: Path, output_dir: Path, base_url: str = "/"):
+        """
+        Docstring for __init__.
+        """
         self.input_dir = input_dir
         self.output_dir = output_dir
         self.base_url = base_url
@@ -25,6 +31,9 @@ class SiteGenerator:
 
     def build(self):
         # Clean output
+        """
+        Docstring for build.
+        """
         if self.output_dir.exists():
             shutil.rmtree(self.output_dir)
         self.output_dir.mkdir(parents=True)
@@ -44,6 +53,9 @@ class SiteGenerator:
                     self._process_file(Path(root) / file)
 
     def _process_file(self, file_path: Path):
+        """
+        Docstring for _process_file.
+        """
         rel_path = file_path.relative_to(self.content_dir)
         output_path = self.output_dir / rel_path.with_suffix(".html")
         output_path.parent.mkdir(parents=True, exist_ok=True)

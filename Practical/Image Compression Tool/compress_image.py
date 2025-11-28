@@ -84,6 +84,9 @@ def compress_directory(
     output_dir.mkdir(parents=True, exist_ok=True)
 
     def _iter_batches(iterable: Iterable[Path], size: int) -> Iterable[list[Path]]:
+        """
+        Docstring for _iter_batches.
+        """
         iterator = iter(iterable)
         while True:
             batch = list(islice(iterator, size))
@@ -117,6 +120,9 @@ def compress_directory(
 
 
 def parse_args() -> argparse.Namespace:
+    """
+    Docstring for parse_args.
+    """
     parser = argparse.ArgumentParser(
         description="Compress images with Pillow using JPEG quality and optimization options.",
     )
@@ -161,6 +167,9 @@ def parse_args() -> argparse.Namespace:
 
 
 def main() -> None:
+    """
+    Docstring for main.
+    """
     args = parse_args()
 
     if not args.input_path.exists():

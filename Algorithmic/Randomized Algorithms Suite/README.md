@@ -81,3 +81,11 @@ To generate the Skip List search visualization:
 ```bash
 manim -pql visualize_randomized.py SkipListDemo
 ```
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+python main.py
+```

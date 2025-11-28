@@ -1,3 +1,7 @@
+"""
+Project implementation.
+"""
+
 from pathlib import Path
 import sys
 
@@ -14,6 +18,9 @@ from Practical.SelfHostedLinkShortener.app import app
 
 @pytest.fixture()
 def client(tmp_path, monkeypatch):
+    """
+    Docstring for client.
+    """
     db_path = tmp_path / "test.db"
     monkeypatch.setenv("SHORTENER_DB_PATH", str(db_path))
     # ensure a clean database for each test run
@@ -23,6 +30,9 @@ def client(tmp_path, monkeypatch):
 
 
 def test_create_and_follow_link(client):
+    """
+    Docstring for test_create_and_follow_link.
+    """
     payload = {"url": "https://example.com"}
     resp = client.post("/links", json=payload)
     assert resp.status_code == 201
@@ -40,11 +50,17 @@ def test_create_and_follow_link(client):
 
 
 def test_custom_slug_validation(client):
+    """
+    Docstring for test_custom_slug_validation.
+    """
     resp = client.post("/links", json={"url": "https://example.com", "custom_slug": "??"})
     assert resp.status_code == 422
 
 
 def test_duplicate_slug(client):
+    """
+    Docstring for test_duplicate_slug.
+    """
     payload = {"url": "https://example.com/a", "custom_slug": "docs"}
     resp = client.post("/links", json=payload)
     assert resp.status_code == 201

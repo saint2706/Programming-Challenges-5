@@ -18,6 +18,9 @@ except ImportError:
 
 
 def humanize(duration: timedelta) -> str:
+    """
+    Docstring for humanize.
+    """
     total_seconds = int(duration.total_seconds())
     hours, remainder = divmod(total_seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
@@ -25,6 +28,9 @@ def humanize(duration: timedelta) -> str:
 
 
 def render_sessions(rows: Iterable[dict]) -> str:
+    """
+    Docstring for render_sessions.
+    """
     lines = ["ID        | Category | Start (UTC)          | End (UTC)            | Duration | Notes"]
     lines.append("-" * 90)
     for row in rows:
@@ -37,12 +43,18 @@ def render_sessions(rows: Iterable[dict]) -> str:
 
 
 def cmd_start(args: argparse.Namespace) -> str:
+    """
+    Docstring for cmd_start.
+    """
     tracker = TimeTracker()
     session = tracker.start_session(args.category, notes=args.notes or "")
     return f"Started session {session['id']}"
 
 
 def cmd_stop(args: argparse.Namespace) -> str:
+    """
+    Docstring for cmd_stop.
+    """
     tracker = TimeTracker()
     session = tracker.stop_session(notes=args.notes)
     duration = tracker.summarize_sessions([session])[0]["duration"]
@@ -50,6 +62,9 @@ def cmd_stop(args: argparse.Namespace) -> str:
 
 
 def cmd_list(_: argparse.Namespace) -> str:
+    """
+    Docstring for cmd_list.
+    """
     tracker = TimeTracker()
     sessions = tracker.summarize_sessions(tracker.list_sessions())
     if not sessions:
@@ -58,6 +73,9 @@ def cmd_list(_: argparse.Namespace) -> str:
 
 
 def cmd_report(args: argparse.Namespace) -> str:
+    """
+    Docstring for cmd_report.
+    """
     tracker = TimeTracker()
     report = tracker.report(period=args.period)
     if not report:
@@ -69,6 +87,9 @@ def cmd_report(args: argparse.Namespace) -> str:
 
 
 def build_parser() -> argparse.ArgumentParser:
+    """
+    Docstring for build_parser.
+    """
     parser = argparse.ArgumentParser(description="Personal time tracker")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -97,6 +118,9 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    """
+    Docstring for main.
+    """
     parser = build_parser()
     args = parser.parse_args(argv)
     try:

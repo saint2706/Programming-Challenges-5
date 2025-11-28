@@ -1,3 +1,7 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import argparse
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
@@ -9,6 +13,9 @@ DEFAULT_STEPS = 300
 
 
 def run_animation(agent_count: int, steps: int) -> None:
+    """
+    Docstring for run_animation.
+    """
     sim = CrowdSimulation(num_agents=agent_count, random_seed=42)
 
     fig, ax = plt.subplots()
@@ -23,11 +30,17 @@ def run_animation(agent_count: int, steps: int) -> None:
     ax.legend(loc="upper right")
 
     def init():
+        """
+        Docstring for init.
+        """
         agents_plot.set_offsets([])
         destinations_plot.set_offsets([])
         return agents_plot, destinations_plot
 
     def update(_frame):
+        """
+        Docstring for update.
+        """
         sim.step()
         agents_plot.set_offsets(sim.positions())
         destinations_plot.set_offsets(sim.destinations())
@@ -38,6 +51,9 @@ def run_animation(agent_count: int, steps: int) -> None:
 
 
 def main():
+    """
+    Docstring for main.
+    """
     parser = argparse.ArgumentParser(description="Visualize the pedestrian crowd simulation")
     parser.add_argument("--agents", type=int, default=25, help="Number of pedestrians to simulate")
     parser.add_argument("--steps", type=int, default=DEFAULT_STEPS, help="Number of animation frames")

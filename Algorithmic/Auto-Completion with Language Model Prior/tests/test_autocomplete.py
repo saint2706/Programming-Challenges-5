@@ -1,8 +1,18 @@
+"""
+Implementation of the algorithm.
+"""
+
 import unittest
 from autocomplete import AutocompleteEngine
 
 class TestAutocomplete(unittest.TestCase):
+    """
+    Docstring for TestAutocomplete.
+    """
     def setUp(self):
+        """
+        Docstring for setUp.
+        """
         self.engine = AutocompleteEngine(n=2)
         corpus = [
             "hello world",
@@ -14,6 +24,9 @@ class TestAutocomplete(unittest.TestCase):
     def test_basic_completion(self):
         # "he" should complete to "hello" (part of corpus)
         # Note: "hello" is in the trie.
+        """
+        Docstring for test_basic_completion.
+        """
         results = self.engine.complete("he")
         self.assertIn("hello", results)
 
@@ -22,11 +35,17 @@ class TestAutocomplete(unittest.TestCase):
         # "the" is followed by "quick".
 
         # Test "the q" -> "quick"
+        """
+        Docstring for test_context_ranking.
+        """
         results = self.engine.complete("the q")
         self.assertEqual(results[0], "quick")
 
     def test_frequency_ranking(self):
         # Add "hello world" multiple times to boost "world" frequency
+        """
+        Docstring for test_frequency_ranking.
+        """
         extra_corpus = ["hello world"] * 5
         self.engine.train(extra_corpus)
 
@@ -35,9 +54,15 @@ class TestAutocomplete(unittest.TestCase):
         self.assertEqual(results[0], "world")
 
     def test_empty_input(self):
+        """
+        Docstring for test_empty_input.
+        """
         self.assertEqual(self.engine.complete(""), [])
 
     def test_unknown_prefix(self):
+        """
+        Docstring for test_unknown_prefix.
+        """
         self.assertEqual(self.engine.complete("xyz"), [])
 
 if __name__ == '__main__':

@@ -84,3 +84,11 @@ To generate the matrix multiplication visualization:
 ```bash
 manim -pql visualize_matrix_ops.py MatrixOpsDemo
 ```
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+python main.py
+```

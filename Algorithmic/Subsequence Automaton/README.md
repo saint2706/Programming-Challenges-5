@@ -22,3 +22,11 @@ python main.py
 *   **Space:** $O(|T| \times |\Sigma|)$.
 
 This is ideal when $|T|$ is large and we have many queries $S$.
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+python main.py
+```

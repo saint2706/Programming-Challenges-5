@@ -61,3 +61,11 @@ The `main` program accepts JSON commands.
 | **Insert** | $O(\log_m N)$ | $O(N)$ |
 
 Where $N$ is the number of keys and $m$ is the order (branching factor).
+
+## Demos
+
+To demonstrate the algorithm, run:
+
+```bash
+go run .
+```

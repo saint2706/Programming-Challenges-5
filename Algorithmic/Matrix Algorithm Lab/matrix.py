@@ -214,6 +214,9 @@ class Matrix:
         padded_b[:rows_b, :cols_b] = b
 
         def strassen(x: np.ndarray, y: np.ndarray) -> np.ndarray:
+            """
+            Docstring for strassen.
+            """
             n = x.shape[0]
             if n <= threshold:
                 return x @ y

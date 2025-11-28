@@ -1,3 +1,7 @@
+"""
+Project implementation.
+"""
+
 import json
 import os
 import socket
@@ -30,11 +34,17 @@ app.add_middleware(
 
 
 class RegisterRequest(BaseModel):
+    """
+    Docstring for RegisterRequest.
+    """
     client_id: str
     display_name: Optional[str] = None
 
 
 class RegisteredClient(BaseModel):
+    """
+    Docstring for RegisteredClient.
+    """
     client_id: str
     display_name: Optional[str] = None
     connected: bool = False
@@ -47,6 +57,9 @@ connections: Dict[str, WebSocket] = {}
 
 @app.post("/register", response_model=RegisteredClient)
 async def register_client(payload: RegisterRequest) -> RegisteredClient:
+    """
+    Docstring for register_client.
+    """
     client = RegisteredClient(
         client_id=payload.client_id, display_name=payload.display_name, connected=False
     )
@@ -56,11 +69,17 @@ async def register_client(payload: RegisterRequest) -> RegisteredClient:
 
 @app.get("/clients")
 async def list_clients() -> Dict[str, RegisteredClient]:
+    """
+    Docstring for list_clients.
+    """
     return clients
 
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
+    """
+    Docstring for websocket_endpoint.
+    """
     client_id = websocket.query_params.get("client_id") or f"anon-{int(time.time())}"
     await websocket.accept()
     connections[client_id] = websocket
@@ -100,6 +119,9 @@ async def websocket_endpoint(websocket: WebSocket):
 
 
 async def _disconnect_client(client_id: str) -> None:
+    """
+    Docstring for _disconnect_client.
+    """
     ws = connections.pop(client_id, None)
     if ws:
         try:
@@ -111,6 +133,9 @@ async def _disconnect_client(client_id: str) -> None:
 
 
 def _local_ip() -> str:
+    """
+    Docstring for _local_ip.
+    """
     sock: Optional[socket.socket] = None
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -125,6 +150,9 @@ def _local_ip() -> str:
 
 
 def _discovery_server(host: str, port: int, service_port: int) -> None:
+    """
+    Docstring for _discovery_server.
+    """
     discovery_running.set()
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -140,6 +168,9 @@ def _discovery_server(host: str, port: int, service_port: int) -> None:
 
 
 def start_discovery_server(host: str = "0.0.0.0") -> None:
+    """
+    Docstring for start_discovery_server.
+    """
     if discovery_running.is_set():
         return
     thread = threading.Thread(

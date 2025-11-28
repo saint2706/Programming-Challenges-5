@@ -26,6 +26,9 @@ class ForecastResult:
     predictions: pd.Series
 
     def pretty_print(self) -> None:
+        """
+        Docstring for pretty_print.
+        """
         header = f"{self.model} forecast"
         print(f"\n{header}\n{'-' * len(header)}")
         for timestamp, value in self.predictions.items():
@@ -201,6 +204,9 @@ def forecast_arima(series: pd.Series, steps: int = 12, order: tuple[int, int, in
 
 
 def _import_first_available(module_names: Iterable[str]):
+    """
+    Docstring for _import_first_available.
+    """
     for name in module_names:
         if find_spec(name):
             return import_module(name)
@@ -226,6 +232,9 @@ class LSTMForecaster:
     """A minimal LSTM forecaster implemented with PyTorch."""
 
     def __init__(self, lookback: int = 12, hidden_size: int = 32, lr: float = 1e-2, epochs: int = 250):
+        """
+        Docstring for __init__.
+        """
         self.lookback = lookback
         self.hidden_size = hidden_size
         self.lr = lr
@@ -235,16 +244,28 @@ class LSTMForecaster:
         self.std: float = 1.0
 
     def _build_model(self):
+        """
+        Docstring for _build_model.
+        """
         import torch
         from torch import nn
 
         class _Net(nn.Module):
+            """
+            Docstring for _Net.
+            """
             def __init__(self, lookback: int, hidden: int):
+                """
+                Docstring for __init__.
+                """
                 super().__init__()
                 self.lstm = nn.LSTM(input_size=1, hidden_size=hidden, batch_first=True)
                 self.fc = nn.Linear(hidden, 1)
 
             def forward(self, x):
+                """
+                Docstring for forward.
+                """
                 out, _ = self.lstm(x)
                 out = out[:, -1, :]
                 return self.fc(out)
@@ -252,6 +273,9 @@ class LSTMForecaster:
         return _Net(self.lookback, self.hidden_size)
 
     def fit(self, series: pd.Series) -> None:
+        """
+        Docstring for fit.
+        """
         import torch
         from torch import nn, optim
         from torch.utils.data import DataLoader, TensorDataset
@@ -283,6 +307,9 @@ class LSTMForecaster:
                 optimizer.step()
 
     def predict(self, last_values: np.ndarray, steps: int) -> np.ndarray:
+        """
+        Docstring for predict.
+        """
         import torch
 
         if self.model is None:
@@ -311,6 +338,9 @@ def forecast_lstm(series: pd.Series, steps: int = 12, lookback: int = 12) -> For
 
 
 def run_demo(forecast_horizon: int = 12) -> None:
+    """
+    Docstring for run_demo.
+    """
     series = load_sample_passenger_series()
     methods = [
         ("ARIMA", lambda: forecast_arima(series, steps=forecast_horizon)),
@@ -329,12 +359,18 @@ def run_demo(forecast_horizon: int = 12) -> None:
 
 
 def parse_args() -> argparse.Namespace:
+    """
+    Docstring for parse_args.
+    """
     parser = argparse.ArgumentParser(description="Demo time-series forecasting toolkit.")
     parser.add_argument("-n", "--steps", type=int, default=12, help="Number of future periods to forecast.")
     return parser.parse_args()
 
 
 def main() -> None:
+    """
+    Docstring for main.
+    """
     args = parse_args()
     run_demo(forecast_horizon=args.steps)
 

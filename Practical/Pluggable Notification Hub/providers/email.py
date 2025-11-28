@@ -9,6 +9,9 @@ class EmailProvider(NotificationProvider):
     """Send notifications via email."""
 
     def send(self, message: str, recipient: str) -> None:
+        """
+        Docstring for send.
+        """
         smtp_server = self.options.get("smtp_server", "smtp.example.com")
         sender = self.options.get("sender", "no-reply@example.com")
         print(f"[Email] To: {recipient} | From: {sender} | SMTP: {smtp_server} | Message: {message}")

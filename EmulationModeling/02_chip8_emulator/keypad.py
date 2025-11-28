@@ -1,12 +1,22 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import pygame
 
 class Keypad:
+    """
+    Docstring for Keypad.
+    """
     def __init__(self):
         # Map QWERTY keys to CHIP-8 HEX keys
         # 1 2 3 4 -> 1 2 3 C
         # Q W E R -> 4 5 6 D
         # A S D F -> 7 8 9 E
         # Z X C V -> A 0 B F
+        """
+        Docstring for __init__.
+        """
         self.key_map = {
             pygame.K_1: 0x1, pygame.K_2: 0x2, pygame.K_3: 0x3, pygame.K_4: 0xC,
             pygame.K_q: 0x4, pygame.K_w: 0x5, pygame.K_e: 0x6, pygame.K_r: 0xD,
@@ -15,6 +25,9 @@ class Keypad:
         }
 
     def process_input(self, cpu_keypad):
+        """
+        Docstring for process_input.
+        """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return False

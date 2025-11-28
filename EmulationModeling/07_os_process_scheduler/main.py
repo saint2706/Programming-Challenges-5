@@ -1,6 +1,13 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 from os_sim import Process, Scheduler, Kernel
 
 def print_stats(processes):
+    """
+    Docstring for print_stats.
+    """
     print(f"{'PID':<5} {'Arr':<5} {'Burst':<5} {'Wait':<5} {'TA':<5}")
     total_wait = 0
     total_ta = 0
@@ -14,6 +21,9 @@ def print_stats(processes):
     print(f"Avg TA:   {total_ta/n:.2f}")
 
 def main():
+    """
+    Docstring for main.
+    """
     procs = [
         Process(1, 0, 5),
         Process(2, 1, 3),

@@ -1,10 +1,20 @@
+"""
+Emulation/Modeling project implementation.
+"""
+
 import unittest
 from os_sim import Process, Scheduler, Kernel
 
 class TestScheduler(unittest.TestCase):
+    """
+    Docstring for TestScheduler.
+    """
     def test_fcfs(self):
         # P1: 0, 5
         # P2: 2, 2
+        """
+        Docstring for test_fcfs.
+        """
         p1 = Process(1, 0, 5)
         p2 = Process(2, 2, 2)
 
@@ -32,6 +42,9 @@ class TestScheduler(unittest.TestCase):
         # P3 runs 5-6.
         # P2 runs 6-8.
 
+        """
+        Docstring for test_sjf.
+        """
         p1 = Process(1, 0, 5)
         p2 = Process(2, 1, 2)
         p3 = Process(3, 2, 1)
@@ -57,6 +70,9 @@ class TestScheduler(unittest.TestCase):
         # 0-2: P1. Rem=2.
         # 2-4: P1. Rem=0. Finished at 4.
 
+        """
+        Docstring for test_rr.
+        """
         p1 = Process(1, 0, 4)
         sched = Scheduler("RR", quantum=2)
         kernel = Kernel(sched)
