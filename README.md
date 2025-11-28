@@ -185,7 +185,7 @@ This repository contains programming challenges across five categories: **Practi
 | 11 | RL Agent for Gridworld with Hazards | (M) | Implemented (Python) | Q-learning. State = (x, y). Q-table `Q[s, a]` stores expected reward. Negative rewards for hazards. |
 | 12 | Neural Network Visual Debugger | (M) | Implemented (Python) | `matplotlib` or `seaborn` to plot weight heatmaps. `TensorBoard` for logging loss/activations. |
 | 13 | Auto Tagging for Images | (M) | | Use a pre-trained vision model (e.g., ResNet, ViT) and get its class predictions. |
-| 14 | Personalized Study Planner with ML | (M) | | Model as regression: `predict(features)` -> `optimal_study_interval`. Features = (correct_count, last_interval). |
+| 14 | Personalized Study Planner with ML | (M) | Implemented (Python) | Model as regression: `predict(features)` -> `optimal_study_interval`. Features = (correct_count, last_interval). |
 | 15 | Market Basket Analysis Engine | (M) | | Implement Apriori or FP-Growth algorithm to find frequent itemsets. Calculate confidence/lift. |
 | 16 | Autonomous Document Cleaner | (M) | | Use regex for simple cleaning. `pdfplumber` for table extraction. Harder: ML model to classify lines (header/footer/body). |
 | 17 | Document Embedding Search Engine | (H) | | Use `Hugging Face` (e.g., `sentence-transformers`) to get embeddings. `FAISS` or `Annoy` for fast vector search. |
