@@ -1,5 +1,24 @@
 # Artificial Intelligence Utilities
 
+## Document Cleaner
+Quickly clean noisy text with regex-based passes that remove emails/URLs, fix common OCR artifacts, and strip repeated headers/footers. An optional hook accepts a machine learning line classifier to label headers and footers for harder layouts.
+
+### Files
+- `document_cleaner.py`: Provides the `DocumentCleaner` class with sequential cleaning steps and an optional ML line classifier hook.
+
+### Example
+```bash
+python - <<'PY'
+from ArtificialIntelligence.document_cleaner import DocumentCleaner
+
+text = """Report Header\n\nContact: editor@example.com\nPage body line\nFooter Text"""
+cleaner = DocumentCleaner()
+print(cleaner.clean(text))
+PY
+```
+
+Pass a custom classifier to remove special headers/footers (e.g., from a fine-tuned model) by setting `line_classifier` when constructing `DocumentCleaner`.
+
 ## Chat Sentiment Over Time
 Use `chat_sentiment_over_time.py` to score chat logs with VADER or a Hugging Face sentiment model, aggregate results by day and session, and plot how sentiment changes over time.
 
@@ -73,3 +92,16 @@ Use the "Images" tab to inspect heatmaps and the "Scalars" tab to monitor loss a
 ### Working offline or with minimal resources
 - Add `--use-fake-data` to avoid downloading MNIST; `--dataset-size` can further shrink the run for quick experiments.
 - Heatmaps are saved even for synthetic data, making automated tests and CI-friendly runs straightforward.
+
+## Toy Neural Machine Translation
+Train a lightweight encoder-decoder LSTM with dot-product attention on a synthetic parallel corpus of digit words.
+
+### Files
+- `toy_nmt_seq2seq.py`: Builds vocabularies, trains the model, and prints sample translations when run as a script.
+
+### Run a quick training session
+From the repository root:
+```bash
+python ArtificialIntelligence/toy_nmt_seq2seq.py
+```
+The script prints a few translated examples such as `one two three -> three two one`. Adjust hyperparameters via the `train` function if you import the module in a notebook.
