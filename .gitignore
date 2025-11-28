@@ -1,23 +1,112 @@
+# Python
 __pycache__/
 *.py[cod]
-*.db
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Node.js
 node_modules/
+jspm_packages/
+.npm
+.eslintcache
+.stylelintcache
+.yarn-integrity
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Go
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Rust
+/target
+**/*.rs.bk
+Cargo.lock
+
+# C/C++
+*.o
+*.obj
+*.lo
+*.la
+*.al
+*.libs
+*.so
+*.so.[0-9]*
+*.a
+*.pyc
+*.pyd
+*.gch
+*.d
+*.dll
+*.exe
+*.exp
+*.lib
+*.ilk
+*.pdb
+*.tlog
+*.out
+*.app
+*.i
+*.is
+*.s
+*.su
+*.idb
+*.pch
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
 
 # Manim
 media/
 
-# OS specific
-.DS_Store
-Thumbs.db
-
 # Generated scheduling playground artifacts
 EmulationModeling/17_scheduling_visual_playground/sample_outputs/
-
-# Rust
-target/
-
-# Python virtual environment
-.venv/
 
 # Symlinks created by conftest.py for testing
 Algorithmic/ApproximateStringMatching
@@ -39,3 +128,7 @@ consistent_hashing
 
 # pytest cache
 .pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
