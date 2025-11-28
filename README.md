@@ -184,7 +184,7 @@ This repository contains programming challenges across five categories: **Practi
 | 10 | Chat Log Sentiment Analyzer | (M) | Implemented (Python) | Use a pre-trained model (e.g., `VADER` or `Hugging Face transformers`). Plot sentiment over time. |
 | 11 | RL Agent for Gridworld with Hazards | (M) | Implemented (Python) | Q-learning. State = (x, y). Q-table `Q[s, a]` stores expected reward. Negative rewards for hazards. |
 | 12 | Neural Network Visual Debugger | (M) | Implemented (Python) | `matplotlib` or `seaborn` to plot weight heatmaps. `TensorBoard` for logging loss/activations. |
-| 13 | Auto Tagging for Images | (M) | | Use a pre-trained vision model (e.g., ResNet, ViT) and get its class predictions. |
+| 13 | Auto Tagging for Images | (M) | Implemented (Python) | Uses a pre-trained ResNet50 to tag local files or URLs and print top-N labels. |
 | 14 | Personalized Study Planner with ML | (M) | | Model as regression: `predict(features)` -> `optimal_study_interval`. Features = (correct_count, last_interval). |
 | 15 | Market Basket Analysis Engine | (M) | Implemented (Python) | Apriori frequent itemsets with support plus association rules (confidence/lift). |
 | 16 | Autonomous Document Cleaner | (M) | | Use regex for simple cleaning. `pdfplumber` for table extraction. Harder: ML model to classify lines (header/footer/body). |
