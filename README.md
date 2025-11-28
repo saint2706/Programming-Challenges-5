@@ -186,12 +186,12 @@ This repository contains programming challenges across five categories: **Practi
 | 12 | Neural Network Visual Debugger | (M) | Implemented (Python) | `matplotlib` or `seaborn` to plot weight heatmaps. `TensorBoard` for logging loss/activations. |
 | 13 | Auto Tagging for Images | (M) | | Use a pre-trained vision model (e.g., ResNet, ViT) and get its class predictions. |
 | 14 | Personalized Study Planner with ML | (M) | | Model as regression: `predict(features)` -> `optimal_study_interval`. Features = (correct_count, last_interval). |
-| 15 | Market Basket Analysis Engine | (M) | | Implement Apriori or FP-Growth algorithm to find frequent itemsets. Calculate confidence/lift. |
+| 15 | Market Basket Analysis Engine | (M) | Implemented (Python) | Apriori frequent itemsets with support plus association rules (confidence/lift). |
 | 16 | Autonomous Document Cleaner | (M) | | Use regex for simple cleaning. `pdfplumber` for table extraction. Harder: ML model to classify lines (header/footer/body). |
-| 17 | Document Embedding Search Engine | (H) | Implemented (Python) | Use `Hugging Face` (e.g., `sentence-transformers`) to get embeddings. `FAISS` or `Annoy` for fast vector search. |
-| 18 | Neural Machine Translation (Toy) | (H) | | Seq2Seq model: Encoder RNN (e.g., LSTM) -> Context Vector -> Decoder RNN (LSTM). Attention mechanism is key. |
+| 17 | Document Embedding Search Engine | (H) | | Use `Hugging Face` (e.g., `sentence-transformers`) to get embeddings. `FAISS` or `Annoy` for fast vector search. |
+| 18 | Neural Machine Translation (Toy) | (H) | Implemented (Python) | LSTM encoder-decoder with attention translating synthetic digit sequences (see `ArtificialIntelligence/toy_nmt_seq2seq.py`). |
 | 19 | Style Transfer Engine | (H) | | Implement Gatys' paper. Load a pre-trained VGG. Optimize input image to match content (deep layers) and style (Gram matrix). |
-| 20 | Face Recognition Attendance System | (H) | | Use `MTCNN` or `OpenCV` for detection. Use `FaceNet` or `ArcFace` to get embeddings. Store embeddings in a DB. |
+| 20 | Face Recognition Attendance System | (H) | Implemented (Python) | Use `MTCNN` or `OpenCV` for detection. Use `FaceNet` or `ArcFace` to get embeddings. Store embeddings in a DB. |
 | 21 | AutoML Lite | (H) | | Pipeline: `scikit-learn` imputers -> scalers -> models (LR, RF, SVM). Use `GridSearchCV` to find best combo. |
 | 22 | Knowledge Graph Builder | (H) | | Use `spaCy` for NER (entities). Use rules or a model for relation extraction (e.g., "X is-a Y"). `networkx` to store/viz. |
 | 23 | Music Genre Classifier | (H) | | Use `librosa` to extract features (MFCCs, spectral contrast). Train a CNN or SVM on these features. |
