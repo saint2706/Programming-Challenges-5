@@ -52,12 +52,10 @@ jobs:
 
       - name: Install Rust
         if: ${{ !env.ACT }}
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@stable
         with:
-          profile: minimal
           toolchain: stable
-          override: true
-          cache: true
+          components: rustfmt, clippy
 
       - name: Cache cargo build
         if: ${{ !env.ACT }}
@@ -67,6 +65,14 @@ jobs:
             ${{ steps.manifest-dir.outputs.path }}
           cache-on-failure: true
           shared-key: ${{ matrix.manifest }}
+
+      - name: Check formatting
+        if: ${{ !env.ACT }}
+        run: cargo fmt --manifest-path "${{ matrix.manifest }}" -- --check
+
+      - name: Run Clippy
+        if: ${{ !env.ACT }}
+        run: cargo clippy --manifest-path "${{ matrix.manifest }}" -- -D warnings
 
       - name: Run tests
         if: ${{ !env.ACT }}

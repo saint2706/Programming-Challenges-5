@@ -1,0 +1,74 @@
+name: Format Codebase
+
+on:
+  workflow_dispatch:
+
+jobs:
+  format:
+    name: Format Code
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+          components: rustfmt
+
+      - name: Install Prettier
+        run: npm install -g prettier
+
+      - name: Install Python formatters
+        run: pip install black isort
+
+      - name: Install ClangFormat
+        run: sudo apt-get update && sudo apt-get install -y clang-format
+
+      - name: Format with Prettier
+        run: prettier --write "**/*.{json,yaml,yml,md,js,jsx,ts,tsx,html,css}"
+
+      - name: Format with Black
+        run: black .
+
+      - name: Format with Isort
+        run: isort .
+
+      - name: Format with Rustfmt
+        # Find all .rs files and format them
+        run: find . -name "*.rs" -not -path "*/target/*" -exec rustfmt --edition 2021 {} +
+
+      - name: Format with Gofmt
+        # Format all .go files
+        run: gofmt -w .
+
+      - name: Format with ClangFormat
+        # Find C/C++ files and format them
+        run: find . -regex '.*\.\(c\|cpp\|h\|hpp\)' -not -path "*/build/*" -exec clang-format -i {} +
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "style: format codebase"
+          file_pattern: "."
