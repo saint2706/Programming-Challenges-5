@@ -1,5 +1,32 @@
 # Artificial Intelligence Utilities
 
+## Auto Image Tagger (Challenge #13)
+Run a pre-trained ResNet50 classifier over local files or HTTP(S) URLs and print the top-N labels for each image.
+
+### Files
+- `auto_image_tagger.py`: CLI that downloads (if needed) and runs a torchvision ResNet50 model to predict labels.
+
+### Quick start
+Use any local image files or URLs. For a quick smoke test with public samples:
+```bash
+python ArtificialIntelligence/auto_image_tagger.py \
+  https://github.com/pytorch/hub/raw/master/images/dog.jpg \
+  https://raw.githubusercontent.com/pytorch/hub/master/images/deeplab1.png \
+  --top-k 3
+```
+
+### Tagging a remote image
+Pass a URL alongside local files:
+```bash
+python ArtificialIntelligence/auto_image_tagger.py \
+  https://pytorch.org/assets/images/dog.jpg \
+  --top-k 5
+```
+
+### Notes
+- The script automatically selects CUDA when available; force CPU with `--device cpu`.
+- Predictions are printed in descending score order, including probabilities.
+
 ## Chat Sentiment Over Time
 Use `chat_sentiment_over_time.py` to score chat logs with VADER or a Hugging Face sentiment model, aggregate results by day and session, and plot how sentiment changes over time.
 
