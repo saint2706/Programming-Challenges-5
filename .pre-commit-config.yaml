@@ -1,0 +1,140 @@
+# Pre-commit hooks configuration for multi-language code formatting and linting
+# This config automatically formats and lints all supported languages on git commit
+# To use: pip install pre-commit && pre-commit install && pre-commit run --all-files
+
+repos:
+  # ============================================================================
+  # PYTHON - Black (formatter) + Flake8 (linter) + isort (import sorting)
+  # ============================================================================
+  - repo: https://github.com/psf/black
+    rev: 24.8.0
+    hooks:
+      - id: black
+        language_version: python3
+        args: [--line-length=88]
+        files: '.py$'
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 7.0.0
+    hooks:
+      - id: flake8
+        args: [--max-line-length=88, --extend-ignore=E203,W503]
+        files: '.py$'
+
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: [--profile=black]
+        files: '.py$'
+
+  # ============================================================================
+  # C / C++ - clang-format
+  # ============================================================================
+  - repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: v18.1.4
+    hooks:
+      - id: clang-format
+        args: [-i]
+        files: '.(c|cc|cpp|h|hpp|cxx|hxx)$'
+
+  # ============================================================================
+  # JAVA - google-java-format
+  # ============================================================================
+  - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+    rev: v2.12.0
+    hooks:
+      - id: pretty-format-java
+        args: [--autofix]
+        files: '.java$'
+
+  # ============================================================================
+  # JAVASCRIPT / TYPESCRIPT / JSX / TSX / JSON / YAML / HTML / CSS - Prettier
+  # ============================================================================
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.3.3
+    hooks:
+      - id: prettier
+        types_or: [javascript, typescript, jsx, tsx, json, yaml, html, css, scss, markdown]
+        args: [--write, --print-width=88]
+
+  # ============================================================================
+  # MARKDOWN - Prettier + Markdownlint (lint markdown)
+  # ============================================================================
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.37.0
+    hooks:
+      - id: markdownlint
+        files: '.md$'
+
+  # ============================================================================
+  # GO - gofmt (built-in Go formatter)
+  # ============================================================================
+  - repo: https://github.com/pre-commit/mirrors-gofmt
+    rev: v1.20.8
+    hooks:
+      - id: gofmt
+        files: '.go$'
+
+  # ============================================================================
+  # RUST - rustfmt
+  # ============================================================================
+  - repo: https://github.com/pre-commit/mirrors-rust
+    rev: v1.75.0
+    hooks:
+      - id: rustfmt
+        files: '.rs$'
+
+  # ============================================================================
+  # SHELL / BASH - shfmt + shellcheck (format + lint shell scripts)
+  # ============================================================================
+  - repo: https://github.com/scop/pre-commit-shfmt
+    rev: v3.8.0-1
+    hooks:
+      - id: shfmt
+        args: [-i, '2', -bn]
+        files: '.(sh|bash)$'
+
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.9.0.6
+    hooks:
+      - id: shellcheck
+        files: '.(sh|bash)$'
+
+  # ============================================================================
+  # GENERAL FILE CHECKS
+  # ============================================================================
+  # Trim trailing whitespace
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: '.(md)$'
+      
+      # Fix line ending to LF (Unix standard)
+      - id: end-of-file-fixer
+      
+      # Detect large files that should not be committed
+      - id: check-large-files
+        args: [--maxkb=1000]
+      
+      # Check YAML syntax
+      - id: check-yaml
+        args: [--unsafe]
+      
+      # Check JSON syntax
+      - id: check-json
+      
+      # Prevent commit of debugger imports
+      - id: debug-statements
+        files: '.py$'
+      
+      # Check for merge conflicts
+      - id: check-merge-conflict
+      
+      # Ensure files parse as valid Python
+      - id: check-ast
+        files: '.py$'
+
+default_language_version:
+  python: python3.11
