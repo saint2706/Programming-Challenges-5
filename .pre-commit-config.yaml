@@ -1,140 +1,295 @@
-# Pre-commit hooks configuration for multi-language code formatting and linting
-# This config automatically formats and lints all supported languages on git commit
-# To use: pip install pre-commit && pre-commit install && pre-commit run --all-files
+# ============================================================================
+# Comprehensive pre-commit configuration for Programming-Challenges-5
+# Runs formatters and linters for all major languages in the repository
+#
+# Install: pip install pre-commit
+# Setup: pre-commit install
+# Run on all files: pre-commit run --all-files
+# ============================================================================
+
+# Configuration options
+default_language_version:
+  python: python3.11
+  node: 18.16.0
+
+# Exclude node_modules, venv, build artifacts
+exclude: |
+  (?x)^(
+    \.venv|
+    venv|
+    node_modules|
+    __pycache__|
+    \.egg-info|
+    dist|
+    build|
+    \.git|
+    \.pytest_cache
+  )/
+
+fail_fast: false
+minimum_pre_commit_version: 2.15.0
 
 repos:
   # ============================================================================
-  # PYTHON - Black (formatter) + Flake8 (linter) + isort (import sorting)
+  # PYTHON: Black (formatting) + Ruff (linting and formatting)
   # ============================================================================
   - repo: https://github.com/psf/black
-    rev: 24.8.0
+    rev: 24.1.1
     hooks:
       - id: black
-        language_version: python3
-        args: [--line-length=88]
-        files: '.py$'
+        name: Black - Python formatter
+        language_version: python3.11
+        args: ['--line-length=88']
+        files: '\.py$'
 
-  - repo: https://github.com/PyCQA/flake8
-    rev: 7.0.0
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.2.1
     hooks:
-      - id: flake8
-        args: [--max-line-length=88, --extend-ignore=E203,W503]
-        files: '.py$'
-
-  - repo: https://github.com/PyCQA/isort
-    rev: 5.13.2
-    hooks:
-      - id: isort
-        args: [--profile=black]
-        files: '.py$'
+      - id: ruff
+        name: Ruff - Python linter
+        args: ['--fix', '--show-fixes']
+        files: '\.py$'
+      - id: ruff-format
+        name: Ruff - Python formatter
+        files: '\.py$'
 
   # ============================================================================
-  # C / C++ - clang-format
+  # JAVASCRIPT / TYPESCRIPT: ESLint + Prettier (using husky + lint-staged)
+  # NOTE: Prettier is better integrated via husky/lint-staged than pre-commit
+  # ============================================================================
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v8.56.0
+    hooks:
+      - id: eslint
+        name: ESLint - JavaScript/TypeScript linter
+        files: '\.(js|jsx|ts|tsx)$'
+        types: [file]
+        additional_dependencies:
+          - 'eslint'
+          - 'eslint-config-prettier'
+          - 'eslint-plugin-prettier'
+        args: ['--fix']
+
+  # ============================================================================
+  # C / C++: clang-format (formatting)
   # ============================================================================
   - repo: https://github.com/pre-commit/mirrors-clang-format
-    rev: v18.1.4
+    rev: v17.0.6
     hooks:
       - id: clang-format
-        args: [-i]
-        files: '.(c|cc|cpp|h|hpp|cxx|hxx)$'
+        name: Clang-Format - C/C++ formatter
+        files: '\.(c|cc|cpp|cxx|h|hpp|hxx|C)$'
+        args: ['-i', '-style=Google']
+        language_version: '17.0.6'
 
   # ============================================================================
-  # JAVA - google-java-format
+  # JAVA: google-java-format (formatting)
   # ============================================================================
   - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
     rev: v2.12.0
     hooks:
       - id: pretty-format-java
-        args: [--autofix]
-        files: '.java$'
+        name: Google Java Format - Java formatter
+        files: '\.java$'
+        args: ['--autofix']
 
   # ============================================================================
-  # JAVASCRIPT / TYPESCRIPT / JSX / TSX / JSON / YAML / HTML / CSS - Prettier
-  # ============================================================================
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.3.3
-    hooks:
-      - id: prettier
-        types_or: [javascript, typescript, jsx, tsx, json, yaml, html, css, scss, markdown]
-        args: [--write, --print-width=88]
-
-  # ============================================================================
-  # MARKDOWN - Prettier + Markdownlint (lint markdown)
-  # ============================================================================
-  - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.37.0
-    hooks:
-      - id: markdownlint
-        files: '.md$'
-
-  # ============================================================================
-  # GO - gofmt (built-in Go formatter)
+  # GO: gofmt + golangci-lint (formatting and linting)
   # ============================================================================
   - repo: https://github.com/pre-commit/mirrors-gofmt
     rev: v1.20.8
     hooks:
       - id: gofmt
-        files: '.go$'
+        name: Gofmt - Go formatter
+        files: '\.go$'
+        language_version: go1.20.8
+
+  - repo: https://github.com/golangci/golangci-lint
+    rev: v1.55.2
+    hooks:
+      - id: golangci-lint
+        name: Golangci-lint - Go linter
+        files: '\.go$'
 
   # ============================================================================
-  # RUST - rustfmt
+  # RUST: rustfmt (formatting) + clippy (linting)
   # ============================================================================
-  - repo: https://github.com/pre-commit/mirrors-rust
+  - repo: https://github.com/rust-lang/rust-clippy
     rev: v1.75.0
     hooks:
-      - id: rustfmt
-        files: '.rs$'
+      - id: clippy
+        name: Clippy - Rust linter
+        files: '\.rs$'
+
+  - repo: https://github.com/doublify/pre-commit-rust
+    rev: v1.0
+    hooks:
+      - id: fmt
+        name: Rustfmt - Rust formatter
+        files: '\.rs$'
+        args: ['--edition=2021']
 
   # ============================================================================
-  # SHELL / BASH - shfmt + shellcheck (format + lint shell scripts)
+  # MARKDOWN: Markdownlint (linting)
+  # NOTE: Prettier is not used via pre-commit (archived mirrors-prettier)
+  #       Use husky + lint-staged for Prettier + Markdown formatting
+  # ============================================================================
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.37.0
+    hooks:
+      - id: markdownlint
+        name: Markdownlint - Markdown linter
+        files: '\.md$'
+        args: ['--fix']
+
+  # ============================================================================
+  # YAML / JSON: Validation
+  # NOTE: Formatting handled by Prettier via husky + lint-staged
+  # ============================================================================
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      # YAML validation
+      - id: check-yaml
+        name: Check YAML syntax
+        files: '\.ya?ml$'
+
+      # JSON validation
+      - id: check-json
+        name: Check JSON syntax
+        files: '\.json$'
+
+      # Trailing whitespace removal
+      - id: trailing-whitespace
+        name: Remove trailing whitespace
+        files: '\.(py|js|ts|jsx|tsx|java|cpp|c|h|hpp|go|rs|md|yaml|yml|json|html|css|scss|sh)$'
+
+      # End of file fixer (adds newline at end of file)
+      - id: end-of-file-fixer
+        name: Fix end of file
+        files: '\.(py|js|ts|jsx|tsx|java|cpp|c|h|hpp|go|rs|md|yaml|yml|json|html|css|scss|sh)$'
+
+      # Check for merge conflicts
+      - id: check-merge-conflict
+        name: Check for merge conflict markers
+
+      # Detect private keys
+      - id: detect-private-key
+        name: Detect private keys
+
+  # ============================================================================
+  # SHELL SCRIPTS: shfmt (formatting) + shellcheck (linting)
   # ============================================================================
   - repo: https://github.com/scop/pre-commit-shfmt
-    rev: v3.8.0-1
+    rev: v3.7.0-1
     hooks:
       - id: shfmt
-        args: [-i, '2', -bn]
-        files: '.(sh|bash)$'
+        name: Shfmt - Shell script formatter
+        files: '\.(sh|bash)$'
+        args: ['-i', '2', '-w']
 
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.9.0.6
     hooks:
       - id: shellcheck
-        files: '.(sh|bash)$'
+        name: ShellCheck - Shell script linter
+        files: '\.(sh|bash)$'
 
   # ============================================================================
-  # GENERAL FILE CHECKS
+  # COMMIT MESSAGE: Commitizen (optional - enforces conventional commits)
   # ============================================================================
-  # Trim trailing whitespace
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v3.12.0
     hooks:
-      - id: trailing-whitespace
-        exclude: '.(md)$'
-      
-      # Fix line ending to LF (Unix standard)
-      - id: end-of-file-fixer
-      
-      # Detect large files that should not be committed
-      - id: check-large-files
-        args: [--maxkb=1000]
-      
-      # Check YAML syntax
-      - id: check-yaml
-        args: [--unsafe]
-      
-      # Check JSON syntax
-      - id: check-json
-      
-      # Prevent commit of debugger imports
-      - id: debug-statements
-        files: '.py$'
-      
-      # Check for merge conflicts
-      - id: check-merge-conflict
-      
-      # Ensure files parse as valid Python
-      - id: check-ast
-        files: '.py$'
+      - id: commitizen
+        name: Commitizen - Commit message check
+        stages: [commit-msg]
 
-default_language_version:
-  python: python3.11
+  # ============================================================================
+  # OPTIONAL: Spell check with codespell
+  # ============================================================================
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.6
+    hooks:
+      - id: codespell
+        name: Codespell - Spell checker
+        files: '\.(py|js|ts|java|cpp|c|go|rs|md|yaml|yml|json|html|css|scss|sh)$'
+        args: ['--ignore-words-list=crate,ser']
+
+  # ============================================================================
+  # OPTIONAL: Security checks with bandit (Python)
+  # ============================================================================
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.5
+    hooks:
+      - id: bandit
+        name: Bandit - Python security linter
+        files: '\.py$'
+        args: ['-c', '.bandit', '-r']
+
+# ============================================================================
+# IMPORTANT NOTE: Prettier and Web Formatting
+# ============================================================================
+#
+# The mirrors-prettier repository was archived on April 11, 2024 and is no
+# longer maintained. For JavaScript/TypeScript/JSON/YAML/HTML/CSS formatting
+# with Prettier, use one of these alternatives:
+#
+# RECOMMENDED: Use husky + lint-staged (official Prettier recommendation)
+# Install:
+#   npm install --save-dev husky lint-staged prettier
+#   npx husky init
+#   npx husky add .husky/pre-commit "npx lint-staged"
+#
+# Add to package.json:
+#   "lint-staged": {
+#     "*.{js,jsx,ts,tsx,json,yaml,yml,md,html,css,scss}": "prettier --write"
+#   }
+#
+# ALTERNATIVE: Use shell script directly
+# Create .git/hooks/pre-commit with:
+#   #!/bin/sh
+#   FILES=$(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
+#   [ -z "$FILES" ] && exit 0
+#   echo "$FILES" | xargs ./node_modules/.bin/prettier --write
+#   echo "$FILES" | xargs git add
+#   exit 0
+
+# ============================================================================
+# SETUP INSTRUCTIONS
+# ============================================================================
+#
+# 1. Install pre-commit framework:
+#    pip install pre-commit
+#
+# 2. Install Git hooks:
+#    pre-commit install
+#    pre-commit install --hook-type commit-msg  # for commitizen
+#
+# 3. (Optional) Run on all existing files:
+#    pre-commit run --all-files
+#
+# 4. For JavaScript/TypeScript/Prettier integration, follow the Prettier section above
+#
+# 5. Run manually on specific files:
+#    pre-commit run --files <files>
+#
+# 6. Update hooks to latest versions:
+#    pre-commit autoupdate
+#
+# 7. Bypass hooks (not recommended):
+#    git commit --no-verify
+#
+# ============================================================================
+# CONFIGURATION FILES TO CREATE (optional)
+# ============================================================================
+#
+# .clang-format           - Google C++ style or custom clang-format rules
+# .eslintrc.json          - ESLint rules for JS/TS
+# .prettierrc.json        - Prettier rules for web files (if using husky)
+# .bandit                 - Bandit security checks
+# .markdownlint.json      - Markdown linting rules
+# .ruff.toml              - Ruff Python linter configuration
+# .codespellrc            - Codespell configuration
+#
+# ============================================================================
