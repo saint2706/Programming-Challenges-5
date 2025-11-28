@@ -1,5 +1,24 @@
 # Artificial Intelligence Utilities
 
+## Document Cleaner
+Quickly clean noisy text with regex-based passes that remove emails/URLs, fix common OCR artifacts, and strip repeated headers/footers. An optional hook accepts a machine learning line classifier to label headers and footers for harder layouts.
+
+### Files
+- `document_cleaner.py`: Provides the `DocumentCleaner` class with sequential cleaning steps and an optional ML line classifier hook.
+
+### Example
+```bash
+python - <<'PY'
+from ArtificialIntelligence.document_cleaner import DocumentCleaner
+
+text = """Report Header\n\nContact: editor@example.com\nPage body line\nFooter Text"""
+cleaner = DocumentCleaner()
+print(cleaner.clean(text))
+PY
+```
+
+Pass a custom classifier to remove special headers/footers (e.g., from a fine-tuned model) by setting `line_classifier` when constructing `DocumentCleaner`.
+
 ## Chat Sentiment Over Time
 Use `chat_sentiment_over_time.py` to score chat logs with VADER or a Hugging Face sentiment model, aggregate results by day and session, and plot how sentiment changes over time.
 
