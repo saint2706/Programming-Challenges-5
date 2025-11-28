@@ -92,3 +92,16 @@ Use the "Images" tab to inspect heatmaps and the "Scalars" tab to monitor loss a
 ### Working offline or with minimal resources
 - Add `--use-fake-data` to avoid downloading MNIST; `--dataset-size` can further shrink the run for quick experiments.
 - Heatmaps are saved even for synthetic data, making automated tests and CI-friendly runs straightforward.
+
+## Toy Neural Machine Translation
+Train a lightweight encoder-decoder LSTM with dot-product attention on a synthetic parallel corpus of digit words.
+
+### Files
+- `toy_nmt_seq2seq.py`: Builds vocabularies, trains the model, and prints sample translations when run as a script.
+
+### Run a quick training session
+From the repository root:
+```bash
+python ArtificialIntelligence/toy_nmt_seq2seq.py
+```
+The script prints a few translated examples such as `one two three -> three two one`. Adjust hyperparameters via the `train` function if you import the module in a notebook.
