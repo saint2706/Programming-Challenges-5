@@ -34,3 +34,16 @@ Provide your own CSV with columns `timestamp`, `session`, and `message`:
 ```bash
 python ArtificialIntelligence/chat_sentiment_over_time.py --log-path path/to/your_log.csv
 ```
+
+## Gridworld RL Agent with Hazards
+Train a tabular Q-learning agent to navigate a grid from a start cell to a goal while avoiding hazardous cells that carry large negative rewards.
+
+### Files
+- `gridworld_hazard_rl.py`: Self-contained environment, Q-learning loop, and CLI for training.
+
+### Run training and view the policy
+From the repository root:
+```bash
+python ArtificialIntelligence/gridworld_hazard_rl.py --width 5 --height 5 --start 0,0 --goal 4,4 --hazards 2,2 2,3
+```
+The script prints a greedy policy grid using arrows for moves, `S` for the start, `G` for the goal, and `X` for hazards.
