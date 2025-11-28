@@ -182,7 +182,7 @@ This repository contains programming challenges across five categories: **Practi
 | 8 | Movie Recommender System | (M) | Implemented (Python) | Collaborative: user-item matrix (e.g., SVD). Content-based: item-feature matrix (genres, actors). |
 | 9 | Time-Series Forecasting Toolkit | (M) | Implemented (Python) | Use `statsmodels` for ARIMA. `prophet` (by Facebook) is good. RNN/LSTM (`PyTorch`) for complex patterns. |
 | 10 | Chat Log Sentiment Analyzer | (M) | Implemented (Python) | Use a pre-trained model (e.g., `VADER` or `Hugging Face transformers`). Plot sentiment over time. |
-| 11 | RL Agent for Gridworld with Hazards | (M) | | Q-learning. State = (x, y). Q-table `Q[s, a]` stores expected reward. Negative rewards for hazards. |
+| 11 | RL Agent for Gridworld with Hazards | (M) | Implemented (Python) | Q-learning. State = (x, y). Q-table `Q[s, a]` stores expected reward. Negative rewards for hazards. |
 | 12 | Neural Network Visual Debugger | (M) | | `matplotlib` or `seaborn` to plot weight heatmaps. `TensorBoard` for logging loss/activations. |
 | 13 | Auto Tagging for Images | (M) | | Use a pre-trained vision model (e.g., ResNet, ViT) and get its class predictions. |
 | 14 | Personalized Study Planner with ML | (M) | | Model as regression: `predict(features)` -> `optimal_study_interval`. Features = (correct_count, last_interval). |
