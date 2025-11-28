@@ -11,9 +11,7 @@ from ArtificialIntelligence.style_transfer import (
 
 
 def test_gram_matrix_normalizes_by_dimensions() -> None:
-    feature_map = torch.tensor(
-        [[[[1.0, 2.0], [3.0, 4.0]], [[1.0, 1.0], [1.0, 1.0]]]]
-    )
+    feature_map = torch.tensor([[[[1.0, 2.0], [3.0, 4.0]], [[1.0, 1.0], [1.0, 1.0]]]])
     gram = gram_matrix(feature_map)
 
     expected = torch.tensor(

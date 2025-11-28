@@ -1,6 +1,6 @@
 """Randomized data structures and selection algorithms."""
 
-from .randomized_structures import QuickselectResult, quickselect, benchmark_quickselect
+from .randomized_structures import QuickselectResult, benchmark_quickselect, quickselect
 from .skiplist import SkipList
 from .treap import Treap
 

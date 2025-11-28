@@ -3,8 +3,10 @@
 Provides interactive visualization with controls for stepping, running,
 resetting, and drawing cells manually.
 """
-import pygame
+
 import numpy as np
+import pygame
+
 
 class Visualizer:
     def __init__(self, engine, cell_size=10):
@@ -23,7 +25,7 @@ class Visualizer:
         self.paused = True
         self.fps = 10
         self.mouse_pressed = False
-        self.draw_mode = 1 # 1 for drawing alive, 0 for erasing
+        self.draw_mode = 1  # 1 for drawing alive, 0 for erasing
 
         # Colors
         self.COLOR_BG = (10, 10, 10)
@@ -57,7 +59,7 @@ class Visualizer:
                     self.fps = max(1, self.fps - 5)
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1: # Left click
+                if event.button == 1:  # Left click
                     self.mouse_pressed = True
                     x, y = event.pos
                     grid_x, grid_y = x // self.cell_size, y // self.cell_size
@@ -83,14 +85,21 @@ class Visualizer:
         # Get coordinates of alive cells
         ys, xs = np.where(self.engine.grid == 1)
         for x, y in zip(xs, ys):
-            rect = (x * self.cell_size, y * self.cell_size, self.cell_size - 1, self.cell_size - 1)
+            rect = (
+                x * self.cell_size,
+                y * self.cell_size,
+                self.cell_size - 1,
+                self.cell_size - 1,
+            )
             pygame.draw.rect(self.screen, self.COLOR_ALIVE, rect)
 
         # Draw UI overlay
         status = "PAUSED" if self.paused else "RUNNING"
         rules = f"B{list(self.engine.rule_b)}/S{list(self.engine.rule_s)}"
         info_text = f"Gen: {self.engine.generation} | FPS: {self.fps} | {status} | Rule: {rules}"
-        help_text = "Space: Pause | R: Random | C: Clear | 1: Life | 2: HighLife | Click: Draw"
+        help_text = (
+            "Space: Pause | R: Random | C: Clear | 1: Life | 2: HighLife | Click: Draw"
+        )
 
         surf_info = self.font.render(info_text, True, self.COLOR_TEXT)
         surf_help = self.font.render(help_text, True, (150, 150, 150))

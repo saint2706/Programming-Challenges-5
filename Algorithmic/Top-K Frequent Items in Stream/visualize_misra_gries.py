@@ -4,9 +4,8 @@ This script demonstrates the Misra-Gries heavy hitter algorithm processing a str
 of items and maintaining a limited set of counters.
 """
 
-import sys
 import os
-from typing import List, Tuple, Dict, Any
+import sys
 
 from manim import *  # type: ignore
 
@@ -38,9 +37,7 @@ class MisraGriesDemo(Scene):
         mg = MisraGriesCounter(k=k)
 
         # Stream of items
-        stream = [
-            "A", "B", "A", "C", "A", "B", "D", "E", "A", "C", "F", "A"
-        ]
+        stream = ["A", "B", "A", "C", "A", "B", "D", "E", "A", "C", "F", "A"]
 
         # Visual elements
         stream_text = Text("Stream: " + " ".join(stream), font_size=24)
@@ -74,15 +71,13 @@ class MisraGriesDemo(Scene):
                 item_group.move_to(RIGHT * x_offset)
                 new_group.add(item_group)
             return new_group
-        
+
         # Initial empty display
         self.play(Create(current_display))
 
         # Process stream
         for i, item in enumerate(stream):
-            processing_text = Text(
-                f"Processing: {item}", font_size=24, color=YELLOW
-            )
+            processing_text = Text(f"Processing: {item}", font_size=24, color=YELLOW)
             processing_text.next_to(stream_text, DOWN)
             self.add(processing_text)
 
@@ -92,14 +87,12 @@ class MisraGriesDemo(Scene):
 
             # Transform current counters to new state
             if len(current_display) == 0 and len(new_display) > 0:
-                 self.play(FadeIn(new_display), run_time=0.5)
+                self.play(FadeIn(new_display), run_time=0.5)
             elif len(new_display) == 0 and len(current_display) > 0:
-                 self.play(FadeOut(current_display), run_time=0.5)
+                self.play(FadeOut(current_display), run_time=0.5)
             else:
-                 self.play(
-                    Transform(current_display, new_display), run_time=0.5
-                 )
-            
+                self.play(Transform(current_display, new_display), run_time=0.5)
+
             # Update reference
             current_display = new_display
             self.remove(processing_text)

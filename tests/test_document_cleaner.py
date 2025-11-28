@@ -5,7 +5,9 @@ from ArtificialIntelligence.document_cleaner import DocumentCleaner
 
 def test_email_and_url_removal() -> None:
     cleaner = DocumentCleaner()
-    raw = "Contact us at help@example.com or visit https://example.com/about for details."
+    raw = (
+        "Contact us at help@example.com or visit https://example.com/about for details."
+    )
     cleaned = cleaner._remove_emails_and_urls(raw)
     assert "example.com" not in cleaned
     assert "https://" not in cleaned

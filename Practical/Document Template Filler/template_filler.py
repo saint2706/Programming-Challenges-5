@@ -3,6 +3,7 @@
 Loads JSON/YAML data, injects it into DOCX placeholders, fills PDF form fields,
 and optionally regenerates a summary PDF using reportlab.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -16,7 +17,6 @@ from PyPDF2 import PdfReader, PdfWriter
 from PyPDF2.generic import NameObject
 from reportlab.lib.pagesizes import LETTER
 from reportlab.pdfgen import canvas
-
 
 PLACEHOLDER_FORMAT = "{{{{{key}}}}}"
 MODULE_DIR = Path(__file__).resolve().parent
@@ -156,7 +156,9 @@ def generate_sample_templates(templates_dir: Path) -> None:
         print(f"PDF template already exists at {pdf_path}, leaving unchanged.")
 
 
-def fill_docx_template(template_path: Path, data: Dict[str, Any], output_path: Path) -> None:
+def fill_docx_template(
+    template_path: Path, data: Dict[str, Any], output_path: Path
+) -> None:
     """Fill placeholders inside a DOCX template and save the result."""
     if not template_path.exists():
         raise FileNotFoundError(f"DOCX template not found: {template_path}")
@@ -197,7 +199,9 @@ def fill_pdf_form(template_path: Path, data: Dict[str, Any], output_path: Path) 
         for idx in range(len(writer.pages)):
             writer.update_page_form_field_values(writer.pages[idx], field_values)
     else:
-        print("Warning: PDF template has no form fields; writing original pages unchanged.")
+        print(
+            "Warning: PDF template has no form fields; writing original pages unchanged."
+        )
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("wb") as f:
@@ -239,13 +243,32 @@ def generate_pdf_summary(data: Dict[str, Any], output_path: Path) -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Fill DOCX/PDF templates using JSON or YAML data.")
-    parser.add_argument("--data", required=True, type=Path, help="Path to JSON/YAML file containing fields.")
-    parser.add_argument("--docx-template", type=Path, help="DOCX template path with {{placeholders}}.")
-    parser.add_argument("--docx-output", type=Path, help="Destination path for filled DOCX.")
-    parser.add_argument("--pdf-template", type=Path, help="Form-enabled PDF template path.")
-    parser.add_argument("--pdf-output", type=Path, help="Destination path for filled PDF form.")
-    parser.add_argument("--generated-pdf", type=Path, help="Optional path to generate a summary PDF via reportlab.")
+    parser = argparse.ArgumentParser(
+        description="Fill DOCX/PDF templates using JSON or YAML data."
+    )
+    parser.add_argument(
+        "--data",
+        required=True,
+        type=Path,
+        help="Path to JSON/YAML file containing fields.",
+    )
+    parser.add_argument(
+        "--docx-template", type=Path, help="DOCX template path with {{placeholders}}."
+    )
+    parser.add_argument(
+        "--docx-output", type=Path, help="Destination path for filled DOCX."
+    )
+    parser.add_argument(
+        "--pdf-template", type=Path, help="Form-enabled PDF template path."
+    )
+    parser.add_argument(
+        "--pdf-output", type=Path, help="Destination path for filled PDF form."
+    )
+    parser.add_argument(
+        "--generated-pdf",
+        type=Path,
+        help="Optional path to generate a summary PDF via reportlab.",
+    )
     parser.add_argument(
         "--create-sample-templates",
         action="store_true",
@@ -278,20 +301,26 @@ def main() -> None:
         fill_docx_template(args.docx_template, data, args.docx_output)
         print(f"DOCX saved to {args.docx_output}")
     elif args.docx_template or args.docx_output:
-        raise SystemExit("Provide both --docx-template and --docx-output to generate DOCX output.")
+        raise SystemExit(
+            "Provide both --docx-template and --docx-output to generate DOCX output."
+        )
 
     if args.pdf_template and args.pdf_output:
         fill_pdf_form(args.pdf_template, data, args.pdf_output)
         print(f"Filled PDF saved to {args.pdf_output}")
     elif args.pdf_template or args.pdf_output:
-        raise SystemExit("Provide both --pdf-template and --pdf-output to generate a filled PDF form.")
+        raise SystemExit(
+            "Provide both --pdf-template and --pdf-output to generate a filled PDF form."
+        )
 
     if args.generated_pdf:
         generate_pdf_summary(data, args.generated_pdf)
         print(f"Generated summary PDF saved to {args.generated_pdf}")
 
     if not any([args.docx_template, args.pdf_template, args.generated_pdf]):
-        print("No outputs requested. Use --docx-template/--pdf-template/--generated-pdf to produce files.")
+        print(
+            "No outputs requested. Use --docx-template/--pdf-template/--generated-pdf to produce files."
+        )
 
 
 if __name__ == "__main__":

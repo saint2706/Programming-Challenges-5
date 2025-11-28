@@ -7,12 +7,18 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import Dict, Iterable, List, Any
+from typing import Any, Dict, Iterable, List
 
 try:
-    from .models import DebtGraph, Participant, PaymentPlanEntry, Expense, quantize_money
+    from .models import (
+        DebtGraph,
+        Expense,
+        Participant,
+        PaymentPlanEntry,
+        quantize_money,
+    )
 except ImportError:
-    from models import DebtGraph, Participant, PaymentPlanEntry, Expense, quantize_money
+    from models import DebtGraph, Expense, Participant, PaymentPlanEntry, quantize_money
 
 
 @dataclass
@@ -62,7 +68,9 @@ def optimize_settlements(expenses: Iterable[Expense]) -> SettlementPlan:
     graph = DebtGraph.from_expenses(expenses)
 
     # Ensure money is quantized before processing to avoid precision artifacts
-    balances = {name: quantize_money(balance) for name, balance in graph.balances.items()}
+    balances = {
+        name: quantize_money(balance) for name, balance in graph.balances.items()
+    }
 
     # Filter out zero balances
     creditors = {name: bal for name, bal in balances.items() if bal > 0}
@@ -74,7 +82,7 @@ def optimize_settlements(expenses: Iterable[Expense]) -> SettlementPlan:
     while creditors and debtors:
         # Find max creditor and max debtor (most negative)
         creditor_name = max(creditors, key=creditors.get)  # type: ignore
-        debtor_name = min(debtors, key=debtors.get)        # type: ignore
+        debtor_name = min(debtors, key=debtors.get)  # type: ignore
 
         creditor_amount = creditors[creditor_name]
         debtor_amount = debtors[debtor_name]

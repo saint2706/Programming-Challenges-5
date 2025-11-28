@@ -46,15 +46,23 @@ class CrowdSimulation:
         agents: List[Agent] = []
         for _ in range(num_agents):
             position = np.array(
-                [self.random.uniform(0, self.width), self.random.uniform(0, self.height)],
+                [
+                    self.random.uniform(0, self.width),
+                    self.random.uniform(0, self.height),
+                ],
                 dtype=float,
             )
             destination = np.array(
-                [self.random.uniform(0, self.width), self.random.uniform(0, self.height)],
+                [
+                    self.random.uniform(0, self.width),
+                    self.random.uniform(0, self.height),
+                ],
                 dtype=float,
             )
             velocity = np.zeros(2, dtype=float)
-            agents.append(Agent(position=position, velocity=velocity, destination=destination))
+            agents.append(
+                Agent(position=position, velocity=velocity, destination=destination)
+            )
         return agents
 
     def _goal_force(self, agent: Agent) -> np.ndarray:
@@ -74,7 +82,9 @@ class CrowdSimulation:
             if distance <= 1e-8 or distance > self.personal_space_radius:
                 continue
             direction = offset / distance
-            strength = self.repulsion_strength * (1 - (distance / self.personal_space_radius))
+            strength = self.repulsion_strength * (
+                1 - (distance / self.personal_space_radius)
+            )
             force += direction * strength / max(distance, 1e-6)
         return force
 
@@ -94,7 +104,10 @@ class CrowdSimulation:
         """Advance the simulation by one time step."""
 
         # Copy state to avoid mid-step interference
-        current_agents = [Agent(a.position.copy(), a.velocity.copy(), a.destination.copy()) for a in self.agents]
+        current_agents = [
+            Agent(a.position.copy(), a.velocity.copy(), a.destination.copy())
+            for a in self.agents
+        ]
         for agent in self.agents:
             self._update_agent(agent, current_agents)
 

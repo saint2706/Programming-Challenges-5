@@ -8,9 +8,11 @@ Controls:
     Type letters: Match falling words
     ESC: Quit game
 """
-import pygame
-import sys
+
 import random
+import sys
+
+import pygame
 
 # Initialize Pygame
 pygame.init()
@@ -35,15 +37,61 @@ font = pygame.font.Font(None, 48)
 font_small = pygame.font.Font(None, 32)
 
 WORD_LIST = [
-    "python", "code", "game", "challenge", "program", "variable", "function",
-    "loop", "class", "object", "string", "integer", "boolean", "list",
-    "tuple", "dictionary", "import", "module", "package", "library",
-    "framework", "algorithm", "structure", "database", "network", "server",
-    "client", "interface", "design", "pattern", "debug", "error", "exception",
-    "syntax", "compiler", "interpreter", "memory", "processor", "storage",
-    "keyboard", "mouse", "monitor", "screen", "pixel", "graphic", "audio",
-    "video", "input", "output", "system", "control", "logic", "math"
+    "python",
+    "code",
+    "game",
+    "challenge",
+    "program",
+    "variable",
+    "function",
+    "loop",
+    "class",
+    "object",
+    "string",
+    "integer",
+    "boolean",
+    "list",
+    "tuple",
+    "dictionary",
+    "import",
+    "module",
+    "package",
+    "library",
+    "framework",
+    "algorithm",
+    "structure",
+    "database",
+    "network",
+    "server",
+    "client",
+    "interface",
+    "design",
+    "pattern",
+    "debug",
+    "error",
+    "exception",
+    "syntax",
+    "compiler",
+    "interpreter",
+    "memory",
+    "processor",
+    "storage",
+    "keyboard",
+    "mouse",
+    "monitor",
+    "screen",
+    "pixel",
+    "graphic",
+    "audio",
+    "video",
+    "input",
+    "output",
+    "system",
+    "control",
+    "logic",
+    "math",
 ]
+
 
 class FallingWord:
     def __init__(self, text, speed):
@@ -52,7 +100,7 @@ class FallingWord:
         self.x = random.randint(50, SCREEN_WIDTH - 150)
         self.y = -50
         self.color = WHITE
-        self.matched_len = 0 # How many chars matched so far
+        self.matched_len = 0  # How many chars matched so far
 
     def update(self):
         self.y += self.speed
@@ -60,14 +108,15 @@ class FallingWord:
 
     def draw(self, surface):
         # Draw matched part in Green, rest in White
-        matched = self.text[:self.matched_len]
-        rest = self.text[self.matched_len:]
-        
+        matched = self.text[: self.matched_len]
+        rest = self.text[self.matched_len :]
+
         m_surf = font.render(matched, True, GREEN)
         r_surf = font.render(rest, True, self.color)
-        
+
         surface.blit(m_surf, (self.x, self.y))
         surface.blit(r_surf, (self.x + m_surf.get_width(), self.y))
+
 
 class TypingGame:
     def __init__(self):
@@ -75,9 +124,9 @@ class TypingGame:
         self.score = 0
         self.lives = 5
         self.spawn_timer = 0
-        self.spawn_rate = 120 # Frames
+        self.spawn_rate = 120  # Frames
         self.difficulty = 1
-        self.active_word_index = -1 # Index of word being typed, -1 if none
+        self.active_word_index = -1  # Index of word being typed, -1 if none
 
     def spawn_word(self):
         text = random.choice(WORD_LIST)
@@ -102,17 +151,19 @@ class TypingGame:
             # Find a word starting with this char
             # Prioritize lowest (closest to bottom)
             # Sort by Y descending
-            sorted_indices = sorted(range(len(self.words)), key=lambda i: self.words[i].y, reverse=True)
-            
+            sorted_indices = sorted(
+                range(len(self.words)), key=lambda i: self.words[i].y, reverse=True
+            )
+
             for i in sorted_indices:
                 word = self.words[i]
                 if word.text.startswith(char):
                     self.active_word_index = i
                     word.matched_len = 1
-                    if word.matched_len == len(word.text): # Single letter word?
-                         self.score += 10
-                         self.words.pop(i)
-                         self.active_word_index = -1
+                    if word.matched_len == len(word.text):  # Single letter word?
+                        self.score += 10
+                        self.words.pop(i)
+                        self.active_word_index = -1
                     break
 
     def update(self):
@@ -126,7 +177,7 @@ class TypingGame:
         for i, word in enumerate(self.words):
             if word.update():
                 missed.append(i)
-        
+
         # Remove missed words (reverse order to keep indices valid)
         for i in sorted(missed, reverse=True):
             self.lives -= 1
@@ -142,24 +193,27 @@ class TypingGame:
         surface.fill(BLACK)
         for word in self.words:
             word.draw(surface)
-            
+
         # UI
         score_text = font_small.render(f"Score: {self.score}", True, WHITE)
         lives_text = font_small.render(f"Lives: {self.lives}", True, RED)
         surface.blit(score_text, (10, 10))
         surface.blit(lives_text, (SCREEN_WIDTH - 120, 10))
-        
+
         # Target indicator
         if self.active_word_index != -1:
-            target_text = font_small.render(f"Target: {self.words[self.active_word_index].text}", True, YELLOW)
+            target_text = font_small.render(
+                f"Target: {self.words[self.active_word_index].text}", True, YELLOW
+            )
             surface.blit(target_text, (SCREEN_WIDTH // 2 - 50, 10))
+
 
 def main():
     game = TypingGame()
-    
+
     running = True
     game_over = False
-    
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -179,10 +233,10 @@ def main():
                 game_over = True
 
         game.draw(screen)
-        
+
         if game_over:
             msg = font.render("Game Over! Press SPACE", True, WHITE)
-            rect = msg.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
+            rect = msg.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
             screen.blit(msg, rect)
 
         pygame.display.update()
@@ -190,6 +244,7 @@ def main():
 
     pygame.quit()
     sys.exit()
+
 
 if __name__ == "__main__":
     main()

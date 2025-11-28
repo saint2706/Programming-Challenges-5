@@ -3,6 +3,7 @@
 Run FCFS, SJF (non-preemptive), and Round Robin scheduling on process data and
 produce Gantt charts with matplotlib or Plotly.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -50,9 +51,16 @@ def load_processes(dataset: str) -> List[Process]:
 
         with path.open(newline="") as f:
             reader = csv.DictReader(f)
-            return [Process(pid=row["pid"], arrival=int(row["arrival"]), burst=int(row["burst"])) for row in reader]
+            return [
+                Process(
+                    pid=row["pid"], arrival=int(row["arrival"]), burst=int(row["burst"])
+                )
+                for row in reader
+            ]
 
-    raise ValueError("Unsupported dataset format. Use a built-in name, JSON, or CSV file.")
+    raise ValueError(
+        "Unsupported dataset format. Use a built-in name, JSON, or CSV file."
+    )
 
 
 def get_builtin_datasets() -> Dict[str, List[Dict[str, int]]]:
@@ -149,14 +157,18 @@ def run_rr(processes: Iterable[Process], quantum: int) -> Schedule:
     return schedule
 
 
-def compute_metrics(schedule: Schedule, processes: Iterable[Process]) -> Dict[str, float]:
+def compute_metrics(
+    schedule: Schedule, processes: Iterable[Process]
+) -> Dict[str, float]:
     arrivals = {p.pid: p.arrival for p in processes}
     bursts = {p.pid: p.burst for p in processes}
     completion: Dict[str, int] = {}
     for pid, _, end in schedule:
         completion[pid] = end
 
-    waiting_times = {pid: completion[pid] - arrivals[pid] - bursts[pid] for pid in arrivals}
+    waiting_times = {
+        pid: completion[pid] - arrivals[pid] - bursts[pid] for pid in arrivals
+    }
     turnaround_times = {pid: bursts[pid] + waiting_times[pid] for pid in bursts}
 
     return {
@@ -167,17 +179,33 @@ def compute_metrics(schedule: Schedule, processes: Iterable[Process]) -> Dict[st
 
 def to_gantt_blocks(schedule: Schedule) -> List[Dict[str, int]]:
     return [
-        {"Task": pid, "Start": start, "Finish": end}
-        for pid, start, end in schedule
+        {"Task": pid, "Start": start, "Finish": end} for pid, start, end in schedule
     ]
 
 
-def plot_matplotlib(schedule: Schedule, title: str, output: Optional[Path] = None) -> Path:
+def plot_matplotlib(
+    schedule: Schedule, title: str, output: Optional[Path] = None
+) -> Path:
     fig, ax = plt.subplots(figsize=(8, 2 + 0.3 * len(schedule)))
     colors = plt.cm.tab20.colors
     for idx, (pid, start, end) in enumerate(schedule):
-        ax.barh(0, end - start, left=start, height=0.5, color=colors[idx % len(colors)], edgecolor="black")
-        ax.text((start + end) / 2, 0, pid, ha="center", va="center", color="white", fontweight="bold")
+        ax.barh(
+            0,
+            end - start,
+            left=start,
+            height=0.5,
+            color=colors[idx % len(colors)],
+            edgecolor="black",
+        )
+        ax.text(
+            (start + end) / 2,
+            0,
+            pid,
+            ha="center",
+            va="center",
+            color="white",
+            fontweight="bold",
+        )
     ax.set_xlabel("Time")
     ax.set_yticks([])
     ax.set_title(title)
@@ -191,19 +219,25 @@ def plot_matplotlib(schedule: Schedule, title: str, output: Optional[Path] = Non
     return output
 
 
-def plot_plotly(schedule: Schedule, title: str, output: Optional[Path] = None) -> Optional[Path]:
+def plot_plotly(
+    schedule: Schedule, title: str, output: Optional[Path] = None
+) -> Optional[Path]:
     if px is None:
         print("Plotly is not installed; skipping Plotly render.", file=sys.stderr)
         return None
     df = to_gantt_blocks(schedule)
-    fig = px.timeline(df, x_start="Start", x_end="Finish", y="Task", color="Task", title=title)
+    fig = px.timeline(
+        df, x_start="Start", x_end="Finish", y="Task", color="Task", title=title
+    )
     fig.update_yaxes(autorange="reversed")
     output = output or Path(f"{title.replace(' ', '_').lower()}_plotly.html")
     fig.write_html(str(output))
     return output
 
 
-def run_algorithm(name: str, processes: List[Process], quantum: int) -> Tuple[Schedule, Dict[str, float]]:
+def run_algorithm(
+    name: str, processes: List[Process], quantum: int
+) -> Tuple[Schedule, Dict[str, float]]:
     if name == "fcfs":
         schedule = run_fcfs(processes)
     elif name == "sjf":
@@ -227,9 +261,26 @@ def comparison_plot(processes: List[Process], quantum: int, output_dir: Path) ->
         max_time = max(max_time, max(end for _, _, end in schedule))
         ax = axes[idx]
         for block_idx, (pid, start, end) in enumerate(schedule):
-            ax.barh(0, end - start, left=start, height=0.5, color=colors[block_idx % len(colors)], edgecolor="black")
-            ax.text((start + end) / 2, 0, pid, ha="center", va="center", color="white", fontweight="bold")
-        ax.set_title(f"{algo.upper()} | avg wait {metrics['average_waiting']:.2f} | avg turnaround {metrics['average_turnaround']:.2f}")
+            ax.barh(
+                0,
+                end - start,
+                left=start,
+                height=0.5,
+                color=colors[block_idx % len(colors)],
+                edgecolor="black",
+            )
+            ax.text(
+                (start + end) / 2,
+                0,
+                pid,
+                ha="center",
+                va="center",
+                color="white",
+                fontweight="bold",
+            )
+        ax.set_title(
+            f"{algo.upper()} | avg wait {metrics['average_waiting']:.2f} | avg turnaround {metrics['average_turnaround']:.2f}"
+        )
         ax.set_yticks([])
         ax.grid(True, axis="x", linestyle="--", alpha=0.5)
 
@@ -245,12 +296,26 @@ def comparison_plot(processes: List[Process], quantum: int, output_dir: Path) ->
 
 
 def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Visualize CPU scheduling algorithms with Gantt charts.")
-    parser.add_argument("--dataset", default="basic", help="Built-in dataset name or path to JSON/CSV file.")
-    parser.add_argument("--algorithm", choices=["fcfs", "sjf", "rr", "all"], default="all")
-    parser.add_argument("--quantum", type=int, default=2, help="Time quantum for Round Robin.")
+    parser = argparse.ArgumentParser(
+        description="Visualize CPU scheduling algorithms with Gantt charts."
+    )
+    parser.add_argument(
+        "--dataset",
+        default="basic",
+        help="Built-in dataset name or path to JSON/CSV file.",
+    )
+    parser.add_argument(
+        "--algorithm", choices=["fcfs", "sjf", "rr", "all"], default="all"
+    )
+    parser.add_argument(
+        "--quantum", type=int, default=2, help="Time quantum for Round Robin."
+    )
     parser.add_argument("--output-dir", type=Path, default=Path("sample_outputs"))
-    parser.add_argument("--plotly", action="store_true", help="Also write Plotly HTML charts when available.")
+    parser.add_argument(
+        "--plotly",
+        action="store_true",
+        help="Also write Plotly HTML charts when available.",
+    )
     return parser.parse_args(argv)
 
 
@@ -272,7 +337,9 @@ def main(argv: Optional[List[str]] = None) -> None:
             html = plot_plotly(schedule, title, output=plot_path)
             if html:
                 print(f"Saved Plotly plot for {algo} to {html}")
-        print(f"Metrics for {algo.upper()}: avg waiting {metrics['average_waiting']:.2f}, avg turnaround {metrics['average_turnaround']:.2f}")
+        print(
+            f"Metrics for {algo.upper()}: avg waiting {metrics['average_waiting']:.2f}, avg turnaround {metrics['average_turnaround']:.2f}"
+        )
 
     comparison = comparison_plot(processes, args.quantum, args.output_dir)
     print(f"Saved comparison plot to {comparison}")

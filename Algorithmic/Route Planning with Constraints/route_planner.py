@@ -5,8 +5,9 @@ This module provides route planning capabilities with support for:
 - Forbidden nodes and edges
 - Shortest path computation via Dijkstra's algorithm
 """
+
 import heapq
-from typing import List, Dict, Set, Tuple, Optional, Any
+from typing import Dict, List, Optional, Set, Tuple
 
 
 class Graph:
@@ -46,7 +47,13 @@ class RoutePlanner:
         """
         self.graph = graph
 
-    def dijkstra(self, start: str, end: Optional[str] = None, forbidden_nodes: Set[str] = None, forbidden_edges: Set[Tuple[str, str]] = None) -> Tuple[Dict[str, float], Dict[str, str]]:
+    def dijkstra(
+        self,
+        start: str,
+        end: Optional[str] = None,
+        forbidden_nodes: Set[str] = None,
+        forbidden_edges: Set[Tuple[str, str]] = None,
+    ) -> Tuple[Dict[str, float], Dict[str, str]]:
         """Run Dijkstra's algorithm with optional constraints.
 
         Args:
@@ -63,7 +70,7 @@ class RoutePlanner:
         if forbidden_edges is None:
             forbidden_edges = set()
 
-        distances = {node: float('inf') for node in self.graph.adj}
+        distances = {node: float("inf") for node in self.graph.adj}
         distances[start] = 0
         predecessors = {node: None for node in self.graph.adj}
 
@@ -85,14 +92,16 @@ class RoutePlanner:
                     continue
 
                 new_dist = d + weight
-                if new_dist < distances.get(v, float('inf')):
+                if new_dist < distances.get(v, float("inf")):
                     distances[v] = new_dist
                     predecessors[v] = u
                     heapq.heappush(pq, (new_dist, v))
 
         return distances, predecessors
 
-    def reconstruct_path(self, predecessors: Dict[str, str], start: str, end: str) -> List[str]:
+    def reconstruct_path(
+        self, predecessors: Dict[str, str], start: str, end: str
+    ) -> List[str]:
         """Reconstruct the path from start to end using predecessors dict."""
         path = []
         curr = end
@@ -103,10 +112,17 @@ class RoutePlanner:
             curr = predecessors.get(curr)
 
         if path[-1] != start:
-            return [] # No path found
+            return []  # No path found
         return path[::-1]
 
-    def find_route(self, start: str, end: str, must_visit: List[str] = None, forbidden_nodes: List[str] = None, forbidden_edges: List[Tuple[str, str]] = None) -> Tuple[List[str], float]:
+    def find_route(
+        self,
+        start: str,
+        end: str,
+        must_visit: List[str] = None,
+        forbidden_nodes: List[str] = None,
+        forbidden_edges: List[Tuple[str, str]] = None,
+    ) -> Tuple[List[str], float]:
         """
         Finds a route from start to end passing through all nodes in must_visit (in order)
         while avoiding forbidden nodes/edges.
@@ -121,9 +137,12 @@ class RoutePlanner:
         Returns:
             (path, total_cost)
         """
-        if must_visit is None: must_visit = []
-        if forbidden_nodes is None: forbidden_nodes = []
-        if forbidden_edges is None: forbidden_edges = []
+        if must_visit is None:
+            must_visit = []
+        if forbidden_nodes is None:
+            forbidden_nodes = []
+        if forbidden_edges is None:
+            forbidden_edges = []
 
         forbidden_nodes_set = set(forbidden_nodes)
         forbidden_edges_set = set(forbidden_edges)
@@ -136,13 +155,13 @@ class RoutePlanner:
 
         for i in range(len(waypoints) - 1):
             u = waypoints[i]
-            v = waypoints[i+1]
+            v = waypoints[i + 1]
 
             # Find shortest path from u to v
             dists, preds = self.dijkstra(u, v, forbidden_nodes_set, forbidden_edges_set)
 
-            if dists.get(v) == float('inf'):
-                return [], float('inf') # Path broken
+            if dists.get(v) == float("inf"):
+                return [], float("inf")  # Path broken
 
             segment = self.reconstruct_path(preds, u, v)
 
@@ -152,7 +171,9 @@ class RoutePlanner:
             if i == 0:
                 full_path.extend(segment)
             else:
-                full_path.extend(segment[1:]) # Skip the first element as it's the same as last of prev segment
+                full_path.extend(
+                    segment[1:]
+                )  # Skip the first element as it's the same as last of prev segment
 
             total_cost += dists[v]
 

@@ -4,7 +4,7 @@ This module simulates an elevator system with multiple elevators using
 a SCAN-like scheduling algorithm. Supports configurable number of
 elevators, floors, and capacity.
 """
-import simpy
+
 
 
 class Elevator:
@@ -25,7 +25,7 @@ class Elevator:
         self.capacity = capacity
 
         self.current_floor = 0
-        self.direction = 0 # 1=up, -1=down, 0=idle
+        self.direction = 0  # 1=up, -1=down, 0=idle
         self.passengers = []
 
         # Requests: set of floors to stop at
@@ -49,14 +49,14 @@ class Elevator:
         while True:
             if not self.stops:
                 self.direction = 0
-                yield self.env.timeout(1) # Idle check
+                yield self.env.timeout(1)  # Idle check
                 continue
 
             # Determine next target
             # Simple SCAN-like behavior: keep going in direction until no more stops, then switch
             if self.direction == 0:
-                 # Should have been set by request_floor, but if cleared:
-                 pass
+                # Should have been set by request_floor, but if cleared:
+                pass
 
             # Move logic
             if self.current_floor in self.stops:
@@ -66,12 +66,16 @@ class Elevator:
 
                 # Check if we should change direction
                 # If moving UP and no stops above, switch to DOWN (if stops below)
-                if self.direction == 1 and not any(f > self.current_floor for f in self.stops):
+                if self.direction == 1 and not any(
+                    f > self.current_floor for f in self.stops
+                ):
                     if any(f < self.current_floor for f in self.stops):
                         self.direction = -1
                     else:
                         self.direction = 0
-                elif self.direction == -1 and not any(f < self.current_floor for f in self.stops):
+                elif self.direction == -1 and not any(
+                    f < self.current_floor for f in self.stops
+                ):
                     if any(f > self.current_floor for f in self.stops):
                         self.direction = 1
                     else:
@@ -80,6 +84,7 @@ class Elevator:
             if self.direction != 0:
                 yield self.env.timeout(self.travel_time_per_floor)
                 self.current_floor += self.direction
+
 
 class Controller:
     """Elevator dispatch controller using nearest-elevator heuristic."""
@@ -117,7 +122,9 @@ class Controller:
                 score = dist
             elif elev.direction == 1 and direction == 1 and floor >= elev.current_floor:
                 score = dist
-            elif elev.direction == -1 and direction == -1 and floor <= elev.current_floor:
+            elif (
+                elev.direction == -1 and direction == -1 and floor <= elev.current_floor
+            ):
                 score = dist
 
             if score < min_dist:
@@ -125,7 +132,7 @@ class Controller:
                 best_elevator = elev
 
         if best_elevator is None:
-            best_elevator = self.elevators[0] # Fallback
+            best_elevator = self.elevators[0]  # Fallback
 
         best_elevator.request_floor(floor)
         return best_elevator.id

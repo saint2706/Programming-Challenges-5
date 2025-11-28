@@ -6,12 +6,13 @@ combines multiple oscillators, and can play a small melody sequence.
 
 Running this module will attempt to play a short demonstration melody.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
+from importlib import import_module, util
 from typing import Iterable, List, Sequence, Tuple
 
-from importlib import import_module, util
 import numpy as np
 
 PYAUDIO_SPEC = util.find_spec("pyaudio")
@@ -55,12 +56,16 @@ class ADSR:
         decay_samples = int(self.decay * sample_rate)
         release_samples = int(self.release * sample_rate)
 
-        sustain_samples = max(length - attack_samples - decay_samples - release_samples, 0)
+        sustain_samples = max(
+            length - attack_samples - decay_samples - release_samples, 0
+        )
 
         attack_env = np.linspace(0, 1, attack_samples, endpoint=False)
         decay_env = np.linspace(1, self.sustain_level, decay_samples, endpoint=False)
         sustain_env = np.full(sustain_samples, self.sustain_level)
-        release_env = np.linspace(self.sustain_level, 0, release_samples, endpoint=False)
+        release_env = np.linspace(
+            self.sustain_level, 0, release_samples, endpoint=False
+        )
 
         envelope = np.concatenate((attack_env, decay_env, sustain_env, release_env))
         if envelope.size < length:
@@ -91,7 +96,9 @@ def note_to_frequency(note: str) -> float:
     return 440.0 * (2 ** (semitone_offset / 12))
 
 
-def generate_waveform(wave_type: str, frequency: float, duration: float, sample_rate: int) -> np.ndarray:
+def generate_waveform(
+    wave_type: str, frequency: float, duration: float, sample_rate: int
+) -> np.ndarray:
     """Generate a waveform of the requested type."""
     t = np.linspace(0, duration, int(sample_rate * duration), endpoint=False)
 
@@ -160,7 +167,10 @@ def synthesize_tone(
     sample_rate: int,
 ) -> np.ndarray:
     frequency = note_to_frequency(note)
-    waves = [amplitude * generate_waveform(wave_type, frequency, duration, sample_rate) for wave_type, amplitude in oscillators]
+    waves = [
+        amplitude * generate_waveform(wave_type, frequency, duration, sample_rate)
+        for wave_type, amplitude in oscillators
+    ]
     mixed = mix_waves(waves)
     return apply_adsr_envelope(mixed, adsr, sample_rate)
 

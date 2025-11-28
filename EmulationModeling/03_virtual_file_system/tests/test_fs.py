@@ -1,6 +1,8 @@
-import unittest
 import os
+import unittest
+
 from fs import VirtualFileSystem
+
 
 class TestVirtualFileSystem(unittest.TestCase):
     def setUp(self):
@@ -64,5 +66,6 @@ class TestVirtualFileSystem(unittest.TestCase):
         self.vfs.cd("a/b")
         self.assertEqual(self.vfs.cat("c.txt"), "deep file")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

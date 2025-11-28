@@ -11,7 +11,17 @@ import sys
 from typing import Dict
 
 import pandas as pd
-from sqlalchemy import Column, DateTime, Float, Integer, MetaData, Table, Text, create_engine, inspect
+from sqlalchemy import (
+    Column,
+    DateTime,
+    Float,
+    Integer,
+    MetaData,
+    Table,
+    Text,
+    create_engine,
+    inspect,
+)
 from sqlalchemy.exc import SQLAlchemyError
 
 # Allow running as a script despite the space in folder name
@@ -55,17 +65,23 @@ def coerce_dataframe(df: pd.DataFrame, schema: Dict[str, object]) -> pd.DataFram
     coerced = df.copy()
     for column, sa_type in schema.items():
         if isinstance(sa_type, Integer):
-            coerced[column] = pd.to_numeric(coerced[column], errors="coerce").astype("Int64")
+            coerced[column] = pd.to_numeric(coerced[column], errors="coerce").astype(
+                "Int64"
+            )
         elif isinstance(sa_type, Float):
             coerced[column] = pd.to_numeric(coerced[column], errors="coerce")
         elif isinstance(sa_type, DateTime):
             coerced[column] = pd.to_datetime(coerced[column], errors="coerce")
         else:
-            coerced[column] = coerced[column].where(coerced[column].notna(), None).astype(object)
+            coerced[column] = (
+                coerced[column].where(coerced[column].notna(), None).astype(object)
+            )
     return coerced
 
 
-def create_table(engine, table_name: str, schema: Dict[str, object], if_exists: str = "replace") -> Table:
+def create_table(
+    engine, table_name: str, schema: Dict[str, object], if_exists: str = "replace"
+) -> Table:
     """Create a SQLAlchemy table based on the inferred schema."""
     metadata = MetaData()
     inspector = inspect(engine)
@@ -76,7 +92,9 @@ def create_table(engine, table_name: str, schema: Dict[str, object], if_exists: 
             Table(table_name, MetaData(), autoload_with=engine).drop(engine)
         elif if_exists == "append":
             return Table(table_name, metadata, autoload_with=engine)
-    columns = [Column(name, col_type, nullable=True) for name, col_type in schema.items()]
+    columns = [
+        Column(name, col_type, nullable=True) for name, col_type in schema.items()
+    ]
     table = Table(table_name, metadata, *columns)
     metadata.create_all(engine)
     return table
@@ -109,7 +127,9 @@ def build_table_name(csv_path: str) -> str:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Import CSV data into SQLite with inferred schema.")
+    parser = argparse.ArgumentParser(
+        description="Import CSV data into SQLite with inferred schema."
+    )
     parser.add_argument("csv", help="Path to the CSV file to import")
     parser.add_argument("--db", default="data_import.db", help="SQLite database file")
     parser.add_argument("--table", help="Name of the table to create")

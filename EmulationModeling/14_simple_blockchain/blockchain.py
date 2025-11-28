@@ -1,4 +1,5 @@
 """Minimal blockchain implementation with proof-of-work mining."""
+
 from __future__ import annotations
 
 import hashlib

@@ -1,4 +1,5 @@
 """Core encryption helpers for the Personal API Key Vault."""
+
 from __future__ import annotations
 
 import base64
@@ -20,7 +21,9 @@ class VaultError(Exception):
     """Raised when vault operations fail."""
 
 
-def derive_key(password: str, salt: bytes, iterations: int = DEFAULT_ITERATIONS) -> bytes:
+def derive_key(
+    password: str, salt: bytes, iterations: int = DEFAULT_ITERATIONS
+) -> bytes:
     """Derive a Fernet key from the provided password and salt."""
     if not password:
         raise ValueError("Master password cannot be empty")
@@ -57,7 +60,9 @@ def decrypt_secrets(salt: bytes, ciphertext: bytes, password: str) -> Dict[str, 
     try:
         plaintext = fernet.decrypt(ciphertext)
     except InvalidToken as exc:  # pragma: no cover - specific failure path
-        raise VaultError("Unable to decrypt vault: invalid password or corrupted data") from exc
+        raise VaultError(
+            "Unable to decrypt vault: invalid password or corrupted data"
+        ) from exc
     data = json.loads(plaintext.decode("utf-8"))
     if not isinstance(data, dict):
         raise VaultError("Vault content is malformed")

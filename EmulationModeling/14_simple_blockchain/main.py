@@ -1,4 +1,5 @@
 """Run a small demo that builds and validates a simple blockchain."""
+
 from __future__ import annotations
 
 from pprint import pprint

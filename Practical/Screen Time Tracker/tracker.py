@@ -33,14 +33,20 @@ class ScreenTimeTracker:
     def _record_interval(self, current_time: datetime) -> None:
         if not self._last_window or not self._last_switch:
             return
-        self.storage.log_interval(self._last_window.title, self._last_switch, current_time)
+        self.storage.log_interval(
+            self._last_window.title, self._last_switch, current_time
+        )
 
     def poll(self) -> None:
         """Capture focus changes and persist the elapsed time."""
 
         active_window = self.provider.get_active_window()
         now = self._now()
-        if active_window and self._last_window and active_window.title == self._last_window.title:
+        if (
+            active_window
+            and self._last_window
+            and active_window.title == self._last_window.title
+        ):
             return
         if self._last_window:
             self._record_interval(now)
@@ -81,4 +87,6 @@ def build_tracker(
         storage = JSONStorage(path or "screen_time.json")
     else:
         storage = SQLiteStorage(path or "screen_time.sqlite")
-    return ScreenTimeTracker(storage=storage, poll_interval_seconds=poll_interval_seconds)
+    return ScreenTimeTracker(
+        storage=storage, poll_interval_seconds=poll_interval_seconds
+    )

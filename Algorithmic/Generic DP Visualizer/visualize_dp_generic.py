@@ -4,9 +4,9 @@ This script demonstrates the classic 0/1 Knapsack problem solution using DP.
 It animates the construction of the DP table.
 """
 
-import sys
 import os
-from typing import List, Dict, Any
+import sys
+from typing import Any, Dict, List
 
 from manim import *  # type: ignore
 
@@ -49,9 +49,7 @@ class GenericDPDemo(Scene):
         # Headers (Columns: Capacity w)
         for j in range(cols):
             label = Text(str(j), font_size=16)
-            label.move_to(
-                start_pos + RIGHT * (j + 1) * cell_size + UP * cell_size
-            )
+            label.move_to(start_pos + RIGHT * (j + 1) * cell_size + UP * cell_size)
             self.add(label)
 
         # Headers (Rows: Items)
@@ -60,9 +58,7 @@ class GenericDPDemo(Scene):
             label = Text(label_text, font_size=16)
             # Adjust left offset for longer text
             label.move_to(
-                start_pos
-                + DOWN * (i + 1) * cell_size
-                + LEFT * 1.5 * cell_size
+                start_pos + DOWN * (i + 1) * cell_size + LEFT * 1.5 * cell_size
             )
             self.add(label)
 
@@ -71,9 +67,7 @@ class GenericDPDemo(Scene):
             for j in range(cols):
                 square = Square(side_length=cell_size).set_stroke(color=WHITE)
                 square.move_to(
-                    start_pos
-                    + RIGHT * (j + 1) * cell_size
-                    + DOWN * (i + 1) * cell_size
+                    start_pos + RIGHT * (j + 1) * cell_size + DOWN * (i + 1) * cell_size
                 )
                 grid.add(square)
                 cells[i][j]["square"] = square

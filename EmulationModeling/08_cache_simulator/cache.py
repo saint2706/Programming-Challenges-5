@@ -3,6 +3,7 @@
 This module provides a set-associative cache simulation supporting LRU and FIFO
 replacement policies. Useful for understanding cache behavior and hit/miss rates.
 """
+
 from collections import deque
 
 
@@ -144,8 +145,4 @@ class Cache:
         """
         total = self.hits + self.misses
         rate = (self.hits / total) if total > 0 else 0
-        return {
-            "hits": self.hits,
-            "misses": self.misses,
-            "rate": rate
-        }
+        return {"hits": self.hits, "misses": self.misses, "rate": rate}

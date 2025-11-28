@@ -91,13 +91,21 @@ class DocumentCleaner:
             if footer:
                 footer_counts[footer] += 1
 
-        repeated_headers = {line for line, count in header_counts.items() if count >= min_repeats}
-        repeated_footers = {line for line, count in footer_counts.items() if count >= min_repeats}
+        repeated_headers = {
+            line for line, count in header_counts.items() if count >= min_repeats
+        }
+        repeated_footers = {
+            line for line, count in footer_counts.items() if count >= min_repeats
+        }
 
         cleaned_pages: List[str] = []
         for lines in pages:
-            trimmed = self._remove_boundary_line(lines, repeated_headers, from_start=True)
-            trimmed = self._remove_boundary_line(trimmed, repeated_footers, from_start=False)
+            trimmed = self._remove_boundary_line(
+                lines, repeated_headers, from_start=True
+            )
+            trimmed = self._remove_boundary_line(
+                trimmed, repeated_footers, from_start=False
+            )
             cleaned_pages.append("\n".join(trimmed).strip())
 
         return "\n\n".join([page for page in cleaned_pages if page])

@@ -1,5 +1,6 @@
 from typing import Dict, List, Optional
 
+
 class SubsequenceAutomaton:
     """
     An automaton that allows checking if a string S is a subsequence of T

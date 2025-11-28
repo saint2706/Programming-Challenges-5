@@ -17,6 +17,7 @@ class Process:
     def __repr__(self):
         return f"P{self.pid}(Arr={self.arrival_time}, Burst={self.burst_time})"
 
+
 class Scheduler:
     def __init__(self, algorithm="FCFS", quantum=2):
         self.algorithm = algorithm
@@ -25,7 +26,7 @@ class Scheduler:
         self.current_process = None
         self.time = 0
         self.completed_processes = []
-        self.gantt_chart = [] # List of (pid, start, end)
+        self.gantt_chart = []  # List of (pid, start, end)
 
     def add_process(self, process):
         # In a real system, processes are added when time matches arrival.
@@ -69,7 +70,10 @@ class Scheduler:
 
             if self.current_process.is_finished():
                 self.current_process.completion_time = self.time + 1
-                self.current_process.turnaround_time = self.current_process.completion_time - self.current_process.arrival_time
+                self.current_process.turnaround_time = (
+                    self.current_process.completion_time
+                    - self.current_process.arrival_time
+                )
                 # wait time is turnaround - burst (or accumulated wait)
                 # self.current_process.wait_time = self.current_process.turnaround_time - self.current_process.burst_time
                 self.completed_processes.append(self.current_process)
@@ -77,19 +81,23 @@ class Scheduler:
 
             elif self.algorithm == "RR":
                 # Check quantum
-                time_running = (self.current_process.burst_time - self.current_process.remaining_time)
+                time_running = (
+                    self.current_process.burst_time
+                    - self.current_process.remaining_time
+                )
                 # If we just finished a quantum (and process not finished)
                 # Note: this logic is slightly tricky if we context switch.
                 # A better way: track 'current_burst_run'
-                pass # Simplified below
+                pass  # Simplified below
 
         self.time += 1
+
 
 class Kernel:
     def __init__(self, scheduler):
         self.scheduler = scheduler
         self.processes = []
-        self.new_processes = [] # Processes that haven't arrived yet
+        self.new_processes = []  # Processes that haven't arrived yet
 
     def load_processes(self, processes):
         self.new_processes = sorted(processes, key=lambda p: p.arrival_time)
@@ -97,7 +105,9 @@ class Kernel:
     def run(self, max_time=100):
         while self.time < max_time:
             # Check arrivals
-            while self.new_processes and self.new_processes[0].arrival_time <= self.time:
+            while (
+                self.new_processes and self.new_processes[0].arrival_time <= self.time
+            ):
                 p = self.new_processes.pop(0)
                 self.scheduler.ready_queue.append(p)
 
@@ -121,23 +131,27 @@ class Kernel:
 
             if self.scheduler.algorithm == "RR":
                 current = self.scheduler.current_process
-                if current: # If a process is still running after tick (didn't finish)
-                     if not hasattr(self.scheduler, 'slice_timer'):
-                         self.scheduler.slice_timer = 0
+                if current:  # If a process is still running after tick (didn't finish)
+                    if not hasattr(self.scheduler, "slice_timer"):
+                        self.scheduler.slice_timer = 0
 
-                     self.scheduler.slice_timer += 1
+                    self.scheduler.slice_timer += 1
 
-                     if self.scheduler.slice_timer >= self.scheduler.quantum:
-                         # Preempt
-                         self.scheduler.ready_queue.append(current)
-                         self.scheduler.current_process = None
-                         self.scheduler.slice_timer = 0
+                    if self.scheduler.slice_timer >= self.scheduler.quantum:
+                        # Preempt
+                        self.scheduler.ready_queue.append(current)
+                        self.scheduler.current_process = None
+                        self.scheduler.slice_timer = 0
                 else:
                     # Process finished or None was running, reset timer
                     self.scheduler.slice_timer = 0
 
             # Exit if all done
-            if not self.new_processes and not self.scheduler.ready_queue and not self.scheduler.current_process:
+            if (
+                not self.new_processes
+                and not self.scheduler.ready_queue
+                and not self.scheduler.current_process
+            ):
                 break
 
     @property

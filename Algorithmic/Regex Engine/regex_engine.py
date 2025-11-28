@@ -1,4 +1,5 @@
-from typing import List, Dict, Set, Optional, Tuple
+from typing import Dict, List, Optional, Set
+
 
 class State:
     def __init__(self, label=None, is_final=False):
@@ -6,17 +7,19 @@ class State:
         self.is_final = is_final
         # transitions: input_char -> list of next states
         # None key represents epsilon transition
-        self.transitions: Dict[Optional[str], List['State']] = {}
+        self.transitions: Dict[Optional[str], List["State"]] = {}
 
-    def add_transition(self, char: Optional[str], state: 'State'):
+    def add_transition(self, char: Optional[str], state: "State"):
         if char not in self.transitions:
             self.transitions[char] = []
         self.transitions[char].append(state)
+
 
 class NFA:
     def __init__(self, start: State, end: State):
         self.start = start
         self.end = end
+
 
 class RegexEngine:
     """
@@ -40,15 +43,15 @@ class RegexEngine:
         stack: List[NFA] = []
 
         for char in postfix:
-            if char == '.':
+            if char == ".":
                 right = stack.pop()
                 left = stack.pop()
                 stack.append(self._concat(left, right))
-            elif char == '|':
+            elif char == "|":
                 right = stack.pop()
                 left = stack.pop()
                 stack.append(self._union(left, right))
-            elif char == '*':
+            elif char == "*":
                 nfa = stack.pop()
                 stack.append(self._star(nfa))
             else:
@@ -56,9 +59,9 @@ class RegexEngine:
                 stack.append(self._literal(char))
 
         if not stack:
-             # Empty pattern matches empty string
-             s = State(is_final=True)
-             return NFA(s, s)
+            # Empty pattern matches empty string
+            s = State(is_final=True)
+            return NFA(s, s)
 
         return stack.pop()
 
@@ -73,9 +76,9 @@ class RegexEngine:
         for i, char in enumerate(pattern):
             processed.append(char)
             if i + 1 < len(pattern):
-                next_char = pattern[i+1]
-                is_curr_literal = char not in '(|'
-                is_next_literal = next_char not in ')|*'
+                next_char = pattern[i + 1]
+                is_curr_literal = char not in "(|"
+                is_next_literal = next_char not in ")|*"
 
                 # Add concat if:
                 # Literal followed by Literal (a b)
@@ -85,30 +88,31 @@ class RegexEngine:
                 # ) followed by Literal
                 # ) followed by (
 
-                if (char not in '(|') and (next_char not in ')|*'):
-                     processed.append('.')
-                elif (char == '*') and (next_char == '('):
-                     processed.append('.')
-                elif (char == ')') and (next_char == '('):
-                     processed.append('.')
-                elif (char == ')') and (next_char not in ')|*'):
-                     processed.append('.')
+                if (char not in "(|") and (next_char not in ")|*"):
+                    processed.append(".")
+                elif (char == "*") and (next_char == "("):
+                    processed.append(".")
+                elif (char == ")") and (next_char == "("):
+                    processed.append(".")
+                elif (char == ")") and (next_char not in ")|*"):
+                    processed.append(".")
 
         # Now classic Shunting-yard
-        precedence = {'*': 3, '.': 2, '|': 1, '(': 0}
+        precedence = {"*": 3, ".": 2, "|": 1, "(": 0}
 
         for char in processed:
-            if char not in '.*|()':
+            if char not in ".*|()":
                 output.append(char)
-            elif char == '(':
+            elif char == "(":
                 operator_stack.append(char)
-            elif char == ')':
-                while operator_stack and operator_stack[-1] != '(':
+            elif char == ")":
+                while operator_stack and operator_stack[-1] != "(":
                     output.append(operator_stack.pop())
-                operator_stack.pop() # Pop '('
+                operator_stack.pop()  # Pop '('
             else:
-                while (operator_stack and
-                       precedence.get(operator_stack[-1], 0) >= precedence.get(char, 0)):
+                while operator_stack and precedence.get(
+                    operator_stack[-1], 0
+                ) >= precedence.get(char, 0):
                     output.append(operator_stack.pop())
                 operator_stack.append(char)
 

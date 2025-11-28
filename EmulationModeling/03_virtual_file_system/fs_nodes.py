@@ -1,5 +1,5 @@
-import json
 import time
+
 
 class Node:
     def __init__(self, name, is_dir=False, parent=None):
@@ -8,7 +8,7 @@ class Node:
         self.parent = parent
         self.created_at = time.time()
         self.modified_at = time.time()
-        self.permissions = "rwxr-xr-x" # Default unix-like
+        self.permissions = "rwxr-xr-x"  # Default unix-like
 
     def to_dict(self):
         return {
@@ -16,8 +16,9 @@ class Node:
             "is_dir": self.is_dir,
             "created_at": self.created_at,
             "modified_at": self.modified_at,
-            "permissions": self.permissions
+            "permissions": self.permissions,
         }
+
 
 class File(Node):
     def __init__(self, name, content="", parent=None):
@@ -39,10 +40,11 @@ class File(Node):
         d["size"] = self.size
         return d
 
+
 class Directory(Node):
     def __init__(self, name, parent=None):
         super().__init__(name, is_dir=True, parent=parent)
-        self.children = {} # Map name -> Node
+        self.children = {}  # Map name -> Node
 
     def add_child(self, node):
         self.children[node.name] = node

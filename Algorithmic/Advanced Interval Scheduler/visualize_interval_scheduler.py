@@ -7,9 +7,9 @@ number of non-overlapping intervals) to allow for a clearer visual demonstration
 greedy choices.
 """
 
-import sys
 import os
-from typing import List, Tuple, Optional, Union
+import sys
+from typing import List, Optional, Tuple
 
 from manim import *  # type: ignore
 
@@ -91,9 +91,9 @@ class IntervalSchedulingDemo(Scene):
         self.play(
             Transform(
                 info_text,
-                Text(
-                    "Selecting non-overlapping...", font_size=24, color=GREEN
-                ).to_edge(LEFT),
+                Text("Selecting non-overlapping...", font_size=24, color=GREEN).to_edge(
+                    LEFT
+                ),
             )
         )
 
@@ -117,7 +117,7 @@ class IntervalSchedulingDemo(Scene):
                 # Accessing text content in Manim can be tricky across versions.
                 # Assuming `text` attribute exists for Text objects.
                 if getattr(text_obj, "text", "") == f"({start},{end})":
-                     # Handle duplicate intervals if any (none in this dataset)
+                    # Handle duplicate intervals if any (none in this dataset)
                     target_mobj = mobj
                     break
 

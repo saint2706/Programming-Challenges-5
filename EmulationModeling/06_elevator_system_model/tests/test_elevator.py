@@ -1,13 +1,15 @@
 import unittest
+
 import simpy
-from elevator_system import Elevator, Controller
+from elevator_system import Controller, Elevator
+
 
 class TestElevatorSystem(unittest.TestCase):
     def test_elevator_move(self):
         env = simpy.Environment()
         elev = Elevator(env, 0)
 
-        elev.request_floor(2) # Go from 0 to 2
+        elev.request_floor(2)  # Go from 0 to 2
 
         # It takes:
         # 1 tick to wake up/check
@@ -35,5 +37,6 @@ class TestElevatorSystem(unittest.TestCase):
         assigned = ctrl.call_elevator(6, 1)
         self.assertEqual(assigned, 1)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

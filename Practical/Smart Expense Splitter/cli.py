@@ -7,8 +7,8 @@ from __future__ import annotations
 
 import argparse
 import json
-import sys
 import os
+import sys
 from pathlib import Path
 from typing import List
 
@@ -16,12 +16,13 @@ from typing import List
 sys.path.append(os.path.dirname(__file__))
 try:
     from parser import ExpenseInputParser, load_expenses_from_file, parse_cli_expenses
-    from settlement import optimize_settlements
+
     from models import Expense
+    from settlement import optimize_settlements
 except ImportError:
+    from .models import Expense
     from .parser import ExpenseInputParser, load_expenses_from_file, parse_cli_expenses
     from .settlement import optimize_settlements
-    from .models import Expense
 
 
 def build_argument_parser() -> argparse.ArgumentParser:
@@ -86,9 +87,7 @@ def main() -> None:
 
     plan_dict = settlement.to_dict()
     if args.output:
-        Path(args.output).write_text(
-            json.dumps(plan_dict, indent=2), encoding="utf-8"
-        )
+        Path(args.output).write_text(json.dumps(plan_dict, indent=2), encoding="utf-8")
 
     if args.pretty or not args.output:
         if not plan_dict:

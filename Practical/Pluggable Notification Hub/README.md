@@ -48,7 +48,10 @@ Equivalent JSON:
     {
       "name": "email",
       "enabled": true,
-      "options": { "smtp_server": "smtp.example.com", "sender": "notifications@example.com" }
+      "options": {
+        "smtp_server": "smtp.example.com",
+        "sender": "notifications@example.com"
+      }
     },
     {
       "name": "slack",

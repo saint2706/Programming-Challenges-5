@@ -6,8 +6,8 @@ Entry point for generating static sites.
 from __future__ import annotations
 
 import argparse
-import sys
 import os
+import sys
 from pathlib import Path
 
 # Hack to support running as a script despite spaces in folder name

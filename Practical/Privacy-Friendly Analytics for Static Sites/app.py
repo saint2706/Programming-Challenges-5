@@ -1,4 +1,5 @@
 """FastAPI app for recording privacy-friendly page views."""
+
 from __future__ import annotations
 
 import os
@@ -28,7 +29,7 @@ app.add_middleware(
     allow_origins=["*"],
     allow_credentials=False,
     allow_methods=["POST", "OPTIONS"],
-    allow_headers=["*"]
+    allow_headers=["*"],
 )
 
 rate_limiter = RateLimiter(limit=120, window_seconds=60)
@@ -39,7 +40,9 @@ def on_startup() -> None:
     Base.metadata.create_all(bind=engine)
 
 
-def store_pageview(payload: PageViewCreate, user_agent: str | None, request: Request) -> Optional[PageView]:
+def store_pageview(
+    payload: PageViewCreate, user_agent: str | None, request: Request
+) -> Optional[PageView]:
     client_ip = get_client_ip(request)
     rate_limiter.touch(client_ip)
 
@@ -68,7 +71,9 @@ async def record_pageview(
     payload: PageViewCreate,
     request: Request,
     response: Response,
-    user_agent: Annotated[str | None, Header(default=None, convert_underscores=False)] = None,
+    user_agent: Annotated[
+        str | None, Header(default=None, convert_underscores=False)
+    ] = None,
 ):
     pageview = store_pageview(payload, user_agent, request)
     if pageview is None:

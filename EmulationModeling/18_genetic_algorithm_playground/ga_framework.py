@@ -7,10 +7,9 @@ one-point crossover, and mutation.
 
 from __future__ import annotations
 
+import random
 from dataclasses import dataclass
 from typing import Callable, Iterable, List, Sequence
-import random
-
 
 Genome = List[float]
 FitnessFunction = Callable[[Genome], float]
@@ -56,10 +55,7 @@ class GeneticAlgorithm:
         """Create an initial population uniformly within the provided bounds."""
         self.population = []
         for _ in range(self.config.population_size):
-            genome = [
-                random.uniform(low, high)
-                for low, high in self.config.bounds
-            ]
+            genome = [random.uniform(low, high) for low, high in self.config.bounds]
             self.population.append(Individual(genome=genome))
 
     def evaluate_population(self) -> None:
@@ -91,9 +87,14 @@ class GeneticAlgorithm:
                 return individual
         return self.population[-1]
 
-    def one_point_crossover(self, parent_a: Individual, parent_b: Individual) -> tuple[Genome, Genome]:
+    def one_point_crossover(
+        self, parent_a: Individual, parent_b: Individual
+    ) -> tuple[Genome, Genome]:
         """Perform one-point crossover between two parents."""
-        if self.config.genome_length < 2 or random.random() > self.config.crossover_rate:
+        if (
+            self.config.genome_length < 2
+            or random.random() > self.config.crossover_rate
+        ):
             return parent_a.genome.copy(), parent_b.genome.copy()
 
         point = random.randint(1, self.config.genome_length - 1)
@@ -114,10 +115,14 @@ class GeneticAlgorithm:
     def step(self) -> dict[str, float]:
         """Run one generation and return summary metrics."""
         self.evaluate_population()
-        best = max(self.population, key=lambda ind: ind.fitness or float('-inf'))
-        avg_fitness = sum(ind.fitness for ind in self.population if ind.fitness is not None) / len(self.population)
+        best = max(self.population, key=lambda ind: ind.fitness or float("-inf"))
+        avg_fitness = sum(
+            ind.fitness for ind in self.population if ind.fitness is not None
+        ) / len(self.population)
 
-        next_population: list[Individual] = [Individual(genome=best.genome.copy(), fitness=best.fitness)]
+        next_population: list[Individual] = [
+            Individual(genome=best.genome.copy(), fitness=best.fitness)
+        ]
         while len(next_population) < self.config.population_size:
             parent_a = self.roulette_wheel_selection()
             parent_b = self.roulette_wheel_selection()
@@ -129,7 +134,10 @@ class GeneticAlgorithm:
                 next_population.append(Individual(genome=mutated))
 
         self.population = next_population
-        return {"best_fitness": best.fitness or float("nan"), "avg_fitness": avg_fitness}
+        return {
+            "best_fitness": best.fitness or float("nan"),
+            "avg_fitness": avg_fitness,
+        }
 
     def run(self, generations: int) -> list[dict[str, float]]:
         """Run the genetic algorithm for a set number of generations."""

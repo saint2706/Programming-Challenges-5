@@ -27,18 +27,24 @@ def discover_builtin_plugins() -> MutableMapping[str, Type[NotificationProvider]
     return dict(BUILTIN_PROVIDERS)
 
 
-def discover_entry_points(group: str) -> MutableMapping[str, Type[NotificationProvider]]:
+def discover_entry_points(
+    group: str,
+) -> MutableMapping[str, Type[NotificationProvider]]:
     """Discover providers exposed via Python entry points."""
 
     registry: MutableMapping[str, Type[NotificationProvider]] = {}
     for entry_point in importlib.metadata.entry_points().select(group=group):  # type: ignore[attr-defined]
         provider_class = entry_point.load()
-        if isinstance(provider_class, type) and issubclass(provider_class, NotificationProvider):
+        if isinstance(provider_class, type) and issubclass(
+            provider_class, NotificationProvider
+        ):
             registry[entry_point.name] = provider_class
     return registry
 
 
-def discover_plugins_directory(plugins_dir: Path | None) -> MutableMapping[str, Type[NotificationProvider]]:
+def discover_plugins_directory(
+    plugins_dir: Path | None,
+) -> MutableMapping[str, Type[NotificationProvider]]:
     """
     Dynamically load provider modules from a plugins directory.
 
@@ -56,7 +62,9 @@ def discover_plugins_directory(plugins_dir: Path | None) -> MutableMapping[str, 
         for module_info in pkgutil.iter_modules([plugin_path]):
             module = importlib.import_module(module_info.name)
             provider_class = getattr(module, "provider", None)
-            if isinstance(provider_class, type) and issubclass(provider_class, NotificationProvider):
+            if isinstance(provider_class, type) and issubclass(
+                provider_class, NotificationProvider
+            ):
                 registry[module_info.name] = provider_class
     finally:
         if plugin_path in sys.path:
@@ -78,7 +86,9 @@ def load_provider_class(
     key = name.lower()
     if key not in registry:
         available = ", ".join(sorted(registry)) or "none"
-        raise ValueError(f"Unknown provider '{name}'. Available providers: {available}.")
+        raise ValueError(
+            f"Unknown provider '{name}'. Available providers: {available}."
+        )
     return registry[key]
 
 
@@ -102,7 +112,9 @@ def initialize_providers(
             options = getattr(item, "options", {})
         if not name:
             continue
-        cls = load_provider_class(name, entry_point_group=entry_point_group, plugins_dir=plugins_dir)
+        cls = load_provider_class(
+            name, entry_point_group=entry_point_group, plugins_dir=plugins_dir
+        )
         providers.append(cls(**(options if isinstance(options, dict) else {})))
     return providers
 

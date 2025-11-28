@@ -3,16 +3,17 @@
 Orchestrates the business logic for managing habits, tracking streaks, and
 generating reminders.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import date, datetime
-from typing import Iterable, List, Optional, Any
+from datetime import datetime
+from typing import List, Optional
 
 try:
-    from .database import HabitRepository, Habit
+    from .database import Habit, HabitRepository
 except ImportError:
-    from database import HabitRepository, Habit
+    from database import Habit, HabitRepository
 
 
 @dataclass

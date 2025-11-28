@@ -52,7 +52,9 @@ class Gridworld:
 
         return self.start
 
-    def step(self, state: Tuple[int, int], action: int) -> Tuple[Tuple[int, int], float, bool]:
+    def step(
+        self, state: Tuple[int, int], action: int
+    ) -> Tuple[Tuple[int, int], float, bool]:
         """Apply an action and return the transition.
 
         Args:
@@ -132,7 +134,9 @@ def update_q_value(
     current_value = float(q_table[row, col, action])
     next_max = 0.0 if done else float(np.max(q_table[next_row, next_col]))
     target = reward + config.discount_factor * next_max
-    q_table[row, col, action] = current_value + config.learning_rate * (target - current_value)
+    q_table[row, col, action] = current_value + config.learning_rate * (
+        target - current_value
+    )
 
 
 def train_agent(env: Gridworld, config: TrainingConfig) -> np.ndarray:
@@ -204,11 +208,17 @@ def parse_hazards(raw: Sequence[str]) -> List[Tuple[int, int]]:
 def run_cli() -> None:
     """Train an agent from command-line arguments and print the policy."""
 
-    parser = argparse.ArgumentParser(description="Train a Q-learning agent in a hazardous gridworld")
+    parser = argparse.ArgumentParser(
+        description="Train a Q-learning agent in a hazardous gridworld"
+    )
     parser.add_argument("--width", type=int, default=5, help="Grid width")
     parser.add_argument("--height", type=int, default=5, help="Grid height")
-    parser.add_argument("--start", type=str, default="0,0", help="Start coordinate as x,y")
-    parser.add_argument("--goal", type=str, default="4,4", help="Goal coordinate as x,y")
+    parser.add_argument(
+        "--start", type=str, default="0,0", help="Start coordinate as x,y"
+    )
+    parser.add_argument(
+        "--goal", type=str, default="4,4", help="Goal coordinate as x,y"
+    )
     parser.add_argument(
         "--hazards",
         type=str,
@@ -217,13 +227,21 @@ def run_cli() -> None:
         help="Hazard coordinates as x,y entries",
     )
     parser.add_argument("--episodes", type=int, default=300, help="Training episodes")
-    parser.add_argument("--max-steps", type=int, default=200, help="Maximum steps per episode")
+    parser.add_argument(
+        "--max-steps", type=int, default=200, help="Maximum steps per episode"
+    )
     parser.add_argument("--lr", type=float, default=0.1, help="Learning rate")
     parser.add_argument("--gamma", type=float, default=0.95, help="Discount factor")
-    parser.add_argument("--epsilon-start", type=float, default=1.0, help="Initial epsilon")
+    parser.add_argument(
+        "--epsilon-start", type=float, default=1.0, help="Initial epsilon"
+    )
     parser.add_argument("--epsilon-end", type=float, default=0.05, help="Final epsilon")
-    parser.add_argument("--epsilon-decay", type=float, default=0.99, help="Epsilon decay per episode")
-    parser.add_argument("--seed", type=int, default=0, help="Random seed (-1 to disable)")
+    parser.add_argument(
+        "--epsilon-decay", type=float, default=0.99, help="Epsilon decay per episode"
+    )
+    parser.add_argument(
+        "--seed", type=int, default=0, help="Random seed (-1 to disable)"
+    )
     args = parser.parse_args()
 
     start = tuple(int(coord) for coord in args.start.split(","))

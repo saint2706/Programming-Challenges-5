@@ -1,6 +1,6 @@
 """Demonstrate parsing and IR/CFG generation for a tiny imperative language."""
 
-from ir_visualizer import TinyLangParser, IRBuilder, build_basic_blocks, cfg_to_dot
+from ir_visualizer import IRBuilder, TinyLangParser, build_basic_blocks, cfg_to_dot
 
 
 def run_example() -> None:

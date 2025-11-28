@@ -1,11 +1,13 @@
 import unittest
+
 import numpy as np
-from nn import NeuralNetwork, Linear, ReLU, MSELoss
+from nn import Linear, MSELoss, NeuralNetwork, ReLU
+
 
 class TestNN(unittest.TestCase):
     def test_linear_shape(self):
         layer = Linear(2, 3)
-        x = np.random.randn(5, 2) # Batch 5
+        x = np.random.randn(5, 2)  # Batch 5
         out = layer.forward(x)
         self.assertEqual(out.shape, (5, 3))
 
@@ -36,5 +38,6 @@ class TestNN(unittest.TestCase):
         final_loss = loss_fn.forward(net.forward(X), y)
         self.assertLess(final_loss, 0.1)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

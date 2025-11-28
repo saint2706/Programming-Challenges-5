@@ -1,7 +1,8 @@
 import json
-import pickle
 import os
+
 from fs_nodes import Directory, File
+
 
 class VirtualFileSystem:
     def __init__(self):
@@ -70,7 +71,12 @@ class VirtualFileSystem:
             target = self._resolve_path(path)
 
         if target and isinstance(target, Directory):
-            return "\n".join([f"{name}{'/' if target.children[name].is_dir else ''}" for name in target.children])
+            return "\n".join(
+                [
+                    f"{name}{'/' if target.children[name].is_dir else ''}"
+                    for name in target.children
+                ]
+            )
         elif target:
             return target.name
         return "Error: Path not found."

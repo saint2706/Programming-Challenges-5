@@ -9,7 +9,7 @@ from __future__ import annotations
 import uuid
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
-from typing import Dict, Iterable, List, Optional, Any, Callable
+from typing import Any, Callable, Dict, Iterable, List, Optional
 
 try:
     from .storage import SessionStore
@@ -99,8 +99,8 @@ class TimeTracker:
         # We know active['id'] exists because it came from store
         result = self.store.update_session(active["id"], **updates)
         if result is None:
-             # Should typically not happen if active was just fetched
-             raise RuntimeError("Failed to update session.")
+            # Should typically not happen if active was just fetched
+            raise RuntimeError("Failed to update session.")
         return result
 
     def list_sessions(self) -> List[Dict[str, Any]]:
@@ -154,7 +154,7 @@ class TimeTracker:
                 # Assume UTC if naive, though typically we store ISO with TZ or UTC
                 start = start.replace(tzinfo=timezone.utc)
             else:
-                 start = start.astimezone(timezone.utc)
+                start = start.astimezone(timezone.utc)
 
             duration = self._duration(session)
 

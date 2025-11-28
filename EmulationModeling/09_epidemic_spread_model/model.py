@@ -1,12 +1,13 @@
 import numpy as np
 
+
 class Agent:
     def __init__(self, x, y, bounds, speed=1.0):
         self.pos = np.array([x, y], dtype=np.float64)
-        angle = np.random.uniform(0, 2*np.pi)
+        angle = np.random.uniform(0, 2 * np.pi)
         self.vel = np.array([np.cos(angle), np.sin(angle)]) * speed
-        self.bounds = bounds # (width, height)
-        self.state = "S" # S, I, R
+        self.bounds = bounds  # (width, height)
+        self.state = "S"  # S, I, R
         self.infection_timer = 0
 
     def update(self):
@@ -21,11 +22,23 @@ class Agent:
             self.vel[1] *= -1
             self.pos[1] = np.clip(self.pos[1], 0, self.bounds[1])
 
+
 class SIRModel:
-    def __init__(self, num_agents=100, width=100, height=100, infection_radius=5.0, infection_prob=0.5, recovery_time=100):
+    def __init__(
+        self,
+        num_agents=100,
+        width=100,
+        height=100,
+        infection_radius=5.0,
+        infection_prob=0.5,
+        recovery_time=100,
+    ):
         self.width = width
         self.height = height
-        self.agents = [Agent(np.random.rand()*width, np.random.rand()*height, (width, height)) for _ in range(num_agents)]
+        self.agents = [
+            Agent(np.random.rand() * width, np.random.rand() * height, (width, height))
+            for _ in range(num_agents)
+        ]
         self.infection_radius = infection_radius
         self.infection_prob = infection_prob
         self.recovery_time = recovery_time

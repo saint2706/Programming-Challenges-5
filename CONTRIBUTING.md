@@ -14,9 +14,9 @@ Thank you for your interest in contributing to this repository! We welcome contr
 
 ## Coding Standards
 
--   **Python**: Follow [PEP 8](https://www.python.org/dev/peps/pep-0008/) style guidelines. Use docstrings for all modules, classes, and functions.
--   **Documentation**: Ensure all new code is well-documented. Update the `README.md` if necessary.
--   **Testing**: Add unit tests for new features where applicable.
+- **Python**: Follow [PEP 8](https://www.python.org/dev/peps/pep-0008/) style guidelines. Use docstrings for all modules, classes, and functions.
+- **Documentation**: Ensure all new code is well-documented. Update the `README.md` if necessary.
+- **Testing**: Add unit tests for new features where applicable.
 
 ## Reporting Issues
 

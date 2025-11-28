@@ -8,11 +8,12 @@ Features:
     - Determinant and inverse helpers (powered by NumPy)
     - Benchmark helper to compare naive, Strassen, and NumPy performance
 """
+
 from __future__ import annotations
 
 import time
 from dataclasses import dataclass
-from typing import Iterable, List, Sequence, Tuple, Union, Optional, Dict
+from typing import Dict, Iterable, List, Optional, Sequence, Tuple, Union
 
 import numpy as np
 
@@ -331,12 +332,8 @@ def benchmark_multiplication(
         a_data = rng.uniform(-1, 1, size=(n, n))
         b_data = rng.uniform(-1, 1, size=(n, n))
         # Construct matrices based on backend preference
-        a = Matrix(
-            a_data.tolist() if backend == "list" else a_data, backend=backend
-        )
-        b = Matrix(
-            b_data.tolist() if backend == "list" else b_data, backend=backend
-        )
+        a = Matrix(a_data.tolist() if backend == "list" else a_data, backend=backend)
+        b = Matrix(b_data.tolist() if backend == "list" else b_data, backend=backend)
 
         timings: Dict[str, Union[int, float]] = {}
 

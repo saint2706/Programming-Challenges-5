@@ -1,4 +1,5 @@
 """Lightweight rate limiting and bot filtering utilities."""
+
 from __future__ import annotations
 
 import time

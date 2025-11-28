@@ -1,17 +1,21 @@
 import unittest
-from model import SIRModel, Agent
+
+from model import SIRModel
+
 
 class TestSIRModel(unittest.TestCase):
     def test_initial_state(self):
         model = SIRModel(num_agents=10)
         stats = model.get_stats()
-        self.assertEqual(stats["I"], 1) # Patient zero
+        self.assertEqual(stats["I"], 1)  # Patient zero
         self.assertEqual(stats["S"], 9)
         self.assertEqual(stats["R"], 0)
 
     def test_infection_spread(self):
         # Place infected agent next to susceptible
-        model = SIRModel(num_agents=2, width=10, height=10, infection_radius=100, infection_prob=1.0)
+        model = SIRModel(
+            num_agents=2, width=10, height=10, infection_radius=100, infection_prob=1.0
+        )
         # Agent 0 is I. Agent 1 is S.
         # Force positions close
         model.agents[0].pos[:] = [5, 5]
@@ -27,11 +31,12 @@ class TestSIRModel(unittest.TestCase):
         model = SIRModel(num_agents=1, recovery_time=2)
         # Agent 0 is I, timer=2.
 
-        model.step() # timer becomes 1
+        model.step()  # timer becomes 1
         self.assertEqual(model.agents[0].state, "I")
 
-        model.step() # timer becomes 0 -> Recovered
+        model.step()  # timer becomes 0 -> Recovered
         self.assertEqual(model.agents[0].state, "R")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

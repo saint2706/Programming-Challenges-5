@@ -1,5 +1,7 @@
 import unittest
+
 from cache import Cache
+
 
 class TestCache(unittest.TestCase):
     def test_direct_mapped_hit_miss(self):
@@ -38,16 +40,17 @@ class TestCache(unittest.TestCase):
         # Set 0 addresses: 0, 32, 64, 96... (Step 32)
 
         cache.read(0)  # Miss. Set 0 has [0, ?]
-        cache.read(32) # Miss. Set 0 has [0, 32]
+        cache.read(32)  # Miss. Set 0 has [0, 32]
 
         cache.read(0)  # Hit. MRU=0. Set 0 has [32, 0] (conceptually)
 
-        cache.read(64) # Miss. Evicts LRU (32). Set 0 has [0, 64]
+        cache.read(64)  # Miss. Evicts LRU (32). Set 0 has [0, 64]
 
-        cache.read(32) # Miss. Evicts LRU (0). Set 0 has [64, 32]
+        cache.read(32)  # Miss. Evicts LRU (0). Set 0 has [64, 32]
 
         self.assertEqual(cache.misses, 4)
         self.assertEqual(cache.hits, 1)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

@@ -1,7 +1,7 @@
 import string
+import sys
 from itertools import product
 from pathlib import Path
-import sys
 
 import pytest
 
@@ -39,7 +39,9 @@ def test_bk_tree_search(threshold):
     tree.build(words)
 
     matches = {word: dist for dist, word in tree.search("book", max_distance=threshold)}
-    assert (threshold == 0 and matches == {"book": 0}) or (threshold > 0 and "book" in matches)
+    assert (threshold == 0 and matches == {"book": 0}) or (
+        threshold > 0 and "book" in matches
+    )
     if threshold >= 1:
         assert "books" in matches or "boon" in matches
     if threshold == 0:

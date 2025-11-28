@@ -4,13 +4,12 @@ import argparse
 import heapq
 import math
 import os
+import random
 from collections import deque
 from dataclasses import dataclass
 from typing import Deque, List, Optional, Tuple
-import random
 
 import matplotlib.pyplot as plt
-
 
 """
 Module for simulating a single-server queue (M/M/1).
@@ -20,6 +19,7 @@ Module for simulating a single-server queue (M/M/1).
 @dataclass
 class Event:
     """Represents a discrete event in the simulation."""
+
     time: float
     kind: str  # "arrival" or "departure"
 
@@ -30,6 +30,7 @@ class Event:
 @dataclass
 class SimulationResult:
     """Container for statistics collected during the simulation."""
+
     end_time: float
     arrivals: int
     served: int
@@ -50,7 +51,10 @@ class QueueingSystemSimulator:
         service_rate (float): Exponential service rate (mu).
         random (random.Random): Random number generator instance.
     """
-    def __init__(self, arrival_rate: float, service_rate: float, seed: Optional[int] = None):
+
+    def __init__(
+        self, arrival_rate: float, service_rate: float, seed: Optional[int] = None
+    ):
         if arrival_rate <= 0 or service_rate <= 0:
             raise ValueError("Rates must be positive")
         self.arrival_rate = arrival_rate
@@ -68,7 +72,9 @@ class QueueingSystemSimulator:
         """Generate a service time from an exponential distribution."""
         return self.random.expovariate(self.service_rate)
 
-    def run(self, *, max_time: Optional[float] = None, max_customers: Optional[int] = None) -> SimulationResult:
+    def run(
+        self, *, max_time: Optional[float] = None, max_customers: Optional[int] = None
+    ) -> SimulationResult:
         """
         Execute the simulation until a stopping condition is met.
 
@@ -80,7 +86,9 @@ class QueueingSystemSimulator:
             SimulationResult: Collected statistics and history.
         """
         if max_time is None and max_customers is None:
-            raise ValueError("Provide max_time or max_customers to bound the simulation")
+            raise ValueError(
+                "Provide max_time or max_customers to bound the simulation"
+            )
 
         clock = 0.0
         queue: Deque[float] = deque()
@@ -180,7 +188,12 @@ def plot_results(result: SimulationResult, output_dir: str) -> None:
     plt.close()
 
     plt.figure(figsize=(10, 4))
-    plt.hist(result.wait_times, bins=max(10, int(math.sqrt(len(result.wait_times) + 1))), color="#1f77b4", edgecolor="black")
+    plt.hist(
+        result.wait_times,
+        bins=max(10, int(math.sqrt(len(result.wait_times) + 1))),
+        color="#1f77b4",
+        edgecolor="black",
+    )
     plt.xlabel("Wait time")
     plt.ylabel("Frequency")
     plt.title("Wait Time Distribution")
@@ -193,13 +206,40 @@ def plot_results(result: SimulationResult, output_dir: str) -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Single-server queue simulator with Poisson arrivals and exponential service.")
-    parser.add_argument("--arrival-rate", type=float, default=3.0, help="Arrival rate (lambda) for the Poisson process.")
-    parser.add_argument("--service-rate", type=float, default=4.0, help="Service rate (mu) for the exponential distribution.")
-    parser.add_argument("--duration", type=float, help="Maximum simulation time. Provide duration or customers.")
-    parser.add_argument("--customers", type=int, help="Number of customers to serve before stopping. Provide duration or customers.")
-    parser.add_argument("--seed", type=int, default=0, help="Seed for the random number generator.")
-    parser.add_argument("--output", type=str, default="results", help="Directory to store generated plots.")
+    parser = argparse.ArgumentParser(
+        description="Single-server queue simulator with Poisson arrivals and exponential service."
+    )
+    parser.add_argument(
+        "--arrival-rate",
+        type=float,
+        default=3.0,
+        help="Arrival rate (lambda) for the Poisson process.",
+    )
+    parser.add_argument(
+        "--service-rate",
+        type=float,
+        default=4.0,
+        help="Service rate (mu) for the exponential distribution.",
+    )
+    parser.add_argument(
+        "--duration",
+        type=float,
+        help="Maximum simulation time. Provide duration or customers.",
+    )
+    parser.add_argument(
+        "--customers",
+        type=int,
+        help="Number of customers to serve before stopping. Provide duration or customers.",
+    )
+    parser.add_argument(
+        "--seed", type=int, default=0, help="Seed for the random number generator."
+    )
+    parser.add_argument(
+        "--output",
+        type=str,
+        default="results",
+        help="Directory to store generated plots.",
+    )
     return parser.parse_args()
 
 

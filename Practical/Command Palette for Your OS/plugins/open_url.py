@@ -1,4 +1,5 @@
 """Open a URL in the default browser."""
+
 import webbrowser
 from urllib.parse import urlparse
 

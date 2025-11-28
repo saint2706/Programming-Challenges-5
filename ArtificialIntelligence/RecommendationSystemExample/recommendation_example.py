@@ -2,22 +2,30 @@
 A small, self-contained recommendation demo that combines collaborative filtering and content-based suggestions.
 Run directly to see recommendations for a sample user.
 """
+
 from __future__ import annotations
 
-import numpy as np
 from typing import List, Tuple
+
+import numpy as np
 
 
 def cosine_similarity(matrix: np.ndarray) -> np.ndarray:
     """Compute cosine similarity for rows in a matrix."""
     norms = np.linalg.norm(matrix, axis=1, keepdims=True)
     # Avoid division by zero for all-zero rows
-    safe_matrix = np.divide(matrix, norms, out=np.zeros_like(matrix, dtype=float), where=norms != 0)
+    safe_matrix = np.divide(
+        matrix, norms, out=np.zeros_like(matrix, dtype=float), where=norms != 0
+    )
     return safe_matrix @ safe_matrix.T
 
 
 def user_based_recommendations(
-    ratings: np.ndarray, user_index: int, movie_titles: List[str], top_k_similar: int = 2, top_n: int = 3
+    ratings: np.ndarray,
+    user_index: int,
+    movie_titles: List[str],
+    top_k_similar: int = 2,
+    top_n: int = 3,
 ) -> List[Tuple[str, float]]:
     """Recommend movies using user-user cosine similarity."""
     similarity = cosine_similarity(ratings)
@@ -44,7 +52,11 @@ def user_based_recommendations(
 
 
 def item_based_recommendations(
-    ratings: np.ndarray, user_index: int, movie_titles: List[str], top_k_similar: int = 2, top_n: int = 3
+    ratings: np.ndarray,
+    user_index: int,
+    movie_titles: List[str],
+    top_k_similar: int = 2,
+    top_n: int = 3,
 ) -> List[Tuple[str, float]]:
     """Recommend movies using item-item cosine similarity."""
     similarity = cosine_similarity(ratings.T)
@@ -90,16 +102,32 @@ def content_based_recommendations(
     # Cosine similarity between user profile and movie features
     profile_norm = np.linalg.norm(user_profile)
     feature_norms = np.linalg.norm(movie_features, axis=1)
-    similarities = np.divide(movie_features @ user_profile, feature_norms * profile_norm, out=np.zeros_like(feature_norms), where=feature_norms * profile_norm != 0)
+    similarities = np.divide(
+        movie_features @ user_profile,
+        feature_norms * profile_norm,
+        out=np.zeros_like(feature_norms),
+        where=feature_norms * profile_norm != 0,
+    )
 
     unrated_indices = np.where(user_ratings == 0)[0]
-    ranked_indices = sorted(unrated_indices, key=lambda idx: similarities[idx], reverse=True)[:top_n]
-    return [(movie_titles[idx], round(float(similarities[idx]), 2)) for idx in ranked_indices]
+    ranked_indices = sorted(
+        unrated_indices, key=lambda idx: similarities[idx], reverse=True
+    )[:top_n]
+    return [
+        (movie_titles[idx], round(float(similarities[idx]), 2))
+        for idx in ranked_indices
+    ]
 
 
 def main() -> None:
     users = ["Alice", "Bob", "Charlie", "Diana"]
-    movies = ["Action Blast", "Romantic Escape", "Space Odyssey", "Comedy Night", "Drama Unfolded"]
+    movies = [
+        "Action Blast",
+        "Romantic Escape",
+        "Space Odyssey",
+        "Comedy Night",
+        "Drama Unfolded",
+    ]
 
     # Rows correspond to users, columns to movies
     ratings = np.array(
@@ -137,7 +165,9 @@ def main() -> None:
     for title, score in item_based:
         print(f"  {title} (predicted rating: {score})")
 
-    content_based = content_based_recommendations(ratings, sample_user, movies, movie_features, feature_labels)
+    content_based = content_based_recommendations(
+        ratings, sample_user, movies, movie_features, feature_labels
+    )
     print("\nContent-based (features):")
     for title, score in content_based:
         print(f"  {title} (similarity: {score})")

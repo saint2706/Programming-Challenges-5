@@ -3,10 +3,11 @@
 A probabilistic data structure that provides O(log n) average complexity for
 search, insert, and delete operations, similar to balanced trees but simpler to implement.
 """
+
 from __future__ import annotations
 
 import random
-from typing import Any, Iterable, List, Optional, Iterator, Generator, Tuple
+from typing import Any, Generator, Iterator, List, Optional, Tuple
 
 
 class SkipListNode:
@@ -87,7 +88,7 @@ class SkipList:
                 # We must be careful with the header node which has key=None (treated as -inf ideally, but here we skip comparison if key is None or handle logic)
                 # Ideally header.key is None. Regular nodes have valid keys.
                 if next_node and next_node.key is not None and next_node.key < key:
-                     current = next_node
+                    current = next_node
                 else:
                     break
 
@@ -170,9 +171,7 @@ class SkipList:
                 update[i].forward[i] = current.forward[i]
 
             # Reduce level if top layers are empty
-            while (
-                self.level > 0 and self.header.forward[self.level] is None
-            ):
+            while self.level > 0 and self.header.forward[self.level] is None:
                 self.level -= 1
             return True
         return False

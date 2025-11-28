@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import tkinter as tk
 from datetime import date
-from typing import Dict
 
 from .storage import JSONStorage, SQLiteStorage
 

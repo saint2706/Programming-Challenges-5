@@ -3,9 +3,9 @@
 This script visualizes the step-by-step computation of multiplying two 2x2 matrices.
 """
 
-import sys
 import os
-from typing import List, Tuple, Any
+import sys
+from typing import Any, List, Tuple
 
 from manim import *  # type: ignore
 
@@ -50,9 +50,7 @@ class MatrixOpsDemo(Scene):
             entries = VGroup()
             for i in range(rows):
                 for j in range(cols):
-                    entry = Text(
-                        str(matrix[i][j]), font_size=24, color=color
-                    )
+                    entry = Text(str(matrix[i][j]), font_size=24, color=color)
                     # Position
                     x = (j - (cols - 1) / 2) * 0.8
                     y = ((rows - 1) / 2 - i) * 0.8
@@ -72,9 +70,7 @@ class MatrixOpsDemo(Scene):
         times = Text("x", font_size=36).move_to(
             (matrix_a_group.get_right() + matrix_b_group.get_left()) / 2
         )
-        equals = Text("=", font_size=36).next_to(
-            matrix_b_group, RIGHT, buff=0.5
-        )
+        equals = Text("=", font_size=36).next_to(matrix_b_group, RIGHT, buff=0.5)
 
         self.play(
             Create(matrix_a_group),
@@ -91,9 +87,7 @@ class MatrixOpsDemo(Scene):
         self.play(Create(matrix_c_group))
 
         # Helper to highlight row/col
-        def highlight_row_col(
-            row_idx: int, col_idx: int
-        ) -> Tuple[VGroup, VGroup]:
+        def highlight_row_col(row_idx: int, col_idx: int) -> Tuple[VGroup, VGroup]:
             # Get row entries from A
             row_entries = VGroup()
             for j in range(len(A[0])):

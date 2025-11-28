@@ -3,6 +3,7 @@
 Reads subscriber data from YAML/JSON, personalizes Jinja2 templates, and sends batched emails
 via SMTP. Includes logging, unsubscribe skipping, and optional scheduling hooks.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -49,19 +50,27 @@ class NewsletterEngine:
     def __init__(self, config: CampaignConfig) -> None:
         self.config = config
         self.logger = logging.getLogger("newsletter_engine")
-        self.template_env = Environment(loader=FileSystemLoader(config.template_path.parent))
+        self.template_env = Environment(
+            loader=FileSystemLoader(config.template_path.parent)
+        )
         self.template_env.globals.update({"now": datetime.now})
-        self.template: Template = self.template_env.get_template(config.template_path.name)
+        self.template: Template = self.template_env.get_template(
+            config.template_path.name
+        )
 
     def load_subscribers(self) -> List[Dict[str, Any]]:
         data = load_yaml_or_json(self.config.subscribers_path)
         subscribers = data.get("subscribers", data) if isinstance(data, dict) else data
         if not isinstance(subscribers, list):
-            raise ValueError("Subscriber data must be a list or contain a 'subscribers' list")
+            raise ValueError(
+                "Subscriber data must be a list or contain a 'subscribers' list"
+            )
         cleaned: List[Dict[str, Any]] = []
         for subscriber in subscribers:
             if not isinstance(subscriber, dict):
-                self.logger.warning("Skipping malformed subscriber entry: %s", subscriber)
+                self.logger.warning(
+                    "Skipping malformed subscriber entry: %s", subscriber
+                )
                 continue
             email = subscriber.get("email")
             if not email:
@@ -93,7 +102,11 @@ class NewsletterEngine:
         message.attach(MIMEText(html_body, "html"))
 
         context = ssl.create_default_context()
-        self.logger.debug("Connecting to SMTP server %s:%s", self.config.smtp.host, self.config.smtp.port)
+        self.logger.debug(
+            "Connecting to SMTP server %s:%s",
+            self.config.smtp.host,
+            self.config.smtp.port,
+        )
         with smtplib.SMTP(self.config.smtp.host, self.config.smtp.port) as server:
             if self.config.smtp.use_tls:
                 server.starttls(context=context)
@@ -109,7 +122,8 @@ class NewsletterEngine:
             self.send_batch(batch)
             if self.config.delay_between_batches and i + len(batch) < len(subscribers):
                 self.logger.info(
-                    "Waiting %s seconds before next batch", self.config.delay_between_batches
+                    "Waiting %s seconds before next batch",
+                    self.config.delay_between_batches,
                 )
                 time.sleep(self.config.delay_between_batches)
 
@@ -139,8 +153,12 @@ def setup_logging(level: str = "INFO") -> None:
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Send personalized newsletters")
-    parser.add_argument("--config", type=Path, required=True, help="Path to campaign config YAML/JSON")
-    parser.add_argument("--log-level", default="INFO", help="Logging level (INFO, DEBUG, etc.)")
+    parser.add_argument(
+        "--config", type=Path, required=True, help="Path to campaign config YAML/JSON"
+    )
+    parser.add_argument(
+        "--log-level", default="INFO", help="Logging level (INFO, DEBUG, etc.)"
+    )
     parser.add_argument(
         "--schedule",
         type=str,

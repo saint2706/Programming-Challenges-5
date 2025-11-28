@@ -3,6 +3,7 @@
 This script generates a small set of cities and uses a genetic algorithm
 with order crossover and swap mutation to find a near-optimal route.
 """
+
 from __future__ import annotations
 
 import math
@@ -32,7 +33,9 @@ def route_length(route: Sequence[int], cities: Sequence[City]) -> float:
     distance = 0.0
     for idx, city_index in enumerate(route):
         next_city_index = route[(idx + 1) % len(route)]
-        distance += euclidean_distance(cities[city_index][1], cities[next_city_index][1])
+        distance += euclidean_distance(
+            cities[city_index][1], cities[next_city_index][1]
+        )
     return distance
 
 
@@ -45,7 +48,9 @@ def initial_population(size: int, num_cities: int) -> List[Route]:
     return [random.sample(base_route, num_cities) for _ in range(size)]
 
 
-def tournament_selection(population: List[Route], cities: Sequence[City], k: int) -> Route:
+def tournament_selection(
+    population: List[Route], cities: Sequence[City], k: int
+) -> Route:
     contenders = random.sample(population, k)
     return max(contenders, key=lambda route: fitness(route, cities))
 
@@ -70,7 +75,9 @@ def swap_mutation(route: Route) -> Route:
     return mutated
 
 
-def evolve_population(population: List[Route], config: GAConfig, cities: Sequence[City]) -> List[Route]:
+def evolve_population(
+    population: List[Route], config: GAConfig, cities: Sequence[City]
+) -> List[Route]:
     population.sort(key=lambda r: fitness(r, cities), reverse=True)
     new_population: List[Route] = population[: config.elite_size]
 

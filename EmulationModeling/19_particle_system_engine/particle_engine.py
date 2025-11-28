@@ -7,6 +7,7 @@ This module provides a simple particle engine with two update implementations:
 A sample animation using ``matplotlib`` is available when running this module as a
 script (``python particle_engine.py``).
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -14,8 +15,8 @@ from typing import Iterable, List, Sequence
 
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.animation import FuncAnimation
 from matplotlib import colors as mcolors
+from matplotlib.animation import FuncAnimation
 
 
 @dataclass
@@ -45,7 +46,10 @@ class ParticleEngine:
             raise ValueError("Gravity must be a 2D vector")
 
     def add_particles(
-        self, positions: Iterable[Sequence[float]], velocities: Iterable[Sequence[float]], lifetimes: Iterable[float]
+        self,
+        positions: Iterable[Sequence[float]],
+        velocities: Iterable[Sequence[float]],
+        lifetimes: Iterable[float],
     ) -> None:
         """Add multiple particles to the engine.
 
@@ -57,7 +61,11 @@ class ParticleEngine:
 
         for pos, vel, life in zip(positions, velocities, lifetimes):
             self.particles.append(
-                Particle(position=np.asarray(pos, dtype=float), velocity=np.asarray(vel, dtype=float), lifetime=float(life))
+                Particle(
+                    position=np.asarray(pos, dtype=float),
+                    velocity=np.asarray(vel, dtype=float),
+                    lifetime=float(life),
+                )
             )
 
     def update(self, dt: float, use_vectorized: bool = False) -> None:
@@ -126,12 +134,15 @@ class ParticleEngine:
 
 # -------- Sample animation -------- #
 
+
 def _initialize_particles(engine: ParticleEngine, count: int = 250) -> None:
     rng = np.random.default_rng()
     positions = rng.normal(loc=0.0, scale=0.2, size=(count, 2))
     velocities = rng.normal(loc=0.0, scale=1.5, size=(count, 2))
     lifetimes = rng.uniform(2.0, 5.0, size=(count,))
-    engine.add_particles(positions=positions, velocities=velocities, lifetimes=lifetimes)
+    engine.add_particles(
+        positions=positions, velocities=velocities, lifetimes=lifetimes
+    )
 
 
 def run_sample_animation() -> None:

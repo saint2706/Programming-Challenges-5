@@ -8,7 +8,7 @@ from typing import Iterable, List, Optional
 
 from pygments import highlight
 from pygments.formatters.terminal import TerminalFormatter
-from pygments.lexers import get_lexer_by_name, guess_lexer, TextLexer
+from pygments.lexers import TextLexer, get_lexer_by_name, guess_lexer
 
 
 class SnippetStore:
@@ -132,8 +132,7 @@ class SnippetStore:
             pattern = f"%{keyword}%"
             params.extend([pattern, pattern])
 
-        base_query = (
-            """
+        base_query = """
             SELECT s.id, s.title, s.language, s.code, s.created_at, GROUP_CONCAT(t.name, ',') AS tags
             FROM snippets s
             LEFT JOIN snippet_tags st ON s.id = st.snippet_id
@@ -143,7 +142,6 @@ class SnippetStore:
             {having_clause}
             ORDER BY s.created_at DESC;
             """
-        )
 
         where_clause = ""
         if where_clauses:
@@ -153,12 +151,16 @@ class SnippetStore:
         if tags:
             placeholders = ",".join("?" for _ in tags)
             having_clause = (
-                "HAVING COUNT(DISTINCT CASE WHEN t.name IN (" + placeholders + ") THEN t.name END) = ?"
+                "HAVING COUNT(DISTINCT CASE WHEN t.name IN ("
+                + placeholders
+                + ") THEN t.name END) = ?"
             )
             params.extend(tags)
             params.append(len(tags))
 
-        query = base_query.format(where_clause=where_clause, having_clause=having_clause)
+        query = base_query.format(
+            where_clause=where_clause, having_clause=having_clause
+        )
         cursor = self.conn.cursor()
         cursor.execute(query, params)
         return cursor.fetchall()
@@ -247,7 +249,9 @@ def read_code(args: argparse.Namespace) -> str:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Manage code snippets with tagging and search.")
+    parser = argparse.ArgumentParser(
+        description="Manage code snippets with tagging and search."
+    )
     parser.add_argument(
         "--db",
         type=Path,
@@ -258,25 +262,43 @@ def parse_args() -> argparse.Namespace:
 
     add_parser = subparsers.add_parser("add", help="Add a new snippet")
     add_parser.add_argument("title", help="Title for the snippet")
-    add_parser.add_argument("language", help="Programming language for syntax highlighting")
+    add_parser.add_argument(
+        "language", help="Programming language for syntax highlighting"
+    )
     add_parser.add_argument("--code", help="Code content as a string")
-    add_parser.add_argument("--file", help="Path to a file containing the code or '-' for stdin")
-    add_parser.add_argument("--tag", action="append", help="Tags to associate with the snippet", default=[])
+    add_parser.add_argument(
+        "--file", help="Path to a file containing the code or '-' for stdin"
+    )
+    add_parser.add_argument(
+        "--tag", action="append", help="Tags to associate with the snippet", default=[]
+    )
 
     list_parser = subparsers.add_parser("list", help="List all snippets")
     list_parser.add_argument("--limit", type=int, help="Limit the number of results")
 
-    search_parser = subparsers.add_parser("search", help="Search snippets by keywords and tags")
-    search_parser.add_argument("--keyword", action="append", help="Keyword to search in title or code")
-    search_parser.add_argument("--tag", action="append", help="Tag that must be present on the snippet")
+    search_parser = subparsers.add_parser(
+        "search", help="Search snippets by keywords and tags"
+    )
+    search_parser.add_argument(
+        "--keyword", action="append", help="Keyword to search in title or code"
+    )
+    search_parser.add_argument(
+        "--tag", action="append", help="Tag that must be present on the snippet"
+    )
 
     show_parser = subparsers.add_parser("show", help="Show a snippet in detail")
-    show_parser.add_argument("snippet_id", type=int, help="ID of the snippet to display")
+    show_parser.add_argument(
+        "snippet_id", type=int, help="ID of the snippet to display"
+    )
 
     export_parser = subparsers.add_parser("export", help="Export all snippets to JSON")
-    export_parser.add_argument("output", type=Path, help="Destination path for the JSON export")
+    export_parser.add_argument(
+        "output", type=Path, help="Destination path for the JSON export"
+    )
 
-    import_parser = subparsers.add_parser("import", help="Import snippets from a JSON file")
+    import_parser = subparsers.add_parser(
+        "import", help="Import snippets from a JSON file"
+    )
     import_parser.add_argument("input", type=Path, help="JSON file to import")
 
     return parser.parse_args()
@@ -288,20 +310,26 @@ def main():
     try:
         if args.command == "add":
             code = read_code(args)
-            snippet_id = store.add_snippet(args.title, args.language, code, tags=args.tag)
+            snippet_id = store.add_snippet(
+                args.title, args.language, code, tags=args.tag
+            )
             print(f"Added snippet #{snippet_id}: {args.title}")
         elif args.command == "list":
             for row in store.list_snippets()[: args.limit if args.limit else None]:
                 snippet_id, title, language, created_at, tags = row
                 tag_display = f" [tags: {tags}]" if tags else ""
-                print(f"#{snippet_id} | {title} ({language}) | {created_at}{tag_display}")
+                print(
+                    f"#{snippet_id} | {title} ({language}) | {created_at}{tag_display}"
+                )
         elif args.command == "search":
             results = store.search_snippets(keywords=args.keyword, tags=args.tag)
             if not results:
                 print("No snippets found.")
             for snippet_id, title, language, code, created_at, tags in results:
                 tag_display = f" [tags: {tags}]" if tags else ""
-                print(f"\n#{snippet_id} | {title} ({language}) | {created_at}{tag_display}")
+                print(
+                    f"\n#{snippet_id} | {title} ({language}) | {created_at}{tag_display}"
+                )
                 print(highlight_code(code, language))
         elif args.command == "show":
             record = store.get_snippet(args.snippet_id)
@@ -310,7 +338,9 @@ def main():
             else:
                 snippet_id, title, language, code, created_at, tags = record
                 tag_display = f" [tags: {tags}]" if tags else ""
-                print(f"#{snippet_id} | {title} ({language}) | {created_at}{tag_display}")
+                print(
+                    f"#{snippet_id} | {title} ({language}) | {created_at}{tag_display}"
+                )
                 print(highlight_code(code, language))
         elif args.command == "export":
             store.export_json(args.output)

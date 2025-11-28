@@ -9,6 +9,7 @@ callable.
 Run with:
     python Practical/Command\ Palette\ for\ Your\ OS/command_palette.py
 """
+
 from __future__ import annotations
 
 import importlib.util
@@ -146,7 +147,9 @@ class CommandPaletteDialog(QtWidgets.QDialog):
         self.filtered_plugins = plugins
 
         layout = QtWidgets.QVBoxLayout(self)
-        info = QtWidgets.QLabel("Type to search plugins. Enter runs the highlighted plugin.")
+        info = QtWidgets.QLabel(
+            "Type to search plugins. Enter runs the highlighted plugin."
+        )
         self.input = QtWidgets.QLineEdit()
         self.input.setPlaceholderText("Search plugins or type a query...")
         self.list_widget = QtWidgets.QListWidget()
@@ -177,8 +180,11 @@ class CommandPaletteDialog(QtWidgets.QDialog):
         if not query:
             self.filtered_plugins = sorted(self.plugins, key=lambda p: p.name.lower())
         else:
+
             def matches(plugin: PluginDefinition) -> bool:
-                haystack = " ".join([plugin.name, plugin.description, " ".join(plugin.keywords)])
+                haystack = " ".join(
+                    [plugin.name, plugin.description, " ".join(plugin.keywords)]
+                )
                 return query in haystack.lower()
 
             self.filtered_plugins = [p for p in self.plugins if matches(p)]
@@ -212,7 +218,9 @@ class CommandPaletteDialog(QtWidgets.QDialog):
     def _execute_plugin(self, plugin: PluginDefinition, query: str) -> None:
         try:
             result = plugin.execute(query)
-            message = str(result) if result is not None else "Plugin executed successfully."
+            message = (
+                str(result) if result is not None else "Plugin executed successfully."
+            )
             self.bridge.success.emit(plugin.name, message)
         except Exception as exc:  # noqa: BLE001
             logging.exception("Plugin %s failed", plugin.name)
@@ -251,7 +259,9 @@ class CommandPaletteApplication(QtCore.QObject):
         self.hotkey_listener.start()
 
     def _build_tray_icon(self) -> QtWidgets.QSystemTrayIcon:
-        icon = QtWidgets.QApplication.style().standardIcon(QtWidgets.QStyle.StandardPixmap.SP_ComputerIcon)
+        icon = QtWidgets.QApplication.style().standardIcon(
+            QtWidgets.QStyle.StandardPixmap.SP_ComputerIcon
+        )
         tray = QtWidgets.QSystemTrayIcon(icon)
         menu = QtWidgets.QMenu()
 

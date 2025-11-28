@@ -6,7 +6,7 @@ import json
 import os
 import sqlite3
 from collections import defaultdict
-from datetime import datetime, date
+from datetime import date, datetime
 from typing import Dict, Iterable, List, Optional
 
 

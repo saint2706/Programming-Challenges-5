@@ -9,6 +9,10 @@ class SlackProvider(NotificationProvider):
     """Send notifications to Slack channels or users."""
 
     def send(self, message: str, recipient: str) -> None:
-        webhook_url = self.options.get("webhook_url", "https://hooks.slack.com/services/demo")
+        webhook_url = self.options.get(
+            "webhook_url", "https://hooks.slack.com/services/demo"
+        )
         channel = self.options.get("channel", recipient)
-        print(f"[Slack] Channel/User: {channel} | Webhook: {webhook_url} | Message: {message}")
+        print(
+            f"[Slack] Channel/User: {channel} | Webhook: {webhook_url} | Message: {message}"
+        )

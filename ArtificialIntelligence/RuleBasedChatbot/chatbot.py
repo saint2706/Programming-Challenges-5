@@ -16,9 +16,10 @@ from __future__ import annotations
 import re
 from typing import Optional
 
-
 GOODBYE_KEYWORDS = {"goodbye", "bye", "exit", "quit"}
-GREETINGS_PATTERN = re.compile(r"\b(hi|hello|hey|good\s+morning|good\s+evening)\b", re.IGNORECASE)
+GREETINGS_PATTERN = re.compile(
+    r"\b(hi|hello|hey|good\s+morning|good\s+evening)\b", re.IGNORECASE
+)
 HOURS_PATTERN = re.compile(r"\b(hours?|open|closing|close)\b", re.IGNORECASE)
 
 

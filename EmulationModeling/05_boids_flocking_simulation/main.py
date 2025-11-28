@@ -1,6 +1,7 @@
-import pygame
 import numpy as np
+import pygame
 from boids import Flock
+
 
 def main():
     WIDTH, HEIGHT = 800, 600
@@ -29,9 +30,9 @@ def main():
 
             # Triangle points
             r = 6
-            p1 = pos + np.array([np.cos(angle)*r, np.sin(angle)*r])
-            p2 = pos + np.array([np.cos(angle + 2.5)*r, np.sin(angle + 2.5)*r])
-            p3 = pos + np.array([np.cos(angle - 2.5)*r, np.sin(angle - 2.5)*r])
+            p1 = pos + np.array([np.cos(angle) * r, np.sin(angle) * r])
+            p2 = pos + np.array([np.cos(angle + 2.5) * r, np.sin(angle + 2.5) * r])
+            p3 = pos + np.array([np.cos(angle - 2.5) * r, np.sin(angle - 2.5) * r])
 
             pygame.draw.polygon(screen, (200, 200, 255), [p1, p2, p3])
 
@@ -39,6 +40,7 @@ def main():
         clock.tick(60)
 
     pygame.quit()
+
 
 if __name__ == "__main__":
     main()

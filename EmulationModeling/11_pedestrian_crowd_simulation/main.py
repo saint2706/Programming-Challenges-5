@@ -1,9 +1,8 @@
 import argparse
+
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
-
 from simulation import CrowdSimulation
-
 
 DEFAULT_STEPS = 300
 
@@ -19,7 +18,9 @@ def run_animation(agent_count: int, steps: int) -> None:
     ax.set_ylabel("Y position")
 
     agents_plot = ax.scatter([], [], s=40, c="tab:blue", label="Pedestrians")
-    destinations_plot = ax.scatter([], [], marker="x", c="tab:red", label="Destinations")
+    destinations_plot = ax.scatter(
+        [], [], marker="x", c="tab:red", label="Destinations"
+    )
     ax.legend(loc="upper right")
 
     def init():
@@ -38,9 +39,15 @@ def run_animation(agent_count: int, steps: int) -> None:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Visualize the pedestrian crowd simulation")
-    parser.add_argument("--agents", type=int, default=25, help="Number of pedestrians to simulate")
-    parser.add_argument("--steps", type=int, default=DEFAULT_STEPS, help="Number of animation frames")
+    parser = argparse.ArgumentParser(
+        description="Visualize the pedestrian crowd simulation"
+    )
+    parser.add_argument(
+        "--agents", type=int, default=25, help="Number of pedestrians to simulate"
+    )
+    parser.add_argument(
+        "--steps", type=int, default=DEFAULT_STEPS, help="Number of animation frames"
+    )
     args = parser.parse_args()
 
     run_animation(agent_count=args.agents, steps=args.steps)

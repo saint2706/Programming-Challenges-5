@@ -4,13 +4,12 @@ This script demonstrates the placement of nodes on a hash ring and how keys
 are mapped to the nearest node in clockwise direction.
 """
 
-import sys
 import os
-import hashlib
-from typing import List, Dict, Any, Tuple
+import sys
+from typing import Dict
 
-from manim import *  # type: ignore
 import numpy as np
+from manim import *  # type: ignore
 
 # Add parent directory to path to import hash_ring
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))

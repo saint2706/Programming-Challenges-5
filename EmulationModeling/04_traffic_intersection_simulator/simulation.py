@@ -1,5 +1,7 @@
-import simpy
 import random
+
+import simpy
+
 
 class TrafficIntersection:
     def __init__(self, env, green_duration=10, yellow_duration=2, red_duration=10):
@@ -10,15 +12,14 @@ class TrafficIntersection:
 
         # Directions: NS (North-South) and EW (East-West)
         # State: "green", "yellow", "red"
-        self.lights = {
-            "NS": "green",
-            "EW": "red"
-        }
+        self.lights = {"NS": "green", "EW": "red"}
 
         # Queues for cars waiting
         self.lanes = {
-            "NS": simpy.Resource(env, capacity=1), # Capacity controls flow rate? No, capacity 1 means 1 car passing intersection at a time per lane
-            "EW": simpy.Resource(env, capacity=1)
+            "NS": simpy.Resource(
+                env, capacity=1
+            ),  # Capacity controls flow rate? No, capacity 1 means 1 car passing intersection at a time per lane
+            "EW": simpy.Resource(env, capacity=1),
         }
 
         self.queue_lengths = {"NS": 0, "EW": 0}
@@ -40,11 +41,14 @@ class TrafficIntersection:
             # NS Red, EW Green (Safety buffer optional, but simplified here)
             self.lights["NS"] = "red"
             self.lights["EW"] = "green"
-            yield self.env.timeout(self.green_duration) # Use same duration for EW for now
+            yield self.env.timeout(
+                self.green_duration
+            )  # Use same duration for EW for now
 
             # EW Yellow
             self.lights["EW"] = "yellow"
             yield self.env.timeout(self.yellow_duration)
+
 
 def car_generator(env, intersection, direction, arrival_rate):
     """Generates cars for a specific direction."""
@@ -52,6 +56,7 @@ def car_generator(env, intersection, direction, arrival_rate):
         yield env.timeout(random.expovariate(arrival_rate))
         intersection.stats["arrived"] += 1
         env.process(car(env, intersection, direction))
+
 
 def car(env, intersection, direction):
     arrival_time = env.now
@@ -62,11 +67,11 @@ def car(env, intersection, direction):
     # We model this by waiting for the light AND the resource.
 
     with intersection.lanes[direction].request() as req:
-        yield req # Wait for turn at stop line
+        yield req  # Wait for turn at stop line
 
         # Wait for Green light
         while intersection.lights[direction] != "green":
-            yield env.timeout(1) # Check every second
+            yield env.timeout(1)  # Check every second
 
         # Passing through
         intersection.queue_lengths[direction] -= 1
@@ -75,7 +80,8 @@ def car(env, intersection, direction):
         yield env.timeout(2)
 
         intersection.stats["crossed"] += 1
-        intersection.stats["total_wait_time"] += (env.now - arrival_time)
+        intersection.stats["total_wait_time"] += env.now - arrival_time
+
 
 def run_simulation(duration=200):
     env = simpy.Environment()

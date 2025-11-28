@@ -1,10 +1,11 @@
-import simpy
-import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+import matplotlib.pyplot as plt
+import simpy
 from simulation import TrafficIntersection, car_generator
 
 # We need to modify simulation to expose real-time state for visualization
 # A generator that yields state every tick?
+
 
 class SimVisualizer:
     def __init__(self):
@@ -18,8 +19,8 @@ class SimVisualizer:
         self.q_ew_data = []
 
         self.fig, (self.ax1, self.ax2) = plt.subplots(2, 1, figsize=(8, 8))
-        self.line_ns, = self.ax1.plot([], [], label="NS Queue")
-        self.line_ew, = self.ax1.plot([], [], label="EW Queue")
+        (self.line_ns,) = self.ax1.plot([], [], label="NS Queue")
+        (self.line_ew,) = self.ax1.plot([], [], label="EW Queue")
         self.ax1.set_xlim(0, 100)
         self.ax1.set_ylim(0, 20)
         self.ax1.legend()
@@ -69,6 +70,7 @@ class SimVisualizer:
     def run(self):
         ani = animation.FuncAnimation(self.fig, self.update, interval=50, blit=False)
         plt.show()
+
 
 if __name__ == "__main__":
     viz = SimVisualizer()

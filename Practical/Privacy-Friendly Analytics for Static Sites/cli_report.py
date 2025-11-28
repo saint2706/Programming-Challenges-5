@@ -1,4 +1,5 @@
 """CLI for aggregating page view counts by URL and date."""
+
 from __future__ import annotations
 
 import argparse
@@ -33,11 +34,15 @@ def parse_date(value: str | None) -> date | None:
     return datetime.strptime(value, "%Y-%m-%d").date()
 
 
-def fetch_counts(start: date | None, end: date | None) -> Iterable[Tuple[date, str, int]]:
+def fetch_counts(
+    start: date | None, end: date | None
+) -> Iterable[Tuple[date, str, int]]:
     ensure_schema()
     with SessionLocal() as session:
         date_column = func.date(PageView.timestamp).label("day")
-        stmt = select(date_column, PageView.url, func.count(PageView.id)).group_by(date_column, PageView.url)
+        stmt = select(date_column, PageView.url, func.count(PageView.id)).group_by(
+            date_column, PageView.url
+        )
 
         if start:
             stmt = stmt.where(date_column >= start)
@@ -50,9 +55,15 @@ def fetch_counts(start: date | None, end: date | None) -> Iterable[Tuple[date, s
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Summarize page views per URL and date")
-    parser.add_argument("--start-date", dest="start", help="Filter results from this date (YYYY-MM-DD)")
-    parser.add_argument("--end-date", dest="end", help="Filter results up to this date (YYYY-MM-DD)")
+    parser = argparse.ArgumentParser(
+        description="Summarize page views per URL and date"
+    )
+    parser.add_argument(
+        "--start-date", dest="start", help="Filter results from this date (YYYY-MM-DD)"
+    )
+    parser.add_argument(
+        "--end-date", dest="end", help="Filter results up to this date (YYYY-MM-DD)"
+    )
     args = parser.parse_args()
 
     start = parse_date(args.start)

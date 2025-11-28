@@ -9,8 +9,8 @@ This module validates commit messages against common best practices:
 Usage:
     python commit_check.py <commit_message_file>
 """
+
 import sys
-import re
 
 
 def validate_commit_message(message_file):
@@ -22,7 +22,7 @@ def validate_commit_message(message_file):
     Raises:
         SystemExit: With code 1 if validation fails, 0 if valid.
     """
-    with open(message_file, 'r') as f:
+    with open(message_file, "r") as f:
         lines = f.readlines()
 
     if not lines:
@@ -30,7 +30,7 @@ def validate_commit_message(message_file):
         sys.exit(1)
 
     subject = lines[0].strip()
-    
+
     # Rule 1: Subject line <= 50 chars
     if len(subject) > 50:
         print(f"Error: Subject line is too long ({len(subject)} > 50 characters).")
@@ -42,7 +42,7 @@ def validate_commit_message(message_file):
         sys.exit(1)
 
     # Rule 3: No trailing period in subject
-    if subject.endswith('.'):
+    if subject.endswith("."):
         print("Error: Subject line must not end with a period.")
         sys.exit(1)
 
@@ -54,9 +54,10 @@ def validate_commit_message(message_file):
     print("Commit message is valid.")
     sys.exit(0)
 
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: python commit_check.py <commit_message_file>")
         sys.exit(1)
-    
+
     validate_commit_message(sys.argv[1])

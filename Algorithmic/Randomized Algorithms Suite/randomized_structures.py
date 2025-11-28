@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
 import random
 import statistics
 import time
+from dataclasses import dataclass
 from typing import Callable, List, Optional, TypeVar
 
 T = TypeVar("T")
@@ -18,7 +18,9 @@ class QuickselectResult:
     average_time: float
 
 
-def _partition(values: List[T], left: int, right: int, pivot_index: int, key: Callable[[T], T]) -> int:
+def _partition(
+    values: List[T], left: int, right: int, pivot_index: int, key: Callable[[T], T]
+) -> int:
     pivot_value = key(values[pivot_index])
     values[pivot_index], values[right] = values[right], values[pivot_index]
     store_index = left
@@ -30,7 +32,13 @@ def _partition(values: List[T], left: int, right: int, pivot_index: int, key: Ca
     return store_index
 
 
-def quickselect(values: List[T], k: int, *, key: Optional[Callable[[T], T]] = None, rng: Optional[random.Random] = None) -> T:
+def quickselect(
+    values: List[T],
+    k: int,
+    *,
+    key: Optional[Callable[[T], T]] = None,
+    rng: Optional[random.Random] = None,
+) -> T:
     """Select the k-th smallest element in-place using randomized partitioning."""
 
     if not 0 <= k < len(values):
@@ -75,4 +83,6 @@ def benchmark_quickselect(
         times.append(time.perf_counter() - start)
         assert value == sorted(items)[target_index]
 
-    return QuickselectResult(value=value, iterations=trials, average_time=statistics.mean(times))
+    return QuickselectResult(
+        value=value, iterations=trials, average_time=statistics.mean(times)
+    )

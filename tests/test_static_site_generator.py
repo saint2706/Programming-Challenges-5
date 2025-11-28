@@ -1,9 +1,10 @@
-import unittest
-import os
 import shutil
 import tempfile
+import unittest
 from pathlib import Path
+
 from Practical.StaticSiteGenerator.generator import SiteGenerator
+
 
 class TestStaticSiteGenerator(unittest.TestCase):
     def setUp(self):
@@ -17,11 +18,15 @@ class TestStaticSiteGenerator(unittest.TestCase):
 
         # Create a base template
         with open(self.input_dir / "templates" / "base.html", "w") as f:
-            f.write("<html><head><title>{{ meta.title }}</title></head><body>{{ content }}</body></html>")
+            f.write(
+                "<html><head><title>{{ meta.title }}</title></head><body>{{ content }}</body></html>"
+            )
 
         # Create content with proper frontmatter (uses --- delimiters)
         with open(self.input_dir / "content" / "hello.md", "w") as f:
-            f.write("---\ntitle: Hello World\ndate: 2023-01-01\n---\n# Hello\nThis is a test.")
+            f.write(
+                "---\ntitle: Hello World\ndate: 2023-01-01\n---\n# Hello\nThis is a test."
+            )
 
     def tearDown(self):
         shutil.rmtree(self.test_dir)
@@ -38,6 +43,7 @@ class TestStaticSiteGenerator(unittest.TestCase):
             content = f.read()
             self.assertIn("Hello World", content)
             self.assertIn("This is a test", content)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -5,6 +5,7 @@ trains a lightweight regression model to estimate the next review interval.
 It is intentionally dependency-light so it can run in constrained environments
 without pulling in scikit-learn.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -91,7 +92,9 @@ def simulate_flashcard_history(
     return history
 
 
-def build_feature_matrix(history: Iterable[ReviewRecord]) -> Tuple[np.ndarray, np.ndarray]:
+def build_feature_matrix(
+    history: Iterable[ReviewRecord],
+) -> Tuple[np.ndarray, np.ndarray]:
     """Convert review history to features and targets.
 
     Features capture the state before scheduling the next review. The target is

@@ -1,4 +1,5 @@
 """SQLAlchemy models for analytics events."""
+
 from __future__ import annotations
 
 from datetime import datetime
@@ -16,4 +17,6 @@ class PageView(Base):
     url: str = Column(String, nullable=False, index=True)
     referrer: Optional[str] = Column(String, nullable=True)
     user_agent: Optional[str] = Column(String, nullable=True)
-    timestamp: datetime = Column(DateTime, default=datetime.utcnow, nullable=False, index=True)
+    timestamp: datetime = Column(
+        DateTime, default=datetime.utcnow, nullable=False, index=True
+    )

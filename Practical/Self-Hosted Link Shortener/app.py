@@ -1,14 +1,15 @@
 """FastAPI application powering a self-hosted link shortener."""
+
 from __future__ import annotations
 
-from typing import List, Optional
-import sys
 import os
+import sys
+from typing import List, Optional
 
 # Hack to support running as a script despite spaces in folder name
 sys.path.append(os.path.dirname(__file__))
 
-from fastapi import Depends, FastAPI, HTTPException, Path, Response, status
+from fastapi import Depends, FastAPI, HTTPException, Path, status
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel, HttpUrl, field_validator
 
@@ -58,11 +59,15 @@ class StatsResponse(BaseModel):
 
 
 @app.post("/links", response_model=LinkResponse, status_code=status.HTTP_201_CREATED)
-async def create_link(payload: LinkCreate, _: None = Depends(_ensure_db)) -> LinkResponse:
+async def create_link(
+    payload: LinkCreate, _: None = Depends(_ensure_db)
+) -> LinkResponse:
     slug = payload.custom_slug
     if slug:
         if database.slug_exists(slug):
-            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Slug already exists")
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT, detail="Slug already exists"
+            )
     else:
         attempt = 0
         slug = generate_slug(payload.url, attempt=attempt)
@@ -75,16 +80,22 @@ async def create_link(payload: LinkCreate, _: None = Depends(_ensure_db)) -> Lin
 
 
 @app.get("/links", response_model=List[LinkResponse])
-async def list_links(limit: Optional[int] = None, _: None = Depends(_ensure_db)) -> List[LinkResponse]:
+async def list_links(
+    limit: Optional[int] = None, _: None = Depends(_ensure_db)
+) -> List[LinkResponse]:
     records = database.list_links(limit=limit)
     return [LinkResponse(**record) for record in records]
 
 
 @app.get("/links/{slug}", response_model=LinkResponse)
-async def get_link(slug: str = Path(..., min_length=4, max_length=32), _: None = Depends(_ensure_db)) -> LinkResponse:
+async def get_link(
+    slug: str = Path(..., min_length=4, max_length=32), _: None = Depends(_ensure_db)
+) -> LinkResponse:
     record = database.get_link(slug)
     if not record:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Slug not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Slug not found"
+        )
     return LinkResponse(**record)
 
 
@@ -92,21 +103,29 @@ async def get_link(slug: str = Path(..., min_length=4, max_length=32), _: None =
 async def delete_link(slug: str, _: None = Depends(_ensure_db)) -> None:
     removed = database.delete_link(slug)
     if not removed:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Slug not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Slug not found"
+        )
 
 
 @app.get("/{slug}")
 async def redirect(slug: str, _: None = Depends(_ensure_db)) -> RedirectResponse:
     record = database.get_link(slug)
     if not record:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Slug not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Slug not found"
+        )
     database.increment_hit(slug)
-    return RedirectResponse(record["original_url"], status_code=status.HTTP_307_TEMPORARY_REDIRECT)
+    return RedirectResponse(
+        record["original_url"], status_code=status.HTTP_307_TEMPORARY_REDIRECT
+    )
 
 
 @app.get("/links/{slug}/stats", response_model=StatsResponse)
 async def stats(slug: str, _: None = Depends(_ensure_db)) -> StatsResponse:
     record = database.get_link(slug)
     if not record:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Slug not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Slug not found"
+        )
     return StatsResponse(**record)

@@ -2,6 +2,7 @@
 
 Run this module directly to play against the AI in the terminal.
 """
+
 from __future__ import annotations
 
 from typing import List, Optional, Tuple
@@ -102,7 +103,15 @@ def heuristic(board: Board, piece: str) -> int:
     return score
 
 
-def alpha_beta(board: Board, depth: int, alpha: int, beta: int, maximizing: bool, player: str, last_move: Optional[Tuple[int, int]]) -> Tuple[int, Optional[int]]:
+def alpha_beta(
+    board: Board,
+    depth: int,
+    alpha: int,
+    beta: int,
+    maximizing: bool,
+    player: str,
+    last_move: Optional[Tuple[int, int]],
+) -> Tuple[int, Optional[int]]:
     if last_move is not None:
         winner = check_winner(board, *last_move)
         if winner == player:
@@ -127,7 +136,9 @@ def alpha_beta(board: Board, depth: int, alpha: int, beta: int, maximizing: bool
             row = drop_piece(board, col, player)
             if row is None:
                 continue
-            score, _ = alpha_beta(board, depth - 1, alpha, beta, False, player, (row, col))
+            score, _ = alpha_beta(
+                board, depth - 1, alpha, beta, False, player, (row, col)
+            )
             board[row][col] = EMPTY
             if score > value:
                 value = score

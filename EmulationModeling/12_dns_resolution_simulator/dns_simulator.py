@@ -1,9 +1,10 @@
 """DNS resolution simulator with root, TLD, and authoritative servers."""
+
 from __future__ import annotations
 
 import time
 from dataclasses import dataclass
-from typing import Dict, Optional, Callable, Tuple
+from typing import Callable, Dict, Optional, Tuple
 
 
 @dataclass
@@ -27,7 +28,9 @@ class AuthoritativeDNSServer:
     def query(self, domain: str) -> DNSRecord:
         self.query_count += 1
         if domain not in self.records:
-            raise KeyError(f"{domain} not found on authoritative server for {self.domain}")
+            raise KeyError(
+                f"{domain} not found on authoritative server for {self.domain}"
+            )
         return self.records[domain]
 
 
@@ -39,7 +42,9 @@ class TLDServer:
         self.authoritative_servers: Dict[str, AuthoritativeDNSServer] = {}
         self.query_count = 0
 
-    def register_domain(self, domain: str, authoritative_server: AuthoritativeDNSServer) -> None:
+    def register_domain(
+        self, domain: str, authoritative_server: AuthoritativeDNSServer
+    ) -> None:
         self.authoritative_servers[domain] = authoritative_server
 
     def query(self, domain: str) -> AuthoritativeDNSServer:
@@ -69,7 +74,9 @@ class RootServer:
 class DNSResolver:
     """Resolver that walks DNS hierarchy and caches results with TTL."""
 
-    def __init__(self, root_server: RootServer, time_provider: Callable[[], float] | None = None):
+    def __init__(
+        self, root_server: RootServer, time_provider: Callable[[], float] | None = None
+    ):
         self.root_server = root_server
         self.cache: Dict[str, Tuple[str, float]] = {}
         self.time_provider = time_provider or time.time

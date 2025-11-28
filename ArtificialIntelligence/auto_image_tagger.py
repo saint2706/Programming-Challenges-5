@@ -75,7 +75,9 @@ class AutoImageTagger:
             image = Image.open(Path(source).expanduser())
         return image.convert("RGB")
 
-    def _extract_predictions(self, logits: torch.Tensor, top_k: int) -> List[LabelPrediction]:
+    def _extract_predictions(
+        self, logits: torch.Tensor, top_k: int
+    ) -> List[LabelPrediction]:
         """Convert model logits into sorted predictions.
 
         Args:
@@ -111,9 +113,7 @@ class AutoImageTagger:
 def _format_predictions(predictions: Iterable[LabelPrediction]) -> str:
     """Render predictions as indented lines for CLI output."""
 
-    return "\n".join(
-        f"    {pred.label}: {pred.score:.3f}" for pred in predictions
-    )
+    return "\n".join(f"    {pred.label}: {pred.score:.3f}" for pred in predictions)
 
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:

@@ -1,7 +1,8 @@
 import unittest
+
 import numpy as np
-from PIL import Image
 from seam_carving import calculate_energy, find_vertical_seam, remove_vertical_seam
+
 
 class TestSeamCarving(unittest.TestCase):
     def test_calculate_energy(self):
@@ -9,11 +10,7 @@ class TestSeamCarving(unittest.TestCase):
         # [[0, 0, 0],
         #  [10, 10, 10],
         #  [20, 20, 20]]
-        arr = np.array([
-            [0, 0, 0],
-            [10, 10, 10],
-            [20, 20, 20]
-        ], dtype=float)
+        arr = np.array([[0, 0, 0], [10, 10, 10], [20, 20, 20]], dtype=float)
 
         energy = calculate_energy(arr)
 
@@ -26,44 +23,29 @@ class TestSeamCarving(unittest.TestCase):
 
     def test_find_vertical_seam(self):
         # Create an energy map where the path is obvious (middle column 0, others high)
-        energy = np.array([
-            [100, 0, 100],
-            [100, 0, 100],
-            [100, 0, 100]
-        ])
+        energy = np.array([[100, 0, 100], [100, 0, 100], [100, 0, 100]])
 
         seam = find_vertical_seam(energy)
         expected = np.array([1, 1, 1])
         np.testing.assert_array_equal(seam, expected)
 
         # Test diagonal path
-        energy_diag = np.array([
-            [0, 100, 100],
-            [100, 0, 100],
-            [100, 100, 0]
-        ])
+        energy_diag = np.array([[0, 100, 100], [100, 0, 100], [100, 100, 0]])
         seam_diag = find_vertical_seam(energy_diag)
         expected_diag = np.array([0, 1, 2])
         np.testing.assert_array_equal(seam_diag, expected_diag)
 
     def test_remove_vertical_seam(self):
         # 3x3 image
-        img = np.array([
-            [1, 2, 3],
-            [4, 5, 6],
-            [7, 8, 9]
-        ])
-        seam = np.array([1, 1, 1]) # Remove middle column
+        img = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+        seam = np.array([1, 1, 1])  # Remove middle column
 
         new_img = remove_vertical_seam(img, seam)
 
-        expected = np.array([
-            [1, 3],
-            [4, 6],
-            [7, 9]
-        ])
+        expected = np.array([[1, 3], [4, 6], [7, 9]])
 
         np.testing.assert_array_equal(new_img, expected)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

@@ -1,5 +1,7 @@
 import unittest
+
 from automaton import SubsequenceAutomaton
+
 
 class TestSubsequenceAutomaton(unittest.TestCase):
     def setUp(self):
@@ -15,8 +17,8 @@ class TestSubsequenceAutomaton(unittest.TestCase):
         self.assertTrue(self.automaton.is_subsequence(""))
 
         # False cases
-        self.assertFalse(self.automaton.is_subsequence("zebra")) # 'z' not in text
-        self.assertFalse(self.automaton.is_subsequence("abbb")) # only 2 b's
+        self.assertFalse(self.automaton.is_subsequence("zebra"))  # 'z' not in text
+        self.assertFalse(self.automaton.is_subsequence("abbb"))  # only 2 b's
         self.assertFalse(self.automaton.is_subsequence("dabrax"))
 
     def test_indices(self):
@@ -33,5 +35,6 @@ class TestSubsequenceAutomaton(unittest.TestCase):
         self.assertTrue(auto.is_subsequence(""))
         self.assertFalse(auto.is_subsequence("a"))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

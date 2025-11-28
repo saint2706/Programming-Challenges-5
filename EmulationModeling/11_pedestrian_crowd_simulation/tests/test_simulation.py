@@ -38,13 +38,15 @@ class TestCrowdSimulation(unittest.TestCase):
         self.assertGreater(a1.position[0], 6.0)
 
     def test_speed_is_capped(self):
-        sim = CrowdSimulation(num_agents=1, goal_strength=10.0, max_speed=0.5, dt=1.0, random_seed=1)
+        sim = CrowdSimulation(
+            num_agents=1, goal_strength=10.0, max_speed=0.5, dt=1.0, random_seed=1
+        )
         sim.reset_positions([[0.0, 0.0]])
         sim.reset_destinations([[100.0, 0.0]])
 
         sim.step()
 
-        speed = (sim.agents[0].velocity**2).sum() ** 0.5
+        speed = (sim.agents[0].velocity ** 2).sum() ** 0.5
         self.assertLessEqual(speed, 0.5)
 
 

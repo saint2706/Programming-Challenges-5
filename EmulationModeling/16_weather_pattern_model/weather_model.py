@@ -4,10 +4,12 @@ This module implements a simple 2D cellular model describing pressure diffusion
 and wind-driven moisture transport. It exposes a :class:`WeatherGrid` for
 running simulations and querying the field state.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Tuple
+
 import numpy as np
 
 
@@ -49,15 +51,21 @@ class WeatherGrid:
 
     def _initialize_pressure(self) -> np.ndarray:
         base = 1013.25  # standard atmosphere in hPa
-        perturbation = self.random.normal(loc=0.0, scale=5.0, size=(self.height, self.width))
+        perturbation = self.random.normal(
+            loc=0.0, scale=5.0, size=(self.height, self.width)
+        )
         return base + perturbation
 
     def _initialize_humidity(self) -> np.ndarray:
         return self.random.uniform(low=0.45, high=0.8, size=(self.height, self.width))
 
     def _initialize_wind(self) -> Tuple[np.ndarray, np.ndarray]:
-        direction = self.random.uniform(low=-1.0, high=1.0, size=(self.height, self.width, 2))
-        magnitude = self.random.uniform(low=0.0, high=8.0, size=(self.height, self.width, 1))
+        direction = self.random.uniform(
+            low=-1.0, high=1.0, size=(self.height, self.width, 2)
+        )
+        magnitude = self.random.uniform(
+            low=0.0, high=8.0, size=(self.height, self.width, 1)
+        )
         norm = np.linalg.norm(direction, axis=2, keepdims=True)
         norm = np.where(norm == 0, 1.0, norm)
         unit_dir = direction / norm

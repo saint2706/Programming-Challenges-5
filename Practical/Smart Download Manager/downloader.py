@@ -9,12 +9,13 @@ This module provides a command-line tool for downloading files with support for:
 Usage:
     python downloader.py <url> [-t threads] [-o output] [-c checksum]
 """
+
 import argparse
-import requests
-import threading
-import os
-import time
 import hashlib
+import os
+import threading
+
+import requests
 from tqdm import tqdm
 
 
@@ -29,10 +30,11 @@ def get_file_size(url):
     """
     try:
         response = requests.head(url, allow_redirects=True)
-        return int(response.headers.get('content-length', 0))
+        return int(response.headers.get("content-length", 0))
     except Exception as e:
         print(f"Error getting file size: {e}")
         return 0
+
 
 def download_chunk(url, start, end, filename, chunk_id, progress_bar=None):
     """Download a specific byte range of a file.
@@ -45,7 +47,7 @@ def download_chunk(url, start, end, filename, chunk_id, progress_bar=None):
         chunk_id: Identifier for this chunk (for logging).
         progress_bar: Optional tqdm progress bar to update.
     """
-    headers = {'Range': f'bytes={start}-{end}'}
+    headers = {"Range": f"bytes={start}-{end}"}
     try:
         response = requests.get(url, headers=headers, stream=True)
         with open(filename, "r+b") as f:
@@ -58,7 +60,8 @@ def download_chunk(url, start, end, filename, chunk_id, progress_bar=None):
     except Exception as e:
         print(f"Error downloading chunk {chunk_id}: {e}")
 
-def calculate_checksum(filename, algorithm='md5'):
+
+def calculate_checksum(filename, algorithm="md5"):
     """Calculate the hash checksum of a file.
 
     Args:
@@ -85,7 +88,7 @@ def download_file(url, num_threads=4, output_file=None, checksum=None):
         checksum: Expected MD5 checksum for verification.
     """
     if not output_file:
-        output_file = url.split('/')[-1]
+        output_file = url.split("/")[-1]
 
     file_size = get_file_size(url)
     if file_size == 0:
@@ -97,17 +100,19 @@ def download_file(url, num_threads=4, output_file=None, checksum=None):
     # Create empty file of appropriate size
     if not os.path.exists(output_file):
         with open(output_file, "wb") as f:
-            f.write(b'\0' * file_size)
-    
+            f.write(b"\0" * file_size)
+
     chunk_size = file_size // num_threads
     threads = []
-    
-    progress_bar = tqdm(total=file_size, unit='B', unit_scale=True, desc=output_file)
+
+    progress_bar = tqdm(total=file_size, unit="B", unit_scale=True, desc=output_file)
 
     for i in range(num_threads):
         start = i * chunk_size
         end = start + chunk_size - 1 if i < num_threads - 1 else file_size - 1
-        t = threading.Thread(target=download_chunk, args=(url, start, end, output_file, i, progress_bar))
+        t = threading.Thread(
+            target=download_chunk, args=(url, start, end, output_file, i, progress_bar)
+        )
         threads.append(t)
         t.start()
 
@@ -123,19 +128,27 @@ def download_file(url, num_threads=4, output_file=None, checksum=None):
         if calculated_checksum == checksum:
             print("Checksum verified successfully!")
         else:
-            print(f"Checksum verification failed! Expected {checksum}, got {calculated_checksum}")
+            print(
+                f"Checksum verification failed! Expected {checksum}, got {calculated_checksum}"
+            )
+
 
 def main():
     """Entry point for the download manager CLI."""
     parser = argparse.ArgumentParser(description="Smart Download Manager")
     parser.add_argument("url", help="URL of the file to download")
-    parser.add_argument("-t", "--threads", type=int, default=4, help="Number of threads (default: 4)")
+    parser.add_argument(
+        "-t", "--threads", type=int, default=4, help="Number of threads (default: 4)"
+    )
     parser.add_argument("-o", "--output", help="Output filename")
-    parser.add_argument("-c", "--checksum", help="Expected MD5 checksum for verification")
+    parser.add_argument(
+        "-c", "--checksum", help="Expected MD5 checksum for verification"
+    )
 
     args = parser.parse_args()
 
     download_file(args.url, args.threads, args.output, args.checksum)
+
 
 if __name__ == "__main__":
     main()

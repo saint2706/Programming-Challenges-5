@@ -1,4 +1,5 @@
 """Pydantic schemas for request/response payloads."""
+
 from __future__ import annotations
 
 from datetime import datetime
@@ -15,9 +16,13 @@ class PageViewCreate(BaseModel):
 
     @field_validator("timestamp")
     @classmethod
-    def timestamp_must_be_timezone_aware(cls, value: Optional[datetime]) -> Optional[datetime]:
+    def timestamp_must_be_timezone_aware(
+        cls, value: Optional[datetime]
+    ) -> Optional[datetime]:
         if value and value.tzinfo is None:
-            raise ValueError("timestamp must include timezone information (ISO8601 with offset)")
+            raise ValueError(
+                "timestamp must include timezone information (ISO8601 with offset)"
+            )
         return value
 
 

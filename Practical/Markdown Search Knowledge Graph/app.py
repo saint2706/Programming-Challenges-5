@@ -82,7 +82,9 @@ def ensure_index(client: Elasticsearch) -> None:
     client.indices.create(index=INDEX_NAME, **mapping)
 
 
-def index_documents(client: Elasticsearch, documents: Dict[str, MarkdownDocument]) -> None:
+def index_documents(
+    client: Elasticsearch, documents: Dict[str, MarkdownDocument]
+) -> None:
     for document in documents.values():
         client.index(
             index=INDEX_NAME,
@@ -96,7 +98,9 @@ def index_documents(client: Elasticsearch, documents: Dict[str, MarkdownDocument
     client.indices.refresh(index=INDEX_NAME)
 
 
-def build_graph(documents: Dict[str, MarkdownDocument]) -> Dict[str, List[Dict[str, str]]]:
+def build_graph(
+    documents: Dict[str, MarkdownDocument],
+) -> Dict[str, List[Dict[str, str]]]:
     nodes = [{"id": doc.identifier, "title": doc.title} for doc in documents.values()]
     node_ids = {doc.identifier for doc in documents.values()}
 
@@ -141,7 +145,12 @@ def create_app() -> Flask:
                 try:
                     response = client.search(
                         index=INDEX_NAME,
-                        query={"multi_match": {"query": query, "fields": ["title", "content"]}},
+                        query={
+                            "multi_match": {
+                                "query": query,
+                                "fields": ["title", "content"],
+                            }
+                        },
                         highlight={"fields": {"content": {}}},
                         size=10,
                     )
@@ -151,12 +160,19 @@ def create_app() -> Flask:
                                 "id": hit["_id"],
                                 "title": hit["_source"]["title"],
                                 "score": hit["_score"],
-                                "highlight": " ".join(hit.get("highlight", {}).get("content", [])).
-                                replace("<em>", "<mark>").replace("</em>", "</mark>")
+                                "highlight": " ".join(
+                                    hit.get("highlight", {}).get("content", [])
+                                )
+                                .replace("<em>", "<mark>")
+                                .replace("</em>", "</mark>")
                                 or None,
                             }
                         )
-                except (TransportError, ConnectionError, ApiError) as exc:  # pragma: no cover - defensive
+                except (
+                    TransportError,
+                    ConnectionError,
+                    ApiError,
+                ) as exc:  # pragma: no cover - defensive
                     search_error = str(exc)
 
         return render_template(

@@ -1,5 +1,5 @@
 import random
-import pygame
+
 
 class Chip8:
     def __init__(self):
@@ -21,22 +21,86 @@ class Chip8:
 
         # Fontset (0-F)
         self.fontset = [
-            0xF0, 0x90, 0x90, 0x90, 0xF0, # 0
-            0x20, 0x60, 0x20, 0x20, 0x70, # 1
-            0xF0, 0x10, 0xF0, 0x80, 0xF0, # 2
-            0xF0, 0x10, 0xF0, 0x10, 0xF0, # 3
-            0x90, 0x90, 0xF0, 0x10, 0x10, # 4
-            0xF0, 0x80, 0xF0, 0x10, 0xF0, # 5
-            0xF0, 0x80, 0xF0, 0x90, 0xF0, # 6
-            0xF0, 0x10, 0x20, 0x40, 0x40, # 7
-            0xF0, 0x90, 0xF0, 0x90, 0xF0, # 8
-            0xF0, 0x90, 0xF0, 0x10, 0xF0, # 9
-            0xF0, 0x90, 0xF0, 0x90, 0x90, # A
-            0xE0, 0x90, 0xE0, 0x90, 0xE0, # B
-            0xF0, 0x80, 0x80, 0x80, 0xF0, # C
-            0xE0, 0x90, 0x90, 0x90, 0xE0, # D
-            0xF0, 0x80, 0xF0, 0x80, 0xF0, # E
-            0xF0, 0x80, 0xF0, 0x80, 0x80  # F
+            0xF0,
+            0x90,
+            0x90,
+            0x90,
+            0xF0,  # 0
+            0x20,
+            0x60,
+            0x20,
+            0x20,
+            0x70,  # 1
+            0xF0,
+            0x10,
+            0xF0,
+            0x80,
+            0xF0,  # 2
+            0xF0,
+            0x10,
+            0xF0,
+            0x10,
+            0xF0,  # 3
+            0x90,
+            0x90,
+            0xF0,
+            0x10,
+            0x10,  # 4
+            0xF0,
+            0x80,
+            0xF0,
+            0x10,
+            0xF0,  # 5
+            0xF0,
+            0x80,
+            0xF0,
+            0x90,
+            0xF0,  # 6
+            0xF0,
+            0x10,
+            0x20,
+            0x40,
+            0x40,  # 7
+            0xF0,
+            0x90,
+            0xF0,
+            0x90,
+            0xF0,  # 8
+            0xF0,
+            0x90,
+            0xF0,
+            0x10,
+            0xF0,  # 9
+            0xF0,
+            0x90,
+            0xF0,
+            0x90,
+            0x90,  # A
+            0xE0,
+            0x90,
+            0xE0,
+            0x90,
+            0xE0,  # B
+            0xF0,
+            0x80,
+            0x80,
+            0x80,
+            0xF0,  # C
+            0xE0,
+            0x90,
+            0x90,
+            0x90,
+            0xE0,  # D
+            0xF0,
+            0x80,
+            0xF0,
+            0x80,
+            0xF0,  # E
+            0xF0,
+            0x80,
+            0xF0,
+            0x80,
+            0x80,  # F
         ]
 
         # Load fontset into memory (0x000-0x050)
@@ -65,66 +129,66 @@ class Chip8:
         nn = opcode & 0x00FF
         nnn = opcode & 0x0FFF
 
-        if opcode == 0x00E0: # CLS
+        if opcode == 0x00E0:  # CLS
             self.display = [0] * (64 * 32)
             self.draw_flag = True
-        elif opcode == 0x00EE: # RET
+        elif opcode == 0x00EE:  # RET
             self.pc = self.stack.pop()
-        elif (opcode & 0xF000) == 0x1000: # JP addr
+        elif (opcode & 0xF000) == 0x1000:  # JP addr
             self.pc = nnn
-        elif (opcode & 0xF000) == 0x2000: # CALL addr
+        elif (opcode & 0xF000) == 0x2000:  # CALL addr
             self.stack.append(self.pc)
             self.pc = nnn
-        elif (opcode & 0xF000) == 0x3000: # SE Vx, byte
+        elif (opcode & 0xF000) == 0x3000:  # SE Vx, byte
             if self.registers[x] == nn:
                 self.pc += 2
-        elif (opcode & 0xF000) == 0x4000: # SNE Vx, byte
+        elif (opcode & 0xF000) == 0x4000:  # SNE Vx, byte
             if self.registers[x] != nn:
                 self.pc += 2
-        elif (opcode & 0xF000) == 0x5000: # SE Vx, Vy
+        elif (opcode & 0xF000) == 0x5000:  # SE Vx, Vy
             if self.registers[x] == self.registers[y]:
                 self.pc += 2
-        elif (opcode & 0xF000) == 0x6000: # LD Vx, byte
+        elif (opcode & 0xF000) == 0x6000:  # LD Vx, byte
             self.registers[x] = nn
-        elif (opcode & 0xF000) == 0x7000: # ADD Vx, byte
+        elif (opcode & 0xF000) == 0x7000:  # ADD Vx, byte
             self.registers[x] = (self.registers[x] + nn) & 0xFF
         elif (opcode & 0xF000) == 0x8000:
-            if n == 0x0: # LD Vx, Vy
+            if n == 0x0:  # LD Vx, Vy
                 self.registers[x] = self.registers[y]
-            elif n == 0x1: # OR Vx, Vy
+            elif n == 0x1:  # OR Vx, Vy
                 self.registers[x] |= self.registers[y]
-            elif n == 0x2: # AND Vx, Vy
+            elif n == 0x2:  # AND Vx, Vy
                 self.registers[x] &= self.registers[y]
-            elif n == 0x3: # XOR Vx, Vy
+            elif n == 0x3:  # XOR Vx, Vy
                 self.registers[x] ^= self.registers[y]
-            elif n == 0x4: # ADD Vx, Vy
+            elif n == 0x4:  # ADD Vx, Vy
                 sum_val = self.registers[x] + self.registers[y]
                 self.registers[0xF] = 1 if sum_val > 255 else 0
                 self.registers[x] = sum_val & 0xFF
-            elif n == 0x5: # SUB Vx, Vy
+            elif n == 0x5:  # SUB Vx, Vy
                 self.registers[0xF] = 1 if self.registers[x] > self.registers[y] else 0
                 self.registers[x] = (self.registers[x] - self.registers[y]) & 0xFF
-            elif n == 0x6: # SHR Vx {, Vy}
+            elif n == 0x6:  # SHR Vx {, Vy}
                 # Standard Chip8: VF = LSB, then shift right
                 self.registers[0xF] = self.registers[x] & 0x1
                 self.registers[x] >>= 1
-            elif n == 0x7: # SUBN Vx, Vy
+            elif n == 0x7:  # SUBN Vx, Vy
                 self.registers[0xF] = 1 if self.registers[y] > self.registers[x] else 0
                 self.registers[x] = (self.registers[y] - self.registers[x]) & 0xFF
-            elif n == 0xE: # SHL Vx {, Vy}
+            elif n == 0xE:  # SHL Vx {, Vy}
                 # Standard Chip8: VF = MSB, then shift left
                 self.registers[0xF] = (self.registers[x] & 0x80) >> 7
                 self.registers[x] = (self.registers[x] << 1) & 0xFF
-        elif (opcode & 0xF000) == 0x9000: # SNE Vx, Vy
+        elif (opcode & 0xF000) == 0x9000:  # SNE Vx, Vy
             if self.registers[x] != self.registers[y]:
                 self.pc += 2
-        elif (opcode & 0xF000) == 0xA000: # LD I, addr
+        elif (opcode & 0xF000) == 0xA000:  # LD I, addr
             self.I = nnn
-        elif (opcode & 0xF000) == 0xB000: # JP V0, addr
+        elif (opcode & 0xF000) == 0xB000:  # JP V0, addr
             self.pc = (nnn + self.registers[0]) & 0xFFF
-        elif (opcode & 0xF000) == 0xC000: # RND Vx, byte
+        elif (opcode & 0xF000) == 0xC000:  # RND Vx, byte
             self.registers[x] = random.randint(0, 255) & nn
-        elif (opcode & 0xF000) == 0xD000: # DRW Vx, Vy, nibble
+        elif (opcode & 0xF000) == 0xD000:  # DRW Vx, Vy, nibble
             x_pos = self.registers[x]
             y_pos = self.registers[y]
             height = n
@@ -134,7 +198,7 @@ class Chip8:
                 pixel = self.memory[self.I + row]
                 for col in range(8):
                     if (pixel & (0x80 >> col)) != 0:
-                        idx = (x_pos + col + ((y_pos + row) * 64))
+                        idx = x_pos + col + ((y_pos + row) * 64)
                         # Wrap handling (simple or clipping? Standard is usually wrapping x/y individually)
                         # Correct logic:
                         screen_x = (x_pos + col) % 64
@@ -146,39 +210,41 @@ class Chip8:
                         self.display[idx] ^= 1
             self.draw_flag = True
         elif (opcode & 0xF000) == 0xE000:
-            if nn == 0x9E: # SKP Vx
+            if nn == 0x9E:  # SKP Vx
                 if self.keypad[self.registers[x]] != 0:
                     self.pc += 2
-            elif nn == 0xA1: # SKNP Vx
+            elif nn == 0xA1:  # SKNP Vx
                 if self.keypad[self.registers[x]] == 0:
                     self.pc += 2
         elif (opcode & 0xF000) == 0xF000:
-            if nn == 0x07: # LD Vx, DT
+            if nn == 0x07:  # LD Vx, DT
                 self.registers[x] = self.delay_timer
-            elif nn == 0x0A: # LD Vx, K (Wait for key)
+            elif nn == 0x0A:  # LD Vx, K (Wait for key)
                 key_pressed = False
                 for i in range(16):
                     if self.keypad[i] != 0:
                         self.registers[x] = i
                         key_pressed = True
                 if not key_pressed:
-                    self.pc -= 2 # Decrement PC to repeat instruction
-            elif nn == 0x15: # LD DT, Vx
+                    self.pc -= 2  # Decrement PC to repeat instruction
+            elif nn == 0x15:  # LD DT, Vx
                 self.delay_timer = self.registers[x]
-            elif nn == 0x18: # LD ST, Vx
+            elif nn == 0x18:  # LD ST, Vx
                 self.sound_timer = self.registers[x]
-            elif nn == 0x1E: # ADD I, Vx
-                self.I = (self.I + self.registers[x]) & 0xFFF # Some interpreters overflow, some don't.
-            elif nn == 0x29: # LD F, Vx
+            elif nn == 0x1E:  # ADD I, Vx
+                self.I = (
+                    self.I + self.registers[x]
+                ) & 0xFFF  # Some interpreters overflow, some don't.
+            elif nn == 0x29:  # LD F, Vx
                 self.I = self.registers[x] * 5
-            elif nn == 0x33: # LD B, Vx
+            elif nn == 0x33:  # LD B, Vx
                 self.memory[self.I] = self.registers[x] // 100
                 self.memory[self.I + 1] = (self.registers[x] % 100) // 10
                 self.memory[self.I + 2] = self.registers[x] % 10
-            elif nn == 0x55: # LD [I], Vx
+            elif nn == 0x55:  # LD [I], Vx
                 for i in range(x + 1):
                     self.memory[self.I + i] = self.registers[i]
-            elif nn == 0x65: # LD Vx, [I]
+            elif nn == 0x65:  # LD Vx, [I]
                 for i in range(x + 1):
                     self.registers[i] = self.memory[self.I + i]
 

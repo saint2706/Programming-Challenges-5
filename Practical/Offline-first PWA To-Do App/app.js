@@ -40,7 +40,9 @@ async function withStore(storeName, mode, fn) {
     const request = fn(store, tx);
     tx.oncomplete = () =>
       resolve(
-        request && typeof request === 'object' && 'result' in request ? request.result : request
+        request && typeof request === 'object' && 'result' in request
+          ? request.result
+          : request
       );
     tx.onerror = () => reject(tx.error);
     tx.onabort = () => reject(tx.error);
@@ -101,7 +103,10 @@ function persistServerTasks(tasks) {
 }
 
 function formatDate(ts) {
-  return new Intl.DateTimeFormat([], { dateStyle: 'medium', timeStyle: 'short' }).format(ts);
+  return new Intl.DateTimeFormat([], {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  }).format(ts);
 }
 
 async function requestBackgroundSync() {
@@ -237,9 +242,12 @@ async function renderTasks() {
 
     const toggleBtn = document.createElement('button');
     toggleBtn.className = 'btn-ghost';
-    toggleBtn.textContent = task.status === 'completed' ? 'Mark open' : 'Complete';
+    toggleBtn.textContent =
+      task.status === 'completed' ? 'Mark open' : 'Complete';
     toggleBtn.addEventListener('click', () =>
-      updateTask(task.id, { status: task.status === 'completed' ? 'pending' : 'completed' })
+      updateTask(task.id, {
+        status: task.status === 'completed' ? 'pending' : 'completed',
+      })
     );
 
     const deleteBtn = document.createElement('button');
@@ -270,10 +278,14 @@ async function processQueue() {
 
   for (const entry of queue) {
     try {
-      const serverIndex = serverTasks.findIndex((task) => task.id === entry.taskId);
+      const serverIndex = serverTasks.findIndex(
+        (task) => task.id === entry.taskId
+      );
       const serverTask = serverIndex >= 0 ? serverTasks[serverIndex] : null;
       const hasServerConflict =
-        entry.action !== 'delete' && serverTask && serverTask.updatedAt > entry.baseUpdatedAt;
+        entry.action !== 'delete' &&
+        serverTask &&
+        serverTask.updatedAt > entry.baseUpdatedAt;
 
       if (hasServerConflict) {
         await dequeue(entry.id);
@@ -336,7 +348,9 @@ async function bootstrap() {
         }
       });
       if ('SyncManager' in window) {
-        reg.addEventListener('updatefound', () => console.log('SW update found'));
+        reg.addEventListener('updatefound', () =>
+          console.log('SW update found')
+        );
       }
     } catch (err) {
       console.error('SW registration failed', err);

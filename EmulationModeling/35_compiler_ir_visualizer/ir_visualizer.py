@@ -1,9 +1,10 @@
 """Tiny imperative language parser that produces three-address code and a CFG."""
+
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 from typing import List, Optional, Tuple
-import re
 
 
 # -------------------------- Lexer --------------------------
@@ -31,7 +32,9 @@ def tokenize(source: str) -> List[Token]:
         ("NEWLINE", r"\n"),
         ("MISMATCH", r"."),
     ]
-    tok_regex = "|".join(f"(?P<{name}>{pattern})" for name, pattern in token_specification)
+    tok_regex = "|".join(
+        f"(?P<{name}>{pattern})" for name, pattern in token_specification
+    )
     tokens: List[Token] = []
     for mo in re.finditer(tok_regex, source):
         kind = mo.lastgroup
@@ -115,7 +118,9 @@ class TinyLangParser:
     def expect(self, token_type: str, value: Optional[str] = None) -> Token:
         token = self.current
         if token.type != token_type or (value is not None and token.value != value):
-            raise SyntaxError(f"Expected {token_type} {value or ''} but got {token.type} {token.value}")
+            raise SyntaxError(
+                f"Expected {token_type} {value or ''} but got {token.type} {token.value}"
+            )
         return self.advance()
 
     def parse(self) -> Program:
@@ -177,7 +182,12 @@ class TinyLangParser:
 
     def parse_comparison(self) -> Expr:
         node = self.parse_term()
-        while self.current.type == "OP" and self.current.value in {"<", "<=", ">", ">="}:
+        while self.current.type == "OP" and self.current.value in {
+            "<",
+            "<=",
+            ">",
+            ">=",
+        }:
             op = self.advance().value
             right = self.parse_term()
             node = BinOp(node, op, right)
@@ -209,7 +219,11 @@ class TinyLangParser:
     def parse_primary(self) -> Expr:
         if self.current.type == "NUMBER":
             return Number(int(self.advance().value))
-        if self.current.type == "ID" and self.current.value not in {"if", "else", "while"}:
+        if self.current.type == "ID" and self.current.value not in {
+            "if",
+            "else",
+            "while",
+        }:
             return Var(self.advance().value)
         if self.current.type == "LPAREN":
             self.advance()
@@ -269,7 +283,9 @@ class IRBuilder:
     def emit_statement(self, stmt: Statement) -> None:
         if isinstance(stmt, Assign):
             value = self.emit_expression(stmt.expr)
-            self.instructions.append(TACInstruction("assign", arg1=value, result=stmt.target))
+            self.instructions.append(
+                TACInstruction("assign", arg1=value, result=stmt.target)
+            )
         elif isinstance(stmt, If):
             self.emit_if(stmt)
         elif isinstance(stmt, While):
@@ -281,7 +297,9 @@ class IRBuilder:
         else_label = self.new_label("else")
         end_label = self.new_label("endif")
         condition_temp = self.emit_expression(stmt.condition)
-        self.instructions.append(TACInstruction("if_false", arg1=condition_temp, label=else_label))
+        self.instructions.append(
+            TACInstruction("if_false", arg1=condition_temp, label=else_label)
+        )
         for inner in stmt.then_branch:
             self.emit_statement(inner)
         self.instructions.append(TACInstruction("goto", label=end_label))
@@ -296,7 +314,9 @@ class IRBuilder:
         end_label = self.new_label("endwhile")
         self.instructions.append(TACInstruction("label", label=start_label))
         condition_temp = self.emit_expression(stmt.condition)
-        self.instructions.append(TACInstruction("if_false", arg1=condition_temp, label=end_label))
+        self.instructions.append(
+            TACInstruction("if_false", arg1=condition_temp, label=end_label)
+        )
         for inner in stmt.body:
             self.emit_statement(inner)
         self.instructions.append(TACInstruction("goto", label=start_label))
@@ -311,7 +331,9 @@ class IRBuilder:
             left = self.emit_expression(expr.left)
             right = self.emit_expression(expr.right)
             temp = self.new_temp()
-            self.instructions.append(TACInstruction(expr.op, arg1=left, arg2=right, result=temp))
+            self.instructions.append(
+                TACInstruction(expr.op, arg1=left, arg2=right, result=temp)
+            )
             return temp
         raise TypeError(f"Unknown expression type: {type(expr)}")
 

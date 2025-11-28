@@ -1,4 +1,5 @@
 """Utilities for loading unit conversion metadata from JSON or YAML files."""
+
 from __future__ import annotations
 
 import json
@@ -53,7 +54,9 @@ class ConversionDataSource:
         try:
             current_mtime = self.path.stat().st_mtime
         except FileNotFoundError as exc:
-            raise ConfigurationError(f"Configuration file {self.path} does not exist") from exc
+            raise ConfigurationError(
+                f"Configuration file {self.path} does not exist"
+            ) from exc
         return self._last_mtime is None or current_mtime > self._last_mtime
 
     def _read_file(self) -> Dict[str, Any]:
@@ -71,4 +74,3 @@ class ConversionDataSource:
         raise ConfigurationError(
             f"Unsupported configuration format '{suffix}'. Use JSON or YAML."
         )
-

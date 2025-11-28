@@ -9,10 +9,12 @@ Controls:
     Space: Launch ball
     ESC: Quit game
 """
-import pygame
-import sys
+
 import os
 import random
+import sys
+
+import pygame
 
 # Initialize Pygame
 pygame.init()
@@ -35,6 +37,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Breakout - Challenge 2")
 clock = pygame.time.Clock()
 
+
 # Load Assets
 def load_asset(name, size=None):
     path = os.path.join("assets", name)
@@ -44,6 +47,7 @@ def load_asset(name, size=None):
             img = pygame.transform.scale(img, size)
         return img
     return None
+
 
 PADDLE_WIDTH = 100
 PADDLE_HEIGHT = 20
@@ -55,9 +59,15 @@ PADDLE_IMG = load_asset("paddle.png", (PADDLE_WIDTH, PADDLE_HEIGHT))
 BALL_IMG = load_asset("ball.png", (BALL_SIZE, BALL_SIZE))
 BRICK_IMG = load_asset("brick.png", (BRICK_WIDTH, BRICK_HEIGHT))
 
+
 class Paddle:
     def __init__(self):
-        self.rect = pygame.Rect(SCREEN_WIDTH // 2 - PADDLE_WIDTH // 2, SCREEN_HEIGHT - 50, PADDLE_WIDTH, PADDLE_HEIGHT)
+        self.rect = pygame.Rect(
+            SCREEN_WIDTH // 2 - PADDLE_WIDTH // 2,
+            SCREEN_HEIGHT - 50,
+            PADDLE_WIDTH,
+            PADDLE_HEIGHT,
+        )
         self.speed = 8
 
     def move(self, dx):
@@ -73,9 +83,12 @@ class Paddle:
         else:
             pygame.draw.rect(surface, BLUE, self.rect)
 
+
 class Ball:
     def __init__(self):
-        self.rect = pygame.Rect(SCREEN_WIDTH // 2 - BALL_SIZE // 2, SCREEN_HEIGHT // 2, BALL_SIZE, BALL_SIZE)
+        self.rect = pygame.Rect(
+            SCREEN_WIDTH // 2 - BALL_SIZE // 2, SCREEN_HEIGHT // 2, BALL_SIZE, BALL_SIZE
+        )
         self.dx = 5 * random.choice([-1, 1])
         self.dy = -5
         self.active = False
@@ -98,7 +111,7 @@ class Ball:
             self.dx *= -1
         if self.rect.top <= 0:
             self.dy *= -1
-        
+
         # Bottom collision (death) handled in main loop
 
     def draw(self, surface):
@@ -106,6 +119,7 @@ class Ball:
             surface.blit(BALL_IMG, self.rect)
         else:
             pygame.draw.ellipse(surface, WHITE, self.rect)
+
 
 class Brick:
     def __init__(self, x, y, color):
@@ -116,7 +130,7 @@ class Brick:
     def draw(self, surface):
         if not self.active:
             return
-        
+
         if BRICK_IMG:
             # Tinting logic could go here, but for now just use the image or rect
             # To tint properly with an image is complex in simple pygame without creating new surfaces
@@ -133,6 +147,7 @@ class Brick:
             pygame.draw.rect(surface, self.color, self.rect)
             pygame.draw.rect(surface, BLACK, self.rect, 1)
 
+
 def create_bricks():
     bricks = []
     colors = [RED, RED, YELLOW, YELLOW, GREEN, GREEN, BLUE, BLUE]
@@ -143,6 +158,7 @@ def create_bricks():
             bricks.append(Brick(x, y, colors[row]))
     return bricks
 
+
 def main():
     paddle = Paddle()
     ball = Ball()
@@ -150,10 +166,10 @@ def main():
     lives = 3
     score = 0
     font = pygame.font.Font(None, 36)
-    
+
     running = True
     game_over = False
-    
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -194,7 +210,7 @@ def main():
                     brick.active = False
                     ball.dy *= -1
                     score += 10
-                    break # Only hit one brick at a time
+                    break  # Only hit one brick at a time
 
             # Ball out of bounds
             if ball.rect.top > SCREEN_HEIGHT:
@@ -202,10 +218,10 @@ def main():
                 ball.reset()
                 if lives <= 0:
                     game_over = True
-            
+
             # Check win
             if all(not b.active for b in bricks):
-                game_over = True # Win state, but let's just say Game Over for now
+                game_over = True  # Win state, but let's just say Game Over for now
 
         # Draw
         screen.fill(BLACK)
@@ -226,11 +242,11 @@ def main():
             else:
                 msg = "Game Over! Press SPACE"
             text = font.render(msg, True, WHITE)
-            rect = text.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
+            rect = text.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
             screen.blit(text, rect)
         elif not ball.active:
             text = font.render("Press SPACE to Start", True, WHITE)
-            rect = text.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 50))
+            rect = text.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 50))
             screen.blit(text, rect)
 
         pygame.display.update()
@@ -238,6 +254,7 @@ def main():
 
     pygame.quit()
     sys.exit()
+
 
 if __name__ == "__main__":
     main()

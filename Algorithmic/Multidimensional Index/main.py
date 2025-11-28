@@ -1,5 +1,6 @@
-from rtree import RTree, Rect
-import os
+
+from rtree import Rect, RTree
+
 
 def main():
     tree = RTree()
@@ -12,7 +13,7 @@ def main():
         ("Houston", 29, -95),
         ("London", 51, 0),
         ("Paris", 48, 2),
-        ("Tokyo", 35, 139)
+        ("Tokyo", 35, 139),
     ]
 
     print("Inserting cities...")
@@ -42,6 +43,7 @@ def main():
     new_tree.load("cities.json")
     results_loaded = new_tree.search(query)
     print(f"Query loaded tree (US): {results_loaded}")
+
 
 if __name__ == "__main__":
     main()

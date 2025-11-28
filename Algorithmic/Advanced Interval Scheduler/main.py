@@ -56,9 +56,11 @@ class AdvancedIntervalScheduler:
             intervals: Iterable of (start, end, weight) tuples or Interval objects.
         """
         self.intervals: List[Interval] = [
-            interval
-            if isinstance(interval, Interval)
-            else Interval(start=interval[0], end=interval[1], weight=interval[2])
+            (
+                interval
+                if isinstance(interval, Interval)
+                else Interval(start=interval[0], end=interval[1], weight=interval[2])
+            )
             for interval in intervals
         ]
         self.n = len(self.intervals)
@@ -150,7 +152,9 @@ class AdvancedIntervalScheduler:
 
         return list(reversed(selected))
 
-    def get_schedule_summary(self, selected_intervals: List[Interval]) -> Dict[str, Any]:
+    def get_schedule_summary(
+        self, selected_intervals: List[Interval]
+    ) -> Dict[str, Any]:
         """Generate a human-readable summary of the chosen intervals.
 
         Args:

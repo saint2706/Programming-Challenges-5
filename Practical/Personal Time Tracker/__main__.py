@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 import argparse
-import sys
 import os
+import sys
 from datetime import timedelta
 from typing import Iterable
 
@@ -25,7 +25,9 @@ def humanize(duration: timedelta) -> str:
 
 
 def render_sessions(rows: Iterable[dict]) -> str:
-    lines = ["ID        | Category | Start (UTC)          | End (UTC)            | Duration | Notes"]
+    lines = [
+        "ID        | Category | Start (UTC)          | End (UTC)            | Duration | Notes"
+    ]
     lines.append("-" * 90)
     for row in rows:
         duration = humanize(row.get("duration") or row.get("duration", timedelta()))
@@ -73,7 +75,9 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     start_parser = subparsers.add_parser("start", help="Start a new session")
-    start_parser.add_argument("--category", required=True, help="Category of the session")
+    start_parser.add_argument(
+        "--category", required=True, help="Category of the session"
+    )
     start_parser.add_argument("--notes", default="", help="Optional notes")
     start_parser.set_defaults(func=cmd_start)
 

@@ -4,19 +4,20 @@ This module provides a simple desktop GUI that can capture screens,
 annotate screenshots with drawing tools, and index the saved images with
 OCR text to enable search.
 """
+
 from __future__ import annotations
 
 import sqlite3
 import threading
 import time
+import tkinter as tk
 from datetime import datetime
 from pathlib import Path
+from tkinter import colorchooser, filedialog, messagebox, simpledialog
 from typing import List, Optional, Tuple
 
 import mss
 import pytesseract
-import tkinter as tk
-from tkinter import filedialog, messagebox, simpledialog, colorchooser
 from PIL import Image, ImageDraw, ImageTk
 
 APP_NAME = "Smart Screenshot Tool"
@@ -102,7 +103,9 @@ class SmartScreenshotApp(tk.Tk):
         toolbar = tk.Frame(self)
         toolbar.pack(side=tk.TOP, fill=tk.X)
 
-        capture_btn = tk.Button(toolbar, text="Capture Screen", command=self.capture_screen)
+        capture_btn = tk.Button(
+            toolbar, text="Capture Screen", command=self.capture_screen
+        )
         capture_btn.pack(side=tk.LEFT, padx=4, pady=4)
 
         save_btn = tk.Button(toolbar, text="Save & Index", command=self.save_image)
@@ -114,16 +117,27 @@ class SmartScreenshotApp(tk.Tk):
         tk.Label(toolbar, text="Tool:").pack(side=tk.LEFT, padx=(8, 2))
         self.tool_var = tk.StringVar(value=self.tool)
         for tool in SUPPORTED_TOOLS:
-            tk.Radiobutton(toolbar, text=tool.title(), variable=self.tool_var, value=tool, command=self._set_tool).pack(
-                side=tk.LEFT
-            )
+            tk.Radiobutton(
+                toolbar,
+                text=tool.title(),
+                variable=self.tool_var,
+                value=tool,
+                command=self._set_tool,
+            ).pack(side=tk.LEFT)
 
         color_btn = tk.Button(toolbar, text="Pick Color", command=self.pick_color)
         color_btn.pack(side=tk.LEFT, padx=4)
 
         tk.Label(toolbar, text="Stroke:").pack(side=tk.LEFT, padx=(8, 2))
         self.width_var = tk.IntVar(value=self.draw_width)
-        width_entry = tk.Spinbox(toolbar, from_=1, to=12, textvariable=self.width_var, width=4, command=self._set_width)
+        width_entry = tk.Spinbox(
+            toolbar,
+            from_=1,
+            to=12,
+            textvariable=self.width_var,
+            width=4,
+            command=self._set_width,
+        )
         width_entry.pack(side=tk.LEFT, padx=(0, 8))
 
         search_frame = tk.Frame(self)
@@ -134,7 +148,9 @@ class SmartScreenshotApp(tk.Tk):
         search_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=4)
         search_entry.bind("<KeyRelease>", lambda _event: self.refresh_gallery())
 
-        self.canvas = tk.Canvas(self, bg="#1e1e1e", width=900, height=520, cursor="cross")
+        self.canvas = tk.Canvas(
+            self, bg="#1e1e1e", width=900, height=520, cursor="cross"
+        )
         self.canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=4, pady=4)
         self.canvas.bind("<ButtonPress-1>", self.on_press)
         self.canvas.bind("<B1-Motion>", self.on_drag)
@@ -145,7 +161,9 @@ class SmartScreenshotApp(tk.Tk):
         tk.Label(gallery_frame, text="Saved Screenshots").pack()
         self.gallery_list = tk.Listbox(gallery_frame, width=40)
         self.gallery_list.pack(fill=tk.BOTH, expand=True)
-        self.gallery_list.bind("<<ListboxSelect>>", lambda _event: self.preview_selected())
+        self.gallery_list.bind(
+            "<<ListboxSelect>>", lambda _event: self.preview_selected()
+        )
 
         self.preview_label = tk.Label(gallery_frame)
         self.preview_label.pack(fill=tk.BOTH, padx=4, pady=4)
@@ -190,7 +208,12 @@ class SmartScreenshotApp(tk.Tk):
             self._place_text(event.x, event.y)
 
     def on_drag(self, event: tk.Event) -> None:
-        if not self.current_image or self.tool == "text" or self.start_x is None or self.start_y is None:
+        if (
+            not self.current_image
+            or self.tool == "text"
+            or self.start_x is None
+            or self.start_y is None
+        ):
             return
 
         if self.tool == "pen":
@@ -218,15 +241,30 @@ class SmartScreenshotApp(tk.Tk):
             self.canvas.delete(self.preview_shape)
         if self.tool == "rectangle":
             self.preview_shape = self.canvas.create_rectangle(
-                self.start_x, self.start_y, event.x, event.y, outline=self.draw_color, width=self.draw_width
+                self.start_x,
+                self.start_y,
+                event.x,
+                event.y,
+                outline=self.draw_color,
+                width=self.draw_width,
             )
         elif self.tool == "ellipse":
             self.preview_shape = self.canvas.create_oval(
-                self.start_x, self.start_y, event.x, event.y, outline=self.draw_color, width=self.draw_width
+                self.start_x,
+                self.start_y,
+                event.x,
+                event.y,
+                outline=self.draw_color,
+                width=self.draw_width,
             )
 
     def on_release(self, event: tk.Event) -> None:
-        if not self.current_image or self.tool == "text" or self.start_x is None or self.start_y is None:
+        if (
+            not self.current_image
+            or self.tool == "text"
+            or self.start_x is None
+            or self.start_y is None
+        ):
             return
 
         draw = ImageDraw.Draw(self.current_image)

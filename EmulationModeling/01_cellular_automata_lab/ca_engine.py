@@ -1,10 +1,12 @@
 import numpy as np
 
+
 class CAEngine:
     """
     Generic 2D Cellular Automata Engine using numpy vectorization.
     Supports arbitrary B/S (Birth/Survival) rules.
     """
+
     def __init__(self, width, height, rule_b=(3,), rule_s=(2, 3)):
         """
         Initialize the grid.
@@ -22,7 +24,9 @@ class CAEngine:
 
     def randomize(self, density=0.2):
         """Randomly populate the grid."""
-        self.grid = (np.random.random((self.height, self.width)) < density).astype(np.int8)
+        self.grid = (np.random.random((self.height, self.width)) < density).astype(
+            np.int8
+        )
         self.generation = 0
 
     def step(self):
@@ -30,14 +34,14 @@ class CAEngine:
         # Count neighbors using numpy rolling for toroidal boundary conditions
         # Neighbors = sum of 8 surrounding cells
         neighbors = (
-            np.roll(self.grid, 1, axis=0) +  # N
-            np.roll(self.grid, -1, axis=0) + # S
-            np.roll(self.grid, 1, axis=1) +  # W
-            np.roll(self.grid, -1, axis=1) + # E
-            np.roll(np.roll(self.grid, 1, axis=0), 1, axis=1) +   # NW
-            np.roll(np.roll(self.grid, 1, axis=0), -1, axis=1) +  # NE
-            np.roll(np.roll(self.grid, -1, axis=0), 1, axis=1) +  # SW
-            np.roll(np.roll(self.grid, -1, axis=0), -1, axis=1)   # SE
+            np.roll(self.grid, 1, axis=0)  # N
+            + np.roll(self.grid, -1, axis=0)  # S
+            + np.roll(self.grid, 1, axis=1)  # W
+            + np.roll(self.grid, -1, axis=1)  # E
+            + np.roll(np.roll(self.grid, 1, axis=0), 1, axis=1)  # NW
+            + np.roll(np.roll(self.grid, 1, axis=0), -1, axis=1)  # NE
+            + np.roll(np.roll(self.grid, -1, axis=0), 1, axis=1)  # SW
+            + np.roll(np.roll(self.grid, -1, axis=0), -1, axis=1)  # SE
         )
 
         # Apply rules

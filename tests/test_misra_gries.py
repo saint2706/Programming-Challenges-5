@@ -6,7 +6,6 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from Algorithmic.TopKFrequentItems.misra_gries import (
-    FrequentItem,
     MisraGriesCounter,
     SpaceSavingCounter,
 )
@@ -24,7 +23,7 @@ def test_misra_gries_heavy_hitters():
     assert "a" in counter.counters
     # Verify counter memory bound: at most k-1 counters
     assert len(counter.counters) <= counter.k - 1
-    
+
     # Get all tracked items
     all_items = counter.heavy_hitters()
     assert len(all_items) > 0
@@ -44,7 +43,7 @@ def test_misra_gries_adversarial_stream():
     # Now heavily update one item
     for _ in range(200):
         counter.update("heavy")
-    
+
     # Verify 'heavy' is tracked
     assert "heavy" in counter.counters
     # The counter for 'heavy' should be high

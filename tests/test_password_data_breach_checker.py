@@ -1,6 +1,8 @@
 import unittest
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
+
 from Practical.PasswordDataBreachChecker.__main__ import check_password
+
 
 class TestPasswordChecker(unittest.TestCase):
 
@@ -31,6 +33,7 @@ class TestPasswordChecker(unittest.TestCase):
 
         count = check_password("super_unique_password_that_hopefully_isnt_pwned")
         self.assertEqual(count, 0)
+
 
 if __name__ == "__main__":
     unittest.main()

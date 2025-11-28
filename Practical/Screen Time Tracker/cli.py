@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import argparse
-from datetime import datetime, date
+from datetime import date, datetime
 from typing import Optional
 
 from .storage import JSONStorage, SQLiteStorage
@@ -45,14 +45,23 @@ def build_parser() -> argparse.ArgumentParser:
 
     track_parser = subparsers.add_parser("track", help="Start logging focus changes.")
     track_parser.add_argument(
-        "--backend", choices=["sqlite", "json"], default="sqlite", help="Storage backend"
+        "--backend",
+        choices=["sqlite", "json"],
+        default="sqlite",
+        help="Storage backend",
     )
     track_parser.add_argument("--path", help="Path to database or JSON file")
-    track_parser.add_argument("--interval", type=float, default=5.0, help="Polling interval seconds")
+    track_parser.add_argument(
+        "--interval", type=float, default=5.0, help="Polling interval seconds"
+    )
     track_parser.set_defaults(func=start_tracking)
 
-    summary_parser = subparsers.add_parser("summary", help="Show usage summary for a day.")
-    summary_parser.add_argument("--backend", choices=["sqlite", "json"], default="sqlite")
+    summary_parser = subparsers.add_parser(
+        "summary", help="Show usage summary for a day."
+    )
+    summary_parser.add_argument(
+        "--backend", choices=["sqlite", "json"], default="sqlite"
+    )
     summary_parser.add_argument("--path", help="Path to database or JSON file")
     summary_parser.add_argument(
         "--date",

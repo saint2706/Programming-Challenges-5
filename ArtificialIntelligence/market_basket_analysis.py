@@ -40,7 +40,9 @@ def _validate_support(min_support: float) -> None:
         raise ValueError("min_support must be in the range (0, 1]")
 
 
-def _candidate_itemsets(previous_level: Set[frozenset[str]], k: int) -> Set[frozenset[str]]:
+def _candidate_itemsets(
+    previous_level: Set[frozenset[str]], k: int
+) -> Set[frozenset[str]]:
     """Generate candidate itemsets of size ``k`` from the previous level.
 
     Args:
@@ -61,7 +63,9 @@ def _candidate_itemsets(previous_level: Set[frozenset[str]], k: int) -> Set[froz
     return candidates
 
 
-def apriori(transactions: Sequence[Iterable[str]], min_support: float) -> MutableMapping[frozenset[str], float]:
+def apriori(
+    transactions: Sequence[Iterable[str]], min_support: float
+) -> MutableMapping[frozenset[str], float]:
     """Run the Apriori algorithm to find frequent itemsets.
 
     Args:
@@ -99,12 +103,16 @@ def apriori(transactions: Sequence[Iterable[str]], min_support: float) -> Mutabl
         if count >= min_support_count
     }
 
-    current_level = {itemset for itemset, support in frequent_itemsets.items() if len(itemset) == 1}
+    current_level = {
+        itemset for itemset, support in frequent_itemsets.items() if len(itemset) == 1
+    }
     k = 2
 
     while current_level:
         candidates = _candidate_itemsets(current_level, k)
-        candidate_counts: MutableMapping[frozenset[str], int] = {c: 0 for c in candidates}
+        candidate_counts: MutableMapping[frozenset[str], int] = {
+            c: 0 for c in candidates
+        }
 
         for basket in transaction_list:
             for candidate in candidates:
@@ -196,7 +204,9 @@ def _format_itemset(itemset: frozenset[str]) -> str:
     return "{" + ", ".join(sorted(itemset)) + "}"
 
 
-def demo(min_support: float = 0.3, min_confidence: float = 0.6, min_lift: float = 1.0) -> None:
+def demo(
+    min_support: float = 0.3, min_confidence: float = 0.6, min_lift: float = 1.0
+) -> None:
     """Run a simple demo using sample transactions.
 
     Args:
@@ -212,7 +222,9 @@ def demo(min_support: float = 0.3, min_confidence: float = 0.6, min_lift: float 
     )
 
     print("Frequent Itemsets:")
-    for itemset, support in sorted(frequent_itemsets.items(), key=lambda x: (len(x[0]), x[0])):
+    for itemset, support in sorted(
+        frequent_itemsets.items(), key=lambda x: (len(x[0]), x[0])
+    ):
         print(f"  {_format_itemset(itemset)} -> support: {support:.2f}")
 
     print("\nAssociation Rules:")
@@ -226,10 +238,25 @@ def demo(min_support: float = 0.3, min_confidence: float = 0.6, min_lift: float 
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Run Apriori market basket analysis demo.")
-    parser.add_argument("--min-support", type=float, default=0.3, help="Minimum support ratio (0, 1].")
-    parser.add_argument("--min-confidence", type=float, default=0.6, help="Minimum confidence for rules.")
-    parser.add_argument("--min-lift", type=float, default=1.0, help="Minimum lift for rules.")
+    parser = argparse.ArgumentParser(
+        description="Run Apriori market basket analysis demo."
+    )
+    parser.add_argument(
+        "--min-support", type=float, default=0.3, help="Minimum support ratio (0, 1]."
+    )
+    parser.add_argument(
+        "--min-confidence",
+        type=float,
+        default=0.6,
+        help="Minimum confidence for rules.",
+    )
+    parser.add_argument(
+        "--min-lift", type=float, default=1.0, help="Minimum lift for rules."
+    )
     args = parser.parse_args()
 
-    demo(min_support=args.min_support, min_confidence=args.min_confidence, min_lift=args.min_lift)
+    demo(
+        min_support=args.min_support,
+        min_confidence=args.min_confidence,
+        min_lift=args.min_lift,
+    )

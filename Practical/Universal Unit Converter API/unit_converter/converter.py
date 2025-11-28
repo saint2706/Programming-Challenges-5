@@ -1,4 +1,5 @@
 """Conversion engine built on top of the configuration loader."""
+
 from __future__ import annotations
 
 from collections import deque
@@ -62,7 +63,9 @@ class UnitConverter:
     def _build_categories(self, data: Dict[str, Dict]) -> None:
         categories = data.get("categories")
         if not isinstance(categories, dict):
-            raise InvalidConfiguration("Configuration must include a 'categories' mapping")
+            raise InvalidConfiguration(
+                "Configuration must include a 'categories' mapping"
+            )
         self._categories.clear()
         self._graphs.clear()
         self._aliases.clear()
@@ -70,7 +73,9 @@ class UnitConverter:
         for category_name, config in categories.items():
             units = config.get("units")
             if not units:
-                raise InvalidConfiguration(f"Category '{category_name}' does not define any units")
+                raise InvalidConfiguration(
+                    f"Category '{category_name}' does not define any units"
+                )
             processed_units: Dict[str, float] = {}
             alias_map: Dict[str, str] = {}
             for unit_name, definition in units.items():
@@ -105,7 +110,9 @@ class UnitConverter:
                 processed_units, base_unit, config.get("relationships", [])
             )
 
-    def _build_graph(self, units: Dict[str, float], base_unit: str, relationships: List[Dict]) -> Dict[str, Dict[str, float]]:
+    def _build_graph(
+        self, units: Dict[str, float], base_unit: str, relationships: List[Dict]
+    ) -> Dict[str, Dict[str, float]]:
         graph: Dict[str, Dict[str, float]] = {unit: {} for unit in units}
         base_factor = units[base_unit]
         if base_factor <= 0:
@@ -123,7 +130,9 @@ class UnitConverter:
             target = relationship.get("to")
             rel_factor = relationship.get("factor")
             if not source or not target or rel_factor is None:
-                raise InvalidConfiguration("Relationships must define 'from', 'to' and 'factor'")
+                raise InvalidConfiguration(
+                    "Relationships must define 'from', 'to' and 'factor'"
+                )
             if source not in graph or target not in graph:
                 raise InvalidConfiguration(
                     f"Relationship references unknown units: {source!r} -> {target!r}"
@@ -145,7 +154,9 @@ class UnitConverter:
             }
         return response
 
-    def convert(self, category: str, from_unit: str, to_unit: str, value: float) -> ConversionResult:
+    def convert(
+        self, category: str, from_unit: str, to_unit: str, value: float
+    ) -> ConversionResult:
         self._ensure_latest()
         canonical_category = self._categories.get(category)
         if canonical_category is None:
@@ -187,4 +198,3 @@ class UnitConverter:
         raise UnitNotFound(
             f"No conversion path between '{source}' and '{target}' in '{category}'"
         )
-

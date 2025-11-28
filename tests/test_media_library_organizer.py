@@ -1,9 +1,11 @@
-import unittest
 import os
 import shutil
 import tempfile
-from unittest.mock import patch, MagicMock
-from Practical.MediaLibraryOrganizer.__main__ import organize_library, clean_filename
+import unittest
+from unittest.mock import MagicMock, patch
+
+from Practical.MediaLibraryOrganizer.__main__ import clean_filename, organize_library
+
 
 class TestMediaOrganizer(unittest.TestCase):
     def setUp(self):
@@ -14,7 +16,7 @@ class TestMediaOrganizer(unittest.TestCase):
 
         # Create dummy movie file
         self.dummy_file = os.path.join(self.source_dir, "The.Matrix.1999.1080p.mp4")
-        with open(self.dummy_file, 'w') as f:
+        with open(self.dummy_file, "w") as f:
             f.write("dummy content")
 
     def tearDown(self):
@@ -35,19 +37,17 @@ class TestMediaOrganizer(unittest.TestCase):
         mock_resp = MagicMock()
         mock_resp.status_code = 200
         mock_resp.json.return_value = {
-            "results": [
-                {
-                    "title": "The Matrix",
-                    "release_date": "1999-03-30"
-                }
-            ]
+            "results": [{"title": "The Matrix", "release_date": "1999-03-30"}]
         }
         mock_get.return_value = mock_resp
 
         organize_library(self.source_dir, self.target_dir, "fake_key")
 
-        expected_path = os.path.join(self.target_dir, "The Matrix (1999)", "The Matrix (1999).mp4")
+        expected_path = os.path.join(
+            self.target_dir, "The Matrix (1999)", "The Matrix (1999).mp4"
+        )
         self.assertTrue(os.path.exists(expected_path))
+
 
 if __name__ == "__main__":
     unittest.main()

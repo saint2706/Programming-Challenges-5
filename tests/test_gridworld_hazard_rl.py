@@ -12,7 +12,9 @@ from ArtificialIntelligence.gridworld_hazard_rl import (
 
 
 def test_q_update_matches_expected_formula() -> None:
-    env = Gridworld(width=3, height=3, start=(0, 0), goal=(2, 2), hazards=[], step_penalty=0.0)
+    env = Gridworld(
+        width=3, height=3, start=(0, 0), goal=(2, 2), hazards=[], step_penalty=0.0
+    )
     q_table = initialize_q_table(env)
     config = TrainingConfig(
         episodes=1,
@@ -33,7 +35,9 @@ def test_q_update_matches_expected_formula() -> None:
 
     update_q_value(q_table, state, action, reward, next_state, False, config)
 
-    expected = 0.0 + config.learning_rate * (reward + config.discount_factor * 0.8 - 0.0)
+    expected = 0.0 + config.learning_rate * (
+        reward + config.discount_factor * 0.8 - 0.0
+    )
     assert np.isclose(q_table[0, 0, action], expected)
 
 
@@ -64,4 +68,6 @@ def test_agent_learns_to_avoid_hazardous_cell() -> None:
     right_value = q_table[start_row, start_col, 3]  # Hazard is directly to the right
     safest_value = np.max(np.delete(q_table[start_row, start_col], 3))
 
-    assert safest_value > right_value, "Agent should prefer routes that avoid the hazard"
+    assert (
+        safest_value > right_value
+    ), "Agent should prefer routes that avoid the hazard"

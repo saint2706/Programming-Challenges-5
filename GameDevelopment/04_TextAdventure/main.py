@@ -12,9 +12,11 @@ Commands:
     help/h: Show available commands
     quit/q: Exit game
 """
+
 import json
 import os
 import sys
+
 
 class Game:
     def __init__(self, world_file):
@@ -25,7 +27,7 @@ class Game:
 
     def load_world(self, file_path):
         try:
-            with open(file_path, 'r') as f:
+            with open(file_path, "r") as f:
                 return json.load(f)
         except FileNotFoundError:
             print(f"Error: World file '{file_path}' not found.")
@@ -40,10 +42,10 @@ class Game:
     def print_room(self):
         room = self.get_room(self.current_room_id)
         print(f"\n=== {room['name']} ===")
-        print(room['description'])
-        if room['items']:
-            print("You see:", ", ".join(room['items']))
-        print("Exits:", ", ".join(room['exits'].keys()))
+        print(room["description"])
+        if room["items"]:
+            print("You see:", ", ".join(room["items"]))
+        print("Exits:", ", ".join(room["exits"].keys()))
 
     def parse_command(self, command):
         parts = command.lower().split()
@@ -74,8 +76,8 @@ class Game:
             return
 
         room = self.get_room(self.current_room_id)
-        if direction in room['exits']:
-            self.current_room_id = room['exits'][direction]
+        if direction in room["exits"]:
+            self.current_room_id = room["exits"][direction]
             self.print_room()
         else:
             print("You can't go that way.")
@@ -86,7 +88,7 @@ class Game:
         else:
             # Check if item in room or inventory
             room = self.get_room(self.current_room_id)
-            if noun in room['items'] or noun in self.inventory:
+            if noun in room["items"] or noun in self.inventory:
                 print(f"{noun}: {self.get_item_desc(noun)}")
             else:
                 print("You don't see that here.")
@@ -97,8 +99,8 @@ class Game:
             return
 
         room = self.get_room(self.current_room_id)
-        if item in room['items']:
-            room['items'].remove(item)
+        if item in room["items"]:
+            room["items"].remove(item)
             self.inventory.append(item)
             print(f"You picked up the {item}.")
         else:
@@ -129,11 +131,12 @@ class Game:
                 self.running = False
         print("\nGoodbye!")
 
+
 if __name__ == "__main__":
     world_file = "world.json"
     if len(sys.argv) > 1:
         world_file = sys.argv[1]
-    
+
     # Ensure we look in the same directory as the script if not found
     if not os.path.exists(world_file):
         script_dir = os.path.dirname(os.path.abspath(__file__))

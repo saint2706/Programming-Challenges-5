@@ -1,5 +1,6 @@
 import pygame
 
+
 class Display:
     def __init__(self, scale=10):
         self.scale = scale
@@ -20,7 +21,9 @@ class Display:
             if pixel:
                 x = (i % 64) * self.scale
                 y = (i // 64) * self.scale
-                pygame.draw.rect(self.screen, self.COLOR_FG, (x, y, self.scale, self.scale))
+                pygame.draw.rect(
+                    self.screen, self.COLOR_FG, (x, y, self.scale, self.scale)
+                )
 
         pygame.display.flip()
 

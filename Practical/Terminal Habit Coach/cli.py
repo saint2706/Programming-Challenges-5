@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 import argparse
-import sys
 import os
+import sys
 from pathlib import Path
 from typing import List, Optional
 
@@ -12,19 +12,16 @@ from typing import List, Optional
 sys.path.append(os.path.dirname(__file__))
 
 try:
-    from service import TerminalHabitCoach
     from database import HabitRepository
+    from service import TerminalHabitCoach
 except ImportError:
-    from .service import TerminalHabitCoach
     from .database import HabitRepository
+    from .service import TerminalHabitCoach
 
 
 def build_parser() -> argparse.ArgumentParser:
     """Construct the command line parser."""
-    parser = argparse.ArgumentParser(
-        description="Terminal Habit Coach",
-        prog="thc"
-    )
+    parser = argparse.ArgumentParser(description="Terminal Habit Coach", prog="thc")
     parser.add_argument(
         "--database",
         type=Path,
@@ -50,18 +47,14 @@ def build_parser() -> argparse.ArgumentParser:
 
     log_cmd = subparsers.add_parser("log", help="Log progress for a habit")
     log_cmd.add_argument("name", help="Habit name")
-    log_cmd.add_argument(
-        "--when", help="ISO timestamp to log (defaults to now)"
-    )
+    log_cmd.add_argument("--when", help="ISO timestamp to log (defaults to now)")
     log_cmd.add_argument("--note", help="Optional note")
 
     subparsers.add_parser("status", help="Display summary table")
 
     subparsers.add_parser("streaks", help="Display streak details")
 
-    show_cmd = subparsers.add_parser(
-        "show", help="Display details for a single habit"
-    )
+    show_cmd = subparsers.add_parser("show", help="Display details for a single habit")
     show_cmd.add_argument("name", help="Habit name")
 
     return parser
@@ -69,9 +62,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 def _build_coach(db_path: Optional[Path]) -> TerminalHabitCoach:
     """Factory for the coach service."""
-    repo = (
-        HabitRepository(db_path=db_path) if db_path else HabitRepository()
-    )
+    repo = HabitRepository(db_path=db_path) if db_path else HabitRepository()
     return TerminalHabitCoach(repository=repo)
 
 
@@ -90,9 +81,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     coach = _build_coach(args.database)
 
     if args.command == "add-habit":
-        coach.add_habit(
-            args.name, args.description, args.frequency, args.reminder
-        )
+        coach.add_habit(args.name, args.description, args.frequency, args.reminder)
         print(f"Added habit '{args.name}'.")
         return 0
     if args.command == "log":

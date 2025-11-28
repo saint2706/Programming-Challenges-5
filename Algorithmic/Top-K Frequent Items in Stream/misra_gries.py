@@ -3,10 +3,11 @@
 This module implements the Misra-Gries algorithm and the Space-Saving algorithm
 to find frequent items in a data stream with bounded memory.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Dict, Iterable, List, Optional, Union
+from typing import Any, Dict, Iterable, List, Optional
 
 
 @dataclass(frozen=True)
@@ -226,9 +227,7 @@ class SpaceSavingCounter:
             Dict[Any, FrequentItem]: Map of item to FrequentItem stats.
         """
         return {
-            item: FrequentItem(
-                item=item, estimate=count, error=self.error[item]
-            )
+            item: FrequentItem(item=item, estimate=count, error=self.error[item])
             for item, count in self.counters.items()
         }
 

@@ -2,13 +2,14 @@
 
 Handles database connections, schema migrations, and CRUD operations for habits.
 """
+
 from __future__ import annotations
 
+import sqlite3
 from dataclasses import dataclass
 from datetime import date, datetime
 from pathlib import Path
-import sqlite3
-from typing import Iterable, List, Optional, Sequence, Union, Any, Dict
+from typing import Any, Dict, List, Optional, Sequence, Union
 
 DEFAULT_DB_PATH = Path.home() / ".terminal_habit_coach.db"
 
@@ -259,9 +260,7 @@ class HabitRepository:
                 (habit.id,),
             ).fetchone()
 
-        last_logged_date_str = (
-            streak_row["last_logged_date"] if streak_row else None
-        )
+        last_logged_date_str = streak_row["last_logged_date"] if streak_row else None
         if last_logged_date_str:
             last_logged_date = datetime.fromisoformat(last_logged_date_str).date()
             days_since = (date.today() - last_logged_date).days

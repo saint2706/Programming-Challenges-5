@@ -1,5 +1,7 @@
 import unittest
+
 from regex_engine import RegexEngine
+
 
 class TestRegexEngine(unittest.TestCase):
     def test_literal(self):
@@ -20,7 +22,9 @@ class TestRegexEngine(unittest.TestCase):
         self.assertTrue(engine.match("a"))
         self.assertTrue(engine.match("b"))
         self.assertFalse(engine.match("c"))
-        self.assertFalse(engine.match("ab")) # Matches full string check? Logic assumes full string consumption?
+        self.assertFalse(
+            engine.match("ab")
+        )  # Matches full string check? Logic assumes full string consumption?
         # My implementation of match loops through text and checks if FINAL state is in active set.
         # But if text has characters left?
         # My current implementation consumes the whole text.
@@ -50,5 +54,6 @@ class TestRegexEngine(unittest.TestCase):
         self.assertTrue(engine.match("abbccd"))
         self.assertFalse(engine.match("add"))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

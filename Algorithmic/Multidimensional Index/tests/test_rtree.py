@@ -1,6 +1,8 @@
-import unittest
 import os
-from rtree import RTree, Rect
+import unittest
+
+from rtree import Rect, RTree
+
 
 class TestRTree(unittest.TestCase):
     def test_basic_ops(self):
@@ -24,7 +26,7 @@ class TestRTree(unittest.TestCase):
         # Force splits (MAX_ENTRIES=4)
         tree = RTree()
         for i in range(10):
-            tree.insert(Rect(i, i, i+1, i+1), i)
+            tree.insert(Rect(i, i, i + 1, i + 1), i)
 
         # Should have split into depth > 1
         # Root should not be leaf
@@ -43,16 +45,17 @@ class TestRTree(unittest.TestCase):
 
     def test_serialization(self):
         tree = RTree()
-        tree.insert(Rect(0,0,1,1), "Data")
+        tree.insert(Rect(0, 0, 1, 1), "Data")
         tree.save("test_rtree.json")
 
         tree2 = RTree()
         tree2.load("test_rtree.json")
-        res = tree2.search(Rect(0,0,1,1))
+        res = tree2.search(Rect(0, 0, 1, 1))
         self.assertEqual(res, ["Data"])
 
         if os.path.exists("test_rtree.json"):
             os.remove("test_rtree.json")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

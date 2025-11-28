@@ -6,11 +6,8 @@ from directories that have spaces in their names using Python-compatible
 import paths.
 """
 
-import os
 import sys
 from pathlib import Path
-
-import pytest
 
 # Repository root directory
 ROOT = Path(__file__).resolve().parents[1]
@@ -58,7 +55,7 @@ def create_symlink(link_path: Path, target_path: Path) -> None:
             # tests from the repo without act, or if the directory was created
             # manually. In this case, the real directory should be used.
             return
-    
+
     if target_path.exists():
         try:
             link_path.symlink_to(target_path)
@@ -74,14 +71,14 @@ def setup_module_symlinks():
         link_path = algorithmic_dir / link_name
         target_path = algorithmic_dir / target_name
         create_symlink(link_path, target_path)
-    
+
     # Create Practical symlinks
     practical_dir = ROOT / "Practical"
     for link_name, target_name in PRACTICAL_MAPPINGS.items():
         link_path = practical_dir / link_name
         target_path = practical_dir / target_name
         create_symlink(link_path, target_path)
-    
+
     # Create root level symlinks
     for link_name, target_rel_path in ROOT_LEVEL_MAPPINGS.items():
         link_path = ROOT / link_name

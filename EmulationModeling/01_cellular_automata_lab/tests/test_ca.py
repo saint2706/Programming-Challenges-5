@@ -1,6 +1,8 @@
 import unittest
+
 import numpy as np
 from ca_engine import CAEngine
+
 
 class TestCAEngine(unittest.TestCase):
     def setUp(self):
@@ -70,13 +72,16 @@ class TestCAEngine(unittest.TestCase):
         # 1 1 1
         # 1 0 1
         # 0 1 0
-        coords = [(0,0), (0,1), (0,2), (1,0), (1,2), (2,1)]
+        coords = [(0, 0), (0, 1), (0, 2), (1, 0), (1, 2), (2, 1)]
         for r, c in coords:
             self.engine.set_cell(c, r, 1)
 
-        self.assertEqual(self.engine.grid[1, 1], 0) # Target cell is dead
+        self.assertEqual(self.engine.grid[1, 1], 0)  # Target cell is dead
         self.engine.step()
-        self.assertEqual(self.engine.grid[1, 1], 1) # Target cell should be born (6 neighbors)
+        self.assertEqual(
+            self.engine.grid[1, 1], 1
+        )  # Target cell should be born (6 neighbors)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

@@ -1,6 +1,7 @@
-import numpy as np
 import matplotlib.pyplot as plt
-from nn import NeuralNetwork, Linear, ReLU, Sigmoid, MSELoss
+import numpy as np
+from nn import Linear, MSELoss, NeuralNetwork, ReLU, Sigmoid
+
 
 def generate_data(n_samples=200):
     # Generate concentric circles
@@ -13,17 +14,18 @@ def generate_data(n_samples=200):
     for _ in range(n_samples // 2):
         # Inner
         r = np.random.uniform(0, 0.5)
-        angle = np.random.uniform(0, 2*np.pi)
-        X.append([r*np.cos(angle), r*np.sin(angle)])
+        angle = np.random.uniform(0, 2 * np.pi)
+        X.append([r * np.cos(angle), r * np.sin(angle)])
         y.append([0])
 
         # Outer
         r = np.random.uniform(0.7, 1.0)
-        angle = np.random.uniform(0, 2*np.pi)
-        X.append([r*np.cos(angle), r*np.sin(angle)])
+        angle = np.random.uniform(0, 2 * np.pi)
+        X.append([r * np.cos(angle), r * np.sin(angle)])
         y.append([1])
 
     return np.array(X), np.array(y)
+
 
 def main():
     X, y = generate_data()
@@ -35,7 +37,7 @@ def main():
     net.add(Linear(16, 16))
     net.add(ReLU())
     net.add(Linear(16, 1))
-    net.add(Sigmoid()) # Binary classification
+    net.add(Sigmoid())  # Binary classification
 
     loss_fn = MSELoss()
 
@@ -81,12 +83,17 @@ def main():
     ax2.contourf(xx, yy, preds_grid, levels=20, cmap="RdBu_r", alpha=0.6)
 
     # Scatter points
-    ax2.scatter(X[y.flatten()==0, 0], X[y.flatten()==0, 1], c='blue', label='Class 0')
-    ax2.scatter(X[y.flatten()==1, 0], X[y.flatten()==1, 1], c='red', label='Class 1')
+    ax2.scatter(
+        X[y.flatten() == 0, 0], X[y.flatten() == 0, 1], c="blue", label="Class 0"
+    )
+    ax2.scatter(
+        X[y.flatten() == 1, 0], X[y.flatten() == 1, 1], c="red", label="Class 1"
+    )
     ax2.legend()
 
     plt.tight_layout()
     plt.show()
+
 
 if __name__ == "__main__":
     main()

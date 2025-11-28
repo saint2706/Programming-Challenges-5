@@ -1,5 +1,6 @@
-import sys
+
 from autocomplete import AutocompleteEngine
+
 
 def main():
     engine = AutocompleteEngine(n=2)
@@ -13,7 +14,7 @@ def main():
         "i love python programming",
         "python is a great language",
         "the quick red fox",
-        "hello there general kenobi"
+        "hello there general kenobi",
     ]
 
     print("Training on corpus...")
@@ -28,6 +29,7 @@ def main():
             print(f"Suggestions: {results}")
     except KeyboardInterrupt:
         print("\nExiting.")
+
 
 if __name__ == "__main__":
     main()

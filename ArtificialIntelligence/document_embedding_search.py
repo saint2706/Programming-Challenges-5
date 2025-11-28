@@ -7,7 +7,6 @@ from typing import Callable, Sequence
 
 import numpy as np
 
-
 Embedder = Callable[[Sequence[str]], np.ndarray]
 
 
@@ -68,7 +67,9 @@ class DocumentEmbeddingSearch:
         model = sentence_transformers.SentenceTransformer(model_name)
 
         def embed(texts: Sequence[str]) -> np.ndarray:
-            return model.encode(texts, convert_to_numpy=True, normalize_embeddings=False)
+            return model.encode(
+                texts, convert_to_numpy=True, normalize_embeddings=False
+            )
 
         return embed
 
@@ -78,10 +79,14 @@ class DocumentEmbeddingSearch:
         norms[norms == 0.0] = 1.0
         return embeddings / norms
 
-    def add_documents(self, documents: Sequence[str], ids: Sequence[str] | None = None) -> None:
+    def add_documents(
+        self, documents: Sequence[str], ids: Sequence[str] | None = None
+    ) -> None:
         """Add new documents to the index."""
 
-        document_ids = [str(idx) for idx, _ in enumerate(documents, start=len(self.documents))]
+        document_ids = [
+            str(idx) for idx, _ in enumerate(documents, start=len(self.documents))
+        ]
         if ids is not None:
             if len(ids) != len(documents):
                 raise ValueError("ids and documents must be the same length")
@@ -184,7 +189,7 @@ class DocumentEmbeddingSearch:
             SearchResult(
                 document_id=self.document_ids[idx],
                 text=self.documents[idx],
-                score=1.0 - (distance ** 2) / 2,
+                score=1.0 - (distance**2) / 2,
             )
             for idx, distance in zip(distance_indices, distances)
         ]

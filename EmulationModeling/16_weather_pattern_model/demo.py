@@ -1,7 +1,9 @@
 """Command-line demo for the weather pattern cellular model."""
+
 from __future__ import annotations
 
 import argparse
+
 import matplotlib
 
 # Use a non-interactive backend for environments without display servers.
@@ -23,8 +25,15 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--width", type=int, default=64, help="Grid width")
     parser.add_argument("--height", type=int, default=64, help="Grid height")
-    parser.add_argument("--steps", type=int, default=50, help="Number of simulation steps")
-    parser.add_argument("--diffusion-rate", type=float, default=0.15, help="Pressure diffusion coefficient")
+    parser.add_argument(
+        "--steps", type=int, default=50, help="Number of simulation steps"
+    )
+    parser.add_argument(
+        "--diffusion-rate",
+        type=float,
+        default=0.15,
+        help="Pressure diffusion coefficient",
+    )
     parser.add_argument(
         "--moisture-transport-rate",
         type=float,
@@ -32,7 +41,9 @@ def parse_args() -> argparse.Namespace:
         help="Humidity advection rate scaled by wind",
     )
     parser.add_argument("--dt", type=float, default=1.0, help="Time step")
-    parser.add_argument("--seed", type=int, default=7, help="Random seed for reproducibility")
+    parser.add_argument(
+        "--seed", type=int, default=7, help="Random seed for reproducibility"
+    )
     parser.add_argument(
         "--output",
         type=str,

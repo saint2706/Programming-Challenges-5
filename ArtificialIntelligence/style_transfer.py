@@ -9,6 +9,7 @@ Example:
         --style path/to/style.jpg \
         --output stylized.png
 """
+
 from __future__ import annotations
 
 import argparse
@@ -21,7 +22,6 @@ import torch.nn.functional as F
 from PIL import Image
 from torchvision import models, transforms
 from torchvision.models import VGG19_Weights
-
 
 MEAN = torch.tensor([0.485, 0.456, 0.406])
 STD = torch.tensor([0.229, 0.224, 0.225])
@@ -48,7 +48,14 @@ class StyleTransferConfig:
     content_layers: Sequence[str] = field(default_factory=lambda: ("conv4_2",))
 
 
-_LAYER_MAP = {0: "conv1_1", 5: "conv2_1", 10: "conv3_1", 19: "conv4_1", 21: "conv4_2", 28: "conv5_1"}
+_LAYER_MAP = {
+    0: "conv1_1",
+    5: "conv2_1",
+    10: "conv3_1",
+    19: "conv4_1",
+    21: "conv4_2",
+    28: "conv5_1",
+}
 
 
 def gram_matrix(feature_map: torch.Tensor) -> torch.Tensor:
@@ -67,7 +74,9 @@ def gram_matrix(feature_map: torch.Tensor) -> torch.Tensor:
     return gram / (channels * height * width)
 
 
-def get_feature_maps(image: torch.Tensor, model: torch.nn.Module) -> Dict[str, torch.Tensor]:
+def get_feature_maps(
+    image: torch.Tensor, model: torch.nn.Module
+) -> Dict[str, torch.Tensor]:
     """Collect feature maps from selected VGG layers.
 
     Args:
@@ -124,7 +133,9 @@ def total_variation_loss(image: torch.Tensor) -> torch.Tensor:
     return x_diff + y_diff
 
 
-def load_image(image_path: str | Path, max_size: int, device: torch.device) -> torch.Tensor:
+def load_image(
+    image_path: str | Path, max_size: int, device: torch.device
+) -> torch.Tensor:
     """Load and normalize an image for VGG."""
 
     image = Image.open(image_path).convert("RGB")
@@ -184,7 +195,9 @@ def run_style_transfer(
     """
 
     cfg = config or StyleTransferConfig()
-    torch_device = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    torch_device = device or torch.device(
+        "cuda" if torch.cuda.is_available() else "cpu"
+    )
 
     content_image = load_image(content_image_path, cfg.max_size, torch_device)
     style_image = load_image(style_image_path, cfg.max_size, torch_device)
@@ -193,7 +206,9 @@ def run_style_transfer(
 
     content_features = get_feature_maps(content_image, vgg)
     style_features = get_feature_maps(style_image, vgg)
-    style_grams = {layer: gram_matrix(style_features[layer]) for layer in cfg.style_layer_weights}
+    style_grams = {
+        layer: gram_matrix(style_features[layer]) for layer in cfg.style_layer_weights
+    }
 
     generated = content_image.clone().requires_grad_(True)
     optimizer = torch.optim.Adam([generated], lr=0.02)
@@ -233,9 +248,15 @@ def parse_args() -> argparse.Namespace:
 
     parser = argparse.ArgumentParser(description="Neural style transfer with VGG19")
     parser.add_argument("--content", required=True, help="Path to the content image")
-    parser.add_argument("--style", required=True, help="Path to the style reference image")
-    parser.add_argument("--output", required=True, help="Path to save the stylized result")
-    parser.add_argument("--steps", type=int, default=200, help="Number of optimization steps")
+    parser.add_argument(
+        "--style", required=True, help="Path to the style reference image"
+    )
+    parser.add_argument(
+        "--output", required=True, help="Path to save the stylized result"
+    )
+    parser.add_argument(
+        "--steps", type=int, default=200, help="Number of optimization steps"
+    )
     parser.add_argument(
         "--max-size",
         type=int,

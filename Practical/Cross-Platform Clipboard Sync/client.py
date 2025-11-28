@@ -26,7 +26,9 @@ def discover_server(timeout: float = 2.0) -> Optional[tuple[str, int]]:
         try:
             data, addr = sock.recvfrom(1024)
             payload = json.loads(data.decode())
-            return payload.get("host") or addr[0], int(payload.get("port", SERVICE_PORT))
+            return payload.get("host") or addr[0], int(
+                payload.get("port", SERVICE_PORT)
+            )
         except (socket.timeout, json.JSONDecodeError, OSError):
             return None
 
@@ -42,7 +44,9 @@ def register_client(base_url: str, client_id: str, display_name: Optional[str]) 
         pass
 
 
-def clipboard_watcher(loop: asyncio.AbstractEventLoop, queue: asyncio.Queue, debounce: float) -> None:
+def clipboard_watcher(
+    loop: asyncio.AbstractEventLoop, queue: asyncio.Queue, debounce: float
+) -> None:
     last_text = pyperclip.paste()
     last_sent_at = 0.0
     while True:
@@ -72,11 +76,15 @@ async def send_clipboard_updates(
 ) -> None:
     while True:
         text = await queue.get()
-        payload = json.dumps({"client_id": client_id, "content": text, "sent_at": time.time()})
+        payload = json.dumps(
+            {"client_id": client_id, "content": text, "sent_at": time.time()}
+        )
         await ws.send(fernet.encrypt(payload.encode()).decode())
 
 
-async def receive_updates(ws: websockets.WebSocketClientProtocol, fernet: Fernet, ignore_value: str) -> None:
+async def receive_updates(
+    ws: websockets.WebSocketClientProtocol, fernet: Fernet, ignore_value: str
+) -> None:
     last_text = ignore_value
     async for message in ws:
         try:
@@ -90,9 +98,13 @@ async def receive_updates(ws: websockets.WebSocketClientProtocol, fernet: Fernet
             continue
 
 
-async def connect_and_sync(host: str, port: int, client_id: str, display_name: Optional[str]) -> None:
+async def connect_and_sync(
+    host: str, port: int, client_id: str, display_name: Optional[str]
+) -> None:
     if not SECRET_KEY:
-        raise RuntimeError("Set CLIPBOARD_SECRET to the shared Fernet key before running the client")
+        raise RuntimeError(
+            "Set CLIPBOARD_SECRET to the shared Fernet key before running the client"
+        )
 
     fernet = Fernet(SECRET_KEY)
     queue: asyncio.Queue[str] = asyncio.Queue()
@@ -101,9 +113,15 @@ async def connect_and_sync(host: str, port: int, client_id: str, display_name: O
     register_client(base_url, client_id, display_name)
 
     websocket_url = f"ws://{host}:{port}/ws?client_id={client_id}"
-    async with websockets.connect(websocket_url, ping_interval=20, ping_timeout=20) as websocket:
-        send_task = asyncio.create_task(send_clipboard_updates(websocket, queue, fernet, client_id))
-        receive_task = asyncio.create_task(receive_updates(websocket, fernet, pyperclip.paste()))
+    async with websockets.connect(
+        websocket_url, ping_interval=20, ping_timeout=20
+    ) as websocket:
+        send_task = asyncio.create_task(
+            send_clipboard_updates(websocket, queue, fernet, client_id)
+        )
+        receive_task = asyncio.create_task(
+            receive_updates(websocket, fernet, pyperclip.paste())
+        )
 
         watcher_thread = threading.Thread(
             target=clipboard_watcher,
@@ -117,9 +135,15 @@ async def connect_and_sync(host: str, port: int, client_id: str, display_name: O
 
 def main():
     parser = argparse.ArgumentParser(description="Bidirectional clipboard sync client")
-    parser.add_argument("--host", help="Clipboard server host (discovery used if omitted)")
-    parser.add_argument("--port", type=int, default=SERVICE_PORT, help="Clipboard server port")
-    parser.add_argument("--client-id", default=socket.gethostname(), help="Unique client identifier")
+    parser.add_argument(
+        "--host", help="Clipboard server host (discovery used if omitted)"
+    )
+    parser.add_argument(
+        "--port", type=int, default=SERVICE_PORT, help="Clipboard server port"
+    )
+    parser.add_argument(
+        "--client-id", default=socket.gethostname(), help="Unique client identifier"
+    )
     parser.add_argument("--name", default=None, help="Human-friendly display name")
     args = parser.parse_args()
 
@@ -130,7 +154,7 @@ def main():
         if discovered:
             target_host, target_port = discovered
         else:
-            target_host = f"127.0.0.1"
+            target_host = "127.0.0.1"
 
     print(f"Connecting to clipboard server at {target_host}:{target_port}")
 

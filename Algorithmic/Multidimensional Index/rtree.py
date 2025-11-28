@@ -1,11 +1,11 @@
 import json
 import os
-import math
-from typing import List, Tuple, Any, Optional
+from typing import Any, List, Optional
 
 # Constants
 MAX_ENTRIES = 4
 MIN_ENTRIES = 2
+
 
 class Rect:
     def __init__(self, x1, y1, x2, y2):
@@ -17,17 +17,29 @@ class Rect:
     def area(self):
         return (self.x2 - self.x1) * (self.y2 - self.y1)
 
-    def contains(self, other: 'Rect') -> bool:
-        return (self.x1 <= other.x1 and self.x2 >= other.x2 and
-                self.y1 <= other.y1 and self.y2 >= other.y2)
+    def contains(self, other: "Rect") -> bool:
+        return (
+            self.x1 <= other.x1
+            and self.x2 >= other.x2
+            and self.y1 <= other.y1
+            and self.y2 >= other.y2
+        )
 
-    def intersects(self, other: 'Rect') -> bool:
-        return not (self.x2 < other.x1 or self.x1 > other.x2 or
-                    self.y2 < other.y1 or self.y1 > other.y2)
+    def intersects(self, other: "Rect") -> bool:
+        return not (
+            self.x2 < other.x1
+            or self.x1 > other.x2
+            or self.y2 < other.y1
+            or self.y1 > other.y2
+        )
 
-    def union(self, other: 'Rect') -> 'Rect':
-        return Rect(min(self.x1, other.x1), min(self.y1, other.y1),
-                    max(self.x2, other.x2), max(self.y2, other.y2))
+    def union(self, other: "Rect") -> "Rect":
+        return Rect(
+            min(self.x1, other.x1),
+            min(self.y1, other.y1),
+            max(self.x2, other.x2),
+            max(self.y2, other.y2),
+        )
 
     def to_dict(self):
         return [self.x1, self.y1, self.x2, self.y2]
@@ -39,17 +51,20 @@ class Rect:
     def __repr__(self):
         return f"[{self.x1}, {self.y1}, {self.x2}, {self.y2}]"
 
+
 class RTreeNode:
     def __init__(self, is_leaf=True):
         self.is_leaf = is_leaf
         self.rects: List[Rect] = []
-        self.children: List[Any] = [] # If leaf: data IDs/Objects. If node: RTreeNode objects (or IDs if disk)
-        self.parent: Optional['RTreeNode'] = None
+        self.children: List[Any] = (
+            []
+        )  # If leaf: data IDs/Objects. If node: RTreeNode objects (or IDs if disk)
+        self.parent: Optional["RTreeNode"] = None
         self.mbr: Optional[Rect] = None
 
     def update_mbr(self):
         if not self.rects:
-            self.mbr = Rect(0,0,0,0)
+            self.mbr = Rect(0, 0, 0, 0)
             return
 
         u = self.rects[0]
@@ -57,12 +72,14 @@ class RTreeNode:
             u = u.union(r)
         self.mbr = u
 
+
 class RTree:
     """
     In-memory R-Tree implementation.
     Serialization to disk is implemented via save/load whole tree.
     (True on-disk R-tree manages pages, but this is sufficient for the challenge scope).
     """
+
     def __init__(self):
         self.root = RTreeNode(is_leaf=True)
 
@@ -101,7 +118,7 @@ class RTree:
 
         # Choose child that requires least enlargement
         best_child = None
-        min_enlargement = float('inf')
+        min_enlargement = float("inf")
 
         for i, child_rect in enumerate(node.rects):
             union = child_rect.union(rect)
@@ -185,7 +202,7 @@ class RTree:
     # Serialization
     def save(self, filepath: str):
         data = self._serialize_node(self.root)
-        with open(filepath, 'w') as f:
+        with open(filepath, "w") as f:
             json.dump(data, f, indent=2)
 
     def _serialize_node(self, node: RTreeNode):
@@ -195,13 +212,13 @@ class RTree:
             "children": [
                 self._serialize_node(c) if not node.is_leaf else c
                 for c in node.children
-            ]
+            ],
         }
 
     def load(self, filepath: str):
         if not os.path.exists(filepath):
             return
-        with open(filepath, 'r') as f:
+        with open(filepath, "r") as f:
             data = json.load(f)
         self.root = self._deserialize_node(data)
 

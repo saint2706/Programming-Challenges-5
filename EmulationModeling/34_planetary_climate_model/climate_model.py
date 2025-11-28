@@ -11,6 +11,7 @@ The models here follow the classic zero-dimensional energy balance approach:
 The same energy accounting is extended to a 1D latitudinal model that adds a
 very simple diffusive heat transport between neighboring latitude bands.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -92,7 +93,9 @@ class ZeroDEnergyBalanceModel:
         self.temperature += (net_flux * self.dt) / self.heat_capacity
         return self.temperature
 
-    def run_to_equilibrium(self, max_steps: int = 10_000, tolerance: float = 1e-4) -> ClimateResult:
+    def run_to_equilibrium(
+        self, max_steps: int = 10_000, tolerance: float = 1e-4
+    ) -> ClimateResult:
         """Iterate until temperature changes fall below ``tolerance``.
 
         Parameters
@@ -113,7 +116,9 @@ class ZeroDEnergyBalanceModel:
             if abs(current - previous) < tolerance:
                 converged = True
                 break
-        return ClimateResult(temperatures=np.array(history), steps=len(history) - 1, converged=converged)
+        return ClimateResult(
+            temperatures=np.array(history), steps=len(history) - 1, converged=converged
+        )
 
 
 class LatitudinalEnergyBalanceModel:
@@ -179,11 +184,15 @@ class LatitudinalEnergyBalanceModel:
         """Advance all latitude bands by one timestep."""
 
         emitted = self.outgoing_infrared(self.temperatures)
-        net_flux = self.absorbed_solar - emitted + self._diffusion_term(self.temperatures)
+        net_flux = (
+            self.absorbed_solar - emitted + self._diffusion_term(self.temperatures)
+        )
         self.temperatures += (net_flux * self.dt) / self.heat_capacity
         return self.temperatures.copy()
 
-    def run_to_equilibrium(self, max_steps: int = 10_000, tolerance: float = 1e-4) -> ClimateResult:
+    def run_to_equilibrium(
+        self, max_steps: int = 10_000, tolerance: float = 1e-4
+    ) -> ClimateResult:
         """Iterate until the maximum temperature change drops below tolerance."""
 
         history: List[np.ndarray] = [self.temperatures.copy()]
@@ -195,7 +204,9 @@ class LatitudinalEnergyBalanceModel:
             if np.max(np.abs(current - previous)) < tolerance:
                 converged = True
                 break
-        return ClimateResult(temperatures=np.vstack(history), steps=len(history) - 1, converged=converged)
+        return ClimateResult(
+            temperatures=np.vstack(history), steps=len(history) - 1, converged=converged
+        )
 
 
 __all__ = [

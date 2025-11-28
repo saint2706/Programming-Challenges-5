@@ -5,6 +5,7 @@ The tool scans a directory for image files, computes both average hash (aHash)
  duplicates using Hamming distance. Optionally, duplicate groups can be moved
  into a review directory for manual inspection.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -16,9 +17,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Iterable, List, Sequence
 
-from PIL import Image
 import imagehash
-
+from PIL import Image
 
 IMAGE_EXTENSIONS = {
     ".jpg",
@@ -42,8 +42,12 @@ class HashRecord:
 
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Find duplicate and near-duplicate photos using perceptual hashing.")
-    parser.add_argument("directory", type=Path, help="Root directory to scan for images")
+    parser = argparse.ArgumentParser(
+        description="Find duplicate and near-duplicate photos using perceptual hashing."
+    )
+    parser.add_argument(
+        "directory", type=Path, help="Root directory to scan for images"
+    )
     parser.add_argument(
         "--hash-type",
         choices=["ahash", "phash", "both"],
@@ -111,11 +115,15 @@ def compute_hash(path: Path, hash_type: str, hash_size: int) -> imagehash.ImageH
         raise ValueError(f"Unsupported hash type: {hash_type}")
 
 
-def collect_hashes(directory: Path, hash_type: str, hash_size: int, recursive: bool) -> Dict[str, List[Path]]:
+def collect_hashes(
+    directory: Path, hash_type: str, hash_size: int, recursive: bool
+) -> Dict[str, List[Path]]:
     hash_buckets: Dict[str, List[Path]] = defaultdict(list)
     for image_path in iter_image_files(directory, recursive=recursive):
         try:
-            img_hash = compute_hash(image_path, hash_type=hash_type, hash_size=hash_size)
+            img_hash = compute_hash(
+                image_path, hash_type=hash_type, hash_size=hash_size
+            )
         except Exception as exc:  # pylint: disable=broad-exception-caught
             print(f"[warn] Skipping {image_path} ({exc})", file=sys.stderr)
             continue
@@ -127,7 +135,9 @@ def find_exact_duplicates(hash_buckets: Dict[str, List[Path]]) -> List[List[Path
     return [paths for paths in hash_buckets.values() if len(paths) > 1]
 
 
-def build_near_duplicate_groups(records: List[HashRecord], threshold: int) -> List[List[Path]]:
+def build_near_duplicate_groups(
+    records: List[HashRecord], threshold: int
+) -> List[List[Path]]:
     if threshold <= 0 or len(records) < 2:
         return []
 
@@ -177,7 +187,10 @@ def move_groups(groups: List[List[Path]], review_dir: Path, label: str) -> None:
             destination = target_group_dir / path.name
             counter = 1
             while destination.exists():
-                destination = target_group_dir / f"{destination.stem}_{counter}{destination.suffix}"
+                destination = (
+                    target_group_dir
+                    / f"{destination.stem}_{counter}{destination.suffix}"
+                )
                 counter += 1
             shutil.move(str(path), destination)
     print(f"Moved {sum(len(g) for g in groups)} files into {review_dir}")
@@ -196,17 +209,32 @@ def main(argv: Sequence[str] | None = None) -> int:
     all_near_groups: List[List[Path]] = []
 
     for htype in hash_types:
-        print(f"Scanning {args.directory} using {htype} (hash size={args.hash_size})...")
-        hash_buckets = collect_hashes(args.directory, hash_type=htype, hash_size=args.hash_size, recursive=args.recursive)
-        records = [HashRecord(path=path, hash_value=imagehash.hex_to_hash(hash_hex)) for hash_hex, paths in hash_buckets.items() for path in paths]
+        print(
+            f"Scanning {args.directory} using {htype} (hash size={args.hash_size})..."
+        )
+        hash_buckets = collect_hashes(
+            args.directory,
+            hash_type=htype,
+            hash_size=args.hash_size,
+            recursive=args.recursive,
+        )
+        records = [
+            HashRecord(path=path, hash_value=imagehash.hex_to_hash(hash_hex))
+            for hash_hex, paths in hash_buckets.items()
+            for path in paths
+        ]
 
         exact_groups = find_exact_duplicates(hash_buckets)
         near_groups = build_near_duplicate_groups(records, threshold=args.threshold)
 
         if exact_groups:
-            print(f"[exact {htype}] {sum(len(g) for g in exact_groups)} files in {len(exact_groups)} groups")
+            print(
+                f"[exact {htype}] {sum(len(g) for g in exact_groups)} files in {len(exact_groups)} groups"
+            )
         if near_groups:
-            print(f"[near  {htype}] {sum(len(g) for g in near_groups)} files in {len(near_groups)} groups (threshold={args.threshold})")
+            print(
+                f"[near  {htype}] {sum(len(g) for g in near_groups)} files in {len(near_groups)} groups (threshold={args.threshold})"
+            )
 
         report_groups(exact_groups, label=f"exact {htype}")
         report_groups(near_groups, label=f"near {htype}")
@@ -215,7 +243,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         all_near_groups.extend(near_groups)
 
         if args.review_dir and args.move:
-            move_groups(exact_groups + near_groups, args.review_dir / htype, label=htype)
+            move_groups(
+                exact_groups + near_groups, args.review_dir / htype, label=htype
+            )
 
     if not all_exact_groups and not all_near_groups:
         return 1

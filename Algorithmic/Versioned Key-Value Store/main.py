@@ -1,11 +1,13 @@
-import shutil
-from lsm_store import LSMStore
 import os
+import shutil
+
+from lsm_store import LSMStore
+
 
 def main():
     data_dir = "lsm_data"
     if os.path.exists(data_dir):
-        shutil.rmtree(data_dir) # Clean start
+        shutil.rmtree(data_dir)  # Clean start
 
     # Small limit to force flushes
     store = LSMStore(data_dir, memtable_limit=20)
@@ -47,6 +49,7 @@ def main():
 
     print(f"Get 'user1' after compact: {store.get('user1')}")
     print(f"Get 'user2' after compact: {store.get('user2')}")
+
 
 if __name__ == "__main__":
     main()

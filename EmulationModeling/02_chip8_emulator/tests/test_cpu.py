@@ -1,5 +1,7 @@
 import unittest
+
 from cpu import Chip8
+
 
 class TestChip8CPU(unittest.TestCase):
     def setUp(self):
@@ -42,8 +44,8 @@ class TestChip8CPU(unittest.TestCase):
         self.cpu.memory[0x201] = 0x14
 
         self.cpu.cycle()
-        self.assertEqual(self.cpu.registers[0], 0x00) # Overflow wrapped
-        self.assertEqual(self.cpu.registers[0xF], 1) # Carry flag set
+        self.assertEqual(self.cpu.registers[0], 0x00)  # Overflow wrapped
+        self.assertEqual(self.cpu.registers[0xF], 1)  # Carry flag set
 
     def test_opcode_2nnn_call_and_00ee_ret(self):
         # 0x2300 -> CALL 0x300
@@ -62,5 +64,6 @@ class TestChip8CPU(unittest.TestCase):
         self.assertEqual(self.cpu.pc, 0x202)
         self.assertEqual(len(self.cpu.stack), 0)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

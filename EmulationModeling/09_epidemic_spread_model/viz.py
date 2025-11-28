@@ -1,6 +1,7 @@
-import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+import matplotlib.pyplot as plt
 from model import SIRModel
+
 
 class SIRVisualizer:
     def __init__(self):
@@ -18,10 +19,12 @@ class SIRVisualizer:
         self.i_data = []
         self.r_data = []
 
-        self.stack = self.ax2.stackplot([], [], [], [], labels=["S", "I", "R"], colors=["blue", "red", "green"])
+        self.stack = self.ax2.stackplot(
+            [], [], [], [], labels=["S", "I", "R"], colors=["blue", "red", "green"]
+        )
         self.ax2.set_xlim(0, 200)
         self.ax2.set_ylim(0, 200)
-        self.ax2.legend(loc='upper left')
+        self.ax2.legend(loc="upper left")
         self.ax2.set_title("SIR Counts")
 
     def update(self, frame):
@@ -31,9 +34,12 @@ class SIRVisualizer:
         positions = [a.pos for a in self.model.agents]
         colors = []
         for a in self.model.agents:
-            if a.state == "S": colors.append("blue")
-            elif a.state == "I": colors.append("red")
-            else: colors.append("green")
+            if a.state == "S":
+                colors.append("blue")
+            elif a.state == "I":
+                colors.append("red")
+            else:
+                colors.append("green")
 
         self.scatter.set_offsets(positions)
         self.scatter.set_color(colors)
@@ -49,16 +55,25 @@ class SIRVisualizer:
             self.ax2.set_xlim(frame - 200, frame)
 
         self.ax2.clear()
-        self.ax2.stackplot(self.time_data, self.s_data, self.i_data, self.r_data,
-                           labels=["S", "I", "R"], colors=["blue", "red", "green"])
-        self.ax2.legend(loc='upper left')
+        self.ax2.stackplot(
+            self.time_data,
+            self.s_data,
+            self.i_data,
+            self.r_data,
+            labels=["S", "I", "R"],
+            colors=["blue", "red", "green"],
+        )
+        self.ax2.legend(loc="upper left")
         self.ax2.set_title("SIR Counts")
 
-        return self.scatter,
+        return (self.scatter,)
 
     def run(self):
-        ani = animation.FuncAnimation(self.fig, self.update, frames=range(1000), interval=50, blit=False)
+        ani = animation.FuncAnimation(
+            self.fig, self.update, frames=range(1000), interval=50, blit=False
+        )
         plt.show()
+
 
 if __name__ == "__main__":
     viz = SIRVisualizer()

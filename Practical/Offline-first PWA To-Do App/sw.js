@@ -22,7 +22,9 @@ self.addEventListener('activate', (event) => {
     caches
       .keys()
       .then((keys) =>
-        Promise.all(keys.map((key) => (key !== CACHE_NAME ? caches.delete(key) : null)))
+        Promise.all(
+          keys.map((key) => (key !== CACHE_NAME ? caches.delete(key) : null))
+        )
       )
       .then(() => self.clients.claim())
   );
@@ -38,10 +40,14 @@ self.addEventListener('fetch', (event) => {
         return fetch(event.request)
           .then((response) => {
             const clone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+            caches
+              .open(CACHE_NAME)
+              .then((cache) => cache.put(event.request, clone));
             return response;
           })
-          .catch(() => caches.match(APP_SHELL.find((path) => path.endsWith('index.html'))));
+          .catch(() =>
+            caches.match(APP_SHELL.find((path) => path.endsWith('index.html')))
+          );
       })
     );
   }

@@ -19,8 +19,10 @@ import streamlit as st
 st.set_page_config(page_title="Dataset Explorer", layout="wide")
 
 
-def load_dataframe(uploaded_file: Optional[st.runtime.uploaded_file_manager.UploadedFile],
-                   file_path: str) -> Tuple[Optional[pd.DataFrame], Optional[str]]:
+def load_dataframe(
+    uploaded_file: Optional[st.runtime.uploaded_file_manager.UploadedFile],
+    file_path: str,
+) -> Tuple[Optional[pd.DataFrame], Optional[str]]:
     """Load a dataframe from an uploaded file or a provided path.
 
     Returns a tuple of (dataframe, error_message).

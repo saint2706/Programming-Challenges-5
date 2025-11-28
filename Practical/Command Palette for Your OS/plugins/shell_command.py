@@ -1,4 +1,5 @@
 """Run an arbitrary shell command and show the output."""
+
 import subprocess
 
 METADATA = {

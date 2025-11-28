@@ -1,4 +1,5 @@
 """Search for files containing the query string."""
+
 from pathlib import Path
 
 METADATA = {

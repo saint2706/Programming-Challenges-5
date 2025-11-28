@@ -27,19 +27,27 @@ class ResumePortfolioGenerator:
         data = json.loads(data_path.read_text(encoding="utf-8"))
         return data
 
-    def render_html(self, data: Dict[str, Any], template_name: str = "resume.html") -> str:
+    def render_html(
+        self, data: Dict[str, Any], template_name: str = "resume.html"
+    ) -> str:
         template = self.env.get_template(template_name)
         return template.render(data=data)
 
     def export_html(
-        self, data: Dict[str, Any], output_path: Path, template_name: str = "resume.html"
+        self,
+        data: Dict[str, Any],
+        output_path: Path,
+        template_name: str = "resume.html",
     ) -> Path:
         html = self.render_html(data, template_name=template_name)
         output_path.write_text(html, encoding="utf-8")
         return output_path
 
     def export_pdf(
-        self, data: Dict[str, Any], output_path: Path, template_name: str = "resume.html"
+        self,
+        data: Dict[str, Any],
+        output_path: Path,
+        template_name: str = "resume.html",
     ) -> Path:
         html = self.render_html(data, template_name=template_name)
         HTML(string=html, base_url=str(self.template_dir)).write_pdf(str(output_path))
@@ -47,7 +55,9 @@ class ResumePortfolioGenerator:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Generate resume HTML and PDF from JSON data.")
+    parser = argparse.ArgumentParser(
+        description="Generate resume HTML and PDF from JSON data."
+    )
     parser.add_argument(
         "--data",
         required=True,
@@ -85,7 +95,9 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    generator = ResumePortfolioGenerator(template_dir=Path(__file__).parent / "templates")
+    generator = ResumePortfolioGenerator(
+        template_dir=Path(__file__).parent / "templates"
+    )
 
     data = generator.load_data(args.data)
     args.output_dir.mkdir(parents=True, exist_ok=True)

@@ -1,4 +1,5 @@
 """CLI search engine for local files using Whoosh."""
+
 from __future__ import annotations
 
 import argparse
@@ -16,7 +17,6 @@ import yaml
 from whoosh import index
 from whoosh.fields import DATETIME, ID, TEXT, Schema
 from whoosh.qparser import MultifieldParser, OrGroup
-
 
 SUPPORTED_EXTENSIONS = {".txt", ".md", ".rtf", ".pdf", ".docx"}
 
@@ -72,7 +72,9 @@ def collect_files(roots: Sequence[Path], ignored: Sequence[str]) -> List[Path]:
             continue
         for dirpath, dirnames, filenames in os.walk(root):
             dirpath_path = Path(dirpath)
-            dirnames[:] = [d for d in dirnames if not is_ignored(dirpath_path / d, ignored)]
+            dirnames[:] = [
+                d for d in dirnames if not is_ignored(dirpath_path / d, ignored)
+            ]
             for name in filenames:
                 path = dirpath_path / name
                 if is_ignored(path, ignored):
@@ -155,8 +157,12 @@ def build_index(config: SearchConfig) -> None:
     ix = open_or_create_index(config.index_dir)
     files = collect_files(config.roots, config.ignored)
     logging.info("Discovered %d files to index", len(files))
-    with concurrent.futures.ProcessPoolExecutor(max_workers=config.max_workers) as executor:
-        parsed = list(executor.map(parse_file, [(path, config.use_tika) for path in files]))
+    with concurrent.futures.ProcessPoolExecutor(
+        max_workers=config.max_workers
+    ) as executor:
+        parsed = list(
+            executor.map(parse_file, [(path, config.use_tika) for path in files])
+        )
     with ix.writer(limitmb=512) as writer:
         for path, text in parsed:
             if not text.strip():
@@ -201,8 +207,12 @@ def reindex(config: SearchConfig) -> None:
     if not to_process:
         return
 
-    with concurrent.futures.ProcessPoolExecutor(max_workers=config.max_workers) as executor:
-        parsed = list(executor.map(parse_file, [(path, config.use_tika) for path in to_process]))
+    with concurrent.futures.ProcessPoolExecutor(
+        max_workers=config.max_workers
+    ) as executor:
+        parsed = list(
+            executor.map(parse_file, [(path, config.use_tika) for path in to_process])
+        )
     with ix.writer(limitmb=512) as writer:
         for path, text in parsed:
             if not text.strip():
@@ -231,18 +241,27 @@ def search(config: SearchConfig, query_text: str, limit: int = 10) -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Local search engine powered by Whoosh")
-    parser.add_argument("command", choices=["index", "reindex", "search"], help="Action to perform")
+    parser = argparse.ArgumentParser(
+        description="Local search engine powered by Whoosh"
+    )
+    parser.add_argument(
+        "command", choices=["index", "reindex", "search"], help="Action to perform"
+    )
     parser.add_argument("query", nargs="?", help="Query text for search")
     parser.add_argument("--config", type=Path, help="Path to YAML configuration file")
-    parser.add_argument("--limit", type=int, default=10, help="Number of search results to return")
+    parser.add_argument(
+        "--limit", type=int, default=10, help="Number of search results to return"
+    )
     parser.add_argument("--verbose", action="store_true", help="Enable debug logging")
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO, format="[%(levelname)s] %(message)s")
+    logging.basicConfig(
+        level=logging.DEBUG if args.verbose else logging.INFO,
+        format="[%(levelname)s] %(message)s",
+    )
     config = SearchConfig.from_file(args.config)
 
     if args.command == "index":

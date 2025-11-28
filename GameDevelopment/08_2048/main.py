@@ -8,9 +8,11 @@ Controls:
     R: Restart game
     ESC: Quit game
 """
-import pygame
+
 import random
 import sys
+
+import pygame
 
 # Initialize Pygame
 pygame.init()
@@ -40,7 +42,7 @@ TILE_COLORS = {
     256: (237, 204, 97),
     512: (237, 200, 80),
     1024: (237, 197, 63),
-    2048: (237, 194, 46)
+    2048: (237, 194, 46),
 }
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -52,6 +54,7 @@ clock = pygame.time.Clock()
 font = pygame.font.Font(None, 55)
 score_font = pygame.font.Font(None, 40)
 
+
 class Game2048:
     def __init__(self):
         self.grid = [[0] * GRID_SIZE for _ in range(GRID_SIZE)]
@@ -61,7 +64,12 @@ class Game2048:
         self.game_over = False
 
     def add_new_tile(self):
-        empty_cells = [(r, c) for r in range(GRID_SIZE) for c in range(GRID_SIZE) if self.grid[r][c] == 0]
+        empty_cells = [
+            (r, c)
+            for r in range(GRID_SIZE)
+            for c in range(GRID_SIZE)
+            if self.grid[r][c] == 0
+        ]
         if empty_cells:
             r, c = random.choice(empty_cells)
             self.grid[r][c] = 2 if random.random() < 0.9 else 4
@@ -79,9 +87,9 @@ class Game2048:
     def merge(self, grid):
         for r in range(GRID_SIZE):
             for c in range(GRID_SIZE - 1):
-                if grid[r][c] != 0 and grid[r][c] == grid[r][c+1]:
+                if grid[r][c] != 0 and grid[r][c] == grid[r][c + 1]:
                     grid[r][c] *= 2
-                    grid[r][c+1] = 0
+                    grid[r][c + 1] = 0
                     self.score += grid[r][c]
         return grid
 
@@ -131,17 +139,18 @@ class Game2048:
         return new_grid
 
     def move(self, direction):
-        if self.game_over: return
+        if self.game_over:
+            return
 
-        if direction == 'UP':
+        if direction == "UP":
             new_grid = self.move_up()
-        elif direction == 'DOWN':
+        elif direction == "DOWN":
             new_grid = self.move_down()
-        elif direction == 'LEFT':
+        elif direction == "LEFT":
             new_grid = self.move_left()
-        elif direction == 'RIGHT':
+        elif direction == "RIGHT":
             new_grid = self.move_right()
-        
+
         if new_grid != self.grid:
             self.grid = new_grid
             self.add_new_tile()
@@ -154,33 +163,42 @@ class Game2048:
             for c in range(GRID_SIZE):
                 if self.grid[r][c] == 0:
                     return False
-        
+
         # Check for merges
         for r in range(GRID_SIZE):
             for c in range(GRID_SIZE - 1):
-                if self.grid[r][c] == self.grid[r][c+1]:
+                if self.grid[r][c] == self.grid[r][c + 1]:
                     return False
         for r in range(GRID_SIZE - 1):
             for c in range(GRID_SIZE):
-                if self.grid[r][c] == self.grid[r+1][c]:
+                if self.grid[r][c] == self.grid[r + 1][c]:
                     return False
         return True
 
     def draw(self, surface):
         surface.fill(BACKGROUND_COLOR)
-        
+
         # Draw Score
         score_text = score_font.render(f"Score: {self.score}", True, WHITE)
         surface.blit(score_text, (20, 20))
-        
+
         # Draw Grid
         for r in range(GRID_SIZE):
             for c in range(GRID_SIZE):
                 val = self.grid[r][c]
-                color = TILE_COLORS.get(val, TILE_COLORS[2048]) if val > 0 else EMPTY_TILE_COLOR
-                rect = pygame.Rect(GAP + c * (TILE_SIZE + GAP), TOP_OFFSET + GAP + r * (TILE_SIZE + GAP), TILE_SIZE, TILE_SIZE)
+                color = (
+                    TILE_COLORS.get(val, TILE_COLORS[2048])
+                    if val > 0
+                    else EMPTY_TILE_COLOR
+                )
+                rect = pygame.Rect(
+                    GAP + c * (TILE_SIZE + GAP),
+                    TOP_OFFSET + GAP + r * (TILE_SIZE + GAP),
+                    TILE_SIZE,
+                    TILE_SIZE,
+                )
                 pygame.draw.rect(surface, color, rect, border_radius=5)
-                
+
                 if val > 0:
                     text_color = FONT_COLOR if val < 8 else WHITE
                     text = font.render(str(val), True, text_color)
@@ -192,13 +210,13 @@ class Game2048:
             s.set_alpha(128)
             s.fill(BLACK)
             surface.blit(s, (0, 0))
-            
+
             msg = font.render("Game Over!", True, WHITE)
-            rect = msg.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
+            rect = msg.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
             surface.blit(msg, rect)
-            
+
             sub = score_font.render("Press SPACE to Restart", True, WHITE)
-            sub_rect = sub.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 60))
+            sub_rect = sub.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 60))
             surface.blit(sub, sub_rect)
 
     def reset(self):
@@ -208,9 +226,10 @@ class Game2048:
         self.add_new_tile()
         self.game_over = False
 
+
 def main():
     game = Game2048()
-    
+
     running = True
     while running:
         for event in pygame.event.get():
@@ -218,13 +237,13 @@ def main():
                 running = False
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    game.move('UP')
+                    game.move("UP")
                 elif event.key == pygame.K_DOWN:
-                    game.move('DOWN')
+                    game.move("DOWN")
                 elif event.key == pygame.K_LEFT:
-                    game.move('LEFT')
+                    game.move("LEFT")
                 elif event.key == pygame.K_RIGHT:
-                    game.move('RIGHT')
+                    game.move("RIGHT")
                 elif event.key == pygame.K_SPACE and game.game_over:
                     game.reset()
                 elif event.key == pygame.K_ESCAPE:
@@ -236,6 +255,7 @@ def main():
 
     pygame.quit()
     sys.exit()
+
 
 if __name__ == "__main__":
     main()

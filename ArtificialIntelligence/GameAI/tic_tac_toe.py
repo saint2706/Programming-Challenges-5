@@ -2,6 +2,7 @@
 
 Run this module directly to play against the AI in the terminal.
 """
+
 from __future__ import annotations
 
 from typing import List, Optional, Tuple
@@ -36,7 +37,9 @@ def check_winner(board: Board) -> Optional[str]:
     return None
 
 
-def minimax(board: Board, player: str, maximizing: bool) -> Tuple[int, Optional[Tuple[int, int]]]:
+def minimax(
+    board: Board, player: str, maximizing: bool
+) -> Tuple[int, Optional[Tuple[int, int]]]:
     winner = check_winner(board)
     if winner == player:
         return 1, None

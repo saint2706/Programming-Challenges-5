@@ -5,6 +5,7 @@ Generators supply power, consumers draw power, and transmission lines have
 capacity limits. Overloaded lines fail, causing power to be rerouted and
 potentially leading to cascading outages.
 """
+
 from __future__ import annotations
 
 from collections import deque
@@ -65,9 +66,13 @@ class PowerGrid:
         self.nodes[name] = Node(name=name, generation=0.0, demand=demand)
         self.adj.setdefault(name, [])
 
-    def add_line(self, a: str, b: str, capacity: float, name: Optional[str] = None) -> None:
+    def add_line(
+        self, a: str, b: str, capacity: float, name: Optional[str] = None
+    ) -> None:
         if a not in self.nodes or b not in self.nodes:
-            raise ValueError("Both endpoints must be added as nodes before connecting them.")
+            raise ValueError(
+                "Both endpoints must be added as nodes before connecting them."
+            )
         line = Line(a=a, b=b, capacity=capacity, name=name)
         self.lines[line.id()] = line
         self.adj.setdefault(a, []).append(b)
@@ -94,7 +99,9 @@ class PowerGrid:
                 if node.demand > 0:
                     node.demand *= scale
 
-    def _shortest_path(self, start: str, end: str, available_lines: Set[str]) -> Optional[List[str]]:
+    def _shortest_path(
+        self, start: str, end: str, available_lines: Set[str]
+    ) -> Optional[List[str]]:
         """Breadth-first search to find any available path between two nodes."""
 
         queue: deque[str] = deque([start])
@@ -134,7 +141,9 @@ class PowerGrid:
                 return line_id
         raise KeyError(f"No line between {a} and {b}")
 
-    def _route_power(self, available_lines: Set[str]) -> Tuple[Dict[str, float], Dict[str, float]]:
+    def _route_power(
+        self, available_lines: Set[str]
+    ) -> Tuple[Dict[str, float], Dict[str, float]]:
         flows: Dict[str, float] = {line_id: 0.0 for line_id in available_lines}
         generators = [node for node in self.nodes.values() if node.generation > 0]
         consumers = [node for node in self.nodes.values() if node.demand > 0]
@@ -143,7 +152,9 @@ class PowerGrid:
         consumer_deficit: Dict[str, float] = {c.name: c.deficit() for c in consumers}
 
         # Largest deficits first helps emphasize overloaded corridors.
-        for consumer_name, deficit in sorted(consumer_deficit.items(), key=lambda x: x[1], reverse=True):
+        for consumer_name, deficit in sorted(
+            consumer_deficit.items(), key=lambda x: x[1], reverse=True
+        ):
             while deficit > 1e-6:
                 # Pick the closest generator with available surplus.
                 candidate_paths: List[Tuple[int, float, str, List[str]]] = []
@@ -174,7 +185,9 @@ class PowerGrid:
 
     def simulate(self, initial_failures: Optional[Set[str]] = None) -> FlowResult:
         self._ensure_balance()
-        available_lines: Set[str] = {lid for lid, line in self.lines.items() if line.online}
+        available_lines: Set[str] = {
+            lid for lid, line in self.lines.items() if line.online
+        }
         if initial_failures:
             for line_id in initial_failures:
                 if line_id in available_lines:
@@ -183,9 +196,15 @@ class PowerGrid:
         failed_lines: List[str] = []
         while True:
             flows, unmet = self._route_power(available_lines)
-            overloaded = [line_id for line_id, flow in flows.items() if flow - 1e-6 > self.lines[line_id].capacity]
+            overloaded = [
+                line_id
+                for line_id, flow in flows.items()
+                if flow - 1e-6 > self.lines[line_id].capacity
+            ]
             if not overloaded:
-                return FlowResult(flows=flows, unmet_demand=unmet, failed_lines=failed_lines)
+                return FlowResult(
+                    flows=flows, unmet_demand=unmet, failed_lines=failed_lines
+                )
 
             # Mark overloaded lines as failed and reroute.
             for line_id in overloaded:

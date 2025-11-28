@@ -1,5 +1,7 @@
 import unittest
+
 from label_placement import Label, MapLabeler, intersect
+
 
 class TestLabelPlacement(unittest.TestCase):
     def test_intersection(self):
@@ -43,5 +45,6 @@ class TestLabelPlacement(unittest.TestCase):
         final_e = solver.solve(iterations=1000)
         self.assertLess(final_e, initial_e)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

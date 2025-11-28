@@ -4,9 +4,9 @@ This script visualizes how a K-d tree partitions a 2D space by recursively
 splitting points along alternating axes (x and y).
 """
 
-import sys
 import os
-from typing import List, Tuple, Optional
+import sys
+from typing import Optional
 
 from manim import *  # type: ignore
 
@@ -15,7 +15,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 # Ensure import works even if sys.path is messy
 try:
-    from kd_tree import build_kd_tree, KDNode  # type: ignore
+    from kd_tree import KDNode, build_kd_tree  # type: ignore
 except ImportError:
     # Dummy fallback for static analysis or if run isolated
     pass
@@ -85,24 +85,16 @@ class KDTreeConstruction(Scene):
                 line = Line(start, end, color=YELLOW)
                 self.play(Create(line), run_time=0.5)
 
-                visualize_split(
-                    node.left, x_min, point[0], y_min, y_max, depth + 1
-                )
-                visualize_split(
-                    node.right, point[0], x_max, y_min, y_max, depth + 1
-                )
+                visualize_split(node.left, x_min, point[0], y_min, y_max, depth + 1)
+                visualize_split(node.right, point[0], x_max, y_min, y_max, depth + 1)
             else:  # Horizontal split (y-axis)
                 start = axes.c2p(x_min, point[1])
                 end = axes.c2p(x_max, point[1])
                 line = Line(start, end, color=GREEN)
                 self.play(Create(line), run_time=0.5)
 
-                visualize_split(
-                    node.left, x_min, x_max, y_min, point[1], depth + 1
-                )
-                visualize_split(
-                    node.right, x_min, x_max, point[1], y_max, depth + 1
-                )
+                visualize_split(node.left, x_min, x_max, y_min, point[1], depth + 1)
+                visualize_split(node.right, x_min, x_max, point[1], y_max, depth + 1)
 
         # Build tree and visualize
         root = build_kd_tree(points)

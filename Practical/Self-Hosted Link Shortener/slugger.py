@@ -1,11 +1,11 @@
 """Utilities for generating and validating slugs for the link shortener."""
+
 from __future__ import annotations
 
 import hashlib
 import re
 import time
 from secrets import token_urlsafe
-from typing import Optional
 
 _SLUG_RE = re.compile(r"^[A-Za-z0-9_-]{4,32}$")
 

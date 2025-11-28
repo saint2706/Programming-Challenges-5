@@ -4,9 +4,11 @@ This module implements the seam carving algorithm which resizes images
 by intelligently removing or adding seams (paths of least importance)
 rather than scaling uniformly. Uses dynamic programming to find optimal seams.
 """
+
+
 import numpy as np
 from PIL import Image
-from typing import Tuple, Optional
+
 
 def calculate_energy(img_array: np.ndarray) -> np.ndarray:
     """
@@ -35,6 +37,7 @@ def calculate_energy(img_array: np.ndarray) -> np.ndarray:
     energy = np.abs(dx) + np.abs(dy)
     return energy
 
+
 def find_vertical_seam(energy: np.ndarray) -> np.ndarray:
     """
     Finds the vertical seam with the lowest cumulative energy.
@@ -57,7 +60,7 @@ def find_vertical_seam(energy: np.ndarray) -> np.ndarray:
     for r in range(1, rows):
         # Vectorized implementation for speed
         # Previous row values
-        prev_row = dp[r-1]
+        prev_row = dp[r - 1]
 
         # Shifted versions for left, up, right neighbors
         up = prev_row
@@ -79,12 +82,14 @@ def find_vertical_seam(energy: np.ndarray) -> np.ndarray:
         # so we might do a column-wise loop or a stacked argmin.
         # Let's do a stacked argmin.
 
-        choices = np.stack([left, up, right]) # Shape (3, W)
-        min_indices = np.argmin(choices, axis=0) # Shape (W,), values 0, 1, 2 corresponding to left, up, right
+        choices = np.stack([left, up, right])  # Shape (3, W)
+        min_indices = np.argmin(
+            choices, axis=0
+        )  # Shape (W,), values 0, 1, 2 corresponding to left, up, right
         min_values = np.min(choices, axis=0)
 
         dp[r] += min_values
-        backtrack[r] = min_indices - 1 # Convert 0,1,2 to -1,0,1
+        backtrack[r] = min_indices - 1  # Convert 0,1,2 to -1,0,1
 
     # Backtrack from the bottom
     seam = np.zeros(rows, dtype=int)
@@ -94,14 +99,15 @@ def find_vertical_seam(energy: np.ndarray) -> np.ndarray:
     seam[-1] = min_col
 
     for r in range(rows - 2, -1, -1):
-        prev_col = seam[r+1]
-        offset = backtrack[r+1, prev_col]
+        prev_col = seam[r + 1]
+        offset = backtrack[r + 1, prev_col]
         seam[r] = prev_col + offset
 
         # Boundary check (should be handled by the logic above, but good for safety)
         seam[r] = np.clip(seam[r], 0, cols - 1)
 
     return seam
+
 
 def remove_vertical_seam(img_array: np.ndarray, seam: np.ndarray) -> np.ndarray:
     """
@@ -134,7 +140,10 @@ def remove_vertical_seam(img_array: np.ndarray, seam: np.ndarray) -> np.ndarray:
 
     return new_img
 
-def seam_carve(image: Image.Image, target_width: int, target_height: int, verbose: bool = False) -> Image.Image:
+
+def seam_carve(
+    image: Image.Image, target_width: int, target_height: int, verbose: bool = False
+) -> Image.Image:
     """
     Resizes an image using seam carving.
 
@@ -175,7 +184,11 @@ def seam_carve(image: Image.Image, target_width: int, target_height: int, verbos
         raise NotImplementedError("Upscaling (seam insertion) not implemented yet.")
 
     if delta_h > 0:
-        img_array = np.transpose(img_array, (1, 0, 2)) if len(img_array.shape) == 3 else np.transpose(img_array)
+        img_array = (
+            np.transpose(img_array, (1, 0, 2))
+            if len(img_array.shape) == 3
+            else np.transpose(img_array)
+        )
 
         for i in range(delta_h):
             if verbose and i % 10 == 0:
@@ -185,6 +198,10 @@ def seam_carve(image: Image.Image, target_width: int, target_height: int, verbos
             seam = find_vertical_seam(energy)
             img_array = remove_vertical_seam(img_array, seam)
 
-        img_array = np.transpose(img_array, (1, 0, 2)) if len(img_array.shape) == 3 else np.transpose(img_array)
+        img_array = (
+            np.transpose(img_array, (1, 0, 2))
+            if len(img_array.shape) == 3
+            else np.transpose(img_array)
+        )
 
     return Image.fromarray(img_array.astype(np.uint8))

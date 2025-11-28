@@ -1,4 +1,5 @@
 """CLI for managing personal API secrets stored in an encrypted vault."""
+
 from __future__ import annotations
 
 import argparse
@@ -10,11 +11,13 @@ from pathlib import Path
 # Support running as a script despite spaces in folder name
 sys.path.append(os.path.dirname(__file__))
 try:  # pragma: no cover - best effort import resolution
-    from vault import load_vault, save_vault, VaultError
+    from vault import VaultError, load_vault, save_vault
 except ImportError:  # pragma: no cover
-    from .vault import load_vault, save_vault, VaultError
+    from .vault import VaultError, load_vault, save_vault
 
-DEFAULT_VAULT_PATH = Path(os.environ.get("API_KEY_VAULT_PATH", Path.home() / ".personal_api_keys.vault"))
+DEFAULT_VAULT_PATH = Path(
+    os.environ.get("API_KEY_VAULT_PATH", Path.home() / ".personal_api_keys.vault")
+)
 
 
 class ValidationError(ValueError):

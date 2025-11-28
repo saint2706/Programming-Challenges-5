@@ -3,11 +3,12 @@
 A Treap is a randomized binary search tree that maintains both BST property (on keys)
 and Heap property (on random priorities). This structure is balanced with high probability.
 """
+
 from __future__ import annotations
 
 import random
 from dataclasses import dataclass
-from typing import Any, Optional, Generator, Iterator
+from typing import Any, Generator, Iterator, Optional
 
 
 @dataclass
@@ -62,9 +63,7 @@ class Treap:
         y.left = x
         return y
 
-    def insert(
-        self, key: Any, value: Any, priority: Optional[float] = None
-    ) -> None:
+    def insert(self, key: Any, value: Any, priority: Optional[float] = None) -> None:
         """Insert a key-value pair into the Treap.
 
         Args:
@@ -149,9 +148,7 @@ class Treap:
         """
         self.root = self._delete(self.root, key)
 
-    def _delete(
-        self, root: Optional[TreapNode], key: Any
-    ) -> Optional[TreapNode]:
+    def _delete(self, root: Optional[TreapNode], key: Any) -> Optional[TreapNode]:
         """Recursive delete helper."""
         if root is None:
             return None
@@ -170,6 +167,7 @@ class Treap:
         Yields:
             TreapNode: Nodes in ascending key order.
         """
+
         def traverse(node: Optional[TreapNode]) -> Iterator[TreapNode]:
             if node:
                 yield from traverse(node.left)
@@ -184,6 +182,7 @@ class Treap:
         Returns:
             int: Height of the tree.
         """
+
         def _height(node: Optional[TreapNode]) -> int:
             if node is None:
                 return 0

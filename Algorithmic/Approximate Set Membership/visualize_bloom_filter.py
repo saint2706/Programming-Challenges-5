@@ -4,9 +4,8 @@ This script generates an animation demonstrating how items are added to a Bloom 
 and how membership checks are performed, highlighting the probabilistic nature of the structure.
 """
 
-import sys
 import os
-import hashlib
+import sys
 from typing import List
 
 from manim import *  # type: ignore

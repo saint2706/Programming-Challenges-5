@@ -1,9 +1,12 @@
 from pathlib import Path
 
 import pytest
-
-from Practical.PersonalAPIKeyVault.vault import decrypt_secrets, encrypt_secrets, VaultError
 from Practical.PersonalAPIKeyVault.__main__ import main
+from Practical.PersonalAPIKeyVault.vault import (
+    VaultError,
+    decrypt_secrets,
+    encrypt_secrets,
+)
 
 
 def test_encrypt_decrypt_roundtrip():
@@ -20,7 +23,14 @@ def test_decrypt_with_wrong_password():
         decrypt_secrets(salt, ciphertext, "password-two")
 
 
-def run_cli(tmp_path: Path, capsys, monkeypatch, *args, password="master-pass", secret="secret-value"):
+def run_cli(
+    tmp_path: Path,
+    capsys,
+    monkeypatch,
+    *args,
+    password="master-pass",
+    secret="secret-value",
+):
     prompts = [password]
     if secret is not None:
         prompts.append(secret)
@@ -49,7 +59,9 @@ def test_cli_add_get_delete(tmp_path, capsys, monkeypatch):
     assert code == 0
     assert "service-a" in out
 
-    code, out = run_cli(tmp_path, capsys, monkeypatch, "delete", "service-a", secret=None)
+    code, out = run_cli(
+        tmp_path, capsys, monkeypatch, "delete", "service-a", secret=None
+    )
     assert code == 0
     assert "Deleted secret" in out
 

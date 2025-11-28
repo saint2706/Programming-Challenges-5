@@ -19,7 +19,6 @@ from typing import Callable, Dict, Optional, Sequence, Tuple
 import cv2
 import numpy as np
 
-
 EmbeddingModel = Callable[[np.ndarray], np.ndarray]
 Detection = Tuple[int, int, int, int]
 

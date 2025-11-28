@@ -1,8 +1,9 @@
-import os
-import json
-import time
 import glob
-from typing import Optional, List, Tuple
+import json
+import os
+import time
+from typing import List, Optional
+
 
 class MemTable:
     def __init__(self, limit_bytes: int = 1024):
@@ -16,7 +17,7 @@ class MemTable:
         new_entry_size = len(key) + len(value)
 
         if old_val:
-            self.size_bytes -= (len(key) + len(old_val))
+            self.size_bytes -= len(key) + len(old_val)
 
         self.data[key] = value
         self.size_bytes += new_entry_size
@@ -30,6 +31,7 @@ class MemTable:
     def clear(self):
         self.data = {}
         self.size_bytes = 0
+
 
 class SSTable:
     def __init__(self, filepath: str):
@@ -54,13 +56,13 @@ class SSTable:
         # or reading fully if small.
         # Let's assume we read line by line.
         try:
-            with open(self.filepath, 'r') as f:
+            with open(self.filepath, "r") as f:
                 for line in f:
                     try:
                         entry = json.loads(line)
-                        k = entry['k']
+                        k = entry["k"]
                         if k == key:
-                            return entry['v']
+                            return entry["v"]
                         if k > key:
                             # Since sorted, if we pass it, it's not there
                             return None
@@ -74,10 +76,11 @@ class SSTable:
     def create(filepath: str, data: dict):
         # Sort keys
         sorted_keys = sorted(data.keys())
-        with open(filepath, 'w') as f:
+        with open(filepath, "w") as f:
             for k in sorted_keys:
-                entry = {'k': k, 'v': data[k]}
+                entry = {"k": k, "v": data[k]}
                 f.write(json.dumps(entry) + "\n")
+
 
 class LSMStore:
     def __init__(self, data_dir: str, memtable_limit: int = 100):
@@ -130,31 +133,31 @@ class LSMStore:
             return
 
         # Ensure unique timestamp
-        timestamp = int(time.time() * 1000000) # Microseconds
+        timestamp = int(time.time() * 1000000)  # Microseconds
         filename = f"sstable_{timestamp}.sst"
         filepath = os.path.join(self.data_dir, filename)
 
         # Safety check if file exists (unlikely with microseconds but possible)
         while os.path.exists(filepath):
-             timestamp += 1
-             filename = f"sstable_{timestamp}.sst"
-             filepath = os.path.join(self.data_dir, filename)
+            timestamp += 1
+            filename = f"sstable_{timestamp}.sst"
+            filepath = os.path.join(self.data_dir, filename)
 
         SSTable.create(filepath, self.memtable.data)
         self.memtable.clear()
 
     def compact_all(self):
         self.flush()
-        files = self._get_sstable_files() # Newest first
-        files.reverse() # Oldest first
+        files = self._get_sstable_files()  # Newest first
+        files.reverse()  # Oldest first
 
         merged = {}
         for fpath in files:
-            with open(fpath, 'r') as f:
+            with open(fpath, "r") as f:
                 for line in f:
                     try:
                         entry = json.loads(line)
-                        merged[entry['k']] = entry['v']
+                        merged[entry["k"]] = entry["v"]
                     except json.JSONDecodeError:
                         continue
 

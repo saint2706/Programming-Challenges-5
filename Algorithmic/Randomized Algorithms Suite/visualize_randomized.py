@@ -3,9 +3,9 @@
 This script demonstrates the structure and search operation of a Skip List.
 """
 
-import sys
 import os
-from typing import List, Dict, Any, Tuple
+import sys
+from typing import Any, Dict, List, Tuple
 
 from manim import *  # type: ignore
 
@@ -85,9 +85,7 @@ class SkipListDemo(Scene):
             for next_node in nodes[1:]:
                 if next_node["levels"] > lvl:
                     # Draw arrow from current to next
-                    start = node_mobjects[
-                        (current_node["val"], lvl)
-                    ].get_right()
+                    start = node_mobjects[(current_node["val"], lvl)].get_right()
                     end = node_mobjects[(next_node["val"], lvl)].get_left()
                     arrow = Arrow(
                         start,
@@ -103,9 +101,7 @@ class SkipListDemo(Scene):
 
         # Search for 8
         target = 8
-        search_text = Text(
-            f"Searching for {target}", font_size=24, color=YELLOW
-        )
+        search_text = Text(f"Searching for {target}", font_size=24, color=YELLOW)
         search_text.next_to(title, DOWN)
         self.play(FadeIn(search_text))
 
@@ -154,15 +150,13 @@ class SkipListDemo(Scene):
                             next_node = n
                         elif is_greater(next_node["val"], n["val"]):
                             next_node = n
-            
+
             # Logic for moving pointer
             if next_node is None:
-                 # Should not happen with inf sentinel
-                 break
+                # Should not happen with inf sentinel
+                break
 
-            if next_node["val"] == "inf" or is_greater(
-                next_node["val"], target
-            ):
+            if next_node["val"] == "inf" or is_greater(next_node["val"], target):
                 # Go down
                 if curr_lvl > 0:
                     self.play(
@@ -175,9 +169,7 @@ class SkipListDemo(Scene):
             elif next_node["val"] == target:
                 # Found!
                 self.play(
-                    pointer.animate.next_to(
-                        node_mobjects[(target, curr_lvl)], UP
-                    ),
+                    pointer.animate.next_to(node_mobjects[(target, curr_lvl)], UP),
                     run_time=0.5,
                 )
                 found_mobj = node_mobjects[(target, curr_lvl)]
@@ -190,9 +182,7 @@ class SkipListDemo(Scene):
                 # Go right
                 curr_val = next_node["val"]
                 self.play(
-                    pointer.animate.next_to(
-                        node_mobjects[(curr_val, curr_lvl)], UP
-                    ),
+                    pointer.animate.next_to(node_mobjects[(curr_val, curr_lvl)], UP),
                     run_time=0.3,
                 )
 

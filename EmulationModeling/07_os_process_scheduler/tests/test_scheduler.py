@@ -1,5 +1,7 @@
 import unittest
-from os_sim import Process, Scheduler, Kernel
+
+from os_sim import Kernel, Process, Scheduler
+
 
 class TestScheduler(unittest.TestCase):
     def test_fcfs(self):
@@ -65,5 +67,6 @@ class TestScheduler(unittest.TestCase):
 
         self.assertEqual(sched.completed_processes[0].completion_time, 4)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

@@ -17,7 +17,6 @@ from torch import Tensor, nn
 from torch.nn.utils.rnn import pad_sequence
 from torch.utils.data import DataLoader, Dataset
 
-
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
@@ -68,7 +67,12 @@ class Vocabulary:
 class SyntheticTranslationDataset(Dataset[Tuple[Tensor, Tensor]]):
     """Synthetic parallel dataset mapping digit words to reversed sequences."""
 
-    def __init__(self, pairs: List[Tuple[List[str], List[str]]], vocab_src: Vocabulary, vocab_tgt: Vocabulary):
+    def __init__(
+        self,
+        pairs: List[Tuple[List[str], List[str]]],
+        vocab_src: Vocabulary,
+        vocab_tgt: Vocabulary,
+    ):
         self.pairs = pairs
         self.vocab_src = vocab_src
         self.vocab_tgt = vocab_tgt
@@ -78,27 +82,39 @@ class SyntheticTranslationDataset(Dataset[Tuple[Tensor, Tensor]]):
 
     def __getitem__(self, idx: int) -> Tuple[Tensor, Tensor]:
         src_tokens, tgt_tokens = self.pairs[idx]
-        src_ids = torch.tensor(self.vocab_src.numericalize(src_tokens), dtype=torch.long)
+        src_ids = torch.tensor(
+            self.vocab_src.numericalize(src_tokens), dtype=torch.long
+        )
         tgt_ids = torch.tensor(
-            [self.vocab_tgt.sos_idx] + self.vocab_tgt.numericalize(tgt_tokens) + [self.vocab_tgt.eos_idx],
+            [self.vocab_tgt.sos_idx]
+            + self.vocab_tgt.numericalize(tgt_tokens)
+            + [self.vocab_tgt.eos_idx],
             dtype=torch.long,
         )
         return src_ids, tgt_ids
 
     def collate_fn(self, batch: List[Tuple[Tensor, Tensor]]) -> Tuple[Tensor, Tensor]:
         src_batch, tgt_batch = zip(*batch)
-        src_padded = pad_sequence(src_batch, batch_first=True, padding_value=self.vocab_src.pad_idx)
-        tgt_padded = pad_sequence(tgt_batch, batch_first=True, padding_value=self.vocab_tgt.pad_idx)
+        src_padded = pad_sequence(
+            src_batch, batch_first=True, padding_value=self.vocab_src.pad_idx
+        )
+        tgt_padded = pad_sequence(
+            tgt_batch, batch_first=True, padding_value=self.vocab_tgt.pad_idx
+        )
         return src_padded, tgt_padded
 
 
 class Encoder(nn.Module):
     """Encoder LSTM that returns outputs for attention and final hidden state."""
 
-    def __init__(self, vocab_size: int, embed_dim: int, hidden_dim: int, num_layers: int = 1) -> None:
+    def __init__(
+        self, vocab_size: int, embed_dim: int, hidden_dim: int, num_layers: int = 1
+    ) -> None:
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, embed_dim, padding_idx=0)
-        self.rnn = nn.LSTM(embed_dim, hidden_dim, num_layers=num_layers, batch_first=True)
+        self.rnn = nn.LSTM(
+            embed_dim, hidden_dim, num_layers=num_layers, batch_first=True
+        )
 
     def forward(self, src: Tensor) -> Tuple[Tensor, Tuple[Tensor, Tensor]]:
         embedded = self.embedding(src)
@@ -109,7 +125,9 @@ class Encoder(nn.Module):
 class Attention(nn.Module):
     """Dot-product attention mechanism with padding mask."""
 
-    def forward(self, decoder_hidden: Tensor, encoder_outputs: Tensor, src_mask: Tensor) -> Tensor:
+    def forward(
+        self, decoder_hidden: Tensor, encoder_outputs: Tensor, src_mask: Tensor
+    ) -> Tensor:
         scores = torch.bmm(encoder_outputs, decoder_hidden.unsqueeze(2)).squeeze(2)
         scores.masked_fill_(~src_mask, float("-inf"))
         attn_weights = torch.softmax(scores, dim=1)
@@ -120,10 +138,14 @@ class Attention(nn.Module):
 class Decoder(nn.Module):
     """Decoder LSTM with attention."""
 
-    def __init__(self, vocab_size: int, embed_dim: int, hidden_dim: int, num_layers: int = 1) -> None:
+    def __init__(
+        self, vocab_size: int, embed_dim: int, hidden_dim: int, num_layers: int = 1
+    ) -> None:
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, embed_dim, padding_idx=0)
-        self.rnn = nn.LSTM(embed_dim + hidden_dim, hidden_dim, num_layers=num_layers, batch_first=True)
+        self.rnn = nn.LSTM(
+            embed_dim + hidden_dim, hidden_dim, num_layers=num_layers, batch_first=True
+        )
         self.fc_out = nn.Linear(hidden_dim * 2, vocab_size)
         self.attention = Attention()
 
@@ -146,14 +168,18 @@ class Decoder(nn.Module):
 class Seq2Seq(nn.Module):
     """Full sequence-to-sequence model wiring encoder and decoder."""
 
-    def __init__(self, encoder: Encoder, decoder: Decoder, pad_idx: int, device: torch.device) -> None:
+    def __init__(
+        self, encoder: Encoder, decoder: Decoder, pad_idx: int, device: torch.device
+    ) -> None:
         super().__init__()
         self.encoder = encoder
         self.decoder = decoder
         self.pad_idx = pad_idx
         self.device = device
 
-    def forward(self, src: Tensor, tgt: Tensor, teacher_forcing_ratio: float = 0.5) -> Tensor:
+    def forward(
+        self, src: Tensor, tgt: Tensor, teacher_forcing_ratio: float = 0.5
+    ) -> Tensor:
         batch_size, tgt_len = tgt.size()
         vocab_size = self.decoder.fc_out.out_features
         outputs = torch.zeros(batch_size, tgt_len, vocab_size, device=self.device)
@@ -161,7 +187,9 @@ class Seq2Seq(nn.Module):
         input_token = tgt[:, 0]
         src_mask = src != self.pad_idx
         for t in range(1, tgt_len):
-            output, hidden, cell = self.decoder(input_token, hidden, cell, encoder_outputs, src_mask)
+            output, hidden, cell = self.decoder(
+                input_token, hidden, cell, encoder_outputs, src_mask
+            )
             outputs[:, t] = output
             teacher_force = torch.rand(1).item() < teacher_forcing_ratio
             top1 = output.argmax(1)
@@ -169,17 +197,27 @@ class Seq2Seq(nn.Module):
         return outputs
 
     def translate(
-        self, src_sentence: Sequence[str], vocab_src: Vocabulary, vocab_tgt: Vocabulary, max_len: int = 15
+        self,
+        src_sentence: Sequence[str],
+        vocab_src: Vocabulary,
+        vocab_tgt: Vocabulary,
+        max_len: int = 15,
     ) -> List[str]:
         self.eval()
         with torch.no_grad():
-            src_tensor = torch.tensor(vocab_src.numericalize(src_sentence), dtype=torch.long, device=self.device).unsqueeze(0)
+            src_tensor = torch.tensor(
+                vocab_src.numericalize(src_sentence),
+                dtype=torch.long,
+                device=self.device,
+            ).unsqueeze(0)
             encoder_outputs, (hidden, cell) = self.encoder(src_tensor)
             input_token = torch.tensor([vocab_tgt.sos_idx], device=self.device)
             src_mask = src_tensor != self.pad_idx
             outputs: List[int] = []
             for _ in range(max_len):
-                output, hidden, cell = self.decoder(input_token, hidden, cell, encoder_outputs, src_mask)
+                output, hidden, cell = self.decoder(
+                    input_token, hidden, cell, encoder_outputs, src_mask
+                )
                 top1 = output.argmax(1)
                 if top1.item() == vocab_tgt.eos_idx:
                     break
@@ -191,7 +229,18 @@ class Seq2Seq(nn.Module):
 def build_synthetic_pairs() -> List[Tuple[List[str], List[str]]]:
     """Create a tiny synthetic dataset of digit sequences and reversed translations."""
 
-    digits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+    digits = [
+        "zero",
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine",
+    ]
     pairs: List[Tuple[List[str], List[str]]] = []
     for length in range(2, 5):
         for start in range(0, 10 - length):
@@ -201,14 +250,18 @@ def build_synthetic_pairs() -> List[Tuple[List[str], List[str]]]:
     return pairs
 
 
-def create_dataloaders(batch_size: int = 4) -> Tuple[DataLoader, Vocabulary, Vocabulary]:
+def create_dataloaders(
+    batch_size: int = 4,
+) -> Tuple[DataLoader, Vocabulary, Vocabulary]:
     """Build dataloaders and vocabularies for the synthetic data."""
 
     pairs = build_synthetic_pairs()
     vocab_src = Vocabulary.build(src for src, _ in pairs)
     vocab_tgt = Vocabulary.build(tgt for _, tgt in pairs)
     dataset = SyntheticTranslationDataset(pairs, vocab_src, vocab_tgt)
-    loader = DataLoader(dataset, batch_size=batch_size, shuffle=True, collate_fn=dataset.collate_fn)
+    loader = DataLoader(
+        dataset, batch_size=batch_size, shuffle=True, collate_fn=dataset.collate_fn
+    )
     return loader, vocab_src, vocab_tgt
 
 
@@ -228,7 +281,9 @@ def train(
     loader, vocab_src, vocab_tgt = create_dataloaders(batch_size=batch_size)
     encoder = Encoder(len(vocab_src.itos), embed_dim, hidden_dim).to(train_device)
     decoder = Decoder(len(vocab_tgt.itos), embed_dim, hidden_dim).to(train_device)
-    model = Seq2Seq(encoder, decoder, pad_idx=vocab_src.pad_idx, device=train_device).to(train_device)
+    model = Seq2Seq(
+        encoder, decoder, pad_idx=vocab_src.pad_idx, device=train_device
+    ).to(train_device)
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
     criterion = nn.CrossEntropyLoss(ignore_index=vocab_tgt.pad_idx)
 
@@ -238,7 +293,9 @@ def train(
             src_batch = src_batch.to(train_device)
             tgt_batch = tgt_batch.to(train_device)
             optimizer.zero_grad()
-            output = model(src_batch, tgt_batch, teacher_forcing_ratio=teacher_forcing_ratio)
+            output = model(
+                src_batch, tgt_batch, teacher_forcing_ratio=teacher_forcing_ratio
+            )
             output_dim = output.shape[-1]
             output_flat = output[:, 1:].reshape(-1, output_dim)
             tgt_flat = tgt_batch[:, 1:].reshape(-1)
@@ -249,10 +306,16 @@ def train(
     return model, vocab_src, vocab_tgt
 
 
-def demo_translations(model: Seq2Seq, vocab_src: Vocabulary, vocab_tgt: Vocabulary) -> List[Tuple[str, str]]:
+def demo_translations(
+    model: Seq2Seq, vocab_src: Vocabulary, vocab_tgt: Vocabulary
+) -> List[Tuple[str, str]]:
     """Generate a few sample translations for inspection."""
 
-    samples = [["one", "two", "three"], ["four", "five"], ["six", "seven", "eight", "nine"]]
+    samples = [
+        ["one", "two", "three"],
+        ["four", "five"],
+        ["six", "seven", "eight", "nine"],
+    ]
     translations: List[Tuple[str, str]] = []
     for src in samples:
         pred_tokens = model.translate(src, vocab_src, vocab_tgt)

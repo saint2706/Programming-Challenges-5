@@ -3,7 +3,7 @@
 This module provides functions to triangulate simple polygons by iteratively
 finding and removing "ear" vertices. The algorithm runs in O(n^2) time.
 """
-import numpy as np
+
 from typing import List, Tuple
 
 
@@ -19,6 +19,7 @@ class Point:
 
     def __eq__(self, other):
         return self.x == other.x and self.y == other.y
+
 
 def is_convex(p: Point, prev_p: Point, next_p: Point) -> bool:
     """
@@ -36,8 +37,10 @@ def is_convex(p: Point, prev_p: Point, next_p: Point) -> bool:
     # Assuming counter-clockwise winding
     return cross > 0
 
+
 def is_point_inside_triangle(pt: Point, v1: Point, v2: Point, v3: Point) -> bool:
     """Checks if point pt is inside the triangle v1-v2-v3."""
+
     def sign(p1, p2, p3):
         return (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y)
 
@@ -50,7 +53,10 @@ def is_point_inside_triangle(pt: Point, v1: Point, v2: Point, v3: Point) -> bool
 
     return not (has_neg and has_pos)
 
-def triangulate_polygon(coords: List[Tuple[float, float]]) -> List[Tuple[int, int, int]]:
+
+def triangulate_polygon(
+    coords: List[Tuple[float, float]],
+) -> List[Tuple[int, int, int]]:
     """
     Triangulates a simple polygon using the Ear Clipping algorithm.
 
@@ -100,7 +106,9 @@ def triangulate_polygon(coords: List[Tuple[float, float]]) -> List[Tuple[int, in
                     break
 
         if not ear_found:
-            raise ValueError("Polygon is likely not simple or not CCW, or numerical issue.")
+            raise ValueError(
+                "Polygon is likely not simple or not CCW, or numerical issue."
+            )
 
     # Add the final triangle
     triangles.append((vertices[0][1], vertices[1][1], vertices[2][1]))

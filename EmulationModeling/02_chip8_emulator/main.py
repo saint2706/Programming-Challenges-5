@@ -1,9 +1,10 @@
 import sys
-import time
+
 import pygame
 from cpu import Chip8
 from display import Display
 from keypad import Keypad
+
 
 def main():
     if len(sys.argv) < 2:
@@ -19,13 +20,23 @@ def main():
         # Data: 0xF0, 0x90, 0xF0, 0x90, 0xF0 (Number 8)
 
         program = [
-            0x00, 0xE0,
-            0x60, 0x00,
-            0x61, 0x00,
-            0xA2, 0x0C,
-            0xD0, 0x15,
-            0x12, 0x08,
-            0xF0, 0x90, 0xF0, 0x90, 0xF0
+            0x00,
+            0xE0,
+            0x60,
+            0x00,
+            0x61,
+            0x00,
+            0xA2,
+            0x0C,
+            0xD0,
+            0x15,
+            0x12,
+            0x08,
+            0xF0,
+            0x90,
+            0xF0,
+            0x90,
+            0xF0,
         ]
         with open("test.ch8", "wb") as f:
             f.write(bytearray(program))
@@ -59,6 +70,7 @@ def main():
         clock.tick(60)
 
     display.quit()
+
 
 if __name__ == "__main__":
     main()

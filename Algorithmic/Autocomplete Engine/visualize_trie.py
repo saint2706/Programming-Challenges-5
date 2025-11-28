@@ -4,9 +4,9 @@ This script demonstrates the insertion of words into a Trie structure.
 It visualizes nodes, edges, and the path taken during insertion.
 """
 
-import sys
 import os
-from typing import Dict, List, Tuple, Any
+import sys
+from typing import Dict, List, Tuple
 
 from manim import *  # type: ignore
 
@@ -120,9 +120,7 @@ class TrieDemo(Scene):
                         new_node.animate.set_fill(YELLOW, opacity=0.5),
                         run_time=0.3,
                     )
-                    self.play(
-                        new_node.animate.set_fill(opacity=0), run_time=0.3
-                    )
+                    self.play(new_node.animate.set_fill(opacity=0), run_time=0.3)
 
                 curr_prefix = next_prefix
                 curr_node_mobj = nodes[curr_prefix][0]

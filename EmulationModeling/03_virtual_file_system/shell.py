@@ -1,5 +1,6 @@
-import sys
+
 from fs import VirtualFileSystem
+
 
 def main():
     vfs = VirtualFileSystem()
@@ -37,7 +38,8 @@ def main():
             elif cmd == "cd":
                 if args:
                     res = vfs.cd(args[0])
-                    if res: print(res)
+                    if res:
+                        print(res)
                 else:
                     print("Usage: cd <path>")
             elif cmd == "pwd":
@@ -66,6 +68,7 @@ def main():
             break
         except Exception as e:
             print(f"Error: {e}")
+
 
 if __name__ == "__main__":
     main()

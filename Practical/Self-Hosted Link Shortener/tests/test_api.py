@@ -1,5 +1,5 @@
-from pathlib import Path
 import sys
+from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
@@ -40,7 +40,9 @@ def test_create_and_follow_link(client):
 
 
 def test_custom_slug_validation(client):
-    resp = client.post("/links", json={"url": "https://example.com", "custom_slug": "??"})
+    resp = client.post(
+        "/links", json={"url": "https://example.com", "custom_slug": "??"}
+    )
     assert resp.status_code == 422
 
 
@@ -49,5 +51,7 @@ def test_duplicate_slug(client):
     resp = client.post("/links", json=payload)
     assert resp.status_code == 201
 
-    resp_dup = client.post("/links", json={"url": "https://example.com/b", "custom_slug": "docs"})
+    resp_dup = client.post(
+        "/links", json={"url": "https://example.com/b", "custom_slug": "docs"}
+    )
     assert resp_dup.status_code == 409

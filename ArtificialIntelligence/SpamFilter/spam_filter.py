@@ -1,4 +1,5 @@
 """Minimal spam filter example using multinomial Naive Bayes."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -29,7 +30,7 @@ def build_corpus() -> List[SpamExample]:
         "Team lunch is scheduled for Friday at noon",
         "Can we reschedule the meeting to next Tuesday?",
         "Thanks for sending the project update earlier",
-        "Here are the notes from today\'s call. Let me know if anything is missing",
+        "Here are the notes from today's call. Let me know if anything is missing",
         "Please review the latest draft when you have time",
     ]
 
@@ -81,7 +82,9 @@ def train_manual_nb(features, labels, alpha: float = 1.0):
     return classes, log_class_prior, log_conditional
 
 
-def manual_predict(vectorizer: CountVectorizer, params, samples: Iterable[str]) -> List[str]:
+def manual_predict(
+    vectorizer: CountVectorizer, params, samples: Iterable[str]
+) -> List[str]:
     classes, log_prior, log_conditional = params
     X = vectorizer.transform(list(samples))
     log_likelihood = X @ log_conditional.T
@@ -114,7 +117,9 @@ def main() -> None:
         print(f"{label.upper():>4} | spam probability={spam_prob:.3f} | {email}")
 
     print("\n=== Manual multinomial NB ===")
-    for email, label in zip(sample_emails, manual_predict(vectorizer, manual_params, sample_emails)):
+    for email, label in zip(
+        sample_emails, manual_predict(vectorizer, manual_params, sample_emails)
+    ):
         print(f"{label.upper():>4} | {email}")
 
 

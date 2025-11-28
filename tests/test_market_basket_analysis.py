@@ -21,7 +21,9 @@ def small_transactions() -> List[Set[str]]:
     ]
 
 
-def test_apriori_generates_expected_frequent_itemsets(small_transactions: List[Set[str]]) -> None:
+def test_apriori_generates_expected_frequent_itemsets(
+    small_transactions: List[Set[str]],
+) -> None:
     frequent_itemsets = apriori(small_transactions, min_support=0.5)
 
     expected_supports = {
@@ -35,7 +37,9 @@ def test_apriori_generates_expected_frequent_itemsets(small_transactions: List[S
     assert frequent_itemsets == expected_supports
 
 
-def test_association_rules_compute_confidence_and_lift(small_transactions: List[Set[str]]) -> None:
+def test_association_rules_compute_confidence_and_lift(
+    small_transactions: List[Set[str]],
+) -> None:
     frequent_itemsets = apriori(small_transactions, min_support=0.5)
     rules = generate_association_rules(frequent_itemsets, min_confidence=0.6)
 

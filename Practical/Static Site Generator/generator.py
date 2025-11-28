@@ -3,8 +3,10 @@
 import os
 import shutil
 from pathlib import Path
+
 import markdown
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+
 
 class SiteGenerator:
     def __init__(self, input_dir: Path, output_dir: Path, base_url: str = "/"):
@@ -16,11 +18,13 @@ class SiteGenerator:
         self.static_dir = input_dir / "static"
 
         if not self.templates_dir.exists():
-            raise FileNotFoundError(f"Templates directory not found: {self.templates_dir}")
+            raise FileNotFoundError(
+                f"Templates directory not found: {self.templates_dir}"
+            )
 
         self.env = Environment(
             loader=FileSystemLoader(self.templates_dir),
-            autoescape=select_autoescape(['html', 'xml'])
+            autoescape=select_autoescape(["html", "xml"]),
         )
 
     def build(self):
@@ -35,8 +39,8 @@ class SiteGenerator:
 
         # Process content
         if not self.content_dir.exists():
-             print(f"Warning: Content directory not found: {self.content_dir}")
-             return
+            print(f"Warning: Content directory not found: {self.content_dir}")
+            return
 
         for root, _, files in os.walk(self.content_dir):
             for file in files:
@@ -68,7 +72,9 @@ class SiteGenerator:
         template_name = meta.get("template", "base.html")
         try:
             template = self.env.get_template(template_name)
-            render = template.render(content=html_content, meta=meta, base_url=self.base_url)
+            render = template.render(
+                content=html_content, meta=meta, base_url=self.base_url
+            )
             output_path.write_text(render, encoding="utf-8")
         except Exception as e:
             print(f"Error rendering {file_path}: {e}")

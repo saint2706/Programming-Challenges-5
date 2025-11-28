@@ -1,7 +1,9 @@
-from typing import Dict, Set, Optional
+from typing import Dict, Set
+
 
 class UnionFind:
     """Standard DSU for static connectivity, used as component in simpler dynamic structures."""
+
     def __init__(self):
         self.parent = {}
         self.rank = {}
@@ -27,6 +29,7 @@ class UnionFind:
                 self.rank[root_i] += 1
             return True
         return False
+
 
 class DynamicConnectivity:
     """
@@ -72,8 +75,10 @@ class DynamicConnectivity:
         # Let's use simple BFS/DFS on the tree_adj for connectivity checks.
 
     def _add_to_adj(self, graph, u, v):
-        if u not in graph: graph[u] = set()
-        if v not in graph: graph[v] = set()
+        if u not in graph:
+            graph[u] = set()
+        if v not in graph:
+            graph[v] = set()
         graph[u].add(v)
         graph[v].add(u)
 
@@ -85,8 +90,10 @@ class DynamicConnectivity:
 
     def connected(self, u: str, v: str) -> bool:
         """Returns True if u and v are connected."""
-        if u == v: return True
-        if u not in self.adj or v not in self.adj: return False
+        if u == v:
+            return True
+        if u not in self.adj or v not in self.adj:
+            return False
 
         # BFS on spanning forest
         visited = set()
@@ -117,7 +124,7 @@ class DynamicConnectivity:
         """Removes the edge between u and v."""
         # Check if edge exists
         if u not in self.adj or v not in self.adj[u]:
-            return # Edge doesn't exist
+            return  # Edge doesn't exist
 
         self._remove_from_adj(self.adj, u, v)
 

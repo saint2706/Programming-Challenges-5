@@ -1,5 +1,4 @@
 import pytest
-
 from dns_simulator import (
     AuthoritativeDNSServer,
     DNSResolver,

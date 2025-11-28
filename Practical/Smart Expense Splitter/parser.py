@@ -8,7 +8,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from decimal import Decimal
 from pathlib import Path
-from typing import Iterable, List, Sequence, Optional, Union
+from typing import Iterable, List, Optional, Sequence, Union
 
 try:
     from .models import Expense, Participant

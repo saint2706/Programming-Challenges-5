@@ -1,4 +1,5 @@
 """Database utilities for the privacy-friendly analytics service."""
+
 from __future__ import annotations
 
 import os
@@ -12,7 +13,9 @@ DATABASE_URL = os.getenv("ANALYTICS_DATABASE_URL", "sqlite:///analytics.db")
 
 engine = create_engine(
     DATABASE_URL,
-    connect_args={"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {},
+    connect_args=(
+        {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
+    ),
 )
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 Base = declarative_base()

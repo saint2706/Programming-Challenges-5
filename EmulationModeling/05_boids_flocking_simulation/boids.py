@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class Boid:
     def __init__(self, x, y, width, height):
         self.position = np.array([x, y], dtype=np.float64)
@@ -78,7 +79,9 @@ class Boid:
             coh /= total_coh
             dir_to_target = coh - self.position
             if np.linalg.norm(dir_to_target) > 0:
-                dir_to_target = (dir_to_target / np.linalg.norm(dir_to_target)) * self.max_speed - self.velocity
+                dir_to_target = (
+                    dir_to_target / np.linalg.norm(dir_to_target)
+                ) * self.max_speed - self.velocity
                 coh = self._limit(dir_to_target, self.max_force)
 
         return sep * 1.5 + ali * 1.0 + coh * 1.0
@@ -89,9 +92,13 @@ class Boid:
             return (vector / norm) * max_val
         return vector
 
+
 class Flock:
     def __init__(self, count, width, height):
-        self.boids = [Boid(np.random.rand()*width, np.random.rand()*height, width, height) for _ in range(count)]
+        self.boids = [
+            Boid(np.random.rand() * width, np.random.rand() * height, width, height)
+            for _ in range(count)
+        ]
         self.width = width
         self.height = height
 

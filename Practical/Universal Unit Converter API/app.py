@@ -3,12 +3,13 @@
 This application loads unit definitions from configuration and provides endpoints
 to list available units and perform conversions.
 """
+
 from __future__ import annotations
 
 import os
 import sys
 from pathlib import Path
-from typing import Optional, Dict
+from typing import Dict, Optional
 
 # Hack to support running as a script despite spaces in folder name
 sys.path.append(os.path.dirname(__file__))
@@ -44,6 +45,7 @@ def _build_converter(config_path: Optional[str] = None) -> UnitConverter:
 
 class ConversionPayload(BaseModel):
     """Request payload for conversion."""
+
     category: str = Field(..., description="Unit category, e.g. 'length'.")
     from_unit: str = Field(..., description="Source unit name or alias.")
     to_unit: str = Field(..., description="Target unit name or alias.")
@@ -52,6 +54,7 @@ class ConversionPayload(BaseModel):
 
 class ConversionResponse(BaseModel):
     """Response payload for conversion."""
+
     category: str
     from_unit: str
     to_unit: str
@@ -62,12 +65,14 @@ class ConversionResponse(BaseModel):
 
 class CategoryResponse(BaseModel):
     """Schema for category metadata."""
+
     description: str
     units: list[str]
 
 
 class UnitsResponse(BaseModel):
     """Schema for the units listing endpoint."""
+
     categories: Dict[str, CategoryResponse]
 
 
@@ -92,7 +97,7 @@ def create_app(config_path: Optional[str] = None) -> FastAPI:
             # v is Dict[str, object]
             typed[k] = CategoryResponse(
                 description=str(v.get("description", "")),
-                units=v.get("units", []) # type: ignore
+                units=v.get("units", []),  # type: ignore
             )
         return UnitsResponse(categories=typed)
 

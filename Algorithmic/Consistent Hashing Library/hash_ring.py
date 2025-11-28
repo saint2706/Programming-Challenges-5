@@ -3,12 +3,13 @@
 This module implements a Consistent Hash Ring, allowing for distributed
 node mapping with minimal disruption when nodes are added or removed.
 """
+
 from __future__ import annotations
 
 import hashlib
 from bisect import bisect_right
 from dataclasses import dataclass
-from typing import List, Protocol, Sequence, Optional, Tuple
+from typing import List, Optional, Protocol, Sequence
 
 
 class HashFunction(Protocol):
@@ -17,8 +18,7 @@ class HashFunction(Protocol):
     A hash function must accept a string key and return an integer hash.
     """
 
-    def __call__(self, value: str) -> int:
-        ...
+    def __call__(self, value: str) -> int: ...
 
 
 class Sha256Hash:
@@ -99,9 +99,7 @@ class HashRing:
         Args:
             node: The node identifier to remove.
         """
-        self._buckets = [
-            bucket for bucket in self._buckets if bucket.node != node
-        ]
+        self._buckets = [bucket for bucket in self._buckets if bucket.node != node]
         self._rebuild_index()
 
     def lookup(self, key: str, replicas: int = 1) -> List[str]:

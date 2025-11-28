@@ -3,6 +3,7 @@
 This script keeps the implementation intentionally lightweight so it can run
 quickly on modest CPUs while demonstrating a full reinforcement-learning loop.
 """
+
 from __future__ import annotations
 
 import argparse
@@ -11,6 +12,7 @@ import random
 from typing import Iterable, Tuple
 
 import numpy as np
+
 try:  # Gymnasium compatibility
     import gymnasium as gym  # type: ignore
 except ImportError:
@@ -52,7 +54,12 @@ class StateDiscretizer:
 class QLearningAgent:
     """Tabular Q-learning agent with epsilon-greedy exploration."""
 
-    def __init__(self, config: TrainingConfig, discretizer: StateDiscretizer, action_space: gym.Space):
+    def __init__(
+        self,
+        config: TrainingConfig,
+        discretizer: StateDiscretizer,
+        action_space: gym.Space,
+    ):
         self.cfg = config
         self.discretizer = discretizer
         if not isinstance(action_space.n, (int, np.integer)):
@@ -69,11 +76,20 @@ class QLearningAgent:
             return random.randrange(self.n_actions)
         return int(np.argmax(self.q_table[state]))
 
-    def update(self, state: Tuple[int, ...], action: int, reward: float, next_state: Tuple[int, ...], done: bool) -> None:
+    def update(
+        self,
+        state: Tuple[int, ...],
+        action: int,
+        reward: float,
+        next_state: Tuple[int, ...],
+        done: bool,
+    ) -> None:
         old_value = self.q_table[state + (action,)]
         next_max = 0.0 if done else float(np.max(self.q_table[next_state]))
         target = reward + self.cfg.discount_factor * next_max
-        self.q_table[state + (action,)] = (1 - self.cfg.learning_rate) * old_value + self.cfg.learning_rate * target
+        self.q_table[state + (action,)] = (
+            1 - self.cfg.learning_rate
+        ) * old_value + self.cfg.learning_rate * target
 
     def decay_epsilon(self) -> None:
         self.epsilon = max(self.cfg.epsilon_end, self.epsilon * self.cfg.epsilon_decay)
@@ -114,7 +130,9 @@ def train(config: TrainingConfig) -> None:
     for episode in range(1, config.episodes + 1):
         episode_reward = run_episode(env, agent, config)
         rewards.append(episode_reward)
-        print(f"Episode {episode:4d} | Reward: {episode_reward:6.1f} | Epsilon: {agent.epsilon: .3f}")
+        print(
+            f"Episode {episode:4d} | Reward: {episode_reward:6.1f} | Epsilon: {agent.epsilon: .3f}"
+        )
         if episode % 50 == 0:
             avg_last_50 = sum(rewards[-50:]) / 50.0
             print(f"  Average reward over last 50 episodes: {avg_last_50:.2f}")
@@ -123,15 +141,57 @@ def train(config: TrainingConfig) -> None:
 
 
 def parse_args() -> TrainingConfig:
-    parser = argparse.ArgumentParser(description="Train a CartPole-v1 agent with Q-learning")
-    parser.add_argument("--episodes", type=int, default=TrainingConfig.episodes, help="Number of training episodes")
-    parser.add_argument("--max-steps", type=int, default=TrainingConfig.max_steps_per_episode, help="Max steps per episode")
-    parser.add_argument("--lr", type=float, default=TrainingConfig.learning_rate, help="Learning rate for Q-updates")
-    parser.add_argument("--gamma", type=float, default=TrainingConfig.discount_factor, help="Discount factor")
-    parser.add_argument("--epsilon-start", type=float, default=TrainingConfig.epsilon_start, help="Initial epsilon for exploration")
-    parser.add_argument("--epsilon-end", type=float, default=TrainingConfig.epsilon_end, help="Minimum epsilon")
-    parser.add_argument("--epsilon-decay", type=float, default=TrainingConfig.epsilon_decay, help="Multiplicative epsilon decay per episode")
-    parser.add_argument("--seed", type=int, default=TrainingConfig.seed, help="Random seed (set -1 to disable)")
+    parser = argparse.ArgumentParser(
+        description="Train a CartPole-v1 agent with Q-learning"
+    )
+    parser.add_argument(
+        "--episodes",
+        type=int,
+        default=TrainingConfig.episodes,
+        help="Number of training episodes",
+    )
+    parser.add_argument(
+        "--max-steps",
+        type=int,
+        default=TrainingConfig.max_steps_per_episode,
+        help="Max steps per episode",
+    )
+    parser.add_argument(
+        "--lr",
+        type=float,
+        default=TrainingConfig.learning_rate,
+        help="Learning rate for Q-updates",
+    )
+    parser.add_argument(
+        "--gamma",
+        type=float,
+        default=TrainingConfig.discount_factor,
+        help="Discount factor",
+    )
+    parser.add_argument(
+        "--epsilon-start",
+        type=float,
+        default=TrainingConfig.epsilon_start,
+        help="Initial epsilon for exploration",
+    )
+    parser.add_argument(
+        "--epsilon-end",
+        type=float,
+        default=TrainingConfig.epsilon_end,
+        help="Minimum epsilon",
+    )
+    parser.add_argument(
+        "--epsilon-decay",
+        type=float,
+        default=TrainingConfig.epsilon_decay,
+        help="Multiplicative epsilon decay per episode",
+    )
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=TrainingConfig.seed,
+        help="Random seed (set -1 to disable)",
+    )
     args = parser.parse_args()
 
     seed = None if args.seed < 0 else args.seed

@@ -6,6 +6,7 @@ Uses PyTorch with Conv2d layers, max pooling, and fully connected layers.
 Usage:
     python mnist_cnn.py --epochs 5 --batch-size 64
 """
+
 import argparse
 from typing import Tuple
 
@@ -15,7 +16,9 @@ from torch.utils.data import DataLoader, Subset
 from torchvision import datasets, transforms
 
 
-def build_dataloaders(batch_size: int, use_subset: bool, subset_size: int) -> Tuple[DataLoader, DataLoader]:
+def build_dataloaders(
+    batch_size: int, use_subset: bool, subset_size: int
+) -> Tuple[DataLoader, DataLoader]:
     """Create training and test data loaders for MNIST.
 
     Args:
@@ -26,13 +29,19 @@ def build_dataloaders(batch_size: int, use_subset: bool, subset_size: int) -> Tu
     Returns:
         Tuple of (train_loader, test_loader).
     """
-    transform = transforms.Compose([
-        transforms.ToTensor(),
-        transforms.Normalize((0.1307,), (0.3081,)),
-    ])
+    transform = transforms.Compose(
+        [
+            transforms.ToTensor(),
+            transforms.Normalize((0.1307,), (0.3081,)),
+        ]
+    )
 
-    train_dataset = datasets.MNIST(root="./data", train=True, download=True, transform=transform)
-    test_dataset = datasets.MNIST(root="./data", train=False, download=True, transform=transform)
+    train_dataset = datasets.MNIST(
+        root="./data", train=True, download=True, transform=transform
+    )
+    test_dataset = datasets.MNIST(
+        root="./data", train=False, download=True, transform=transform
+    )
 
     if use_subset:
         subset_indices = list(range(min(subset_size, len(train_dataset))))
@@ -67,7 +76,13 @@ class MnistCNN(nn.Module):
         return self.fc2(x)
 
 
-def train_epoch(model: nn.Module, dataloader: DataLoader, criterion: nn.Module, optimizer: optim.Optimizer, device: torch.device) -> float:
+def train_epoch(
+    model: nn.Module,
+    dataloader: DataLoader,
+    criterion: nn.Module,
+    optimizer: optim.Optimizer,
+    device: torch.device,
+) -> float:
     """Train the model for one epoch.
 
     Returns:
@@ -89,7 +104,9 @@ def train_epoch(model: nn.Module, dataloader: DataLoader, criterion: nn.Module, 
     return running_loss / len(dataloader.dataset)
 
 
-def evaluate(model: nn.Module, dataloader: DataLoader, device: torch.device) -> Tuple[float, float]:
+def evaluate(
+    model: nn.Module, dataloader: DataLoader, device: torch.device
+) -> Tuple[float, float]:
     """Evaluate model accuracy and loss on a dataset.
 
     Returns:
@@ -119,8 +136,12 @@ def evaluate(model: nn.Module, dataloader: DataLoader, device: torch.device) -> 
 def parse_args() -> argparse.Namespace:
     """Parse command-line arguments."""
     parser = argparse.ArgumentParser(description="Train a CNN on MNIST")
-    parser.add_argument("--epochs", type=int, default=1, help="Number of training epochs")
-    parser.add_argument("--batch-size", type=int, default=64, help="Batch size for data loaders")
+    parser.add_argument(
+        "--epochs", type=int, default=1, help="Number of training epochs"
+    )
+    parser.add_argument(
+        "--batch-size", type=int, default=64, help="Batch size for data loaders"
+    )
     parser.add_argument(
         "--subset",
         action="store_true",
@@ -143,7 +164,9 @@ def main() -> None:
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    train_loader, test_loader = build_dataloaders(args.batch_size, args.subset, args.subset_size)
+    train_loader, test_loader = build_dataloaders(
+        args.batch_size, args.subset, args.subset_size
+    )
     model = MnistCNN().to(device)
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum)

@@ -104,7 +104,10 @@ class LinuxWindowProvider(ActiveWindowProvider):
 
     def _via_xprop(self) -> Optional[WindowInfo]:
         window_id_proc = subprocess.run(
-            ["xprop", "-root", "_NET_ACTIVE_WINDOW"], capture_output=True, text=True, check=False
+            ["xprop", "-root", "_NET_ACTIVE_WINDOW"],
+            capture_output=True,
+            text=True,
+            check=False,
         )
         if window_id_proc.returncode != 0:
             return None

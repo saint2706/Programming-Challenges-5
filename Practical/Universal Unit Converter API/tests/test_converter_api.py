@@ -3,7 +3,6 @@ from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
-
 from Practical.UniversalUnitConverter.app import create_app
 
 

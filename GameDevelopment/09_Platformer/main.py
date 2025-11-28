@@ -8,8 +8,10 @@ Controls:
     Space or Up arrow: Jump
     ESC: Quit game
 """
-import pygame
+
 import sys
+
+import pygame
 
 # Initialize Pygame
 pygame.init()
@@ -36,6 +38,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Platformer - Challenge 9")
 clock = pygame.time.Clock()
 
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
@@ -52,7 +55,7 @@ class Player(pygame.sprite.Sprite):
     def update(self, platforms):
         # Apply Gravity
         self.vel_y += GRAVITY
-        
+
         # Movement
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
@@ -101,6 +104,7 @@ class Player(pygame.sprite.Sprite):
         self.vel_y = 0
         self.vel_x = 0
 
+
 class Platform(pygame.sprite.Sprite):
     def __init__(self, x, y, w, h, color=GREEN):
         super().__init__()
@@ -109,6 +113,7 @@ class Platform(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+
 
 class Camera:
     def __init__(self, width, height):
@@ -124,12 +129,13 @@ class Camera:
         y = -target.rect.centery + int(SCREEN_HEIGHT / 2)
 
         # Limit scrolling to map size
-        x = min(0, x) # Left
-        y = min(0, y) # Top
-        x = max(-(self.width - SCREEN_WIDTH), x) # Right
-        y = max(-(self.height - SCREEN_HEIGHT), y) # Bottom
-        
+        x = min(0, x)  # Left
+        y = min(0, y)  # Top
+        x = max(-(self.width - SCREEN_WIDTH), x)  # Right
+        y = max(-(self.height - SCREEN_HEIGHT), y)  # Bottom
+
         self.camera = pygame.Rect(x, y, self.width, self.height)
+
 
 def main():
     # Level Setup
@@ -151,10 +157,10 @@ def main():
         (850, SCREEN_HEIGHT - 350, 150, 20),
         (1100, SCREEN_HEIGHT - 450, 150, 20),
         (1400, SCREEN_HEIGHT - 300, 200, 20),
-        (1700, SCREEN_HEIGHT - 200, 100, 20)
+        (1700, SCREEN_HEIGHT - 200, 100, 20),
     ]
 
-    for (x, y, w, h) in coords:
+    for x, y, w, h in coords:
         p = Platform(x, y, w, h)
         all_sprites.add(p)
         platforms.add(p)
@@ -190,7 +196,7 @@ def main():
         if player.rect.colliderect(goal.rect):
             font = pygame.font.Font(None, 74)
             text = font.render("YOU WIN!", True, WHITE)
-            rect = text.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
+            rect = text.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
             screen.blit(text, rect)
             pygame.display.update()
             pygame.time.delay(2000)
@@ -201,6 +207,7 @@ def main():
 
     pygame.quit()
     sys.exit()
+
 
 if __name__ == "__main__":
     main()

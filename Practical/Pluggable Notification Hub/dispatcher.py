@@ -20,5 +20,7 @@ class NotificationDispatcher:
             provider.send(message=message, recipient=recipient)
 
     @classmethod
-    def from_providers(cls, providers: Iterable[NotificationProvider]) -> "NotificationDispatcher":
+    def from_providers(
+        cls, providers: Iterable[NotificationProvider]
+    ) -> "NotificationDispatcher":
         return cls(list(providers))

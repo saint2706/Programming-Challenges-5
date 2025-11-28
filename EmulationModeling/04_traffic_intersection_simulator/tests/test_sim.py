@@ -1,5 +1,7 @@
 import unittest
+
 from simulation import run_simulation
+
 
 class TestTrafficSimulation(unittest.TestCase):
     def test_run_simulation(self):
@@ -16,5 +18,6 @@ class TestTrafficSimulation(unittest.TestCase):
         self.assertGreater(stats["crossed"], 0)
         self.assertTrue(stats["arrived"] >= stats["crossed"])
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

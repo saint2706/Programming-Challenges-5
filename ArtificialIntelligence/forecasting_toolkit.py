@@ -188,7 +188,9 @@ def load_sample_passenger_series() -> pd.Series:
     return pd.Series(passengers, index=dates, name="air_passengers")
 
 
-def forecast_arima(series: pd.Series, steps: int = 12, order: tuple[int, int, int] = (2, 1, 2)) -> ForecastResult:
+def forecast_arima(
+    series: pd.Series, steps: int = 12, order: tuple[int, int, int] = (2, 1, 2)
+) -> ForecastResult:
     """Fit a simple ARIMA model and forecast forward."""
 
     from statsmodels.tsa.arima.model import ARIMA
@@ -196,7 +198,9 @@ def forecast_arima(series: pd.Series, steps: int = 12, order: tuple[int, int, in
     model = ARIMA(series, order=order)
     fitted = model.fit()
     forecast = fitted.forecast(steps=steps)
-    forecast.index = pd.date_range(start=series.index[-1] + pd.offsets.MonthBegin(1), periods=steps, freq="MS")
+    forecast.index = pd.date_range(
+        start=series.index[-1] + pd.offsets.MonthBegin(1), periods=steps, freq="MS"
+    )
     return ForecastResult("ARIMA", forecast)
 
 
@@ -225,7 +229,13 @@ def forecast_prophet(series: pd.Series, steps: int = 12) -> ForecastResult:
 class LSTMForecaster:
     """A minimal LSTM forecaster implemented with PyTorch."""
 
-    def __init__(self, lookback: int = 12, hidden_size: int = 32, lr: float = 1e-2, epochs: int = 250):
+    def __init__(
+        self,
+        lookback: int = 12,
+        hidden_size: int = 32,
+        lr: float = 1e-2,
+        epochs: int = 250,
+    ):
         self.lookback = lookback
         self.hidden_size = hidden_size
         self.lr = lr
@@ -235,7 +245,6 @@ class LSTMForecaster:
         self.std: float = 1.0
 
     def _build_model(self):
-        import torch
         from torch import nn
 
         class _Net(nn.Module):
@@ -268,7 +277,9 @@ class LSTMForecaster:
 
         x_tensor = torch.tensor(np.array(sequences)).unsqueeze(-1)
         y_tensor = torch.tensor(np.array(labels)).unsqueeze(-1)
-        loader = DataLoader(TensorDataset(x_tensor, y_tensor), batch_size=16, shuffle=True)
+        loader = DataLoader(
+            TensorDataset(x_tensor, y_tensor), batch_size=16, shuffle=True
+        )
 
         self.model = self._build_model()
         criterion = nn.MSELoss()
@@ -291,7 +302,11 @@ class LSTMForecaster:
         history = (last_values - self.mean) / (self.std + 1e-8)
         preds: List[float] = []
         for _ in range(steps):
-            input_seq = torch.tensor(history[-self.lookback :]).float().view(1, self.lookback, 1)
+            input_seq = (
+                torch.tensor(history[-self.lookback :])
+                .float()
+                .view(1, self.lookback, 1)
+            )
             with torch.no_grad():
                 pred_norm = self.model(input_seq).item()
             preds.append(pred_norm * (self.std + 1e-8) + self.mean)
@@ -299,14 +314,18 @@ class LSTMForecaster:
         return np.array(preds)
 
 
-def forecast_lstm(series: pd.Series, steps: int = 12, lookback: int = 12) -> ForecastResult:
+def forecast_lstm(
+    series: pd.Series, steps: int = 12, lookback: int = 12
+) -> ForecastResult:
     """Fit the LSTM forecaster and project forward."""
 
     _import_first_available(["torch"])  # Ensure PyTorch is available.
     forecaster = LSTMForecaster(lookback=lookback)
     forecaster.fit(series)
     preds = forecaster.predict(series.values.astype(np.float32), steps)
-    forecast_index = pd.date_range(start=series.index[-1] + pd.offsets.MonthBegin(1), periods=steps, freq="MS")
+    forecast_index = pd.date_range(
+        start=series.index[-1] + pd.offsets.MonthBegin(1), periods=steps, freq="MS"
+    )
     return ForecastResult("LSTM", pd.Series(preds, index=forecast_index))
 
 
@@ -329,8 +348,16 @@ def run_demo(forecast_horizon: int = 12) -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Demo time-series forecasting toolkit.")
-    parser.add_argument("-n", "--steps", type=int, default=12, help="Number of future periods to forecast.")
+    parser = argparse.ArgumentParser(
+        description="Demo time-series forecasting toolkit."
+    )
+    parser.add_argument(
+        "-n",
+        "--steps",
+        type=int,
+        default=12,
+        help="Number of future periods to forecast.",
+    )
     return parser.parse_args()
 
 

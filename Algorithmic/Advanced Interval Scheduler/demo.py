@@ -4,7 +4,7 @@ import random
 import time
 from typing import List, Tuple
 
-from main import AdvancedIntervalScheduler, Interval
+from main import AdvancedIntervalScheduler
 
 
 def test_advanced_scheduler() -> None:
@@ -86,7 +86,7 @@ def performance_test() -> None:
     max_weight, schedule = scheduler.find_optimal_schedule()
     end_time = time.time()
 
-    print(f"Performance Test (1000 intervals):")
+    print("Performance Test (1000 intervals):")
     print(f"  Maximum Weight: {max_weight}")
     print(f"  Number of Selected Intervals: {len(schedule)}")
     print(f"  Execution Time: {end_time - start_time:.4f} seconds")

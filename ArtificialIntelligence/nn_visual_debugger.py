@@ -87,7 +87,9 @@ def prepare_dataloader(config: TrainingConfig) -> DataLoader:
     return DataLoader(dataset, batch_size=config.batch_size, shuffle=True)
 
 
-def register_activation_hooks(model: nn.Module) -> Tuple[Dict[str, Tensor], List[torch.utils.hooks.RemovableHandle]]:
+def register_activation_hooks(
+    model: nn.Module,
+) -> Tuple[Dict[str, Tensor], List[torch.utils.hooks.RemovableHandle]]:
     """Attach hooks to store first batch activations for each target layer.
 
     Args:
@@ -250,7 +252,9 @@ def train_model(config: TrainingConfig) -> SessionResult:
     dataloader = prepare_dataloader(config)
     model = SmallCNN().to(device)
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.SGD(model.parameters(), lr=config.learning_rate, momentum=config.momentum)
+    optimizer = optim.SGD(
+        model.parameters(), lr=config.learning_rate, momentum=config.momentum
+    )
     writer = SummaryWriter(log_dir=str(config.log_dir))
     activation_store, handles = register_activation_hooks(model)
     heatmap_dir = config.log_dir / "heatmaps"
@@ -298,25 +302,50 @@ def train_model(config: TrainingConfig) -> SessionResult:
 
     event_files = list(config.log_dir.glob("events.*"))
 
-    return SessionResult(log_dir=config.log_dir, heatmap_paths=generated_paths, event_files=event_files)
+    return SessionResult(
+        log_dir=config.log_dir, heatmap_paths=generated_paths, event_files=event_files
+    )
 
 
 def parse_args() -> TrainingConfig:
     """Parse CLI arguments into a TrainingConfig."""
 
-    parser = argparse.ArgumentParser(description="Train a small CNN and log debug visuals.")
-    parser.add_argument("--batch-size", type=int, default=64, help="Training batch size")
-    parser.add_argument("--epochs", type=int, default=3, help="Number of epochs to train")
-    parser.add_argument("--learning-rate", type=float, default=0.01, help="Optimizer learning rate")
+    parser = argparse.ArgumentParser(
+        description="Train a small CNN and log debug visuals."
+    )
+    parser.add_argument(
+        "--batch-size", type=int, default=64, help="Training batch size"
+    )
+    parser.add_argument(
+        "--epochs", type=int, default=3, help="Number of epochs to train"
+    )
+    parser.add_argument(
+        "--learning-rate", type=float, default=0.01, help="Optimizer learning rate"
+    )
     parser.add_argument("--momentum", type=float, default=0.9, help="SGD momentum")
-    parser.add_argument("--log-dir", type=Path, default=Path("runs/nn_visual_debugger"), help="Directory for TensorBoard logs and heatmaps")
-    parser.add_argument("--data-dir", type=Path, default=Path("data"), help="Directory for MNIST data downloads")
+    parser.add_argument(
+        "--log-dir",
+        type=Path,
+        default=Path("runs/nn_visual_debugger"),
+        help="Directory for TensorBoard logs and heatmaps",
+    )
+    parser.add_argument(
+        "--data-dir",
+        type=Path,
+        default=Path("data"),
+        help="Directory for MNIST data downloads",
+    )
     parser.add_argument(
         "--use-fake-data",
         action="store_true",
         help="Use synthetic data instead of downloading MNIST (helps in offline environments)",
     )
-    parser.add_argument("--dataset-size", type=int, default=None, help="Limit dataset size (only for fake data)")
+    parser.add_argument(
+        "--dataset-size",
+        type=int,
+        default=None,
+        help="Limit dataset size (only for fake data)",
+    )
     args = parser.parse_args()
 
     return TrainingConfig(

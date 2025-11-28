@@ -1,4 +1,5 @@
 """SQLite persistence helpers for the self-hosted link shortener."""
+
 from __future__ import annotations
 
 import os
@@ -6,7 +7,7 @@ import sqlite3
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, Iterator, List, Optional, Any
+from typing import Any, Dict, Iterator, List, Optional
 
 _DB_FILENAME = "shortener.db"
 

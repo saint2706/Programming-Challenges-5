@@ -19,7 +19,9 @@ from PIL import Image
 SUPPORTED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
 
 
-def compress_image(image_path: Path, output_path: Path, quality: int, optimize: bool) -> Path:
+def compress_image(
+    image_path: Path, output_path: Path, quality: int, optimize: bool
+) -> Path:
     """Compress a single image and save it to ``output_path``.
 
     Args:
@@ -92,7 +94,9 @@ def compress_directory(
             yield batch
 
     supported_files = sorted(
-        p for p in input_dir.iterdir() if p.is_file() and p.suffix.lower() in normalized_exts
+        p
+        for p in input_dir.iterdir()
+        if p.is_file() and p.suffix.lower() in normalized_exts
     )
 
     if not supported_files:
@@ -105,7 +109,11 @@ def compress_directory(
         for batch in _iter_batches(supported_files, batch_size):
             futures = {
                 executor.submit(
-                    compress_image, image_path, output_dir / image_path.name, quality, optimize
+                    compress_image,
+                    image_path,
+                    output_dir / image_path.name,
+                    quality,
+                    optimize,
                 ): image_path
                 for image_path in batch
             }
@@ -120,7 +128,9 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Compress images with Pillow using JPEG quality and optimization options.",
     )
-    parser.add_argument("input_path", type=Path, help="Image file or directory to compress.")
+    parser.add_argument(
+        "input_path", type=Path, help="Image file or directory to compress."
+    )
     parser.add_argument(
         "-o",
         "--output",
@@ -167,9 +177,13 @@ def main() -> None:
         raise SystemExit(f"Input path does not exist: {args.input_path}")
 
     if args.input_path.is_file():
-        default_output = args.input_path.with_name(f"{args.input_path.stem}_compressed{args.input_path.suffix}")
+        default_output = args.input_path.with_name(
+            f"{args.input_path.stem}_compressed{args.input_path.suffix}"
+        )
         output_path = args.output or default_output
-        compressed_path = compress_image(args.input_path, output_path, args.quality, args.optimize)
+        compressed_path = compress_image(
+            args.input_path, output_path, args.quality, args.optimize
+        )
         print(f"Compressed file written to: {compressed_path}")
         return
 

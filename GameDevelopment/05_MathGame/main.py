@@ -10,9 +10,11 @@ Controls:
     Backspace: Delete last digit
     ESC: Quit game
 """
-import pygame
-import sys
+
 import random
+import sys
+
+import pygame
 
 # Initialize Pygame
 pygame.init()
@@ -37,6 +39,7 @@ font_large = pygame.font.Font(None, 100)
 font_medium = pygame.font.Font(None, 60)
 font_small = pygame.font.Font(None, 36)
 
+
 class MathGame:
     def __init__(self):
         self.score = 0
@@ -49,27 +52,28 @@ class MathGame:
         self.generate_question()
 
     def generate_question(self):
-        ops = ['+', '-']
+        ops = ["+", "-"]
         if self.difficulty > 2:
-            ops.append('*')
-        
+            ops.append("*")
+
         op = random.choice(ops)
         limit = 10 * self.difficulty
-        
+
         a = random.randint(1, limit)
         b = random.randint(1, limit)
-        
-        if op == '-':
-            if a < b: a, b = b, a # Ensure positive result
-        
+
+        if op == "-":
+            if a < b:
+                a, b = b, a  # Ensure positive result
+
         self.question = f"{a} {op} {b} = ?"
-        if op == '+':
+        if op == "+":
             self.answer = a + b
-        elif op == '-':
+        elif op == "-":
             self.answer = a - b
-        elif op == '*':
+        elif op == "*":
             self.answer = a * b
-        
+
         self.user_input = ""
 
     def check_answer(self):
@@ -91,33 +95,40 @@ class MathGame:
 
     def draw(self, surface):
         surface.fill(BLACK)
-        
+
         # Question
         q_text = font_large.render(self.question, True, WHITE)
-        q_rect = q_text.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/3))
+        q_rect = q_text.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3))
         surface.blit(q_text, q_rect)
-        
+
         # Input
         input_text = font_large.render(self.user_input + "_", True, BLUE)
-        input_rect = input_text.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
+        input_rect = input_text.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
         surface.blit(input_text, input_rect)
-        
+
         # Feedback
         if self.feedback:
             fb_text = font_medium.render(self.feedback, True, self.feedback_color)
-            fb_rect = fb_text.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 100))
+            fb_rect = fb_text.get_rect(
+                center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 100)
+            )
             surface.blit(fb_text, fb_rect)
-            
+
         # UI
-        score_text = font_small.render(f"Score: {self.score}  Level: {self.difficulty}", True, WHITE)
+        score_text = font_small.render(
+            f"Score: {self.score}  Level: {self.difficulty}", True, WHITE
+        )
         surface.blit(score_text, (20, 20))
-        
-        help_text = font_small.render("Type answer and press ENTER", True, (150, 150, 150))
+
+        help_text = font_small.render(
+            "Type answer and press ENTER", True, (150, 150, 150)
+        )
         surface.blit(help_text, (20, SCREEN_HEIGHT - 40))
+
 
 def main():
     game = MathGame()
-    
+
     running = True
     while running:
         for event in pygame.event.get():
@@ -130,7 +141,9 @@ def main():
                     game.user_input = game.user_input[:-1]
                 elif event.key == pygame.K_ESCAPE:
                     running = False
-                elif event.unicode.isdigit() or (event.unicode == '-' and len(game.user_input) == 0):
+                elif event.unicode.isdigit() or (
+                    event.unicode == "-" and len(game.user_input) == 0
+                ):
                     game.user_input += event.unicode
 
         game.draw(screen)
@@ -139,6 +152,7 @@ def main():
 
     pygame.quit()
     sys.exit()
+
 
 if __name__ == "__main__":
     main()

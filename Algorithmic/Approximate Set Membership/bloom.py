@@ -9,12 +9,11 @@ import math
 import random
 import string
 from collections import defaultdict
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 import matplotlib.pyplot as plt
 import mmh3
 import numpy as np
-import seaborn as sns
 
 
 class BloomFilter:
@@ -54,11 +53,9 @@ class BloomFilter:
         self.element_count = 0
 
         # Generate unique seeds for hash functions to ensure independence
-        self.hash_seeds = [
-            random.randint(0, 2**32 - 1) for _ in range(self.hash_count)
-        ]
+        self.hash_seeds = [random.randint(0, 2**32 - 1) for _ in range(self.hash_count)]
 
-        print(f"Bloom Filter initialized:")
+        print("Bloom Filter initialized:")
         print(f"  Capacity: {capacity} elements")
         print(f"  Bit array size: {self.size} bits")
         print(f"  Hash functions: {self.hash_count}")
@@ -280,12 +277,8 @@ class BloomFilterVisualizer:
 
         for i, capacity in enumerate(sorted(capacities)):
             mask = [c == capacity for c in results["capacity"]]
-            target_fpr = [
-                results["target_fpr"][j] for j, m in enumerate(mask) if m
-            ]
-            actual_fpr = [
-                results["actual_fpr"][j] for j, m in enumerate(mask) if m
-            ]
+            target_fpr = [results["target_fpr"][j] for j, m in enumerate(mask) if m]
+            actual_fpr = [results["actual_fpr"][j] for j, m in enumerate(mask) if m]
 
             ax1.plot(
                 target_fpr,
@@ -370,9 +363,7 @@ class BloomFilterVisualizer:
         bit_segment = bloom_filter.bit_array[:bits_to_show]
 
         plt.figure(figsize=(15, 2))
-        plt.imshow(
-            [bit_segment], cmap="RdYlGn", aspect="auto", interpolation="nearest"
-        )
+        plt.imshow([bit_segment], cmap="RdYlGn", aspect="auto", interpolation="nearest")
         plt.colorbar(label="Bit Value (0/1)")
         plt.title(
             f"Bloom Filter Bit Array (First {bits_to_show} bits) - "
@@ -459,15 +450,13 @@ class AdvancedBloomFilterTests:
         # Analyze distribution
         positions_used = len(position_distribution)
         if len(position_distribution) > 0:
-            avg_hits = sum(position_distribution.values()) / len(
-                position_distribution
-            )
+            avg_hits = sum(position_distribution.values()) / len(position_distribution)
             max_hits = max(position_distribution.values())
         else:
             avg_hits = 0
             max_hits = 0
 
-        print(f"Hash Function Distribution Analysis:")
+        print("Hash Function Distribution Analysis:")
         print(f"  Total bit positions: {bf.size}")
         print(
             f"  Positions actually used: {positions_used} ({positions_used/bf.size*100:.1f}%)"
@@ -503,11 +492,7 @@ def demonstration() -> None:
         result = bf.contains(item)
         status = "Probably Present" if result else "Definitely Not Present"
         certainty = (
-            "✓"
-            if item in items_to_add
-            else "✗ (False Positive)"
-            if result
-            else "✓"
+            "✓" if item in items_to_add else "✗ (False Positive)" if result else "✓"
         )
         print(f"  {item:12} -> {status:20} {certainty}")
 
@@ -533,9 +518,7 @@ def demonstration() -> None:
 
             # Create and test Bloom Filter
             bf_test = BloomFilter(capacity, target_fpr)
-            actual_fpr = analyzer.test_false_positive_rate(
-                bf_test, inserted, test_set
-            )
+            actual_fpr = analyzer.test_false_positive_rate(bf_test, inserted, test_set)
 
             print(
                 f"Capacity: {capacity:5d} | Target FPR: {target_fpr:5.3f} | "

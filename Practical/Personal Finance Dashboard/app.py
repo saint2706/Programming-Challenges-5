@@ -8,12 +8,12 @@ breakdowns, and summary metrics.
 Run with:
     streamlit run app.py
 """
+
 import io
 
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-
 
 st.set_page_config(page_title="Personal Finance Dashboard", layout="wide")
 
@@ -117,7 +117,9 @@ def add_sidebar_filters(df: pd.DataFrame) -> pd.DataFrame:
     )
 
     filtered = df.copy()
-    filtered = filtered[(filtered["date"] >= start_date) & (filtered["date"] <= end_date)]
+    filtered = filtered[
+        (filtered["date"] >= start_date) & (filtered["date"] <= end_date)
+    ]
     if selected_categories:
         filtered = filtered[filtered["category"].isin(selected_categories)]
 

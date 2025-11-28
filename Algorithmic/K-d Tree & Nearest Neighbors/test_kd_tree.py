@@ -75,7 +75,7 @@ def test_k_nearest_neighbors_matches_brute_force() -> None:
 
     assert len(kd_dists) == len(brute_dists)
     for d1, d2 in zip(kd_dists, brute_dists):
-         assert math.isclose(d1, d2, rel_tol=1e-9)
+        assert math.isclose(d1, d2, rel_tol=1e-9)
 
     print("✓ k-NN OK")
 

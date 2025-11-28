@@ -10,10 +10,8 @@ from __future__ import annotations
 import math
 import random
 from pathlib import Path
-from typing import Callable
 
 import matplotlib.pyplot as plt
-
 from ga_framework import GAConfig, GeneticAlgorithm
 
 random.seed(42)
@@ -45,7 +43,9 @@ def run_demo(generations: int = 60) -> list[dict[str, float]]:
     history = ga.run(generations)
 
     for idx, metrics in enumerate(history, start=1):
-        print(f"Generation {idx:02d}: best={metrics['best_fitness']:.5f} avg={metrics['avg_fitness']:.5f}")
+        print(
+            f"Generation {idx:02d}: best={metrics['best_fitness']:.5f} avg={metrics['avg_fitness']:.5f}"
+        )
     return history
 
 

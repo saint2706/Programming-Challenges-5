@@ -5,6 +5,7 @@ and A* search using Manhattan distance on a simple grid. The test harness
 constructs an example grid with obstacles, runs each algorithm from a start
 position to a goal, and prints the resulting paths and annotated grids.
 """
+
 from __future__ import annotations
 
 from collections import deque
@@ -41,7 +42,9 @@ def neighbors(grid: Grid, node: Coordinate) -> Iterable[Coordinate]:
             yield nr, nc
 
 
-def reconstruct_path(parents: Dict[Coordinate, Coordinate], goal: Coordinate) -> List[Coordinate]:
+def reconstruct_path(
+    parents: Dict[Coordinate, Coordinate], goal: Coordinate
+) -> List[Coordinate]:
     """Reconstruct a path from start to goal using the parent map."""
 
     path: List[Coordinate] = [goal]
@@ -96,7 +99,12 @@ def dfs(grid: Grid, start: Coordinate, goal: Coordinate) -> SearchResult:
     return SearchResult(None, visited)
 
 
-def a_star(grid: Grid, start: Coordinate, goal: Coordinate, heuristic: Callable[[Coordinate, Coordinate], int] = manhattan) -> SearchResult:
+def a_star(
+    grid: Grid,
+    start: Coordinate,
+    goal: Coordinate,
+    heuristic: Callable[[Coordinate, Coordinate], int] = manhattan,
+) -> SearchResult:
     """Perform A* search from start to goal using the provided heuristic."""
 
     open_set: List[Tuple[int, Coordinate]] = []
@@ -126,7 +134,12 @@ def a_star(grid: Grid, start: Coordinate, goal: Coordinate, heuristic: Callable[
     return SearchResult(None, visited)
 
 
-def format_grid_with_path(grid: Grid, path: Optional[Sequence[Coordinate]], start: Coordinate, goal: Coordinate) -> str:
+def format_grid_with_path(
+    grid: Grid,
+    path: Optional[Sequence[Coordinate]],
+    start: Coordinate,
+    goal: Coordinate,
+) -> str:
     """Return a string visualizing the grid with the path overlaid."""
 
     visual = []

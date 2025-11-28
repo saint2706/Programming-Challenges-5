@@ -1,7 +1,10 @@
 from decimal import Decimal
 
 from Practical.SmartExpenseSplitter.models import Expense, Participant
-from Practical.SmartExpenseSplitter.settlement import build_balance_sheet, optimize_settlements
+from Practical.SmartExpenseSplitter.settlement import (
+    build_balance_sheet,
+    optimize_settlements,
+)
 
 
 def sample_expenses():
@@ -25,6 +28,8 @@ def test_build_balance_sheet():
 def test_optimize_settlements_minimizes_transactions():
     plan = optimize_settlements(sample_expenses())
     assert plan.total_transactions() == 2
-    payouts = {(entry.payer.name, entry.receiver.name): entry.amount for entry in plan.entries}
+    payouts = {
+        (entry.payer.name, entry.receiver.name): entry.amount for entry in plan.entries
+    }
     assert payouts[("Bob", "Alice")] == Decimal("45.00")
     assert payouts[("Carla", "Alice")] == Decimal("15.00")

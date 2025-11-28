@@ -1,8 +1,10 @@
-import unittest
 import os
 import shutil
 import tempfile
+import unittest
+
 from Practical.DotfilesManager.__main__ import install_dotfiles
+
 
 class TestDotfilesManager(unittest.TestCase):
     def setUp(self):
@@ -25,7 +27,9 @@ class TestDotfilesManager(unittest.TestCase):
 
         target_path = os.path.join(self.home_dir, ".vimrc")
         self.assertTrue(os.path.islink(target_path))
-        self.assertEqual(os.readlink(target_path), os.path.join(self.source_dir, "vimrc"))
+        self.assertEqual(
+            os.readlink(target_path), os.path.join(self.source_dir, "vimrc")
+        )
 
     def test_backup_existing(self):
         # Create existing file in home
@@ -47,6 +51,7 @@ class TestDotfilesManager(unittest.TestCase):
         install_dotfiles(self.source_dir, self.home_dir, dry_run=True)
         target_path = os.path.join(self.home_dir, ".vimrc")
         self.assertFalse(os.path.exists(target_path))
+
 
 if __name__ == "__main__":
     unittest.main()

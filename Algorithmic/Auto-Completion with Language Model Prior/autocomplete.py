@@ -1,14 +1,19 @@
-from typing import Dict, List, Tuple, Optional
 import collections
 import heapq
+from typing import Dict, List, Optional
+
 
 class TrieNode:
     """A node in the Trie."""
+
     def __init__(self):
         self.children: Dict[str, TrieNode] = {}
         self.is_end_of_word: bool = False
         self.frequency: int = 0
-        self.word: Optional[str] = None  # Store the full word at the leaf for convenience
+        self.word: Optional[str] = (
+            None  # Store the full word at the leaf for convenience
+        )
+
 
 class AutocompleteEngine:
     """
@@ -89,7 +94,9 @@ class AutocompleteEngine:
         """
         if self.n == 1 or not context:
             # Fallback to unigram probability
-            return self.unigram_counts[word] / (self.total_words + 1) # +1 for smoothing
+            return self.unigram_counts[word] / (
+                self.total_words + 1
+            )  # +1 for smoothing
 
         # Try to use the largest context possible up to n-1
         context_len = min(len(context), self.n - 1)
@@ -116,9 +123,9 @@ class AutocompleteEngine:
 
         ngram_count = self.ngram_counts.get(ngram, 0)
         if ngram_count > 0:
-            return ngram_count * 100 # Boost significantly if it follows the context
+            return ngram_count * 100  # Boost significantly if it follows the context
 
-        return self.unigram_counts[word] # Default to unigram freq
+        return self.unigram_counts[word]  # Default to unigram freq
 
     def complete(self, text: str, max_results: int = 5) -> List[str]:
         """
@@ -154,7 +161,7 @@ class AutocompleteEngine:
                 # If prob is high (meaning it was found in ngrams), it dominates
                 score += prob
 
-            scored_candidates.append((-score, cand)) # Max heap via negative score
+            scored_candidates.append((-score, cand))  # Max heap via negative score
 
         heapq.heapify(scored_candidates)
 

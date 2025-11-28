@@ -14,7 +14,9 @@
         <h1>Offline-first To-Do</h1>
         <p>Works even when you're disconnected.</p>
       </div>
-      <div class="status" id="connection-status" aria-live="polite">Checking connection...</div>
+      <div class="status" id="connection-status" aria-live="polite">
+        Checking connection...
+      </div>
     </header>
 
     <main>
@@ -31,7 +33,9 @@
           />
           <button type="submit">Add</button>
         </form>
-        <div class="helper">Offline? We'll queue changes and sync when you're back online.</div>
+        <div class="helper">
+          Offline? We'll queue changes and sync when you're back online.
+        </div>
       </section>
 
       <section class="card">
@@ -40,18 +44,26 @@
           <div class="badge" id="queue-indicator" hidden>Pending sync</div>
         </div>
         <ul id="task-list" class="task-list" aria-live="polite"></ul>
-        <div class="empty" id="empty-state" hidden>Start by adding your first task.</div>
+        <div class="empty" id="empty-state" hidden>
+          Start by adding your first task.
+        </div>
       </section>
 
       <section class="card" id="conflict-panel" hidden>
         <h2>Conflicts resolved</h2>
-        <p>We kept the latest change when the same task was updated in multiple places.</p>
+        <p>
+          We kept the latest change when the same task was updated in multiple
+          places.
+        </p>
         <ul id="conflict-log"></ul>
       </section>
     </main>
 
     <footer>
-      <small>Built as an offline-first PWA demo with IndexedDB + Background Sync.</small>
+      <small
+        >Built as an offline-first PWA demo with IndexedDB + Background
+        Sync.</small
+      >
     </footer>
 
     <script type="module" src="app.js"></script>

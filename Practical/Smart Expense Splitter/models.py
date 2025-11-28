@@ -6,8 +6,8 @@ Defines the core entities like Participant, Expense, and the DebtGraph.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from decimal import Decimal, ROUND_HALF_UP
-from typing import Iterable, List, Dict, Any
+from decimal import ROUND_HALF_UP, Decimal
+from typing import Dict, Iterable, List
 
 MONEY_CONTEXT = Decimal("0.01")
 

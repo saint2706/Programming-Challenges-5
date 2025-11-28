@@ -9,7 +9,8 @@ import {
 
 describe('table creation and steps', () => {
   it('initializes base cells and computes recurrence-driven updates', () => {
-    const initializer = (i, j, _table, _ctx, base) => (i === 0 || j === 0 ? base : null);
+    const initializer = (i, j, _table, _ctx, base) =>
+      i === 0 || j === 0 ? base : null;
     const recurrence = 'dp[i-1][j] + dp[i][j-1] + 1';
     const { steps } = buildSteps(3, 3, recurrence, (i, j, table, ctx) =>
       initializer(i, j, table, ctx, 0)
@@ -30,7 +31,13 @@ describe('history building and snapshot exporting', () => {
     const table = createEmptyTable(2, 2);
     const steps = [
       { row: 0, col: 0, value: 0, dependencies: [], type: 'init' },
-      { row: 0, col: 1, value: 1, dependencies: [{ row: 0, col: 0 }], type: 'update' },
+      {
+        row: 0,
+        col: 1,
+        value: 1,
+        dependencies: [{ row: 0, col: 0 }],
+        type: 'update',
+      },
     ];
 
     const history = buildHistoryFromSteps(2, 2, steps);

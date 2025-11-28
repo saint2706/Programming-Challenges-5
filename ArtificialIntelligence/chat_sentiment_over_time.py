@@ -1,4 +1,5 @@
 """Visualize chat sentiment over time using VADER or Hugging Face models."""
+
 from __future__ import annotations
 
 import argparse
@@ -112,7 +113,9 @@ def load_chat_log(path: Path) -> pd.DataFrame:
     return df
 
 
-def aggregate_sentiment(results: Iterable[SentimentResult]) -> List[AggregatedSentiment]:
+def aggregate_sentiment(
+    results: Iterable[SentimentResult],
+) -> List[AggregatedSentiment]:
     df = pd.DataFrame([r.__dict__ for r in results])
     df["date"] = df["timestamp"].dt.date
     grouped = (
@@ -133,7 +136,9 @@ def aggregate_sentiment(results: Iterable[SentimentResult]) -> List[AggregatedSe
     return aggregated
 
 
-def plot_sentiment(aggregated: List[AggregatedSentiment], output_path: Path, show: bool) -> None:
+def plot_sentiment(
+    aggregated: List[AggregatedSentiment], output_path: Path, show: bool
+) -> None:
     if not aggregated:
         raise ValueError("No sentiment scores to plot.")
 

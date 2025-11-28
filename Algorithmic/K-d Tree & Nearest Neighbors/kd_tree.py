@@ -4,12 +4,13 @@ This module provides a K-Dimensional Tree (k-d tree) for organizing points in a
 k-dimensional space. It supports efficient Nearest Neighbor and k-Nearest Neighbor
 searches using median splitting and priority-queue backtracking.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
 from heapq import heappop, heappush
 from math import hypot
-from typing import Callable, Iterable, List, Optional, Sequence, Tuple, Union
+from typing import Callable, Iterable, List, Optional, Sequence, Tuple
 
 # Type aliases
 Point = Sequence[float]
@@ -126,9 +127,7 @@ def _squared_distance(a: Point, b: Point) -> float:
     return sum((x - y) ** 2 for x, y in zip(a, b))
 
 
-def _bounds_distance(
-    point: Point, bounds_min: Point, bounds_max: Point
-) -> float:
+def _bounds_distance(point: Point, bounds_min: Point, bounds_max: Point) -> float:
     """Calculate minimum squared distance from a point to a hyper-rectangle.
 
     Returns 0 if the point is inside the bounding box.
@@ -179,14 +178,10 @@ def nearest_neighbor(
 
         # Push children to heap with their lower bound distance
         if left is not None:
-            bound_dist = _bounds_distance(
-                query, left.bounds_min, left.bounds_max
-            )
+            bound_dist = _bounds_distance(query, left.bounds_min, left.bounds_max)
             heappush(heap, (bound_dist, left))
         if right is not None:
-            bound_dist = _bounds_distance(
-                query, right.bounds_min, right.bounds_max
-            )
+            bound_dist = _bounds_distance(query, right.bounds_min, right.bounds_max)
             heappush(heap, (bound_dist, right))
 
     visit(root)
@@ -281,7 +276,7 @@ def brute_force_nearest(
     if not points_list:
         return None
 
-    best_point = points_list[0] # Default
+    best_point = points_list[0]  # Default
     best_dist_sq = float("inf")
 
     # Iterate all to find min

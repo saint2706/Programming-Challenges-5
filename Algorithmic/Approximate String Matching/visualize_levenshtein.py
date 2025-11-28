@@ -5,9 +5,9 @@ Levenshtein distance between two strings ("kitten" and "sitting").
 It visualizes the DP table construction and the traceback path.
 """
 
-import sys
 import os
-from typing import List, Dict, Any, Optional
+import sys
+from typing import Any, Dict, List
 
 from manim import *  # type: ignore
 
@@ -49,17 +49,13 @@ class LevenshteinDemo(Scene):
         # Headers (Target string on top)
         for j, char in enumerate(" " + s2):
             label = Text(char, font_size=24)
-            label.move_to(
-                start_pos + RIGHT * (j + 1) * cell_size + UP * cell_size
-            )
+            label.move_to(start_pos + RIGHT * (j + 1) * cell_size + UP * cell_size)
             self.add(label)
 
         # Headers (Source string on left)
         for i, char in enumerate(" " + s1):
             label = Text(char, font_size=24)
-            label.move_to(
-                start_pos + DOWN * (i + 1) * cell_size + LEFT * cell_size
-            )
+            label.move_to(start_pos + DOWN * (i + 1) * cell_size + LEFT * cell_size)
             self.add(label)
 
         # Initialize grid cells
@@ -67,9 +63,7 @@ class LevenshteinDemo(Scene):
             for j in range(cols):
                 square = Square(side_length=cell_size).set_stroke(color=WHITE)
                 square.move_to(
-                    start_pos
-                    + RIGHT * (j + 1) * cell_size
-                    + DOWN * (i + 1) * cell_size
+                    start_pos + RIGHT * (j + 1) * cell_size + DOWN * (i + 1) * cell_size
                 )
                 grid.add(square)
                 cells[i][j]["square"] = square
@@ -98,9 +92,7 @@ class LevenshteinDemo(Scene):
                     if s1[i - 1] == s2[j - 1]:
                         val = dp[i - 1][j - 1]
                     else:
-                        val = 1 + min(
-                            dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]
-                        )
+                        val = 1 + min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])
 
                 dp[i][j] = val
 
@@ -127,12 +119,10 @@ class LevenshteinDemo(Scene):
 
         # We don't strictly need a VGroup for path elements if we animate sequentially,
         # but tracking them is good practice.
-        
+
         while i > 0 or j > 0:
             rect = cells[i][j]["square"]
-            self.play(
-                rect.animate.set_stroke(color=RED, width=4), run_time=0.2
-            )
+            self.play(rect.animate.set_stroke(color=RED, width=4), run_time=0.2)
 
             if i > 0 and j > 0 and s1[i - 1] == s2[j - 1]:
                 # Match

@@ -1,8 +1,10 @@
-import unittest
-import shutil
 import os
+import shutil
 import time
+import unittest
+
 from lsm_store import LSMStore
+
 
 class TestLSMStore(unittest.TestCase):
     def setUp(self):
@@ -38,7 +40,7 @@ class TestLSMStore(unittest.TestCase):
     def test_update(self):
         self.store.put("key1", "val1")
         self.store.flush()
-        self.store.put("key1", "val2") # Update in memtable (or new sst)
+        self.store.put("key1", "val2")  # Update in memtable (or new sst)
 
         self.assertEqual(self.store.get("key1"), "val2")
 
@@ -52,8 +54,8 @@ class TestLSMStore(unittest.TestCase):
     def test_compaction(self):
         self.store.put("key1", "val1")
         self.store.flush()
-        time.sleep(0.01) # Ensure timestamp diff
-        self.store.put("key1", "val2") # Overwrite
+        time.sleep(0.01)  # Ensure timestamp diff
+        self.store.put("key1", "val2")  # Overwrite
         self.store.flush()
 
         # We have 2 sst files.
@@ -65,5 +67,6 @@ class TestLSMStore(unittest.TestCase):
 
         self.assertEqual(self.store.get("key1"), "val2")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

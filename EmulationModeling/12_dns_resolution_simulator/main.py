@@ -1,4 +1,5 @@
 """Run a simple DNS resolution simulation with caching."""
+
 from dns_simulator import (
     AuthoritativeDNSServer,
     DNSResolver,

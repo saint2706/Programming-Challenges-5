@@ -1,14 +1,12 @@
 import unittest
+
 from autocomplete import AutocompleteEngine
+
 
 class TestAutocomplete(unittest.TestCase):
     def setUp(self):
         self.engine = AutocompleteEngine(n=2)
-        corpus = [
-            "hello world",
-            "hello there",
-            "the quick brown fox"
-        ]
+        corpus = ["hello world", "hello there", "the quick brown fox"]
         self.engine.train(corpus)
 
     def test_basic_completion(self):
@@ -40,5 +38,6 @@ class TestAutocomplete(unittest.TestCase):
     def test_unknown_prefix(self):
         self.assertEqual(self.engine.complete("xyz"), [])
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

@@ -5,6 +5,7 @@ building blocks including linear layers, activation functions, and loss
 functions. Designed for educational purposes to understand backpropagation
 and gradient descent.
 """
+
 import numpy as np
 
 
@@ -46,6 +47,7 @@ class Linear:
         self.bias -= learning_rate * self.db
 
         return grad_input
+
 
 class ReLU:
     """Rectified Linear Unit activation function."""
