@@ -38,8 +38,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Check environment
+        id: check-env
+        run: |
+          if [ "$ACT" = "true" ]; then
+            echo "is_act=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_act=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Set up Python
-        if: ${{ !env.ACT }}
+        if: ${{ steps.check-env.outputs.is_act != 'true' }}
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
@@ -47,7 +56,7 @@ jobs:
           cache-dependency-path: requirements.txt
 
       - name: Set up Python (act)
-        if: ${{ env.ACT }}
+        if: ${{ steps.check-env.outputs.is_act == 'true' }}
         run: |
           # Use pre-installed Python in act environment with virtual env
           python3 -m venv .venv

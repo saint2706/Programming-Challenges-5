@@ -35,30 +35,39 @@ jobs:
           - 'Algorithmic/Text Justification Engine/Cargo.toml'
           - 'Algorithmic/Game Tree Search Framework/Cargo.toml'
     steps:
+      - name: Check environment
+        id: check-env
+        run: |
+          if [ "$ACT" = "true" ]; then
+            echo "is_act=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_act=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Check if running in act
-        if: ${{ env.ACT }}
+        if: ${{ steps.check-env.outputs.is_act == 'true' }}
         run: |
           echo "Skipping Rust tests in act environment (Rust not pre-installed)"
           exit 0
 
       - name: Checkout repository
-        if: ${{ !env.ACT }}
+        if: ${{ steps.check-env.outputs.is_act != 'true' }}
         uses: actions/checkout@v4
 
       - name: Determine manifest directory
-        if: ${{ !env.ACT }}
+        if: ${{ steps.check-env.outputs.is_act != 'true' }}
         id: manifest-dir
         run: echo "path=$(dirname '${{ matrix.manifest }}')" >> "$GITHUB_OUTPUT"
 
       - name: Install Rust
-        if: ${{ !env.ACT }}
+        if: ${{ steps.check-env.outputs.is_act != 'true' }}
         uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: stable
           components: rustfmt, clippy
 
       - name: Cache cargo build
-        if: ${{ !env.ACT }}
+        if: ${{ steps.check-env.outputs.is_act != 'true' }}
         uses: swatinem/rust-cache@v2
         with:
           workspaces: |
@@ -67,13 +76,13 @@ jobs:
           shared-key: ${{ matrix.manifest }}
 
       - name: Check formatting
-        if: ${{ !env.ACT }}
+        if: ${{ steps.check-env.outputs.is_act != 'true' }}
         run: cargo fmt --manifest-path "${{ matrix.manifest }}" -- --check
 
       - name: Run Clippy
-        if: ${{ !env.ACT }}
+        if: ${{ steps.check-env.outputs.is_act != 'true' }}
         run: cargo clippy --manifest-path "${{ matrix.manifest }}" -- -D warnings
 
       - name: Run tests
-        if: ${{ !env.ACT }}
+        if: ${{ steps.check-env.outputs.is_act != 'true' }}
         run: cargo test --manifest-path "${{ matrix.manifest }}"

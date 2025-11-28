@@ -45,18 +45,27 @@ jobs:
           - Algorithmic/TurnPenaltyRouting
           - Algorithmic/TwoDRangeQuery
     steps:
+      - name: Check environment
+        id: check-env
+        run: |
+          if [ "$ACT" = "true" ]; then
+            echo "is_act=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_act=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Check if running in act
-        if: ${{ env.ACT }}
+        if: ${{ steps.check-env.outputs.is_act == 'true' }}
         run: |
           echo "Skipping Go tests in act environment (Go not pre-installed)"
           exit 0
 
       - name: Checkout repository
-        if: ${{ !env.ACT }}
+        if: ${{ steps.check-env.outputs.is_act != 'true' }}
         uses: actions/checkout@v4
 
       - name: Setup Go
-        if: ${{ !env.ACT }}
+        if: ${{ steps.check-env.outputs.is_act != 'true' }}
         uses: actions/setup-go@v5
         with:
           go-version: '1.21'
@@ -64,7 +73,7 @@ jobs:
           cache-dependency-path: ${{ matrix.module }}/go.sum
 
       - name: Check formatting
-        if: ${{ !env.ACT }}
+        if: ${{ steps.check-env.outputs.is_act != 'true' }}
         working-directory: ${{ matrix.module }}
         run: |
           if [ -n "$(gofmt -l .)" ]; then
@@ -74,11 +83,11 @@ jobs:
           fi
 
       - name: Run vet
-        if: ${{ !env.ACT }}
+        if: ${{ steps.check-env.outputs.is_act != 'true' }}
         working-directory: ${{ matrix.module }}
         run: go vet ./...
 
       - name: Run tests
-        if: ${{ !env.ACT }}
+        if: ${{ steps.check-env.outputs.is_act != 'true' }}
         working-directory: ${{ matrix.module }}
         run: go test -v -race ./...
