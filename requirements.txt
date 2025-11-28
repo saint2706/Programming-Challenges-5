@@ -27,3 +27,6 @@ sweetviz
 Pygments
 Pillow
 ImageHash
+torch
+torchvision
+tensorboard
