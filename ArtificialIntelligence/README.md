@@ -47,3 +47,29 @@ From the repository root:
 python ArtificialIntelligence/gridworld_hazard_rl.py --width 5 --height 5 --start 0,0 --goal 4,4 --hazards 2,2 2,3
 ```
 The script prints a greedy policy grid using arrows for moves, `S` for the start, `G` for the goal, and `X` for hazards.
+
+## Neural Network Visual Debugger
+Train a compact CNN on MNIST (or synthetic data) while saving heatmaps and TensorBoard summaries for weights and activations.
+
+### Files
+- `nn_visual_debugger.py`: CLI + utility functions that train the model, generate seaborn heatmaps for layers, and log everything to TensorBoard.
+
+### Run a sample session
+From the repository root:
+```bash
+python ArtificialIntelligence/nn_visual_debugger.py \
+  --epochs 2 \
+  --log-dir /tmp/nn_visual_debugger \
+  --use-fake-data
+```
+This produces PNG heatmaps in `/tmp/nn_visual_debugger/heatmaps` and TensorBoard event files alongside them.
+
+### Inspect the run in TensorBoard
+```bash
+tensorboard --logdir /tmp/nn_visual_debugger
+```
+Use the "Images" tab to inspect heatmaps and the "Scalars" tab to monitor loss and accuracy trends.
+
+### Working offline or with minimal resources
+- Add `--use-fake-data` to avoid downloading MNIST; `--dataset-size` can further shrink the run for quick experiments.
+- Heatmaps are saved even for synthetic data, making automated tests and CI-friendly runs straightforward.
