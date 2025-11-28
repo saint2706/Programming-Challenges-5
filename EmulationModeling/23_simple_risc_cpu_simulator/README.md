@@ -3,6 +3,7 @@
 A cycle-accurate simulator for a 5-stage pipelined RISC processor (like MIPS).
 
 ## 📋 Table of Contents
+
 - [Theory](#theory)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -12,7 +13,9 @@ A cycle-accurate simulator for a 5-stage pipelined RISC processor (like MIPS).
 ## 🧠 Theory
 
 ### Pipelining
+
 Instructions are broken into 5 stages:
+
 1.  **IF**: Instruction Fetch
 2.  **ID**: Instruction Decode / Register Read
 3.  **EX**: Execute / ALU
@@ -20,8 +23,9 @@ Instructions are broken into 5 stages:
 5.  **WB**: Write Back
 
 Pipelining increases throughput (Instructions Per Cycle), but introduces hazards:
--   **Data Hazards**: Operands not ready (solved by forwarding or stalling).
--   **Control Hazards**: Branching (solved by prediction or flushing).
+
+- **Data Hazards**: Operands not ready (solved by forwarding or stalling).
+- **Control Hazards**: Branching (solved by prediction or flushing).
 
 ## 💻 Installation
 
@@ -38,8 +42,8 @@ g++ -std=c++17 -DRISC_PIPELINE_DEMO main.cpp -o risc_cpu
 
 ## 📊 Complexity Analysis
 
--   **Throughput**: Ideally 1 instruction per cycle (IPC = 1).
--   **Simulation**: $O(I)$ where $I$ is the number of instructions.
+- **Throughput**: Ideally 1 instruction per cycle (IPC = 1).
+- **Simulation**: $O(I)$ where $I$ is the number of instructions.
 
 ## 🎬 Demos
 

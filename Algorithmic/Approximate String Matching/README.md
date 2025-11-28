@@ -5,6 +5,7 @@ This project implements algorithms for approximate string matching, primarily fo
 ![Levenshtein Distance Visualization](levenshtein_viz.gif)
 
 ## 📋 Table of Contents
+
 - [Theory](#theory)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -14,12 +15,14 @@ This project implements algorithms for approximate string matching, primarily fo
 ## 🧠 Theory
 
 ### Levenshtein Distance
+
 The Levenshtein distance between two strings is the minimum number of single-character edits (insertions, deletions, or substitutions) required to change one word into the other.
 
 It is calculated using Dynamic Programming:
 $$D(i, j) = \min \begin{cases} D(i-1, j) + 1 \\ D(i, j-1) + 1 \\ D(i-1, j-1) + (1 \text{ if } s[i] \neq t[j] \text{ else } 0) \end{cases}$$
 
 ### BK-Tree (Burkhard-Keller Tree)
+
 A BK-Tree is a tree data structure adapted for metric spaces. It allows for faster fuzzy searching by pruning branches that cannot possibly contain a match, relying on the **Triangle Inequality**:
 $$|dist(A, B) - dist(B, C)| \le dist(A, C) \le dist(A, B) + dist(B, C)$$
 
@@ -61,15 +64,16 @@ print(matches)
 
 ## 📊 Complexity Analysis
 
-| Algorithm | Time Complexity | Space Complexity | Notes |
-| :--- | :--- | :--- | :--- |
-| **Levenshtein** | $O(m \cdot n)$ | $O(\min(m, n))$ | Optimized to use only two rows. |
-| **BK-Tree Build** | $O(N \log N)$ | $O(N)$ | Average case. |
-| **BK-Tree Search** | $O(N)$ (Worst) | $O(N)$ | In practice, prunes significant search space. |
+| Algorithm          | Time Complexity | Space Complexity | Notes                                         |
+| :----------------- | :-------------- | :--------------- | :-------------------------------------------- |
+| **Levenshtein**    | $O(m \cdot n)$  | $O(\min(m, n))$  | Optimized to use only two rows.               |
+| **BK-Tree Build**  | $O(N \log N)$   | $O(N)$           | Average case.                                 |
+| **BK-Tree Search** | $O(N)$ (Worst)  | $O(N)$           | In practice, prunes significant search space. |
 
 ## 🎬 Demos
 
 ### Generating the Animation
+
 To generate the DP table visualization:
 
 ```bash

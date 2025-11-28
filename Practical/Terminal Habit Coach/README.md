@@ -26,35 +26,45 @@ alias thc="python -m Practical.TerminalHabitCoach.cli"
 ## 🚀 Usage
 
 ### Add a Habit
+
 ```bash
 thc add-habit "Morning Walk" --description "15 minute walk" --reminder 07:30
 ```
 
 ### Log Progress
+
 Log for now:
+
 ```bash
 thc log "Morning Walk"
 ```
 
 Log for a specific time with a note:
+
 ```bash
 thc log "Morning Walk" --when 2024-05-01T07:20:00 --note "Sunny day"
 ```
 
 ### Check Status
+
 View a table of all habits and today's reminders:
+
 ```bash
 thc status
 ```
 
 ### View Streaks
+
 Inspect streak health:
+
 ```bash
 thc streaks
 ```
 
 ### Habit Details
+
 Display an individual summary with recent log entries:
+
 ```bash
 thc show "Morning Walk"
 ```
@@ -64,6 +74,7 @@ thc show "Morning Walk"
 By default the database lives at `~/.terminal_habit_coach.db`.
 
 Override the path using `--database` when invoking the CLI:
+
 ```bash
 thc --database /tmp/habits.db status
 ```

@@ -3,6 +3,7 @@
 A classic brick-breaking game where you bounce a ball off a paddle to destroy bricks.
 
 ## 📋 Table of Contents
+
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -19,6 +20,7 @@ A classic brick-breaking game where you bounce a ball off a paddle to destroy br
 ## 💻 Installation
 
 Ensure you have Python 3.8+ and pygame installed:
+
 ```bash
 pip install pygame
 ```
@@ -26,6 +28,7 @@ pip install pygame
 ## 🚀 Usage
 
 ### Running the Game
+
 ```bash
 cd GameDevelopment/02_Breakout
 python main.py
@@ -33,11 +36,11 @@ python main.py
 
 ## 🎮 Controls
 
-| Key | Action |
-| :--- | :--- |
-| **Left/Right Arrow Keys** or **A/D** | Move paddle |
-| **Space** | Launch ball (if applicable) |
-| **ESC/Close Window** | Quit game |
+| Key                                  | Action                      |
+| :----------------------------------- | :-------------------------- |
+| **Left/Right Arrow Keys** or **A/D** | Move paddle                 |
+| **Space**                            | Launch ball (if applicable) |
+| **ESC/Close Window**                 | Quit game                   |
 
 ## 🎯 Gameplay
 

@@ -5,6 +5,7 @@ A Python library for matrix operations, featuring both naive and advanced multip
 ![Matrix Ops Visualization](matrix_ops_viz.gif)
 
 ## 📋 Table of Contents
+
 - [Theory](#theory)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -14,10 +15,12 @@ A Python library for matrix operations, featuring both naive and advanced multip
 ## 🧠 Theory
 
 ### Matrix Multiplication
+
 Given two matrices $A$ (size $m \times n$) and $B$ (size $n \times p$), the product $C = AB$ is an $m \times p$ matrix where:
 $$C_{ij} = \sum_{k=1}^n A_{ik} B_{kj}$$
 
 ### Strassen's Algorithm
+
 Strassen's algorithm divides a matrix into 4 sub-matrices and uses 7 recursive multiplications (instead of the usual 8) to compute the product.
 This improves the asymptotic time complexity from $O(N^3)$ to $O(N^{\log_2 7}) \approx O(N^{2.81})$.
 
@@ -71,14 +74,15 @@ for res in results:
 
 ## 📊 Complexity Analysis
 
-| Algorithm | Time Complexity | Space Complexity |
-| :--- | :--- | :--- |
-| **Naive** | $O(N^3)$ | $O(N^2)$ |
-| **Strassen** | $O(N^{2.81})$ | $O(N^2)$ (high constant factor) |
+| Algorithm    | Time Complexity | Space Complexity                |
+| :----------- | :-------------- | :------------------------------ |
+| **Naive**    | $O(N^3)$        | $O(N^2)$                        |
+| **Strassen** | $O(N^{2.81})$   | $O(N^2)$ (high constant factor) |
 
 ## 🎬 Demos
 
 ### Generating the Animation
+
 To generate the matrix multiplication visualization:
 
 ```bash

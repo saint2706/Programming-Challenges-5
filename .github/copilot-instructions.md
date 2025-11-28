@@ -135,6 +135,7 @@ cargo test
 ## Preferred Libraries
 
 ### Python
+
 - Web frameworks: FastAPI, Flask
 - Data processing: pandas, numpy
 - Testing: pytest
@@ -143,14 +144,17 @@ cargo test
 - Image processing: Pillow, imagehash
 
 ### JavaScript
+
 - Testing: Vitest
 - Build tools: npm scripts
 
 ### Rust
+
 - Error handling: thiserror, anyhow
 - Serialization: serde
 - CLI: clap
 
 ### Go
+
 - Testing: built-in testing package
 - HTTP: net/http (standard library)

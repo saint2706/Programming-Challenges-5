@@ -2,11 +2,11 @@
   {
     "email": "dana@example.com",
     "name": "Dana",
-    "preferences": {"topics": ["product"], "unsubscribe": false}
+    "preferences": { "topics": ["product"], "unsubscribe": false }
   },
   {
     "email": "eli@example.com",
     "name": "Eli",
-    "preferences": {"topics": ["events"], "unsubscribe": false}
+    "preferences": { "topics": ["events"], "unsubscribe": false }
   }
 ]

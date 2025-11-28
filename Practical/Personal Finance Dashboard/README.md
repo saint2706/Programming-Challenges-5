@@ -3,6 +3,7 @@
 A Streamlit web app that ingests personal finance CSV exports and turns them into interactive visualizations. Upload your transaction history and explore spending trends over time with category breakdowns and filters.
 
 ## Features
+
 - CSV ingestion with smart column detection (date, amount, category, description).
 - Date range and category filters in the sidebar.
 - Interactive Plotly charts for spending over time and category distribution (bar + pie).
@@ -10,16 +11,20 @@ A Streamlit web app that ingests personal finance CSV exports and turns them int
 - View of filtered raw transactions for quick inspection.
 
 ## Requirements
+
 - Python 3.9+
 - See `requirements.txt` for Python dependencies.
 
 ## Installation
+
 ```bash
 pip install -r "Practical/Personal Finance Dashboard/requirements.txt"
 ```
 
 ## Usage
+
 Run the Streamlit app from the repository root:
+
 ```bash
 streamlit run "Practical/Personal Finance Dashboard/app.py"
 ```

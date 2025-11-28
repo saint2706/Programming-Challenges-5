@@ -5,6 +5,7 @@ A demonstration of Consistent Hashing, a technique used in distributed systems t
 ![Consistent Hashing Visualization](hash_ring_viz.gif)
 
 ## 📋 Table of Contents
+
 - [Theory](#theory)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -14,12 +15,14 @@ A demonstration of Consistent Hashing, a technique used in distributed systems t
 ## 🧠 Theory
 
 ### The Ring
--   Hash both **nodes** and **keys** onto the same circular space (e.g., $0$ to $2^{256}-1$).
--   A key is assigned to the first node found moving clockwise from the key's position on the ring.
+
+- Hash both **nodes** and **keys** onto the same circular space (e.g., $0$ to $2^{256}-1$).
+- A key is assigned to the first node found moving clockwise from the key's position on the ring.
 
 ### Virtual Nodes (VNodes)
--   To improve load balancing, each physical node is mapped to multiple points on the ring (virtual nodes).
--   This prevents "hot spots" where one node handles a disproportionate amount of the keyspace.
+
+- To improve load balancing, each physical node is mapped to multiple points on the ring (virtual nodes).
+- This prevents "hot spots" where one node handles a disproportionate amount of the keyspace.
 
 ## 💻 Installation
 
@@ -55,17 +58,18 @@ print(f"Replicas: {nodes}")
 
 ## 📊 Complexity Analysis
 
-| Operation | Time Complexity |
-| :--- | :--- |
-| **Add Node** | $O(V \cdot N \log (V \cdot N))$ (sorting) |
-| **Remove Node** | $O(V \cdot N)$ |
-| **Lookup** | $O(\log (V \cdot N))$ (Binary Search) |
+| Operation       | Time Complexity                           |
+| :-------------- | :---------------------------------------- |
+| **Add Node**    | $O(V \cdot N \log (V \cdot N))$ (sorting) |
+| **Remove Node** | $O(V \cdot N)$                            |
+| **Lookup**      | $O(\log (V \cdot N))$ (Binary Search)     |
 
 Where $N$ is the number of physical nodes and $V$ is the number of virtual nodes per physical node.
 
 ## 🎬 Demos
 
 ### Generating the Animation
+
 To generate the Consistent Hashing visualization:
 
 ```bash

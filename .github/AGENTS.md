@@ -26,13 +26,13 @@ cargo test
 
 This repository contains programming challenges in five categories:
 
-| Category | Path | Languages |
-|----------|------|-----------|
-| Practical | `Practical/` | Python, JavaScript |
-| Algorithmic | `Algorithmic/` | Python, Rust, Go, JavaScript |
-| Emulation/Modeling | `EmulationModeling/` | Python, C++ |
-| Game Development | `GameDevelopment/` | Python (pygame) |
-| Artificial Intelligence | `ArtificialIntelligence/` | Python |
+| Category                | Path                      | Languages                    |
+| ----------------------- | ------------------------- | ---------------------------- |
+| Practical               | `Practical/`              | Python, JavaScript           |
+| Algorithmic             | `Algorithmic/`            | Python, Rust, Go, JavaScript |
+| Emulation/Modeling      | `EmulationModeling/`      | Python, C++                  |
+| Game Development        | `GameDevelopment/`        | Python (pygame)              |
+| Artificial Intelligence | `ArtificialIntelligence/` | Python                       |
 
 JavaScript is used for web-based implementations (e.g., DP Visualizer) and Vitest testing.
 
@@ -48,27 +48,32 @@ JavaScript is used for web-based implementations (e.g., DP Visualizer) and Vites
 ### Code Style Requirements
 
 **Python:**
+
 - Type hints on all functions
 - Google-style docstrings
 - PEP 8 compliance
 - `from __future__ import annotations` for forward references
 
 **Rust:**
+
 - Use `Result`/`Option` for error handling
 - Run `cargo clippy` and `cargo fmt`
 - Include tests in `#[cfg(test)]` module
 
 **Go:**
+
 - Use `gofmt` for formatting
 - Handle all errors explicitly
 - Tests in `*_test.go` files
 
 **C++:**
+
 - C++17 or later
 - Use smart pointers
 - `#pragma once` for header guards
 
 **JavaScript:**
+
 - Use Vitest for testing
 - Follow npm scripts for build commands
 

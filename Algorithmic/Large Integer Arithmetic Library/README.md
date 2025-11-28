@@ -3,6 +3,7 @@
 A library for performing arithmetic operations on arbitrarily large integers beyond the limits of primitive integer types.
 
 ## 📋 Table of Contents
+
 - [Theory](#theory)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -13,12 +14,15 @@ A library for performing arithmetic operations on arbitrarily large integers bey
 **Arbitrary-precision arithmetic** allows working with integers of any size by representing them as arrays or vectors of digits.
 
 ### Algorithms Implemented
+
 1. **Addition/Subtraction**: Schoolbook algorithm with carry/borrow propagation
 2. **Multiplication**: Karatsuba algorithm for faster multiplication
 3. **Division**: Long division with remainder
 
 ### Karatsuba Multiplication
+
 A divide-and-conquer algorithm that reduces multiplication complexity:
+
 - Split numbers: $x = a \cdot 10^m + b$, $y = c \cdot 10^m + d$
 - Compute: $ac$, $bd$, $(a+b)(c+d)$
 - Result: $ac \cdot 10^{2m} + ((a+b)(c+d) - ac - bd) \cdot 10^m + bd$
@@ -52,11 +56,11 @@ println!("Product: {}", product);
 
 ## 📊 Complexity Analysis
 
-| Operation | Time Complexity |
-| :--- | :--- |
-| **Addition** | $O(n)$ |
-| **Subtraction** | $O(n)$ |
-| **Multiplication (Karatsuba)** | $O(n^{1.585})$ |
-| **Division** | $O(n^2)$ |
+| Operation                      | Time Complexity |
+| :----------------------------- | :-------------- |
+| **Addition**                   | $O(n)$          |
+| **Subtraction**                | $O(n)$          |
+| **Multiplication (Karatsuba)** | $O(n^{1.585})$  |
+| **Division**                   | $O(n^2)$        |
 
 Where $n$ is the number of digits.

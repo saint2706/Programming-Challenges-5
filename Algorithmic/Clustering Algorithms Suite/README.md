@@ -3,6 +3,7 @@
 A comprehensive suite of clustering algorithms including k-means, k-medoids, and DBSCAN for grouping similar data points.
 
 ## 📋 Table of Contents
+
 - [Theory](#theory)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -15,18 +16,21 @@ A comprehensive suite of clustering algorithms including k-means, k-medoids, and
 ### Algorithms Implemented
 
 #### 1. K-Means
+
 - **Goal**: Partition data into k clusters
 - **Method**: Iteratively assign points to nearest centroid and recompute centroids
 - **Pros**: Fast, simple
 - **Cons**: Sensitive to outliers, requires k to be specified
 
 #### 2. K-Medoids
+
 - **Goal**: Similar to k-means but uses actual data points as centers
 - **Method**: Select k representative points (medoids)
 - **Pros**: More robust to outliers than k-means
 - **Cons**: More expensive computationally
 
 #### 3. DBSCAN (Density-Based Spatial Clustering)
+
 - **Goal**: Find clusters of arbitrary shape based on density
 - **Method**: Group points that are closely packed, mark outliers
 - **Pros**: No need to specify k, finds arbitrary shapes, handles outliers
@@ -77,13 +81,14 @@ let clusters = dbscan.fit(&points);
 
 ## 📊 Complexity Analysis
 
-| Algorithm | Time Complexity | Space Complexity |
-| :--- | :--- | :--- |
-| **K-Means** | $O(nki)$ | $O(n + k)$ |
-| **K-Medoids** | $O(n^2ki)$ | $O(n^2)$ |
-| **DBSCAN** | $O(n \log n)$ | $O(n)$ |
+| Algorithm     | Time Complexity | Space Complexity |
+| :------------ | :-------------- | :--------------- |
+| **K-Means**   | $O(nki)$        | $O(n + k)$       |
+| **K-Medoids** | $O(n^2ki)$      | $O(n^2)$         |
+| **DBSCAN**    | $O(n \log n)$   | $O(n)$           |
 
 Where:
+
 - $n$ = number of points
 - $k$ = number of clusters
 - $i$ = number of iterations

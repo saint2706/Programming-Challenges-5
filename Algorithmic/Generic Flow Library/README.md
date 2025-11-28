@@ -3,6 +3,7 @@
 A library for solving maximum flow and minimum cut problems on flow networks using the Edmonds-Karp algorithm.
 
 ## 📋 Table of Contents
+
 - [Theory](#theory)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -13,18 +14,22 @@ A library for solving maximum flow and minimum cut problems on flow networks usi
 **Maximum flow** finds the maximum amount of "flow" that can be sent from a source to a sink in a flow network.
 
 ### Key Concepts
+
 - **Flow network**: Directed graph where each edge has a capacity
 - **Flow**: Assignment of values to edges respecting capacities
 - **Residual graph**: Shows remaining capacity and allows flow reversal
 
 ### Edmonds-Karp Algorithm
+
 A specific implementation of Ford-Fulkerson using BFS:
+
 1. Find augmenting path using BFS (shortest path in residual graph)
 2. Send maximum possible flow along the path
 3. Update residual capacities
 4. Repeat until no augmenting path exists
 
 ### Min-Cut Max-Flow Theorem
+
 The maximum flow equals the minimum cut capacity.
 
 **Min-cut**: Partition vertices into two sets (S, T) where source ∈ S, sink ∈ T, minimizing total capacity of edges from S to T.
@@ -66,11 +71,12 @@ println!("Min-cut vertices: {:?}", cut);
 
 ## 📊 Complexity Analysis
 
-| Operation | Time Complexity |
-| :--- | :--- |
-| **Edmonds-Karp** | $O(VE^2)$ |
-| **Finding min-cut** | $O(V + E)$ |
+| Operation           | Time Complexity |
+| :------------------ | :-------------- |
+| **Edmonds-Karp**    | $O(VE^2)$       |
+| **Finding min-cut** | $O(V + E)$      |
 
 Where:
+
 - $V$ = number of vertices
 - $E$ = number of edges

@@ -3,6 +3,7 @@
 A service for efficiently computing shortest paths in graphs where edge weights change over time, using incremental algorithms.
 
 ## 📋 Table of Contents
+
 - [Theory](#theory)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -13,15 +14,18 @@ A service for efficiently computing shortest paths in graphs where edge weights 
 **Dynamic shortest paths** maintains shortest path information as the graph changes, avoiding full recomputation.
 
 ### Algorithms
-1. **D* Lite**: An incremental search algorithm that reuses previous search results
+
+1. **D\* Lite**: An incremental search algorithm that reuses previous search results
 2. **LPA* (Lifelong Planning A*)**: Maintains shortest paths as costs change
 
 ### When to Use
+
 - Navigation systems with traffic updates
 - Network routing with link failures
 - Game AI with changing terrain costs
 
 ### Key Insight
+
 When an edge weight changes, only paths using that edge may need updates. By maintaining additional bookkeeping, we can update only affected paths.
 
 ## 💻 Installation
@@ -57,12 +61,13 @@ let new_path = dsp.shortest_path(2);
 
 ## 📊 Complexity Analysis
 
-| Operation | Time Complexity |
-| :--- | :--- |
-| **Initial computation** | $O(E \log V)$ |
-| **Edge update** | $O(k \log V)$ |
+| Operation               | Time Complexity |
+| :---------------------- | :-------------- |
+| **Initial computation** | $O(E \log V)$   |
+| **Edge update**         | $O(k \log V)$   |
 
 Where:
+
 - $V$ = number of vertices
 - $E$ = number of edges
 - $k$ = number of affected vertices (typically $k \ll V$)

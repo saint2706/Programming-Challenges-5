@@ -5,6 +5,7 @@ Implementations of **Skip Lists** and **Treaps**, two randomized data structures
 ![Skip List Visualization](skip_list_viz.gif)
 
 ## 📋 Table of Contents
+
 - [Theory](#theory)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -14,16 +15,20 @@ Implementations of **Skip Lists** and **Treaps**, two randomized data structures
 ## 🧠 Theory
 
 ### Skip List
+
 A Skip List is a probabilistic alternative to a balanced binary tree. It consists of multiple layers of linked lists.
--   **Bottom Layer**: Contains all elements.
--   **Higher Layers**: Each element promotes to the next layer with probability $p$ (usually $0.5$).
--   **Search**: Starts at the top layer, moving right until the next node is greater than the target, then drops down a layer.
+
+- **Bottom Layer**: Contains all elements.
+- **Higher Layers**: Each element promotes to the next layer with probability $p$ (usually $0.5$).
+- **Search**: Starts at the top layer, moving right until the next node is greater than the target, then drops down a layer.
 
 ### Treap
+
 A Treap is a binary search tree that assigns a random **priority** to each node.
--   **BST Property**: Maintained on the keys (for searching).
--   **Heap Property**: Maintained on the priorities (for balancing).
--   Nodes are rotated during insertion/deletion to satisfy the heap property, which keeps the tree balanced with high probability.
+
+- **BST Property**: Maintained on the keys (for searching).
+- **Heap Property**: Maintained on the priorities (for balancing).
+- Nodes are rotated during insertion/deletion to satisfy the heap property, which keeps the tree balanced with high probability.
 
 ## 💻 Installation
 
@@ -66,16 +71,17 @@ t.delete("banana")
 
 ## 📊 Complexity Analysis
 
-| Structure | Search (Avg) | Insert (Avg) | Delete (Avg) | Space (Avg) |
-| :--- | :--- | :--- | :--- | :--- |
-| **Skip List** | $O(\log N)$ | $O(\log N)$ | $O(\log N)$ | $O(N)$ |
-| **Treap** | $O(\log N)$ | $O(\log N)$ | $O(\log N)$ | $O(N)$ |
+| Structure     | Search (Avg) | Insert (Avg) | Delete (Avg) | Space (Avg) |
+| :------------ | :----------- | :----------- | :----------- | :---------- |
+| **Skip List** | $O(\log N)$  | $O(\log N)$  | $O(\log N)$  | $O(N)$      |
+| **Treap**     | $O(\log N)$  | $O(\log N)$  | $O(\log N)$  | $O(N)$      |
 
-*Worst case is $O(N)$ for both, but the probability of this occurring is exponentially small.*
+_Worst case is $O(N)$ for both, but the probability of this occurring is exponentially small._
 
 ## 🎬 Demos
 
 ### Generating the Animation
+
 To generate the Skip List search visualization:
 
 ```bash

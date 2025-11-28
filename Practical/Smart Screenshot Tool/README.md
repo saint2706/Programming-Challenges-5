@@ -3,6 +3,7 @@
 A Tkinter-based desktop utility that captures screens with [MSS](https://github.com/BoboTiG/python-mss), lets you annotate with shapes/text, and indexes screenshots with [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) for text search. Saved captures appear in a searchable gallery backed by a lightweight SQLite index.
 
 ## Features
+
 - Full-screen capture via MSS
 - Drawing tools: freehand pen, rectangles, ellipses, and text labels
 - Color picker and stroke width control
@@ -11,6 +12,7 @@ A Tkinter-based desktop utility that captures screens with [MSS](https://github.
 - Built-in gallery list with instant search and thumbnail preview
 
 ## Requirements
+
 - Python 3.9+
 - Tkinter (bundled with most CPython installs)
 - Pillow
@@ -25,6 +27,7 @@ pip install pillow mss pytesseract
 ```
 
 ## Usage
+
 Run the tool from the project root:
 
 ```bash

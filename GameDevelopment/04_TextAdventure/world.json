@@ -1,54 +1,46 @@
 {
-    "start_room": "entrance",
-    "rooms": {
-        "entrance": {
-            "name": "Dungeon Entrance",
-            "description": "You are standing at the entrance of a dark dungeon. The air is cold and damp.",
-            "exits": {
-                "north": "hallway"
-            },
-            "items": [
-                "torch"
-            ]
-        },
-        "hallway": {
-            "name": "Long Hallway",
-            "description": "A long, narrow hallway stretching into the darkness. There are doors to the east and west.",
-            "exits": {
-                "south": "entrance",
-                "east": "armory",
-                "west": "library"
-            },
-            "items": []
-        },
-        "armory": {
-            "name": "Old Armory",
-            "description": "Racks of rusted weapons line the walls. It smells of old iron.",
-            "exits": {
-                "west": "hallway"
-            },
-            "items": [
-                "sword",
-                "shield"
-            ]
-        },
-        "library": {
-            "name": "Dusty Library",
-            "description": "Shelves filled with rotting books. A strange glow comes from the corner.",
-            "exits": {
-                "east": "hallway"
-            },
-            "items": [
-                "key",
-                "scroll"
-            ]
-        }
+  "start_room": "entrance",
+  "rooms": {
+    "entrance": {
+      "name": "Dungeon Entrance",
+      "description": "You are standing at the entrance of a dark dungeon. The air is cold and damp.",
+      "exits": {
+        "north": "hallway"
+      },
+      "items": ["torch"]
     },
-    "items": {
-        "torch": "A wooden torch with an unlit rag.",
-        "sword": "A rusty but usable iron sword.",
-        "shield": "A wooden shield with a crack in it.",
-        "key": "A heavy iron key.",
-        "scroll": "A parchment with magical runes."
+    "hallway": {
+      "name": "Long Hallway",
+      "description": "A long, narrow hallway stretching into the darkness. There are doors to the east and west.",
+      "exits": {
+        "south": "entrance",
+        "east": "armory",
+        "west": "library"
+      },
+      "items": []
+    },
+    "armory": {
+      "name": "Old Armory",
+      "description": "Racks of rusted weapons line the walls. It smells of old iron.",
+      "exits": {
+        "west": "hallway"
+      },
+      "items": ["sword", "shield"]
+    },
+    "library": {
+      "name": "Dusty Library",
+      "description": "Shelves filled with rotting books. A strange glow comes from the corner.",
+      "exits": {
+        "east": "hallway"
+      },
+      "items": ["key", "scroll"]
     }
+  },
+  "items": {
+    "torch": "A wooden torch with an unlit rag.",
+    "sword": "A rusty but usable iron sword.",
+    "shield": "A wooden shield with a crack in it.",
+    "key": "A heavy iron key.",
+    "scroll": "A parchment with magical runes."
+  }
 }

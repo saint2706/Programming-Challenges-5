@@ -5,7 +5,8 @@ A command-line tool for practicing interview questions using spaced repetition.
 ## Usage
 
 1. **Add Questions**: Manually edit `questions.json` or use the tool (if supported) to add Q&A.
-   *Format of `questions.json`:*
+   _Format of `questions.json`:_
+
    ```json
    [
      {
@@ -25,4 +26,5 @@ A command-line tool for practicing interview questions using spaced repetition.
    The tool will show you questions due for review. Rate your confidence to update the schedule.
 
 ## Requirements
-* Python 3+
+
+- Python 3+

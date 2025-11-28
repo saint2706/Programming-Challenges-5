@@ -3,6 +3,7 @@
 A twin-stick style top-down shooter game.
 
 ## 📋 Table of Contents
+
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -20,6 +21,7 @@ A twin-stick style top-down shooter game.
 ## 💻 Installation
 
 Ensure you have Python 3.8+ and pygame installed:
+
 ```bash
 pip install pygame
 ```
@@ -27,6 +29,7 @@ pip install pygame
 ## 🚀 Usage
 
 ### Running the Game
+
 ```bash
 cd GameDevelopment/10_TopDownShooter
 python main.py
@@ -34,12 +37,12 @@ python main.py
 
 ## 🎮 Controls
 
-| Key | Action |
-| :--- | :--- |
-| **W/A/S/D** | Move player |
-| **Mouse Movement** | Aim |
-| **Left Mouse Click** | Shoot |
-| **ESC** | Quit game |
+| Key                  | Action      |
+| :------------------- | :---------- |
+| **W/A/S/D**          | Move player |
+| **Mouse Movement**   | Aim         |
+| **Left Mouse Click** | Shoot       |
+| **ESC**              | Quit game   |
 
 ## 🎯 Gameplay
 

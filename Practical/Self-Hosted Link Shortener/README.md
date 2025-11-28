@@ -3,6 +3,7 @@
 A minimal FastAPI-based service for creating, managing, and tracking short URLs with SQLite persistence.
 
 ## 📋 Table of Contents
+
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Running the API](#running-the-api)
@@ -40,14 +41,14 @@ Auto-generated docs are available at `http://127.0.0.1:8000/docs`.
 
 ## 📚 API Reference
 
-| Method | Path | Description |
-| :--- | :--- | :--- |
-| `POST` | `/links` | Create a short URL (optionally supply `custom_slug`). |
-| `GET` | `/links` | List all known short links. |
-| `GET` | `/links/{slug}` | Retrieve metadata about a short link. |
-| `GET` | `/{slug}` | Redirect to the original URL while incrementing analytics. |
-| `GET` | `/links/{slug}/stats` | Fetch hit counts and timestamps. |
-| `DELETE` | `/links/{slug}` | Remove a short link. |
+| Method   | Path                  | Description                                                |
+| :------- | :-------------------- | :--------------------------------------------------------- |
+| `POST`   | `/links`              | Create a short URL (optionally supply `custom_slug`).      |
+| `GET`    | `/links`              | List all known short links.                                |
+| `GET`    | `/links/{slug}`       | Retrieve metadata about a short link.                      |
+| `GET`    | `/{slug}`             | Redirect to the original URL while incrementing analytics. |
+| `GET`    | `/links/{slug}/stats` | Fetch hit counts and timestamps.                           |
+| `DELETE` | `/links/{slug}`       | Remove a short link.                                       |
 
 ### Example Creation Payload
 

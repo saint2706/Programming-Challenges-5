@@ -1,53 +1,59 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Offline-first PWA To-Do</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="styles.css">
-  <meta name="theme-color" content="#2563eb">
-</head>
-<body>
-  <header class="app-header">
-    <div class="title">
-      <h1>Offline-first To-Do</h1>
-      <p>Works even when you're disconnected.</p>
-    </div>
-    <div class="status" id="connection-status" aria-live="polite">Checking connection...</div>
-  </header>
-
-  <main>
-    <section class="card">
-      <h2>Add a task</h2>
-      <form id="task-form" autocomplete="off">
-        <label class="sr-only" for="task-title">Task title</label>
-        <input id="task-title" name="title" type="text" placeholder="What do you need to do?" required>
-        <button type="submit">Add</button>
-      </form>
-      <div class="helper">Offline? We'll queue changes and sync when you're back online.</div>
-    </section>
-
-    <section class="card">
-      <div class="card-header">
-        <h2>Your tasks</h2>
-        <div class="badge" id="queue-indicator" hidden>Pending sync</div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Offline-first PWA To-Do</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="theme-color" content="#2563eb" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="title">
+        <h1>Offline-first To-Do</h1>
+        <p>Works even when you're disconnected.</p>
       </div>
-      <ul id="task-list" class="task-list" aria-live="polite"></ul>
-      <div class="empty" id="empty-state" hidden>Start by adding your first task.</div>
-    </section>
+      <div class="status" id="connection-status" aria-live="polite">Checking connection...</div>
+    </header>
 
-    <section class="card" id="conflict-panel" hidden>
-      <h2>Conflicts resolved</h2>
-      <p>We kept the latest change when the same task was updated in multiple places.</p>
-      <ul id="conflict-log"></ul>
-    </section>
-  </main>
+    <main>
+      <section class="card">
+        <h2>Add a task</h2>
+        <form id="task-form" autocomplete="off">
+          <label class="sr-only" for="task-title">Task title</label>
+          <input
+            id="task-title"
+            name="title"
+            type="text"
+            placeholder="What do you need to do?"
+            required
+          />
+          <button type="submit">Add</button>
+        </form>
+        <div class="helper">Offline? We'll queue changes and sync when you're back online.</div>
+      </section>
 
-  <footer>
-    <small>Built as an offline-first PWA demo with IndexedDB + Background Sync.</small>
-  </footer>
+      <section class="card">
+        <div class="card-header">
+          <h2>Your tasks</h2>
+          <div class="badge" id="queue-indicator" hidden>Pending sync</div>
+        </div>
+        <ul id="task-list" class="task-list" aria-live="polite"></ul>
+        <div class="empty" id="empty-state" hidden>Start by adding your first task.</div>
+      </section>
 
-  <script type="module" src="app.js"></script>
-</body>
+      <section class="card" id="conflict-panel" hidden>
+        <h2>Conflicts resolved</h2>
+        <p>We kept the latest change when the same task was updated in multiple places.</p>
+        <ul id="conflict-log"></ul>
+      </section>
+    </main>
+
+    <footer>
+      <small>Built as an offline-first PWA demo with IndexedDB + Background Sync.</small>
+    </footer>
+
+    <script type="module" src="app.js"></script>
+  </body>
 </html>

@@ -5,6 +5,7 @@ An efficient Autocomplete Engine implemented using a **Trie** (Prefix Tree). It 
 ![Trie Visualization](trie_viz.gif)
 
 ## 📋 Table of Contents
+
 - [Theory](#theory)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -15,14 +16,15 @@ An efficient Autocomplete Engine implemented using a **Trie** (Prefix Tree). It 
 
 A **Trie** (pronounced "try") is a tree-based data structure used to efficiently store and retrieve keys in a dataset of strings.
 
--   **Nodes**: Each node represents a character.
--   **Edges**: Links between nodes represent the next character in the string.
--   **Root**: Represents an empty string.
--   **Word Marking**: Some nodes are marked as "end of word" to distinguish complete words from prefixes.
+- **Nodes**: Each node represents a character.
+- **Edges**: Links between nodes represent the next character in the string.
+- **Root**: Represents an empty string.
+- **Word Marking**: Some nodes are marked as "end of word" to distinguish complete words from prefixes.
 
 ### Why Tries?
--   **Prefix Search**: Finding all words starting with "app" is $O(L)$ where $L$ is the prefix length.
--   **Space Efficiency**: Common prefixes are stored only once.
+
+- **Prefix Search**: Finding all words starting with "app" is $O(L)$ where $L$ is the prefix length.
+- **Space Efficiency**: Common prefixes are stored only once.
 
 ## 💻 Installation
 
@@ -69,17 +71,18 @@ loaded_engine = AutocompleteEngine.from_json("trie_data.json")
 
 Let $L$ be the length of the word/prefix.
 
-| Operation | Time Complexity | Space Complexity |
-| :--- | :--- | :--- |
-| **Insert** | $O(L)$ | $O(L)$ (worst case, new nodes) |
-| **Search/Prefix** | $O(L)$ | $O(1)$ |
-| **Top-K** | $O(L + N \log N)$ | $O(N)$ |
+| Operation         | Time Complexity   | Space Complexity               |
+| :---------------- | :---------------- | :----------------------------- |
+| **Insert**        | $O(L)$            | $O(L)$ (worst case, new nodes) |
+| **Search/Prefix** | $O(L)$            | $O(1)$                         |
+| **Top-K**         | $O(L + N \log N)$ | $O(N)$                         |
 
-*Note: Top-K involves traversing the subtree (size $N$) and sorting the results.*
+_Note: Top-K involves traversing the subtree (size $N$) and sorting the results._
 
 ## 🎬 Demos
 
 ### Generating the Animation
+
 To generate the Trie construction visualization:
 
 ```bash

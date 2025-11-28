@@ -6,10 +6,12 @@ language supports assignments, arithmetic expressions, `if/else` branches, and `
 loops.
 
 ## What's inside?
+
 - **`ir_visualizer.py`** — lexer, recursive-descent parser, TAC generator, and CFG builder.
 - **`main.py`** — runs an example program end-to-end, printing TAC instructions and DOT output.
 
 ## Running the example
+
 From the repository root:
 
 ```bash

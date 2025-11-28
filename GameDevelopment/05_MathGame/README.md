@@ -3,6 +3,7 @@
 An interactive math quiz game with adaptive difficulty.
 
 ## 📋 Table of Contents
+
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -19,6 +20,7 @@ An interactive math quiz game with adaptive difficulty.
 ## 💻 Installation
 
 Ensure you have Python 3.8+ and pygame installed:
+
 ```bash
 pip install pygame
 ```
@@ -26,6 +28,7 @@ pip install pygame
 ## 🚀 Usage
 
 ### Running the Game
+
 ```bash
 cd GameDevelopment/05_MathGame
 python main.py
@@ -33,12 +36,12 @@ python main.py
 
 ## 🎮 Controls
 
-| Key | Action |
-| :--- | :--- |
-| **Number Keys (0-9)** | Type your answer |
-| **Backspace** | Delete last character |
-| **Enter** | Submit answer |
-| **ESC/Close Window** | Quit game |
+| Key                   | Action                |
+| :-------------------- | :-------------------- |
+| **Number Keys (0-9)** | Type your answer      |
+| **Backspace**         | Delete last character |
+| **Enter**             | Submit answer         |
+| **ESC/Close Window**  | Quit game             |
 
 ## 🎯 Gameplay
 
