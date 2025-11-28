@@ -12,7 +12,7 @@ from __future__ import annotations
 import csv
 import json
 from dataclasses import dataclass, field
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable, Dict, Optional, Sequence, Tuple
 
@@ -46,7 +46,7 @@ class AttendanceLogger:
             writer = csv.writer(csvfile)
             if new_file:
                 writer.writerow(["name", "timestamp"])
-            writer.writerow([name, datetime.now(UTC).isoformat()])
+            writer.writerow([name, datetime.now(timezone.utc).isoformat()])
         self.recorded_names.add(name)
 
 
