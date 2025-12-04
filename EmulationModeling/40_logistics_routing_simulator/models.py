@@ -1,6 +1,7 @@
 from pydantic import Field
 from simulation_core.config import BaseSimulationConfig
 
+
 class LogisticsConfig(BaseSimulationConfig):
     num_depots: int = 2
     num_customers: int = 10

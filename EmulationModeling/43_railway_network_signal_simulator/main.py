@@ -1,18 +1,22 @@
-import simpy
-import networkx as nx
-import matplotlib.pyplot as plt
 from typing import Dict, List, Optional
+
+import matplotlib.pyplot as plt
+import networkx as nx
+import simpy
 from simulation_core.discrete_event import DiscreteEventSimulation
 from simulation_core.visualization import SimulationVisualizer
+
 from .models import RailwayConfig
+
 
 class Block:
     def __init__(self, env, block_id, length):
         self.env = env
         self.id = block_id
         self.length = length
-        self.resource = simpy.Resource(env, capacity=1) # Only one train per block
+        self.resource = simpy.Resource(env, capacity=1)  # Only one train per block
         self.occupied_by = None
+
 
 class Train:
     def __init__(self, train_id, speed):
@@ -21,13 +25,16 @@ class Train:
         self.current_block = None
         self.distance_in_block = 0
 
+
 class RailwaySimulation(DiscreteEventSimulation):
     def __init__(self, config: RailwayConfig):
         super().__init__(config.seed)
         self.config = config
         self.blocks: Dict[str, Block] = {}
         self.trains: List[Train] = []
-        self.visualizer = SimulationVisualizer(output_dir=f"EmulationModeling/43_railway_network_signal_simulator/{config.output_dir}")
+        self.visualizer = SimulationVisualizer(
+            output_dir=f"EmulationModeling/43_railway_network_signal_simulator/{config.output_dir}"
+        )
 
         self.setup_track()
         self.setup_trains()
@@ -74,7 +81,7 @@ class RailwaySimulation(DiscreteEventSimulation):
             next_block = self.blocks[f"B{next_idx}"]
 
             next_req = next_block.resource.request()
-            yield next_req # Wait for signal
+            yield next_req  # Wait for signal
 
             # Enter next
             curr_block.resource.release(req)
@@ -94,8 +101,8 @@ class RailwaySimulation(DiscreteEventSimulation):
             color = "green"
             if self.blocks[f"B{i}"].occupied_by:
                 color = "red"
-            ax.plot([i * 100, (i+1)*100], [0, 0], color=color, linewidth=5)
-            ax.text(i * 100 + 50, -10, f"B{i}", ha='center')
+            ax.plot([i * 100, (i + 1) * 100], [0, 0], color=color, linewidth=5)
+            ax.text(i * 100 + 50, -10, f"B{i}", ha="center")
 
         # Draw trains
         for t in self.trains:
@@ -105,7 +112,7 @@ class RailwaySimulation(DiscreteEventSimulation):
             frac = t.distance_in_block / self.config.block_length
             x = (b_idx + frac) * 100
             ax.scatter(x, 0, s=200, label=t.id, zorder=10)
-            ax.text(x, 20, t.id, ha='center')
+            ax.text(x, 20, t.id, ha="center")
 
         ax.set_ylim(-50, 50)
         ax.set_title(f"Railway Signal Sim (t={self.env.now:.1f})")
@@ -116,11 +123,13 @@ class RailwaySimulation(DiscreteEventSimulation):
 
     # Override schedule not needed anymore
 
+
 def run_simulation():
     config = RailwayConfig(duration=200)
     sim = RailwaySimulation(config)
     sim.run(until=config.duration)
     sim.visualizer.save_gif("railway.gif")
+
 
 if __name__ == "__main__":
     run_simulation()

@@ -1,7 +1,8 @@
-import unittest
+import importlib
 import os
 import shutil
-import importlib
+import unittest
+
 
 def import_challenge_module(challenge_num, module_name):
     base_dir = "EmulationModeling"
@@ -11,6 +12,7 @@ def import_challenge_module(challenge_num, module_name):
     dir_name = dirs[0]
     module_path = f"{base_dir}.{dir_name}.{module_name}"
     return importlib.import_module(module_path)
+
 
 class TestEconomy(unittest.TestCase):
     def setUp(self):
@@ -36,6 +38,7 @@ class TestEconomy(unittest.TestCase):
         # Check history recorded
         self.assertGreater(len(model.history_avg_price), 0)
 
+
 class TestMicroservices(unittest.TestCase):
     def setUp(self):
         self.output_dir = "tests/EmulationModeling/output_42"
@@ -51,12 +54,15 @@ class TestMicroservices(unittest.TestCase):
             shutil.rmtree(self.output_dir)
 
     def test_microservices_run(self):
-        config = self.MicroserviceConfig(duration=10, output_dir=f"../../{self.output_dir}")
+        config = self.MicroserviceConfig(
+            duration=10, output_dir=f"../../{self.output_dir}"
+        )
         sim = self.MicroserviceSimulation(config)
         sim.run(until=10)
 
         self.assertTrue("Gateway" in sim.services)
         self.assertGreaterEqual(sim.services["Gateway"].stats["requests"], 0)
+
 
 if __name__ == "__main__":
     unittest.main()

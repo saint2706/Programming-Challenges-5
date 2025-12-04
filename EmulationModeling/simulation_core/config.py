@@ -1,7 +1,9 @@
 from pydantic import BaseModel, ConfigDict
 
+
 class BaseSimulationConfig(BaseModel):
     """Base configuration for simulations."""
+
     model_config = ConfigDict(extra="forbid")
 
     seed: int = 42

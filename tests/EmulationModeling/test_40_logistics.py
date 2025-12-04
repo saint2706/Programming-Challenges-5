@@ -1,8 +1,9 @@
-import unittest
+import importlib
 import os
 import shutil
-import importlib
 import sys
+import unittest
+
 
 # Dynamic import helper since folder starts with number
 def import_challenge_module(challenge_num, module_name):
@@ -16,6 +17,7 @@ def import_challenge_module(challenge_num, module_name):
     dir_name = dirs[0]
     module_path = f"{base_dir}.{dir_name}.{module_name}"
     return importlib.import_module(module_path)
+
 
 class TestLogistics(unittest.TestCase):
     def setUp(self):
@@ -37,7 +39,7 @@ class TestLogistics(unittest.TestCase):
             duration=50,
             output_dir=f"../../{self.output_dir}",
             num_customers=5,
-            num_trucks=2
+            num_trucks=2,
         )
         sim = self.LogisticsSimulation(config)
         sim.run(until=10)
@@ -48,6 +50,7 @@ class TestLogistics(unittest.TestCase):
 
         # Check we can generate frames
         self.assertGreaterEqual(len(sim.visualizer.frames), 0)
+
 
 if __name__ == "__main__":
     unittest.main()

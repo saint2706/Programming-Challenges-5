@@ -1,11 +1,6 @@
 """Run a simple DNS resolution simulation with caching."""
 
-from dns_simulator import (
-    AuthoritativeDNSServer,
-    DNSResolver,
-    RootServer,
-    TLDServer,
-)
+from dns_simulator import AuthoritativeDNSServer, DNSResolver, RootServer, TLDServer
 
 
 def build_demo_resolver() -> DNSResolver:

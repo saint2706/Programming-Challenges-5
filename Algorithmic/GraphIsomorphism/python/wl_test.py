@@ -3,8 +3,9 @@
 Uses Weisfeiler-Lehman (WL) Color Refinement algorithm.
 """
 
-from typing import List, Dict, Tuple
 import hashlib
+from typing import Dict, List, Tuple
+
 
 def get_graph_hash(adj: List[List[int]], iterations: int = 3) -> str:
     """Compute WL hash for a graph.
@@ -30,6 +31,7 @@ def get_graph_hash(adj: List[List[int]], iterations: int = 3) -> str:
     # Canonical label is sorted colors
     canonical = sorted(colors)
     return hashlib.sha256("".join(canonical).encode()).hexdigest()
+
 
 def are_isomorphic(adj1: List[List[int]], adj2: List[List[int]]) -> bool:
     """Check if two graphs are likely isomorphic."""

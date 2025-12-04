@@ -1,7 +1,8 @@
-import unittest
+import importlib
 import os
 import shutil
-import importlib
+import unittest
+
 
 def import_challenge_module(challenge_num, module_name):
     base_dir = "EmulationModeling"
@@ -11,6 +12,7 @@ def import_challenge_module(challenge_num, module_name):
     dir_name = dirs[0]
     module_path = f"{base_dir}.{dir_name}.{module_name}"
     return importlib.import_module(module_path)
+
 
 class TestChallenges48_50(unittest.TestCase):
     def setUp(self):
@@ -25,7 +27,9 @@ class TestChallenges48_50(unittest.TestCase):
         mod_main = import_challenge_module(48, "main")
         mod_models = import_challenge_module(48, "models")
 
-        config = mod_models.Fluid2DConfig(duration=1.0, output_dir=f"../../{self.output_base}/48", grid_size=32)
+        config = mod_models.Fluid2DConfig(
+            duration=1.0, output_dir=f"../../{self.output_base}/48", grid_size=32
+        )
         sim = mod_main.Fluid2DSimulation(config)
         sim.run()
         # Check density has values
@@ -35,7 +39,9 @@ class TestChallenges48_50(unittest.TestCase):
         mod_main = import_challenge_module(49, "main")
         mod_models = import_challenge_module(49, "models")
 
-        config = mod_models.RigidBodyConfig(duration=0.2, output_dir=f"../../{self.output_base}/49")
+        config = mod_models.RigidBodyConfig(
+            duration=0.2, output_dir=f"../../{self.output_base}/49"
+        )
         sim = mod_main.PhysicsSimulation(config)
         sim.run()
         # Check bodies moved (gravity)
@@ -45,11 +51,14 @@ class TestChallenges48_50(unittest.TestCase):
         mod_main = import_challenge_module(50, "main")
         mod_models = import_challenge_module(50, "models")
 
-        config = mod_models.NCAConfig(steps=5, output_dir=f"../../{self.output_base}/50")
+        config = mod_models.NCAConfig(
+            steps=5, output_dir=f"../../{self.output_base}/50"
+        )
         sim = mod_main.NCASimulation(config)
         sim.run()
         # Check state changed
         self.assertIsNotNone(sim.state)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,8 +1,10 @@
-import simpy
-from typing import Generator, Callable, Any
 import logging
+from typing import Any, Callable, Generator
+
+import simpy
 
 logger = logging.getLogger(__name__)
+
 
 class DiscreteEventSimulation:
     def __init__(self, config_seed: int = 42):
@@ -10,8 +12,10 @@ class DiscreteEventSimulation:
         self.seed = config_seed
         # Ensure reproducibility if needed by derived classes
         import random
+
         random.seed(config_seed)
         import numpy as np
+
         np.random.seed(config_seed)
 
     def run(self, until: float):
@@ -19,5 +23,7 @@ class DiscreteEventSimulation:
         self.env.run(until=until)
         logger.info("Simulation finished")
 
-    def schedule_process(self, process_func: Callable[..., Generator[Any, Any, Any]], *args, **kwargs):
+    def schedule_process(
+        self, process_func: Callable[..., Generator[Any, Any, Any]], *args, **kwargs
+    ):
         return self.env.process(process_func(*args, **kwargs))

@@ -5,16 +5,19 @@ Constructs a Suffix Automaton in O(N) time.
 
 from typing import Dict, List, Optional
 
+
 class State:
-    __slots__ = ['len', 'link', 'next']
+    __slots__ = ["len", "link", "next"]
+
     def __init__(self, length: int = 0, link: int = -1):
         self.len = length
         self.link = link
         self.next: Dict[str, int] = {}
 
+
 class SuffixAutomaton:
     def __init__(self, s: str = ""):
-        self.states: List[State] = [State()] # Initial state 0
+        self.states: List[State] = [State()]  # Initial state 0
         self.last = 0
         for char in s:
             self.extend(char)

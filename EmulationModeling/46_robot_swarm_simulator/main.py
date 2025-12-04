@@ -1,18 +1,27 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.spatial import KDTree
 from simulation_core.visualization import SimulationVisualizer
+
 from .models import RobotSwarmConfig
+
 
 class RobotSwarmSimulation:
     def __init__(self, config: RobotSwarmConfig):
         self.config = config
-        self.visualizer = SimulationVisualizer(output_dir=f"EmulationModeling/46_robot_swarm_simulator/{config.output_dir}")
+        self.visualizer = SimulationVisualizer(
+            output_dir=f"EmulationModeling/46_robot_swarm_simulator/{config.output_dir}"
+        )
         self.time = 0.0
 
         # State: [x, y, vx, vy]
-        self.positions = np.random.rand(config.num_robots, 2) * [config.width, config.height]
-        self.velocities = (np.random.rand(config.num_robots, 2) - 0.5) * config.max_speed
+        self.positions = np.random.rand(config.num_robots, 2) * [
+            config.width,
+            config.height,
+        ]
+        self.velocities = (
+            np.random.rand(config.num_robots, 2) - 0.5
+        ) * config.max_speed
 
     def step(self, dt: float = 0.1):
         self.time += dt
@@ -25,7 +34,9 @@ class RobotSwarmSimulation:
 
         for i in range(self.config.num_robots):
             # Find neighbors
-            indices = tree.query_ball_point(self.positions[i], self.config.perception_radius)
+            indices = tree.query_ball_point(
+                self.positions[i], self.config.perception_radius
+            )
             if len(indices) <= 1:
                 continue
 
@@ -43,22 +54,27 @@ class RobotSwarmSimulation:
             # 3. Separation: steer away from neighbors
             force_separate = np.zeros(2)
             for idx in indices:
-                if idx == i: continue
+                if idx == i:
+                    continue
                 diff = self.positions[i] - self.positions[idx]
                 dist_sq = np.dot(diff, diff)
                 if dist_sq > 0:
                     force_separate += diff / dist_sq
 
-            total_force = (force_align * self.config.alignment_weight +
-                           force_cohere * self.config.cohesion_weight +
-                           force_separate * self.config.separation_weight)
+            total_force = (
+                force_align * self.config.alignment_weight
+                + force_cohere * self.config.cohesion_weight
+                + force_separate * self.config.separation_weight
+            )
 
             new_velocities[i] += total_force * dt
 
         # Apply Speed Limit
         speeds = np.linalg.norm(new_velocities, axis=1)
         mask = speeds > self.config.max_speed
-        new_velocities[mask] = (new_velocities[mask] / speeds[mask, None]) * self.config.max_speed
+        new_velocities[mask] = (
+            new_velocities[mask] / speeds[mask, None]
+        ) * self.config.max_speed
 
         # Update Position
         self.positions += new_velocities * dt
@@ -81,18 +97,25 @@ class RobotSwarmSimulation:
         ax.set_xlim(0, self.config.width)
         ax.set_ylim(0, self.config.height)
 
-        ax.quiver(self.positions[:, 0], self.positions[:, 1],
-                  self.velocities[:, 0], self.velocities[:, 1],
-                  color='blue', scale=50)
+        ax.quiver(
+            self.positions[:, 0],
+            self.positions[:, 1],
+            self.velocities[:, 0],
+            self.velocities[:, 1],
+            color="blue",
+            scale=50,
+        )
 
         ax.set_title(f"Robot Swarm (t={self.time:.1f})")
         self.visualizer.add_frame(fig)
         plt.close(fig)
 
+
 def run_simulation():
     config = RobotSwarmConfig(duration=20.0)
     sim = RobotSwarmSimulation(config)
     sim.run()
+
 
 if __name__ == "__main__":
     run_simulation()

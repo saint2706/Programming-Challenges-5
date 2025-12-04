@@ -7,8 +7,10 @@ from typing import List, Tuple
 
 Point = Tuple[float, float]
 
+
 def cross_product(o: Point, a: Point, b: Point) -> float:
     return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+
 
 def convex_hull(points: List[Point]) -> List[Point]:
     """Compute Convex Hull using Monotone Chain algorithm. O(N log N)."""
@@ -31,6 +33,7 @@ def convex_hull(points: List[Point]) -> List[Point]:
         lower.append(p)
 
     return upper[:-1] + lower[:-1]
+
 
 def point_in_polygon(poly: List[Point], p: Point) -> bool:
     """Check if point p is inside polygon poly (Ray Casting)."""

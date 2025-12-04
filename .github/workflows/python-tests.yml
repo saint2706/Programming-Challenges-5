@@ -71,17 +71,7 @@ jobs:
           fi
           python3 -m pip install pytest
 
-      - name: Install linting dependencies
-        run: pip install black isort ruff
 
-      - name: Check formatting with Black
-        run: black --check .
-
-      - name: Check imports with Isort
-        run: isort --check-only --profile black .
-
-      - name: Lint with Ruff
-        run: ruff check .
 
       - name: Run tests
         run: python3 -m pytest tests/

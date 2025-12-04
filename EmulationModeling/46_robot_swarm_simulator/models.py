@@ -1,5 +1,6 @@
 from simulation_core.config import BaseSimulationConfig
 
+
 class RobotSwarmConfig(BaseSimulationConfig):
     num_robots: int = 100
     width: float = 100.0

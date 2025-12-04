@@ -6,6 +6,7 @@ Implements a limit order book using two heaps (buy/sell).
 import heapq
 from typing import List, Tuple
 
+
 class MatchingEngine:
     def __init__(self):
         # Bids (Buy): Max-heap (-price, counter, quantity, id)
@@ -18,7 +19,7 @@ class MatchingEngine:
         self.id_counter += 1
         oid = self.id_counter
 
-        if side == 'buy':
+        if side == "buy":
             # Check asks (lowest sell price first)
             while quantity > 0 and self.asks and self.asks[0][0] <= price:
                 ask_price, _, ask_qty, ask_id = self.asks[0]
@@ -37,7 +38,7 @@ class MatchingEngine:
                 # Push to bids (-price for max-heap)
                 heapq.heappush(self.bids, (-price, oid, quantity, oid))
 
-        else: # Sell
+        else:  # Sell
             # Check bids (highest buy price first, which is smallest negative)
             while quantity > 0 and self.bids and -self.bids[0][0] >= price:
                 bid_neg_price, _, bid_qty, bid_id = self.bids[0]
@@ -47,7 +48,12 @@ class MatchingEngine:
                 if matched == bid_qty:
                     heapq.heappop(self.bids)
                 else:
-                    new_bid = (bid_neg_price, self.bids[0][1], bid_qty - matched, bid_id)
+                    new_bid = (
+                        bid_neg_price,
+                        self.bids[0][1],
+                        bid_qty - matched,
+                        bid_id,
+                    )
                     heapq.heapreplace(self.bids, new_bid)
 
             if quantity > 0:

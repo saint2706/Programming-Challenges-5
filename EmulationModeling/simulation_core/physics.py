@@ -1,6 +1,8 @@
-import numpy as np
 from dataclasses import dataclass
 from typing import List, Tuple
+
+import numpy as np
+
 
 @dataclass
 class RigidBody:
@@ -11,6 +13,7 @@ class RigidBody:
 
     def __post_init__(self):
         self.force = np.zeros(3)
+
 
 class PhysicsWorld:
     def __init__(self, gravity: float = -9.81):
@@ -34,4 +37,4 @@ class PhysicsWorld:
             # Simple floor collision
             if body.position[1] < 0:
                 body.position[1] = 0
-                body.velocity[1] *= -0.5 # restitution
+                body.velocity[1] *= -0.5  # restitution

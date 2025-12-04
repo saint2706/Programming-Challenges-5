@@ -1,5 +1,6 @@
 from simulation_core.config import BaseSimulationConfig
 
+
 class DroneConfig(BaseSimulationConfig):
     num_drones: int = 5
     num_orders: int = 20

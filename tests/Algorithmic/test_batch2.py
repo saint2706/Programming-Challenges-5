@@ -1,28 +1,30 @@
-
-import unittest
-import sys
 import os
+import sys
+import unittest
 
-sys.path.append(os.path.join(os.getcwd(), 'Algorithmic', 'SuffixAutomaton', 'python'))
+sys.path.append(os.path.join(os.getcwd(), "Algorithmic", "SuffixAutomaton", "python"))
 from sam import SuffixAutomaton
 
-sys.path.append(os.path.join(os.getcwd(), 'Algorithmic', 'SuffixArrayLCP', 'python'))
+sys.path.append(os.path.join(os.getcwd(), "Algorithmic", "SuffixArrayLCP", "python"))
 from suffix_array import SuffixArray
 
-sys.path.append(os.path.join(os.getcwd(), 'Algorithmic', 'StreamingQuantiles', 'python'))
+sys.path.append(
+    os.path.join(os.getcwd(), "Algorithmic", "StreamingQuantiles", "python")
+)
 from quantiles import GKQuantile
 
-sys.path.append(os.path.join(os.getcwd(), 'Algorithmic', 'GraphIsomorphism', 'python'))
+sys.path.append(os.path.join(os.getcwd(), "Algorithmic", "GraphIsomorphism", "python"))
 from wl_test import are_isomorphic
 
-sys.path.append(os.path.join(os.getcwd(), 'Algorithmic', 'GeometryEngine2D', 'python'))
+sys.path.append(os.path.join(os.getcwd(), "Algorithmic", "GeometryEngine2D", "python"))
 from geometry import convex_hull, point_in_polygon
 
-sys.path.append(os.path.join(os.getcwd(), 'Algorithmic', 'OnDiskBTree', 'python'))
+sys.path.append(os.path.join(os.getcwd(), "Algorithmic", "OnDiskBTree", "python"))
 from btree import BTree
 
-sys.path.append(os.path.join(os.getcwd(), 'Algorithmic', 'MatchingEngine', 'python'))
+sys.path.append(os.path.join(os.getcwd(), "Algorithmic", "MatchingEngine", "python"))
 from matching import MatchingEngine
+
 
 class TestAlgoBatch2(unittest.TestCase):
     def test_sam(self):
@@ -55,13 +57,13 @@ class TestAlgoBatch2(unittest.TestCase):
         self.assertFalse(are_isomorphic(adj1, adj3))
 
     def test_geometry(self):
-        points = [(0,0), (2,0), (2,2), (0,2), (1,1)]
+        points = [(0, 0), (2, 0), (2, 2), (0, 2), (1, 1)]
         hull = convex_hull(points)
         self.assertEqual(len(hull), 4)
 
-        poly = [(0,0), (2,0), (2,2), (0,2)]
-        self.assertTrue(point_in_polygon(poly, (1,1)))
-        self.assertFalse(point_in_polygon(poly, (3,3)))
+        poly = [(0, 0), (2, 0), (2, 2), (0, 2)]
+        self.assertTrue(point_in_polygon(poly, (1, 1)))
+        self.assertFalse(point_in_polygon(poly, (3, 3)))
 
     def test_btree(self):
         bt = BTree(t=2)
@@ -72,11 +74,12 @@ class TestAlgoBatch2(unittest.TestCase):
 
     def test_matching_engine(self):
         me = MatchingEngine()
-        me.place_limit_order('sell', 100.0, 10)
-        me.place_limit_order('buy', 100.0, 5)
+        me.place_limit_order("sell", 100.0, 10)
+        me.place_limit_order("buy", 100.0, 5)
         self.assertEqual(me.asks[0][2], 5)
-        me.place_limit_order('buy', 90.0, 10)
+        me.place_limit_order("buy", 90.0, 10)
         self.assertEqual(len(me.bids), 1)
+
 
 if __name__ == "__main__":
     unittest.main()

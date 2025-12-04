@@ -1,4 +1,3 @@
-
 from rtree import Rect, RTree
 
 

@@ -1,7 +1,8 @@
-import unittest
+import importlib
 import os
 import shutil
-import importlib
+import unittest
+
 
 def import_challenge_module(challenge_num, module_name):
     base_dir = "EmulationModeling"
@@ -11,6 +12,7 @@ def import_challenge_module(challenge_num, module_name):
     dir_name = dirs[0]
     module_path = f"{base_dir}.{dir_name}.{module_name}"
     return importlib.import_module(module_path)
+
 
 class TestChallenges43_45(unittest.TestCase):
     def setUp(self):
@@ -25,7 +27,9 @@ class TestChallenges43_45(unittest.TestCase):
         mod_main = import_challenge_module(43, "main")
         mod_models = import_challenge_module(43, "models")
 
-        config = mod_models.RailwayConfig(duration=10, output_dir=f"../../{self.output_base}/43")
+        config = mod_models.RailwayConfig(
+            duration=10, output_dir=f"../../{self.output_base}/43"
+        )
         sim = mod_main.RailwaySimulation(config)
         sim.run(until=10)
         self.assertEqual(len(sim.trains), 3)
@@ -34,7 +38,9 @@ class TestChallenges43_45(unittest.TestCase):
         mod_main = import_challenge_module(44, "main")
         mod_models = import_challenge_module(44, "models")
 
-        config = mod_models.BootConfig(duration=5, output_dir=f"../../{self.output_base}/44")
+        config = mod_models.BootConfig(
+            duration=5, output_dir=f"../../{self.output_base}/44"
+        )
         sim = mod_main.BootSimulation(config)
         sim.run(until=5)
         self.assertTrue("BIOS" in sim.stages)
@@ -43,11 +49,14 @@ class TestChallenges43_45(unittest.TestCase):
         mod_main = import_challenge_module(45, "main")
         mod_models = import_challenge_module(45, "models")
 
-        config = mod_models.PipeConfig(duration=1, output_dir=f"../../{self.output_base}/45")
+        config = mod_models.PipeConfig(
+            duration=1, output_dir=f"../../{self.output_base}/45"
+        )
         sim = mod_main.PipeSimulation(config)
         # Should run without error
         sim.run()
-        self.assertTrue(sim.state[0] > 90) # Source pressure maintained
+        self.assertTrue(sim.state[0] > 90)  # Source pressure maintained
+
 
 if __name__ == "__main__":
     unittest.main()

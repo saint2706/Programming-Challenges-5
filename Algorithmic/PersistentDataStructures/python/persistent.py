@@ -6,13 +6,22 @@ Every update returns a new root, preserving previous versions.
 
 from typing import Any, Optional, Tuple
 
+
 class Node:
-    __slots__ = ['key', 'value', 'left', 'right']
-    def __init__(self, key: Any, value: Any, left: Optional['Node'] = None, right: Optional['Node'] = None):
+    __slots__ = ["key", "value", "left", "right"]
+
+    def __init__(
+        self,
+        key: Any,
+        value: Any,
+        left: Optional["Node"] = None,
+        right: Optional["Node"] = None,
+    ):
         self.key = key
         self.value = value
         self.left = left
         self.right = right
+
 
 class PersistentMap:
     """A persistent key-value store based on a balanced BST (AVL logic omitted for brevity, simple BST).
@@ -35,7 +44,7 @@ class PersistentMap:
                 return node.value
         return None
 
-    def set(self, key: Any, value: Any) -> 'PersistentMap':
+    def set(self, key: Any, value: Any) -> "PersistentMap":
         """Return a new PersistentMap with the key set to value."""
         new_root = self._insert(self.root, key, value)
         return PersistentMap(new_root)

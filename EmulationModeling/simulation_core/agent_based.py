@@ -1,12 +1,15 @@
-from typing import List, Any
+from typing import Any, List
+
 import numpy as np
+
 
 class Agent:
     def __init__(self, agent_id: int):
         self.id = agent_id
 
-    def step(self, model: 'AgentBasedModel'):
+    def step(self, model: "AgentBasedModel"):
         pass
+
 
 class AgentBasedModel:
     def __init__(self, seed: int = 42):

@@ -6,7 +6,6 @@ elevators, floors, and capacity.
 """
 
 
-
 class Elevator:
     """Simulates a single elevator with SCAN-like behavior."""
 

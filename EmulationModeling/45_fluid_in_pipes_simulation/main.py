@@ -1,16 +1,20 @@
-import numpy as np
-import networkx as nx
 import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
 from scipy.integrate import odeint
 from simulation_core.visualization import SimulationVisualizer
+
 from .models import PipeConfig
+
 
 class PipeSimulation:
     def __init__(self, config: PipeConfig):
         self.config = config
-        self.visualizer = SimulationVisualizer(output_dir=f"EmulationModeling/45_fluid_in_pipes_simulation/{config.output_dir}")
+        self.visualizer = SimulationVisualizer(
+            output_dir=f"EmulationModeling/45_fluid_in_pipes_simulation/{config.output_dir}"
+        )
         self.graph = nx.Graph()
-        self.state = None # Pressures at nodes
+        self.state = None  # Pressures at nodes
         self.setup_network()
 
     def setup_network(self):
@@ -20,7 +24,7 @@ class PipeSimulation:
         #               v    |
         #               4 -> 5
 
-        edges = [(0,1), (1,2), (2,3), (1,4), (4,5), (5,2)]
+        edges = [(0, 1), (1, 2), (2, 3), (1, 4), (4, 5), (5, 2)]
         for u, v in edges:
             self.graph.add_edge(u, v, resistance=1.0)
 
@@ -29,8 +33,8 @@ class PipeSimulation:
         # Initial pressures
         self.num_nodes = 6
         self.state = np.zeros(self.num_nodes)
-        self.state[0] = 100.0 # Source pressure high
-        self.state[3] = 0.0   # Sink pressure low
+        self.state[0] = 100.0  # Source pressure high
+        self.state[3] = 0.0  # Sink pressure low
 
     def derivative(self, P, t):
         # dP/dt = sum(flow_in) - sum(flow_out)
@@ -44,10 +48,10 @@ class PipeSimulation:
             return 0.0
 
         dPdt = np.zeros_like(P)
-        k = 10.0 # Bulk modulus / capacitance factor
+        k = 10.0  # Bulk modulus / capacitance factor
 
         for u, v, data in self.graph.edges(data=True):
-            R = data['resistance']
+            R = data["resistance"]
             # P might be passed as scalar if shape mismatch occurs, but here we expect array.
             # However, if odeint passes a list or scalar for single eq, it's an issue.
             # But we have size 6.
@@ -72,7 +76,9 @@ class PipeSimulation:
         t = np.linspace(0, self.config.duration, int(self.config.duration * 30))
 
         # Solve ODE
-        print(f"DEBUG: Starting odeint. state shape={self.state.shape}, state={self.state}")
+        print(
+            f"DEBUG: Starting odeint. state shape={self.state.shape}, state={self.state}"
+        )
         try:
             solution = odeint(self.derivative, self.state, t)
         except Exception as e:
@@ -80,7 +86,7 @@ class PipeSimulation:
             raise e
 
         # Visualize results
-        for i in range(0, len(t), 5): # skip frames
+        for i in range(0, len(t), 5):  # skip frames
             self.snapshot(solution[i], t[i])
 
         self.visualizer.save_gif("pipe_flow.gif")
@@ -89,22 +95,35 @@ class PipeSimulation:
         fig, ax = plt.subplots(figsize=(6, 4))
 
         # Draw nodes colored by Pressure
-        nx.draw(self.graph, self.pos, node_color=P, cmap=plt.cm.coolwarm,
-                vmin=0, vmax=100, node_size=500, with_labels=True, ax=ax)
+        nx.draw(
+            self.graph,
+            self.pos,
+            node_color=P,
+            cmap=plt.cm.coolwarm,
+            vmin=0,
+            vmax=100,
+            node_size=500,
+            with_labels=True,
+            ax=ax,
+        )
 
         # Draw edge widths by Flow magnitude
         for u, v, data in self.graph.edges(data=True):
-            flow = abs(P[u] - P[v]) / data['resistance']
-            nx.draw_networkx_edges(self.graph, self.pos, edgelist=[(u, v)], width=1+flow/5, ax=ax)
+            flow = abs(P[u] - P[v]) / data["resistance"]
+            nx.draw_networkx_edges(
+                self.graph, self.pos, edgelist=[(u, v)], width=1 + flow / 5, ax=ax
+            )
 
         ax.set_title(f"Fluid Pressure (t={t:.2f})")
         self.visualizer.add_frame(fig)
         plt.close(fig)
 
+
 def run_simulation():
     config = PipeConfig(duration=5.0)
     sim = PipeSimulation(config)
     sim.run()
+
 
 if __name__ == "__main__":
     run_simulation()

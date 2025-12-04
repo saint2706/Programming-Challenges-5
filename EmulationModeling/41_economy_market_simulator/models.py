@@ -1,6 +1,7 @@
 from pydantic import Field
 from simulation_core.config import BaseSimulationConfig
 
+
 class EconomyConfig(BaseSimulationConfig):
     num_households: int = 50
     num_firms: int = 10

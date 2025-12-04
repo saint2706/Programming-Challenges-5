@@ -1,8 +1,10 @@
+import os
+from typing import List, Optional
+
+import imageio
 import matplotlib.pyplot as plt
 import numpy as np
-from typing import List, Optional
-import os
-import imageio
+
 
 class SimulationVisualizer:
     def __init__(self, output_dir: str = "output"):
@@ -21,12 +23,12 @@ class SimulationVisualizer:
 
         # Modern matplotlib way
         try:
-             # Returns RGBA buffer
+            # Returns RGBA buffer
             buf = fig.canvas.buffer_rgba()
             image = np.asarray(buf)
         except AttributeError:
-             # Fallback for older versions or different backends if needed
-            image = np.frombuffer(fig.canvas.tostring_rgb(), dtype='uint8')
+            # Fallback for older versions or different backends if needed
+            image = np.frombuffer(fig.canvas.tostring_rgb(), dtype="uint8")
             image = image.reshape(fig.canvas.get_width_height()[::-1] + (3,))
 
         self.frames.append(image)
@@ -38,13 +40,13 @@ class SimulationVisualizer:
         path = os.path.join(self.output_dir, filename)
         imageio.mimsave(path, self.frames, fps=fps)
         print(f"Saved GIF to {path}")
-        self.frames = [] # clear
+        self.frames = []  # clear
 
     def save_mp4(self, filename: str, fps: int = 24):
         if not self.frames:
             print("No frames to save.")
             return
         path = os.path.join(self.output_dir, filename)
-        imageio.mimsave(path, self.frames, fps=fps, format='mp4')
+        imageio.mimsave(path, self.frames, fps=fps, format="mp4")
         print(f"Saved MP4 to {path}")
         self.frames = []

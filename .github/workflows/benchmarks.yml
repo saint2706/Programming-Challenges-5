@@ -1,0 +1,35 @@
+name: Benchmarks
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0' # Weekly
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest-benchmark
+
+      - name: Run Benchmarks
+        run: |
+          # Assuming benchmarks are in tests/benchmarks or marked with @pytest.mark.benchmark
+          # If no specific benchmark folder exists yet, we'll just try to run pytest with benchmark enabled
+          # But for now, let's just echo a placeholder if no benchmarks exist
+          if [ -d "tests/benchmarks" ]; then
+            pytest tests/benchmarks/ --benchmark-only --benchmark-json=benchmark_results.json
+          else
+            echo "No benchmarks found in tests/benchmarks/"
+          fi

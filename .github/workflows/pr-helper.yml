@@ -1,0 +1,47 @@
+name: PR Auto-Review Helper
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  review-helper:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for CONTRIBUTING.md compliance
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { repo, owner, number } = context.issue;
+            const pr = await github.rest.pulls.get({
+              owner,
+              repo,
+              pull_number: number,
+            });
+            
+            const body = pr.data.body || "";
+            const title = pr.data.title || "";
+            
+            let comments = [];
+            
+            if (title.length < 10) {
+              comments.push("- ⚠️ Title seems too short. Please use a descriptive title.");
+            }
+            
+            if (body.length < 20) {
+              comments.push("- ⚠️ Description seems too short. Please explain your changes.");
+            }
+            
+            if (comments.length > 0) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: number,
+                body: "### PR Review Helper\n\n" + comments.join("\n") + "\n\nPlease review [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines."
+              });
+            }

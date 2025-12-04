@@ -1,4 +1,27 @@
-# Repository Structure and Challenges
+# Programming Challenges 5
+
+A comprehensive collection of programming challenges across multiple domains, designed for learning, benchmarking, and AI agent testing.
+
+## Documentation
+
+- [**Developer Guide**](DEVELOPER_GUIDE.md): How to setup, run, and test.
+- [**Architecture**](ARCHITECTURE.md): High-level design and philosophy.
+- [**Contributing**](CONTRIBUTING.md): Guidelines for contributors.
+- [**Agent Safety**](AGENTS.md): Rules for AI agents.
+- [**Benchmarking**](BENCHMARKING_GUIDE.md): Performance testing guide.
+- [**Troubleshooting**](TROUBLESHOOTING.md): Common fixes.
+
+## Project Philosophy
+
+We aim to build **polyglot reference implementations** (Python, Rust, Go) with a focus on:
+
+1. **Readability**: Clean, well-documented code.
+2. **Performance**: Optimized algorithms with benchmarks.
+3. **Modularity**: Self-contained challenges.
+
+---
+
+## Challenge Status
 
 This repository contains programming challenges across five categories: **Practical**, **Algorithmic**, **Emulation/Modeling**, **Artificial Intelligence**, and **Game Development**. Below is the status of all challenges.
 
@@ -6,41 +29,41 @@ This repository contains programming challenges across five categories: **Practi
 
 | #   | Challenge                                   | Difficulty | Status                   | Implementation Notes                                                                                                     |
 | :-- | :------------------------------------------ | :--------- | :----------------------- | :----------------------------------------------------------------------------------------------------------------------- |
-| 1   | Personal Time Tracker                       | (E)        | Implemented (Python)     | Store data in SQLite or JSON. Use `datetime` module for tracking.                                                        |
-| 2   | Terminal Habit Coach                        | (E)        | Implemented (Python)     | Use SQLite for persistence. A simple `argparse` or `click` CLI.                                                          |
-| 3   | Smart Expense Splitter                      | (E)        | Implemented (Python)     | Model as a graph problem to simplify debts (e.g., Min-Cost Max-Flow or simpler heuristics).                              |
-| 4   | Self-Hosted Link Shortener                  | (E)        | Implemented (Python)     | Use a simple web framework (Flask/FastAPI) and a database for mapping. Hash the original URL for a basic slug.           |
-| 5   | Universal Unit Converter API                | (E)        | Implemented (Python)     | Store conversion factors in a JSON or config file. Expose via a simple HTTP API.                                         |
-| 6   | System Health Dashboard                     | (E)        | Implemented (Python)     | Use `psutil` library to get CPU/RAM/Disk stats. A simple web dashboard or CLI.                                           |
-| 7   | Interview Prep CLI                          | (E)        | Implemented (Python)     | Store Q&A in JSON/YAML. Implement spaced repetition using a simple date-based algorithm.                                 |
-| 8   | Smart Download Manager                      | (M)        | Implemented (Python)     | Use `threading` for concurrent chunks. `requests` for HTTP Range headers (pausing). `hashlib` for checksums.             |
-| 9   | Encrypted Notes Vault                       | (M)        | Implemented (Python)     | Use `cryptography` library (Fernet) for symmetric encryption. `tkinter` or `PyQt` for minimal GUI.                       |
-| 10  | Git Commit Quality Bot                      | (M)        | Implemented (Python)     | Implement as a `pre-commit` hook. Use regex to check message format (e.g., 50-char limit for subject).                   |
-| 11  | Universal Log Analyzer                      | (M)        | Implemented (Python)     | Use regex for parsing common formats (Apache, nginx). `pandas` for aggregation. `Plotly` or `matplotlib` for dashboards. |
-| 12  | Static Site Generator                       | (M)        | Implemented (Python)     | Use `markdown` library to convert. `Jinja2` for templating. Manage posts, tags, and drafts.                              |
-| 13  | Media Library Organizer                     | (M)        | Implemented (Python)     | Use APIs like TMDB (movies) or MusicBrainz (music). `os` and `shutil` for file operations.                               |
-| 14  | Password Data Breach Checker                | (M)        | Implemented (Python)     | Use `hashlib` (SHA-1). Implement k-Anonymity by sending only the first 5 hash chars to HIBP API.                         |
-| 15  | Dotfiles Manager                            | (M)        | Implemented (Python)     | Core logic involves creating/managing symlinks from a central repo to home directory locations.                          |
+| 1   | [Personal Time Tracker](Practical/Personal%20Time%20Tracker)                       | (E)        | Implemented (Python)     | Store data in SQLite or JSON. Use `datetime` module for tracking.                                                        |
+| 2   | [Terminal Habit Coach](Practical/Terminal%20Habit%20Coach)                        | (E)        | Implemented (Python)     | Use SQLite for persistence. A simple `argparse` or `click` CLI.                                                          |
+| 3   | [Smart Expense Splitter](Practical/Smart%20Expense%20Splitter)                      | (E)        | Implemented (Python)     | Model as a graph problem to simplify debts (e.g., Min-Cost Max-Flow or simpler heuristics).                              |
+| 4   | [Self-Hosted Link Shortener](Practical/Self-Hosted%20Link%20Shortener)                  | (E)        | Implemented (Python)     | Use a simple web framework (Flask/FastAPI) and a database for mapping. Hash the original URL for a basic slug.           |
+| 5   | [Universal Unit Converter API](Practical/Universal%20Unit%20Converter%20API)                | (E)        | Implemented (Python)     | Store conversion factors in a JSON or config file. Expose via a simple HTTP API.                                         |
+| 6   | [System Health Dashboard](Practical/System%20Health%20Dashboard)                     | (E)        | Implemented (Python)     | Use `psutil` library to get CPU/RAM/Disk stats. A simple web dashboard or CLI.                                           |
+| 7   | [Interview Prep CLI](Practical/Interview%20Prep%20CLI)                          | (E)        | Implemented (Python)     | Store Q&A in JSON/YAML. Implement spaced repetition using a simple date-based algorithm.                                 |
+| 8   | [Smart Download Manager](Practical/Smart%20Download%20Manager)                      | (M)        | Implemented (Python)     | Use `threading` for concurrent chunks. `requests` for HTTP Range headers (pausing). `hashlib` for checksums.             |
+| 9   | [Encrypted Notes Vault](Practical/Encrypted%20Notes%20Vault)                       | (M)        | Implemented (Python)     | Use `cryptography` library (Fernet) for symmetric encryption. `tkinter` or `PyQt` for minimal GUI.                       |
+| 10  | [Git Commit Quality Bot](Practical/Git%20Commit%20Quality%20Bot)                      | (M)        | Implemented (Python)     | Implement as a `pre-commit` hook. Use regex to check message format (e.g., 50-char limit for subject).                   |
+| 11  | [Universal Log Analyzer](Practical/Universal%20Log%20Analyzer)                      | (M)        | Implemented (Python)     | Use regex for parsing common formats (Apache, nginx). `pandas` for aggregation. `Plotly` or `matplotlib` for dashboards. |
+| 12  | [Static Site Generator](Practical/Static%20Site%20Generator)                       | (M)        | Implemented (Python)     | Use `markdown` library to convert. `Jinja2` for templating. Manage posts, tags, and drafts.                              |
+| 13  | [Media Library Organizer](Practical/Media%20Library%20Organizer)                     | (M)        | Implemented (Python)     | Use APIs like TMDB (movies) or MusicBrainz (music). `os` and `shutil` for file operations.                               |
+| 14  | [Password Data Breach Checker](Practical/Password%20Data%20Breach%20Checker)                | (M)        | Implemented (Python)     | Use `hashlib` (SHA-1). Implement k-Anonymity by sending only the first 5 hash chars to HIBP API.                         |
+| 15  | [Dotfiles Manager](Practical/Dotfiles%20Manager)                            | (M)        | Implemented (Python)     | Core logic involves creating/managing symlinks from a central repo to home directory locations.                          |
 | 16  | Markdown Knowledge Base                     | (M)        | Implemented (Python)     | Use `Whoosh` or `Elasticsearch` for full-text search. Parse links (regex or AST) to build the graph.                     |
-| 17  | Personal Finance Dashboard                  | (M)        | Implemented (Python)     | Use `pandas` to read and analyze CSVs. `matplotlib` or `Plotly` for visualization.                                       |
-| 18  | Image Compression Tool                      | (M)        | Implemented (Python)     | Use `Pillow` (PIL) for image operations. Expose `quality` (lossy) and `optimize` (lossless) parameters.                  |
+| 17  | [Personal Finance Dashboard](Practical/Personal%20Finance%20Dashboard)                  | (M)        | Implemented (Python)     | Use `pandas` to read and analyze CSVs. `matplotlib` or `Plotly` for visualization.                                       |
+| 18  | [Image Compression Tool](Practical/Image%20Compression%20Tool)                      | (M)        | Implemented (Python)     | Use `Pillow` (PIL) for image operations. Expose `quality` (lossy) and `optimize` (lossless) parameters.                  |
 | 19  | Resume/Portfolio Generator                  | (M)        | Implemented (Python)     | Use `Jinja2` to render JSON data into HTML/Markdown templates. `WeasyPrint` or `pandoc` for PDF.                         |
-| 20  | Pluggable Notification Hub                  | (M)        | Implemented (Python)     | Design a core `Notification` class and provider-specific subclasses (EmailProvider, SlackProvider).                      |
-| 21  | Data Import Wizard                          | (M)        | Implemented (Python)     | Use `pandas` to infer dtypes. `SQLAlchemy` to generate tables and insert data into SQLite.                               |
-| 22  | Screen Time Tracker                         | (M)        | Implemented (Python)     | OS-specific APIs needed (e.g., `pywin32` on Windows, AppleScript on macOS) to get active window title.                   |
-| 23  | Smart Screenshot Tool                       | (M)        | Implemented (Python)     | Use `mss` for screen capture. `PyQt` or `tkinter` for drawing annotations. `Tesseract` (OCR) for search.                 |
-| 24  | Email Newsletter Engine                     | (M)        | Implemented (Python)     | Use `smtplib` for sending. `Jinja2` for templates. Manage subscribers in a simple DB (SQLite).                           |
-| 25  | Document Template Filler                    | (M)        | Implemented (Python)     | For DOCX, use `python-docx`. For PDF, `PyPDF2` or `reportlab` (harder) or find a template library.                       |
+| 20  | [Pluggable Notification Hub](Practical/Pluggable%20Notification%20Hub)                  | (M)        | Implemented (Python)     | Design a core `Notification` class and provider-specific subclasses (EmailProvider, SlackProvider).                      |
+| 21  | [Data Import Wizard](Practical/Data%20Import%20Wizard)                          | (M)        | Implemented (Python)     | Use `pandas` to infer dtypes. `SQLAlchemy` to generate tables and insert data into SQLite.                               |
+| 22  | [Screen Time Tracker](Practical/Screen%20Time%20Tracker)                         | (M)        | Implemented (Python)     | OS-specific APIs needed (e.g., `pywin32` on Windows, AppleScript on macOS) to get active window title.                   |
+| 23  | [Smart Screenshot Tool](Practical/Smart%20Screenshot%20Tool)                       | (M)        | Implemented (Python)     | Use `mss` for screen capture. `PyQt` or `tkinter` for drawing annotations. `Tesseract` (OCR) for search.                 |
+| 24  | [Email Newsletter Engine](Practical/Email%20Newsletter%20Engine)                     | (M)        | Implemented (Python)     | Use `smtplib` for sending. `Jinja2` for templates. Manage subscribers in a simple DB (SQLite).                           |
+| 25  | [Document Template Filler](Practical/Document%20Template%20Filler)                    | (M)        | Implemented (Python)     | For DOCX, use `python-docx`. For PDF, `PyPDF2` or `reportlab` (harder) or find a template library.                       |
 | 26  | Smart Calendar Merger                       | (M)        |                          | Use `icalendar` library to parse `.ics` files. Implement logic to merge event lists and find overlaps.                   |
-| 27  | Photo De-Duplicator                         | (M)        | Implemented (Python)     | Use `Pillow` and an image hashing library (`imagehash`) for perceptual hashing (aHash, pHash).                           |
-| 28  | Code Snippet Manager                        | (M)        | Implemented (Python)     | Use `Pygments` for syntax highlighting. Store snippets in SQLite with tags.                                              |
-| 29  | Dataset Explorer UI                         | (M)        | Implemented (Python)     | Use `pandas-profiling` or `sweetviz` for reports. Build a simple `Streamlit` or `Dash` UI.                               |
-| 30  | Offline-first PWA To-Do App                 | (M)        | Implemented (JavaScript) | Requires Service Workers for caching. Use `IndexedDB` or `localStorage` for client-side storage.                         |
-| 31  | Personal API Key Vault                      | (M)        | Implemented (Python)     | Use a master password to derive an encryption key (e.g., PBKDF2). Store encrypted keys in a local file/DB.               |
-| 32  | Privacy-Friendly Analytics for Static Sites | (M)        | Implemented (Python)     | A simple backend (FastAPI) to log pageviews (URL, referrer). No cookies. Store in SQLite.                                |
-| 33  | Cross-Platform Clipboard Sync               | (H)        | Implemented (Python)     | Requires a server (e.g., Flask) and clients. Use UDP broadcast for LAN discovery. `cryptography` for E2E.                |
-| 34  | Command Palette for Your OS                 | (H)        | Implemented (Python)     | Needs a global hotkey listener. `PyQt` for the UI. Plugin system can use simple Python modules in a folder.              |
-| 35  | Local Search Engine                         | (H)        | Implemented (Python)     | Use `Whoosh` (pure Python) or `Solr`/`Elasticsearch` for indexing. `Tika` for parsing docs (PDF, DOCX).                  |
+| 27  | [Photo De-Duplicator](Practical/Photo%20De-Duplicator)                         | (M)        | Implemented (Python)     | Use `Pillow` and an image hashing library (`imagehash`) for perceptual hashing (aHash, pHash).                           |
+| 28  | [Code Snippet Manager](Practical/Code%20Snippet%20Manager)                        | (M)        | Implemented (Python)     | Use `Pygments` for syntax highlighting. Store snippets in SQLite with tags.                                              |
+| 29  | [Dataset Explorer UI](Practical/Dataset%20Explorer%20UI)                         | (M)        | Implemented (Python)     | Use `pandas-profiling` or `sweetviz` for reports. Build a simple `Streamlit` or `Dash` UI.                               |
+| 30  | [Offline-first PWA To-Do App](Practical/Offline-first%20PWA%20To-Do%20App)                 | (M)        | Implemented (JavaScript) | Requires Service Workers for caching. Use `IndexedDB` or `localStorage` for client-side storage.                         |
+| 31  | [Personal API Key Vault](Practical/Personal%20API%20Key%20Vault)                      | (M)        | Implemented (Python)     | Use a master password to derive an encryption key (e.g., PBKDF2). Store encrypted keys in a local file/DB.               |
+| 32  | [Privacy-Friendly Analytics for Static Sites](Practical/Privacy-Friendly%20Analytics%20for%20Static%20Sites) | (M)        | Implemented (Python)     | A simple backend (FastAPI) to log pageviews (URL, referrer). No cookies. Store in SQLite.                                |
+| 33  | [Cross-Platform Clipboard Sync](Practical/Cross-Platform%20Clipboard%20Sync)               | (H)        | Implemented (Python)     | Requires a server (e.g., Flask) and clients. Use UDP broadcast for LAN discovery. `cryptography` for E2E.                |
+| 34  | [Command Palette for Your OS](Practical/Command%20Palette%20for%20Your%20OS)                 | (H)        | Implemented (Python)     | Needs a global hotkey listener. `PyQt` for the UI. Plugin system can use simple Python modules in a folder.              |
+| 35  | [Local Search Engine](Practical/Local%20Search%20Engine)                         | (H)        | Implemented (Python)     | Use `Whoosh` (pure Python) or `Solr`/`Elasticsearch` for indexing. `Tika` for parsing docs (PDF, DOCX).                  |
 | 36  | Backup Orchestrator                         | (H)        |                          | Implement rsync-like logic (check file mtime/hash). Use `zlib` or `lzma` for compression. Manage snapshots.              |
 | 37  | Task Queue + Worker System                  | (H)        |                          | Use Redis LISTs (LPUSH/BRPOP) for a simple queue. `Celery` is the full-featured version.                                 |
 | 38  | CLI Email Client with Rules                 | (H)        |                          | Use `imaplib` and `smtplib`. `sqlite` for offline caching. Rule engine can be simple JSON/YAML.                          |
@@ -62,33 +85,33 @@ This repository contains programming challenges across five categories: **Practi
 | #   | Challenge                                 | Difficulty | Status                                     | Implementation Notes                                                                                            |
 | :-- | :---------------------------------------- | :--------- | :----------------------------------------- | :-------------------------------------------------------------------------------------------------------------- |
 | 1   | Approximate Set Membership (Bloom Filter) | (E)        | Optimized (Python)                         | Implement a bit array and multiple hash functions (e.g., variations of `mmh3`). Test false positive rate.       |
-| 2   | Advanced Interval Scheduler               | (M)        | Optimized (Python)                         | Classic DP problem. Sort by end times. `dp[i]` = max weight using intervals up to `i`.                          |
-| 3   | Autocomplete Engine                       | (M)        | Optimized (Python)                         | Use a Trie (Prefix Tree). Store frequency in nodes for ranking.                                                 |
-| 4   | Approximate String Matching               | (M)        | Optimized (Python)                         | Implement Levenshtein distance (DP). For speed, explore BK-trees or n-gram indexing.                            |
-| 5   | K-d Tree & Nearest Neighbors              | (M)        | Optimized (Python)                         | Build tree by recursively splitting on median. k-NN search requires backtracking (priority queue).              |
-| 6   | Consistent Hashing Library                | (M)        | Optimized (Python)                         | Map nodes/keys to a circle (e.g., `hash(key) % 360`). Virtual nodes improve distribution.                       |
-| 7   | Generic DP Visualizer                     | (M)        | Optimized (Python)                         | Needs a UI (`tkinter`, `PyQt`, web). Pass the DP table and recurrence; step through filling it.                 |
-| 8   | Top-K Frequent Items in Stream            | (M)        | Optimized (Python)                         | Implement Misra-Gries or Space-Saving algorithm. A hash map is the core data structure.                         |
-| 9   | Randomized Algorithms Suite               | (M)        | Optimized (Python)                         | Quickselect (partitioning), Skip Lists (probabilistic linked lists), Treaps (BST + heap).                       |
-| 10  | Matrix Algorithm Lab                      | (M)        | Optimized (Python)                         | Implement matrix as list-of-lists or `numpy`. Strassen is a recursive, divide-and-conquer algorithm.            |
-| 11  | HyperLogLog Implementation                | (M)        | Implemented (Rust), Optimized (Python)     | Core is hashing items and storing the max number of leading zeros in the hash.                                  |
-| 12  | Game Tree Search Framework                | (M)        | Implemented (Rust), Optimized (Python)     | Implement Minimax. Alpha-beta pruning is an optimization that prunes unpromising branches.                      |
-| 13  | Clustering Algorithms Suite               | (M)        | Implemented (Rust), Optimized (Python)     | k-means (centroids), k-medoids (data points), DBSCAN (density-based). `matplotlib` for visualization.           |
-| 14  | Edit Distance with Custom Costs           | (M)        | Implemented (Rust), Optimized (Python)     | Standard Levenshtein DP, but use the custom costs in the recurrence relation.                                   |
-| 15  | Online Caching Simulator                  | (M)        | Implemented (Rust), Optimized (Python)     | Implement cache as a dict/hash map. LRU needs a doubly-linked list or `OrderedDict`.                            |
-| 16  | Text Justification Engine                 | (M)        | Implemented (Rust), Optimized (Python)     | DP approach: `dp[i]` = min badness for justifying words `i` to `n`.                                             |
-| 17  | Large Integer Arithmetic Library          | (M)        | Implemented (Rust), Optimized (Python)     | Store numbers as arrays of digits. Implement schoolbook add/subtract. Karatsuba or FFT for fast multiply.       |
-| 18  | Dynamic Shortest Paths Service            | (H)        | Implemented (Rust), Optimized (Python)     | For edge weight changes, Dijkstra is too slow. Research D\* Lite or algorithms for dynamic graphs.              |
+| 2   | [Advanced Interval Scheduler](Algorithmic/Advanced%20Interval%20Scheduler)               | (M)        | Optimized (Python)                         | Classic DP problem. Sort by end times. `dp[i]` = max weight using intervals up to `i`.                          |
+| 3   | [Autocomplete Engine](Algorithmic/Autocomplete%20Engine)                       | (M)        | Optimized (Python)                         | Use a Trie (Prefix Tree). Store frequency in nodes for ranking.                                                 |
+| 4   | [Approximate String Matching](Algorithmic/Approximate%20String%20Matching)               | (M)        | Optimized (Python)                         | Implement Levenshtein distance (DP). For speed, explore BK-trees or n-gram indexing.                            |
+| 5   | [K-d Tree & Nearest Neighbors](Algorithmic/K-d%20Tree%20&%20Nearest%20Neighbors)              | (M)        | Optimized (Python)                         | Build tree by recursively splitting on median. k-NN search requires backtracking (priority queue).              |
+| 6   | [Consistent Hashing Library](Algorithmic/Consistent%20Hashing%20Library)                | (M)        | Optimized (Python)                         | Map nodes/keys to a circle (e.g., `hash(key) % 360`). Virtual nodes improve distribution.                       |
+| 7   | [Generic DP Visualizer](Algorithmic/Generic%20DP%20Visualizer)                     | (M)        | Optimized (Python)                         | Needs a UI (`tkinter`, `PyQt`, web). Pass the DP table and recurrence; step through filling it.                 |
+| 8   | [Top-K Frequent Items in Stream](Algorithmic/Top-K%20Frequent%20Items%20in%20Stream)            | (M)        | Optimized (Python)                         | Implement Misra-Gries or Space-Saving algorithm. A hash map is the core data structure.                         |
+| 9   | [Randomized Algorithms Suite](Algorithmic/Randomized%20Algorithms%20Suite)               | (M)        | Optimized (Python)                         | Quickselect (partitioning), Skip Lists (probabilistic linked lists), Treaps (BST + heap).                       |
+| 10  | [Matrix Algorithm Lab](Algorithmic/Matrix%20Algorithm%20Lab)                      | (M)        | Optimized (Python)                         | Implement matrix as list-of-lists or `numpy`. Strassen is a recursive, divide-and-conquer algorithm.            |
+| 11  | [HyperLogLog Implementation](Algorithmic/HyperLogLog%20Implementation)                | (M)        | Implemented (Rust), Optimized (Python)     | Core is hashing items and storing the max number of leading zeros in the hash.                                  |
+| 12  | [Game Tree Search Framework](Algorithmic/Game%20Tree%20Search%20Framework)                | (M)        | Implemented (Rust), Optimized (Python)     | Implement Minimax. Alpha-beta pruning is an optimization that prunes unpromising branches.                      |
+| 13  | [Clustering Algorithms Suite](Algorithmic/Clustering%20Algorithms%20Suite)               | (M)        | Implemented (Rust), Optimized (Python)     | k-means (centroids), k-medoids (data points), DBSCAN (density-based). `matplotlib` for visualization.           |
+| 14  | [Edit Distance with Custom Costs](Algorithmic/Edit%20Distance%20with%20Custom%20Costs)           | (M)        | Implemented (Rust), Optimized (Python)     | Standard Levenshtein DP, but use the custom costs in the recurrence relation.                                   |
+| 15  | [Online Caching Simulator](Algorithmic/Online%20Caching%20Simulator)                  | (M)        | Implemented (Rust), Optimized (Python)     | Implement cache as a dict/hash map. LRU needs a doubly-linked list or `OrderedDict`.                            |
+| 16  | [Text Justification Engine](Algorithmic/Text%20Justification%20Engine)                 | (M)        | Implemented (Rust), Optimized (Python)     | DP approach: `dp[i]` = min badness for justifying words `i` to `n`.                                             |
+| 17  | [Large Integer Arithmetic Library](Algorithmic/Large%20Integer%20Arithmetic%20Library)          | (M)        | Implemented (Rust), Optimized (Python)     | Store numbers as arrays of digits. Implement schoolbook add/subtract. Karatsuba or FFT for fast multiply.       |
+| 18  | [Dynamic Shortest Paths Service](Algorithmic/Dynamic%20Shortest%20Paths%20Service)            | (H)        | Implemented (Rust), Optimized (Python)     | For edge weight changes, Dijkstra is too slow. Research D\* Lite or algorithms for dynamic graphs.              |
 | 19  | Constraint Solver (Mini-SAT)              | (H)        | Implemented (Rust), Optimized (Python)     | Implement DPLL: unit propagation, pure literal elimination, and branching. Clause representation is key.        |
-| 20  | Generic Flow Library                      | (H)        | Implemented (Rust), Optimized (Python)     | Start with Edmonds-Karp (BFS for augmenting paths). Min-cut from residual graph.                                |
+| 20  | [Generic Flow Library](Algorithmic/Generic%20Flow%20Library)                      | (H)        | Implemented (Rust), Optimized (Python)     | Start with Edmonds-Karp (BFS for augmenting paths). Min-cut from residual graph.                                |
 | 21  | Persistent Data Structures Kit            | (H)        | Implemented (Go), Optimized (Python)       | Key is "path copying." When modifying a node, copy it and its ancestors.                                        |
 | 22  | Rope-based Text Editor Core               | (H)        | Implemented (Go), Optimized (Python)       | Implement a binary tree where leaves are strings. Insert/delete involves splitting/merging nodes.               |
 | 23  | 2D Range Query Library                    | (H)        | Implemented (Go), Optimized (Python)       | A 2D Fenwick tree (BIT) or segment tree. Can be a 1D tree where each node is another 1D tree.                   |
 | 24  | Suffix Automaton Toolkit                  | (H)        | Implemented (Go), Optimized (Python)       | Complex state machine. Each path from root = a suffix. Online O(n) construction is possible.                    |
-| 25  | Streaming Quantiles                       | (H)        | Implemented (Go), Optimized (Python)       | CKMS or KLL algorithms. Maintain a compact summary of the stream, not all data.                                 |
+| 25  | [Streaming Quantiles](Algorithmic/StreamingQuantiles)                       | (H)        | Implemented (Go), Optimized (Python)       | CKMS or KLL algorithms. Maintain a compact summary of the stream, not all data.                                 |
 | 26  | Suffix Array + LCP                        | (H)        | Implemented (Go), Optimized (Python)       | Build suffix array (e.g., O(n log n) or O(n)). Kasai's algorithm for O(n) LCP array.                            |
 | 27  | Graph Isomorphism Checker (Heuristic)     | (H)        | Implemented (Go), Optimized (Python)       | No known poly-time algorithm. Use heuristics like Weisfeiler-Lehman (color refinement).                         |
-| 28  | Geometry Engine 2D                        | (H)        | Implemented (Go), Optimized (Python)       | Use `atan2` for angles. Convex hull (e.g., Graham scan). Point-in-polygon (ray casting).                        |
+| 28  | [Geometry Engine 2D](Algorithmic/GeometryEngine2D)                        | (H)        | Implemented (Go), Optimized (Python)       | Use `atan2` for angles. Convex hull (e.g., Graham scan). Point-in-polygon (ray casting).                        |
 | 29  | On-Disk B-Tree Index                      | (H)        | Implemented (Go), Optimized (Python)       | Focus on serializing/deserializing nodes (pages) to disk. Each node is a fixed-size block.                      |
 | 30  | Matching Engine (Order Book)              | (H)        | Implemented (Go), Optimized (Python)       | Use two priority heaps (min-heap for asks, max-heap for bids) or sorted data structures.                        |
 | 31  | Multi-dimensional Knapsack Solver         | (H)        | Implemented (Go)                           | DP state becomes `dp[i][w1][w2]...`. For large W, use branch-and-bound.                                         |
@@ -96,20 +119,20 @@ This repository contains programming challenges across five categories: **Practi
 | 33  | Scheduler with Deadlines & Penalties      | (H)        | Implemented (Go)                           | Sort by deadlines. DP or greedy approach with a disjoint set (for finding available slots).                     |
 | 34  | Parallel Sort Library                     | (H)        | Implemented (Go)                           | Parallel merge sort is a good start. Use `threading` or `multiprocessing` to sort subarrays.                    |
 | 35  | Disjoint Set with Rollback                | (H)        | Implemented (Go)                           | DSU (Union-Find). To rollback, don't use path compression. Store a stack of changes.                            |
-| 36  | Temporal Event Store                      | (H)        | Implemented (Go)                           | Use an interval tree to index events by their time ranges for efficient queries.                                |
+| 36  | [Temporal Event Store](Algorithmic/TemporalEventStore)                      | (H)        | Implemented (Go)                           | Use an interval tree to index events by their time ranges for efficient queries.                                |
 | 37  | Routing with Turn Penalties               | (H)        | Implemented (Go)                           | Model graph with edges as (u, v) pairs. Or, model graph with nodes as (u, v) _edges_ to store turn costs.       |
 | 38  | Pattern Mining in Sequences               | (H)        | Implemented (Go)                           | Apriori-based (GSP) or PrefixSpan. Involves building and mining prefix trees.                                   |
-| 39  | Automatic Timetabler                      | (H)        | Implemented (Go)                           | Model as a graph coloring problem (courses=nodes, conflicts=edges). Use heuristics (e.g., backtracking).        |
+| 39  | [Automatic Timetabler](Algorithmic/AutomaticTimetabler)                      | (H)        | Implemented (Go)                           | Model as a graph coloring problem (courses=nodes, conflicts=edges). Use heuristics (e.g., backtracking).        |
 | 40  | Bin Packing Variants                      | (H)        | Implemented (Go)                           | NP-hard. Implement heuristics: First Fit, Best Fit, First Fit Decreasing.                                       |
-| 41  | Image Seam Carving                        | (H)        | Implemented (Python)                       | DP. Find lowest-energy seam (path) from top to bottom. Energy = pixel gradient.                                 |
-| 42  | Auto-Completion with Language Model Prior | (H)        | Implemented (Python)                       | Combine Trie search (for prefix) with n-gram probabilities (for ranking).                                       |
-| 43  | Route Planning with Constraints           | (H)        | Implemented (Python)                       | Modify Dijkstra/A\*. For "must-visit," find path segments (A->B, B->C). For "forbidden," remove nodes.          |
-| 44  | Polygon Triangulation                     | (H)        | Implemented (Python)                       | Ear clipping algorithm (O(n^2)) is feasible. Find a convex vertex ("ear") and clip it.                          |
-| 45  | Subsequence Automaton                     | (H)        | Implemented (Python)                       | Build an automaton in O(n\*k) (k=alphabet size) where `next[i][c]` = first occurrence of `c` after pos `i`.     |
-| 46  | Dynamic Connectivity Structure            | (I)        | Implemented (Python)                       | Requires complex data structures like a link-cut tree or a fully dynamic graph algorithm.                       |
-| 47  | Regex Engine                              | (I)        | Implemented (Python)                       | Convert regex to NFA (Thompson's construction), then NFA to DFA (subset construction).                          |
+| 41  | [Image Seam Carving](Algorithmic/Image%20Seam%20Carving)                        | (H)        | Implemented (Python)                       | DP. Find lowest-energy seam (path) from top to bottom. Energy = pixel gradient.                                 |
+| 42  | [Auto-Completion with Language Model Prior](Algorithmic/Auto-Completion%20with%20Language%20Model%20Prior) | (H)        | Implemented (Python)                       | Combine Trie search (for prefix) with n-gram probabilities (for ranking).                                       |
+| 43  | [Route Planning with Constraints](Algorithmic/Route%20Planning%20with%20Constraints)           | (H)        | Implemented (Python)                       | Modify Dijkstra/A\*. For "must-visit," find path segments (A->B, B->C). For "forbidden," remove nodes.          |
+| 44  | [Polygon Triangulation](Algorithmic/Polygon%20Triangulation)                     | (H)        | Implemented (Python)                       | Ear clipping algorithm (O(n^2)) is feasible. Find a convex vertex ("ear") and clip it.                          |
+| 45  | [Subsequence Automaton](Algorithmic/Subsequence%20Automaton)                     | (H)        | Implemented (Python)                       | Build an automaton in O(n\*k) (k=alphabet size) where `next[i][c]` = first occurrence of `c` after pos `i`.     |
+| 46  | [Dynamic Connectivity Structure](Algorithmic/Dynamic%20Connectivity%20Structure)            | (I)        | Implemented (Python)                       | Requires complex data structures like a link-cut tree or a fully dynamic graph algorithm.                       |
+| 47  | [Regex Engine](Algorithmic/Regex%20Engine)                              | (I)        | Implemented (Python)                       | Convert regex to NFA (Thompson's construction), then NFA to DFA (subset construction).                          |
 | 48  | Versioned Key–Value Store (LSM-tree)      | (I)        | Implemented (Python)                       | Implement an in-memory memtable (e.g., skiplist) and on-disk SSTables. Compaction merges SSTables.              |
-| 49  | Map Label Placement                       | (I)        | Implemented (Python)                       | NP-hard. Heuristics like simulated annealing or greedy placement (e.g., place most constrained labels first).   |
+| 49  | [Map Label Placement](Algorithmic/Map%20Label%20Placement)                       | (I)        | Implemented (Python)                       | NP-hard. Heuristics like simulated annealing or greedy placement (e.g., place most constrained labels first).   |
 | 50  | Multidimensional Index (R-Tree)           | (I)        | Implemented (Python)                       | Tree of Minimum Bounding Rectangles (MBRs). Splitting nodes (e.g., quadratic or linear split) is the hard part. |
 
 ## 3. Emulation / Modeling Challenges
@@ -160,7 +183,7 @@ This repository contains programming challenges across five categories: **Practi
 | #   | Challenge                                           | Difficulty | Status               | Implementation Notes                                                                                                         |
 | :-- | :-------------------------------------------------- | :--------- | :------------------- | :--------------------------------------------------------------------------------------------------------------------------- |
 | 1   | Rule-based Chatbot                                  | (E)        | Implemented (Python) | Use simple `if-elif-else` or regex pattern matching on user input.                                                           |
-| 2   | Search Algorithms Lab                               | (E)        | Implemented (Python) | Implement BFS (use a `queue`), DFS (use a `stack` or recursion). A\* needs a `priority_queue`.                               |
+| 2   | [Search Algorithms Lab](ArtificialIntelligence/SearchAlgorithmsLab)                               | (E)        | Implemented (Python) | Implement BFS (use a `queue`), DFS (use a `stack` or recursion). A\* needs a `priority_queue`.                               |
 | 3   | Spam Filter (Naive Bayes)                           | (E)        | Implemented (Python) | Use `scikit-learn`'s `MultinomialNB`. Tokenize text and use `CountVectorizer` for features.                                  |
 | 4   | Classic Game AI (Tic-Tac-Toe, Connect-4)            | (M)        | Implemented (Python) | Implement Minimax algorithm. Connect-4 is harder and may need alpha-beta pruning.                                            |
 | 5   | Reinforcement Learning for CartPole                 | (M)        | Implemented (Python) | Use OpenAI `Gym`. Q-learning: discretize state space. Policy Gradient: simple NN model.                                      |
@@ -212,7 +235,7 @@ This repository contains programming challenges across five categories: **Practi
 
 Run the Traveling Salesman genetic algorithm demo with:
 
-```
+```bash
 python ArtificialIntelligence/tsp_genetic.py
 ```
 

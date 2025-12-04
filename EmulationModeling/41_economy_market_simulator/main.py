@@ -1,20 +1,23 @@
 import random
+from typing import List
+
 import matplotlib.pyplot as plt
 import numpy as np
-from typing import List
 from simulation_core.agent_based import Agent, AgentBasedModel
 from simulation_core.visualization import SimulationVisualizer
+
 from .models import EconomyConfig
+
 
 class Household(Agent):
     def __init__(self, agent_id: int, money: float):
         super().__init__(agent_id)
         self.money = money
         self.consumption = 0
-        self.labor_supply = 1.0 # Works 1 unit
+        self.labor_supply = 1.0  # Works 1 unit
         self.employed_at = None
 
-    def step(self, model: 'EconomyModel'):
+    def step(self, model: "EconomyModel"):
         # 1. Earn wages
         if self.employed_at:
             wage = self.employed_at.wage
@@ -32,6 +35,7 @@ class Household(Agent):
                 chosen_firm.sell_product()
                 self.consumption += 1
 
+
 class Firm(Agent):
     def __init__(self, agent_id: int, money: float, wage: float, price: float):
         super().__init__(agent_id)
@@ -42,10 +46,12 @@ class Firm(Agent):
         self.employees: List[Household] = []
         self.sales = 0
 
-    def step(self, model: 'EconomyModel'):
+    def step(self, model: "EconomyModel"):
         # 1. Production
         # Production function: Y = A * L
-        production = len(self.employees) * (1.0 + model.time * model.config.productivity_growth)
+        production = len(self.employees) * (
+            1.0 + model.time * model.config.productivity_growth
+        )
         self.inventory += production
 
         # 2. Pay wages
@@ -61,19 +67,20 @@ class Firm(Agent):
         # 3. Adjust Prices & Wages based on last step sales
         # Simple heuristic
         if self.sales > production * 0.8:
-            self.price *= 1.05 # Raise price if high demand
+            self.price *= 1.05  # Raise price if high demand
             self.wage *= 1.02  # Raise wage to attract more
         elif self.sales < production * 0.2:
-            self.price *= 0.95 # Lower price
+            self.price *= 0.95  # Lower price
             if self.price < self.wage:
-                self.price = self.wage * 1.01 # floor
+                self.price = self.wage * 1.01  # floor
 
-        self.sales = 0 # Reset for next step
+        self.sales = 0  # Reset for next step
 
     def sell_product(self):
         self.inventory -= 1
         self.sales += 1
         self.money += self.price
+
 
 class EconomyModel(AgentBasedModel):
     def __init__(self, config: EconomyConfig):
@@ -81,7 +88,9 @@ class EconomyModel(AgentBasedModel):
         self.config = config
         self.households: List[Household] = []
         self.firms: List[Firm] = []
-        self.visualizer = SimulationVisualizer(output_dir=f"EmulationModeling/41_economy_market_simulator/{config.output_dir}")
+        self.visualizer = SimulationVisualizer(
+            output_dir=f"EmulationModeling/41_economy_market_simulator/{config.output_dir}"
+        )
 
         self.history_avg_price = []
         self.history_avg_wage = []
@@ -126,17 +135,19 @@ class EconomyModel(AgentBasedModel):
         ax1.legend()
 
         wealths = [h.money for h in self.households]
-        ax2.hist(wealths, bins=10, color='skyblue', edgecolor='black')
+        ax2.hist(wealths, bins=10, color="skyblue", edgecolor="black")
         ax2.set_title("Wealth Distribution")
 
         self.visualizer.add_frame(fig)
         plt.close(fig)
+
 
 def run_simulation():
     config = EconomyConfig(duration=100)
     model = EconomyModel(config)
     model.run(steps=int(config.duration))
     model.visualizer.save_gif("market_dynamics.gif")
+
 
 if __name__ == "__main__":
     run_simulation()

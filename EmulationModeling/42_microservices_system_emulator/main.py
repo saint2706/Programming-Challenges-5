@@ -1,19 +1,28 @@
-import simpy
 import random
-import networkx as nx
-import matplotlib.pyplot as plt
 from typing import Dict, List
+
+import matplotlib.pyplot as plt
+import networkx as nx
+import simpy
 from simulation_core.discrete_event import DiscreteEventSimulation
 from simulation_core.visualization import SimulationVisualizer
+
 from .models import MicroserviceConfig
 
+
 class Service:
-    def __init__(self, env: simpy.Environment, name: str, config: MicroserviceConfig, dependencies: List[str]):
+    def __init__(
+        self,
+        env: simpy.Environment,
+        name: str,
+        config: MicroserviceConfig,
+        dependencies: List[str],
+    ):
         self.env = env
         self.name = name
         self.config = config
         self.dependencies = dependencies
-        self.queue = simpy.Resource(env, capacity=10) # Limited concurrency
+        self.queue = simpy.Resource(env, capacity=10)  # Limited concurrency
         self.stats = {"requests": 0, "failures": 0, "latency": []}
 
     def handle_request(self, req_id: int):
@@ -21,7 +30,7 @@ class Service:
         start_time = self.env.now
 
         with self.queue.request() as req:
-            yield req # Wait for thread/resource
+            yield req  # Wait for thread/resource
 
             # Simulate processing time (cold start or normal)
             latency = random.expovariate(1.0 / self.config.mean_latency)
@@ -31,7 +40,7 @@ class Service:
             for dep_name in self.dependencies:
                 # In a real sim we'd call the other service instance.
                 # Here we simulate the delay and potential failure of calling a dependency
-                yield self.env.timeout(0.01) # Network hop
+                yield self.env.timeout(0.01)  # Network hop
 
             # Simulate failure
             if random.random() < self.config.failure_rate:
@@ -41,13 +50,16 @@ class Service:
         end_time = self.env.now
         self.stats["latency"].append(end_time - start_time)
 
+
 class MicroserviceSimulation(DiscreteEventSimulation):
     def __init__(self, config: MicroserviceConfig):
         super().__init__(config.seed)
         self.config = config
         self.services: Dict[str, Service] = {}
         self.graph = nx.DiGraph()
-        self.visualizer = SimulationVisualizer(output_dir=f"EmulationModeling/42_microservices_system_emulator/{config.output_dir}")
+        self.visualizer = SimulationVisualizer(
+            output_dir=f"EmulationModeling/42_microservices_system_emulator/{config.output_dir}"
+        )
         self.setup_system()
 
     def setup_system(self):
@@ -61,7 +73,7 @@ class MicroserviceSimulation(DiscreteEventSimulation):
             "Auth": [],
             "Product": ["DB", "Inventory"],
             "Inventory": ["DB"],
-            "DB": []
+            "DB": [],
         }
 
         for name, deps in adj.items():
@@ -84,7 +96,7 @@ class MicroserviceSimulation(DiscreteEventSimulation):
         try:
             yield from self.services["Gateway"].handle_request(req_id)
         except:
-            pass # Request failed
+            pass  # Request failed
 
         if req_id % 20 == 0:
             self.snapshot()
@@ -98,26 +110,42 @@ class MicroserviceSimulation(DiscreteEventSimulation):
             svc = self.services[node]
             fail_rate = svc.stats["failures"] / max(1, svc.stats["requests"])
             # Map fail rate to color (Green -> Red)
-            colors.append((fail_rate * 5, 1 - fail_rate * 5, 0)) # simplified
+            colors.append((fail_rate * 5, 1 - fail_rate * 5, 0))  # simplified
 
         pos = nx.shell_layout(self.graph)
-        nx.draw(self.graph, pos, with_labels=True, node_color="lightblue", node_size=2000, font_weight="bold", arrows=True, ax=ax)
+        nx.draw(
+            self.graph,
+            pos,
+            with_labels=True,
+            node_color="lightblue",
+            node_size=2000,
+            font_weight="bold",
+            arrows=True,
+            ax=ax,
+        )
 
         # Overlay stats
         for node, (x, y) in pos.items():
             svc = self.services[node]
-            ax.text(x, y - 0.1, f"Req: {svc.stats['requests']}\nFail: {svc.stats['failures']}",
-                    bbox=dict(facecolor='white', alpha=0.5), ha='center')
+            ax.text(
+                x,
+                y - 0.1,
+                f"Req: {svc.stats['requests']}\nFail: {svc.stats['failures']}",
+                bbox=dict(facecolor="white", alpha=0.5),
+                ha="center",
+            )
 
         ax.set_title(f"Microservices Tracing (t={self.env.now:.1f})")
         self.visualizer.add_frame(fig)
         plt.close(fig)
+
 
 def run_simulation():
     config = MicroserviceConfig(duration=50)
     sim = MicroserviceSimulation(config)
     sim.run(until=config.duration)
     sim.visualizer.save_gif("microservices_trace.gif")
+
 
 if __name__ == "__main__":
     run_simulation()

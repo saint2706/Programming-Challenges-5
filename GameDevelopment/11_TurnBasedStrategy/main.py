@@ -77,11 +77,11 @@ class Unit:
         """Check if the unit can move to the given position."""
         if x < 0 or x >= GRID_SIZE or y < 0 or y >= GRID_SIZE:
             return False
-        
+
         # Check if occupied
         if grid[y][x] is not None:
             return False
-        
+
         # Check distance
         distance = abs(x - self.grid_x) + abs(y - self.grid_y)
         return distance <= self.movement_range and not self.has_moved
@@ -113,7 +113,7 @@ class Unit:
         """Draw the unit on the screen."""
         x = GRID_OFFSET_X + self.grid_x * TILE_SIZE
         y = GRID_OFFSET_Y + self.grid_y * TILE_SIZE
-        
+
         # Draw selection highlight
         if selected:
             pygame.draw.rect(
@@ -122,21 +122,21 @@ class Unit:
                 (x, y, TILE_SIZE, TILE_SIZE),
                 4,
             )
-        
+
         # Draw unit
         center_x = x + TILE_SIZE // 2
         center_y = y + TILE_SIZE // 2
         pygame.draw.circle(screen, self.color, (center_x, center_y), TILE_SIZE // 3)
-        
+
         # Draw HP bar
         hp_width = TILE_SIZE - 10
         hp_height = 8
         hp_x = x + 5
         hp_y = y + TILE_SIZE - 15
-        
+
         # Background
         pygame.draw.rect(screen, DARK_GRAY, (hp_x, hp_y, hp_width, hp_height))
-        
+
         # HP fill
         hp_fill = int(hp_width * (self.hp / self.max_hp))
         hp_color = GREEN if self.hp > 50 else ORANGE if self.hp > 25 else RED
@@ -150,7 +150,7 @@ class Game:
         self.grid = [[None for _ in range(GRID_SIZE)] for _ in range(GRID_SIZE)]
         self.player = Unit(2, 7, BLUE, "Player", is_player=True)
         self.grid[self.player.grid_y][self.player.grid_x] = self.player
-        
+
         # Create enemies
         self.enemies = []
         enemy_positions = [(7, 2), (8, 3), (6, 1)]
@@ -158,7 +158,7 @@ class Game:
             enemy = Unit(x, y, RED, f"Enemy {i+1}", is_player=False)
             self.enemies.append(enemy)
             self.grid[y][x] = enemy
-        
+
         self.state = GameState.PLAYER_TURN
         self.selected_unit = None
         self.font = pygame.font.Font(None, 30)
@@ -183,7 +183,7 @@ class Game:
     def get_valid_attacks(self, unit):
         """Get all valid attack targets for the unit."""
         valid_targets = []
-        for enemy in (self.enemies if unit.is_player else [self.player]):
+        for enemy in self.enemies if unit.is_player else [self.player]:
             if enemy.hp > 0 and unit.can_attack(enemy):
                 valid_targets.append((enemy.grid_x, enemy.grid_y))
         return valid_targets
@@ -192,16 +192,16 @@ class Game:
         """Handle mouse click on grid."""
         if self.state != GameState.PLAYER_TURN:
             return
-        
+
         clicked_unit = self.get_unit_at(grid_x, grid_y)
-        
+
         # If clicking on player unit
         if clicked_unit == self.player:
             self.selected_unit = self.player
             self.highlighted_tiles = self.get_valid_moves(self.player)
             self.highlighted_tiles.extend(self.get_valid_attacks(self.player))
             return
-        
+
         # If player is selected
         if self.selected_unit == self.player:
             # Try to attack
@@ -210,26 +210,26 @@ class Game:
                     self.player.attack(clicked_unit)
                     if clicked_unit.hp <= 0:
                         self.grid[clicked_unit.grid_y][clicked_unit.grid_x] = None
-                    
+
                     # Check victory
                     if all(e.hp <= 0 for e in self.enemies):
                         self.state = GameState.VICTORY
                     elif self.player.has_moved and self.player.has_attacked:
                         self.end_player_turn()
-                    
+
                     self.selected_unit = None
                     self.highlighted_tiles = []
                     return
-            
+
             # Try to move
             if self.player.can_move_to(grid_x, grid_y, self.grid):
                 # Remove from old position
                 self.grid[self.player.grid_y][self.player.grid_x] = None
-                
+
                 # Move to new position
                 self.player.move_to(grid_x, grid_y)
                 self.grid[grid_y][grid_x] = self.player
-                
+
                 # Update highlights for attacks
                 self.highlighted_tiles = self.get_valid_attacks(self.player)
                 return
@@ -247,7 +247,7 @@ class Game:
         for enemy in self.enemies:
             if enemy.hp <= 0:
                 continue
-            
+
             # Try to attack player if in range
             if enemy.can_attack(self.player):
                 enemy.attack(self.player)
@@ -260,20 +260,20 @@ class Game:
                 if best_move:
                     # Remove from old position
                     self.grid[enemy.grid_y][enemy.grid_x] = None
-                    
+
                     # Move to new position
                     enemy.move_to(best_move[0], best_move[1])
                     self.grid[best_move[1]][best_move[0]] = enemy
-                    
+
                     # Try to attack after moving
                     if enemy.can_attack(self.player):
                         enemy.attack(self.player)
                         if self.player.hp <= 0:
                             self.state = GameState.GAME_OVER
                             return
-            
+
             enemy.reset_turn()
-        
+
         # Start player turn
         self.state = GameState.PLAYER_TURN
 
@@ -282,17 +282,19 @@ class Game:
         valid_moves = self.get_valid_moves(enemy)
         if not valid_moves:
             return None
-        
+
         # Find move that gets closest to player
         best_move = None
-        best_distance = float('inf')
-        
+        best_distance = float("inf")
+
         for move_x, move_y in valid_moves:
-            distance = abs(move_x - self.player.grid_x) + abs(move_y - self.player.grid_y)
+            distance = abs(move_x - self.player.grid_x) + abs(
+                move_y - self.player.grid_y
+            )
             if distance < best_distance:
                 best_distance = distance
                 best_move = (move_x, move_y)
-        
+
         return best_move
 
     def draw_grid(self):
@@ -301,7 +303,7 @@ class Game:
             for x in range(GRID_SIZE):
                 rect_x = GRID_OFFSET_X + x * TILE_SIZE
                 rect_y = GRID_OFFSET_Y + y * TILE_SIZE
-                
+
                 # Determine tile color
                 if (x, y) in self.highlighted_tiles:
                     # Check if it's an attack highlight
@@ -310,13 +312,15 @@ class Game:
                         target = self.get_unit_at(x, y)
                         if target and not target.is_player:
                             is_attack = True
-                    
+
                     color = ORANGE if is_attack else GREEN
                 else:
                     color = LIGHT_GRAY if (x + y) % 2 == 0 else WHITE
-                
+
                 pygame.draw.rect(screen, color, (rect_x, rect_y, TILE_SIZE, TILE_SIZE))
-                pygame.draw.rect(screen, GRAY, (rect_x, rect_y, TILE_SIZE, TILE_SIZE), 1)
+                pygame.draw.rect(
+                    screen, GRAY, (rect_x, rect_y, TILE_SIZE, TILE_SIZE), 1
+                )
 
     def draw_ui(self):
         """Draw UI elements."""
@@ -334,24 +338,28 @@ class Game:
         elif self.state == GameState.VICTORY:
             turn_text = "Victory!"
             color = GREEN
-        
+
         text = self.font.render(turn_text, True, color)
         screen.blit(text, (SCREEN_WIDTH // 2 - text.get_width() // 2, 10))
-        
+
         # End turn button
         if self.state == GameState.PLAYER_TURN:
-            button_text = self.font.render("End Turn (or make all actions)", True, WHITE)
+            button_text = self.font.render(
+                "End Turn (or make all actions)", True, WHITE
+            )
             button_rect = pygame.Rect(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 50, 240, 40)
             pygame.draw.rect(screen, DARK_BLUE, button_rect)
             pygame.draw.rect(screen, BLUE, button_rect, 2)
             screen.blit(button_text, (button_rect.x + 10, button_rect.y + 10))
-        
+
         # Game over / victory message
         if self.state in [GameState.GAME_OVER, GameState.VICTORY]:
             msg = "Press R to Restart"
             text = self.font.render(msg, True, WHITE)
-            screen.blit(text, (SCREEN_WIDTH // 2 - text.get_width() // 2, SCREEN_HEIGHT // 2))
-        
+            screen.blit(
+                text, (SCREEN_WIDTH // 2 - text.get_width() // 2, SCREEN_HEIGHT // 2)
+            )
+
         # Instructions
         if self.state == GameState.PLAYER_TURN:
             inst_text = "Click your unit, then click to move or attack"
@@ -362,14 +370,14 @@ class Game:
         """Draw everything."""
         screen.fill(DARK_GRAY)
         self.draw_grid()
-        
+
         # Draw units
         for y in range(GRID_SIZE):
             for x in range(GRID_SIZE):
                 unit = self.grid[y][x]
                 if unit and unit.hp > 0:
                     unit.draw(screen, selected=(unit == self.selected_unit))
-        
+
         self.draw_ui()
 
     def restart(self):
@@ -385,31 +393,41 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            
+
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:  # Left click
                     mouse_x, mouse_y = event.pos
-                    
+
                     # Convert to grid coordinates
                     grid_x = (mouse_x - GRID_OFFSET_X) // TILE_SIZE
                     grid_y = (mouse_y - GRID_OFFSET_Y) // TILE_SIZE
-                    
+
                     if 0 <= grid_x < GRID_SIZE and 0 <= grid_y < GRID_SIZE:
                         game.handle_click(grid_x, grid_y)
-                    
+
                     # Check end turn button
-                    button_rect = pygame.Rect(SCREEN_WIDTH - 250, SCREEN_HEIGHT - 50, 240, 40)
-                    if button_rect.collidepoint(mouse_x, mouse_y) and game.state == GameState.PLAYER_TURN:
+                    button_rect = pygame.Rect(
+                        SCREEN_WIDTH - 250, SCREEN_HEIGHT - 50, 240, 40
+                    )
+                    if (
+                        button_rect.collidepoint(mouse_x, mouse_y)
+                        and game.state == GameState.PLAYER_TURN
+                    ):
                         game.end_player_turn()
-            
+
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     running = False
-                elif event.key == pygame.K_r and game.state in [GameState.GAME_OVER, GameState.VICTORY]:
+                elif event.key == pygame.K_r and game.state in [
+                    GameState.GAME_OVER,
+                    GameState.VICTORY,
+                ]:
                     game.restart()
-                elif event.key == pygame.K_SPACE and game.state == GameState.PLAYER_TURN:
+                elif (
+                    event.key == pygame.K_SPACE and game.state == GameState.PLAYER_TURN
+                ):
                     game.end_player_turn()
-            
+
             elif event.type == pygame.USEREVENT:
                 # AI turn execution
                 if game.state == GameState.ENEMY_TURN:

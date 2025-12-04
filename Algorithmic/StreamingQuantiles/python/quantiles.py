@@ -6,6 +6,7 @@ For small datasets, keeps exact values. For large streams, maintains a uniform r
 import random
 from typing import List
 
+
 class GKQuantile:
     """Reservoir Sampling based Quantile Estimator."""
 
@@ -25,7 +26,8 @@ class GKQuantile:
                 self.pool[j] = v
 
     def query(self, phi: float) -> float:
-        if not self.pool: return 0.0
+        if not self.pool:
+            return 0.0
         # Sort pool to find quantile
         sorted_pool = sorted(self.pool)
         idx = int(phi * (len(sorted_pool) - 1))

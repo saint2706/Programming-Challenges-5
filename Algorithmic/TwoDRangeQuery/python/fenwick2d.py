@@ -5,6 +5,7 @@ Supports point update and range sum in O(log N * log M).
 
 from typing import List
 
+
 class FenwickTree2D:
     def __init__(self, rows: int, cols: int):
         self.rows = rows
@@ -35,7 +36,9 @@ class FenwickTree2D:
 
     def range_query(self, r1: int, c1: int, r2: int, c2: int) -> int:
         """Sum of rectangle defined by (r1, c1) top-left and (r2, c2) bottom-right."""
-        return (self.query(r2, c2)
-                - self.query(r1 - 1, c2)
-                - self.query(r2, c1 - 1)
-                + self.query(r1 - 1, c1 - 1))
+        return (
+            self.query(r2, c2)
+            - self.query(r1 - 1, c2)
+            - self.query(r2, c1 - 1)
+            + self.query(r1 - 1, c1 - 1)
+        )

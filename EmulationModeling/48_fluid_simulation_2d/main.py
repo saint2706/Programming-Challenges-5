@@ -1,16 +1,20 @@
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+from simulation_core.pde_solvers import advect_step_2d, diffusion_step_2d
 from simulation_core.visualization import SimulationVisualizer
-from simulation_core.pde_solvers import diffusion_step_2d, advect_step_2d
+
 from .models import Fluid2DConfig
 
 # Simplified "Stable Fluids" Implementation
 # Based on Jos Stam's paper, adapted for Python/NumPy
 
+
 class Fluid2DSimulation:
     def __init__(self, config: Fluid2DConfig):
         self.config = config
-        self.visualizer = SimulationVisualizer(output_dir=f"EmulationModeling/48_fluid_simulation_2d/{config.output_dir}")
+        self.visualizer = SimulationVisualizer(
+            output_dir=f"EmulationModeling/48_fluid_simulation_2d/{config.output_dir}"
+        )
         self.N = config.grid_size
         self.dt = config.dt
 
@@ -26,9 +30,9 @@ class Fluid2DSimulation:
 
         # Initialize with some sources
         center = self.N // 2
-        self.dens[center-5:center+5, center-5:center+5] = 1.0
-        self.u[center-5:center+5, center-5:center+5] = 1.0 # Initial push
-        self.v[center-5:center+5, center-5:center+5] = 1.0
+        self.dens[center - 5 : center + 5, center - 5 : center + 5] = 1.0
+        self.u[center - 5 : center + 5, center - 5 : center + 5] = 1.0  # Initial push
+        self.v[center - 5 : center + 5, center - 5 : center + 5] = 1.0
 
     def step(self):
         # 1. Velocity Step
@@ -47,7 +51,9 @@ class Fluid2DSimulation:
 
         # 2. Density Step
         # Diffuse
-        self.dens = diffusion_step_2d(self.dens, self.config.diffusion, self.dt, 1.0, 1.0)
+        self.dens = diffusion_step_2d(
+            self.dens, self.config.diffusion, self.dt, 1.0, 1.0
+        )
         # Advect
         self.dens = advect_step_2d(self.dens, self.u, self.v, self.dt, 1.0, 1.0)
 
@@ -61,10 +67,10 @@ class Fluid2DSimulation:
 
             # Add some noise/inflow
             if i % 10 == 0:
-                 center = self.N // 2
-                 self.dens[center, center] = 1.0
-                 self.u[center, center] += np.random.uniform(-1, 1)
-                 self.v[center, center] += np.random.uniform(-1, 1)
+                center = self.N // 2
+                self.dens[center, center] = 1.0
+                self.u[center, center] += np.random.uniform(-1, 1)
+                self.v[center, center] += np.random.uniform(-1, 1)
 
             if i % 5 == 0:
                 self.snapshot(i * self.dt)
@@ -73,17 +79,19 @@ class Fluid2DSimulation:
 
     def snapshot(self, t):
         fig, ax = plt.subplots(figsize=(6, 6))
-        ax.imshow(self.dens, cmap='inferno', origin='lower', vmin=0, vmax=1)
+        ax.imshow(self.dens, cmap="inferno", origin="lower", vmin=0, vmax=1)
         ax.set_title(f"Fluid Density (t={t:.2f})")
-        ax.axis('off')
+        ax.axis("off")
 
         self.visualizer.add_frame(fig)
         plt.close(fig)
+
 
 def run_simulation():
     config = Fluid2DConfig(duration=10.0)
     sim = Fluid2DSimulation(config)
     sim.run()
+
 
 if __name__ == "__main__":
     run_simulation()

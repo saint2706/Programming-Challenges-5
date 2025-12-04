@@ -1,16 +1,18 @@
-
-import unittest
-import sys
 import os
+import sys
+import unittest
 
-sys.path.append(os.path.join(os.getcwd(), 'Algorithmic', 'PersistentDataStructures', 'python'))
+sys.path.append(
+    os.path.join(os.getcwd(), "Algorithmic", "PersistentDataStructures", "python")
+)
 from persistent import PersistentMap
 
-sys.path.append(os.path.join(os.getcwd(), 'Algorithmic', 'RopeTextEditor', 'python'))
+sys.path.append(os.path.join(os.getcwd(), "Algorithmic", "RopeTextEditor", "python"))
 from rope import Rope
 
-sys.path.append(os.path.join(os.getcwd(), 'Algorithmic', 'TwoDRangeQuery', 'python'))
+sys.path.append(os.path.join(os.getcwd(), "Algorithmic", "TwoDRangeQuery", "python"))
 from fenwick2d import FenwickTree2D
+
 
 class TestAdvancedStructures(unittest.TestCase):
     def test_persistent_map(self):
@@ -55,6 +57,7 @@ class TestAdvancedStructures(unittest.TestCase):
         self.assertEqual(ft.range_query(1, 1, 2, 2), 5)
         # Sum (0,0) to (2,2) -> 6
         self.assertEqual(ft.range_query(0, 0, 2, 2), 6)
+
 
 if __name__ == "__main__":
     unittest.main()
