@@ -132,3 +132,55 @@ consistent_hashing
 .mypy_cache/
 .coverage
 htmlcov/
+
+# Additional Python Testing & Coverage
+*.cover
+.hypothesis/
+.tox/
+nosetests.xml
+coverage.xml
+*.coveragerc
+.dmypy.json
+dmypy.json
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Game Development Artifacts
+*.log
+*.save
+*.dat
+screenshots/
+replays/
+
+# Database Files
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-shm
+*.db-wal
+
+# Temporary Files
+*.tmp
+*.temp
+*.bak
+*.backup
+*~.nib
+
+# Additional OS-Specific
+*.lnk
+.Spotlight-V100/
+.Trashes/
+.AppleDouble/
+.LSOverride/
+.DocumentRevisions-V100/
+.fseventsd/
+.TemporaryItems/
+.VolumeIcon.icns/
+.com.apple.timemachine.donotpresent/
+
+# Compiled Documentation
+docs/_build/
+site/
+.doctrees/
