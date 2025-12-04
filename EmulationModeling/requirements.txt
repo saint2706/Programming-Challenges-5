@@ -3,3 +3,15 @@ matplotlib
 pygame
 simpy
 pyaudio
+simpy
+networkx
+numpy
+scipy
+numba
+matplotlib
+plotly
+typer
+pydantic
+torch
+imageio
+imageio-ffmpeg
