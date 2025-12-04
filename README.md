@@ -230,7 +230,7 @@ python ArtificialIntelligence/tsp_genetic.py
 | 8   | 2048 Variant                                | (M)        | Implemented (Python) | 2D array. Core logic: "squash" a line (e.g., `[2, 0, 2, 4] -> [4, 4, 0, 0]`). Add new tiles randomly.             |
 | 9   | Platformer Prototype                        | (M)        | Implemented (Python) | Physics: `velocity_y += gravity`. AABB collision. `is_on_ground` flag for jumping.                                |
 | 10  | Top-Down Shooter                            | (M)        | Implemented (Python) | Player movement (WASD). Rotate player sprite towards mouse. Spawn/move bullets. AABB for hits.                    |
-| 11  | Turn-Based Strategy Microgame               | (M)        |                      | Grid-based map. Unit class (HP, move, attack). Simple AI: move towards player, attack if in range.                |
+| 11  | Turn-Based Strategy Microgame               | (M)        | Implemented (Python) | Grid-based map. Unit class (HP, move, attack). Simple AI: move towards player, attack if in range.                |
 | 12  | Card Game Engine                            | (M)        |                      | `Card` class, `Deck` class, `Player` class. Game state machine for turns (draw, play, discard).                   |
 | 13  | Physics Puzzle Game                         | (M)        |                      | Use a 2D physics engine (`Box2D` via `pygame`, or `pymunk`). Design levels as JSON.                               |
 | 14  | Online Multiplayer Tic-Tac-Toe or Connect-4 | (M)        |                      | Use `WebSockets` (e.g., `websockets` library). Server state: `game_id`, `board`, `turn`.                          |
