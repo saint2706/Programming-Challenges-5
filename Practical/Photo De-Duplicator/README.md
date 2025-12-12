@@ -4,7 +4,7 @@ A command-line helper for surfacing duplicate and near-duplicate photos using pe
 
 ## Features
 
-- aHash and pHash via [Pillow](https://python-pillow.org) + [ImageHash](https://pypi.org/project/ImageHash/)
+- aHash and pHash via [Pillow](https://pypi.org/project/Pillow/) + [ImageHash](https://pypi.org/project/ImageHash/)
 - Exact duplicate grouping keyed by hash value
 - Near-duplicate grouping using Hamming distance with union-find clustering
 - Optional move step to stage duplicates into a review folder

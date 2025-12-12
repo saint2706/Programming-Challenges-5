@@ -87,8 +87,6 @@ class OrderBookDemo(Scene):
         matched_text.next_to(order_info, DOWN, aligned_edge=LEFT)
         self.play(Write(matched_text))
 
-        match_y = matched_text.get_center()[1] - 0.4
-
         remaining = incoming_qty
         ask_idx = 0
 
@@ -133,7 +131,9 @@ class OrderBookDemo(Scene):
         if remaining == 0:
             complete = Text("Order fully filled!", font_size=24, color=GREEN)
         else:
-            complete = Text(f"Partial fill, {remaining} remaining", font_size=24, color=YELLOW)
+            complete = Text(
+                f"Partial fill, {remaining} remaining", font_size=24, color=YELLOW
+            )
 
         complete.to_edge(DOWN)
         self.play(Write(complete))

@@ -81,10 +81,7 @@ class Scheduler:
 
             elif self.algorithm == "RR":
                 # Check quantum
-                (
-                    self.current_process.burst_time
-                    - self.current_process.remaining_time
-                )
+                (self.current_process.burst_time - self.current_process.remaining_time)
                 # If we just finished a quantum (and process not finished)
                 # Note: this logic is slightly tricky if we context switch.
                 # A better way: track 'current_burst_run'

@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pytest
+
 from Practical.PersonalAPIKeyVault.__main__ import main
 from Practical.PersonalAPIKeyVault.vault import (
     VaultError,

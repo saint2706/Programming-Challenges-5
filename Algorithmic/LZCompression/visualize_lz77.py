@@ -49,7 +49,9 @@ class LZ77CompressionDemo(Scene):
         window_rect = Rectangle(
             width=window_size * 0.65, height=0.8, color=BLUE, fill_opacity=0.1
         )
-        lookahead_rect = Rectangle(width=3 * 0.65, height=0.8, color=GREEN, fill_opacity=0.1)
+        lookahead_rect = Rectangle(
+            width=3 * 0.65, height=0.8, color=GREEN, fill_opacity=0.1
+        )
 
         legend = VGroup(
             Rectangle(width=0.3, height=0.3, color=BLUE, fill_opacity=0.3),
@@ -105,7 +107,8 @@ class LZ77CompressionDemo(Scene):
                 while (
                     length < len(lookahead)
                     and pos + length < len(input_str)
-                    and input_str[match_start + (length % offset)] == input_str[pos + length]
+                    and input_str[match_start + (length % offset)]
+                    == input_str[pos + length]
                 ):
                     length += 1
                 if length > best_length:
@@ -114,7 +117,11 @@ class LZ77CompressionDemo(Scene):
 
             # Create token
             if best_length > 0:
-                next_char = input_str[pos + best_length] if pos + best_length < len(input_str) else ""
+                next_char = (
+                    input_str[pos + best_length]
+                    if pos + best_length < len(input_str)
+                    else ""
+                )
                 token_text = f"({best_offset},{best_length},{next_char})"
 
                 # Highlight match
