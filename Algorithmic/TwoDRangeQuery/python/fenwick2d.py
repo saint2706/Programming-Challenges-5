@@ -4,7 +4,6 @@ Supports point update and range sum in O(log N * log M).
 """
 
 
-
 class FenwickTree2D:
     def __init__(self, rows: int, cols: int):
         self.rows = rows

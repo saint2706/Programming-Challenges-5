@@ -4,6 +4,7 @@ import time
 from pathlib import Path
 
 import pytest
+
 from Practical.UniversalUnitConverter.unit_converter import (
     CategoryNotFound,
     ConversionDataSource,

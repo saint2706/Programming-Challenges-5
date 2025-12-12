@@ -49,8 +49,12 @@ for module_path in MODULE_PATHS:
         sys.path.insert(0, path_str)
 
 # Also add Practical and Algorithmic directories themselves for package imports
-for category in ["Practical", "Algorithmic", "EmulationModeling", "ArtificialIntelligence"]:
+for category in [
+    "Practical",
+    "Algorithmic",
+    "EmulationModeling",
+    "ArtificialIntelligence",
+]:
     category_path = ROOT / category
     if category_path.exists() and str(category_path) not in sys.path:
         sys.path.insert(0, str(category_path))
-

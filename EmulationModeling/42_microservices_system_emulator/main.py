@@ -95,7 +95,7 @@ class MicroserviceSimulation(DiscreteEventSimulation):
         # Requests start at Gateway
         try:
             yield from self.services["Gateway"].handle_request(req_id)
-        except:
+        except Exception:
             pass  # Request failed
 
         if req_id % 20 == 0:

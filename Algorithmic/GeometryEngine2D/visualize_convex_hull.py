@@ -3,9 +3,9 @@
 Demonstrates Convex Hull (Graham Scan) and Line Intersection.
 """
 
+import math
 import os
 import sys
-import math
 
 from manim import *
 
