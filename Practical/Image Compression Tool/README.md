@@ -5,7 +5,7 @@ A lightweight Pillow-based utility to compress images with configurable JPEG qua
 ## Requirements
 
 - Python 3.9+
-- [Pillow](https://python-pillow.org/)
+- [Pillow](https://pypi.org/project/Pillow/)
 
 Install dependencies:
 
