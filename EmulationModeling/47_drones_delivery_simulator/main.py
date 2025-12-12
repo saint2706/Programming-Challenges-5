@@ -1,11 +1,9 @@
 import math
 import random
-from typing import List, Tuple
 
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
-import simpy
 from simulation_core.discrete_event import DiscreteEventSimulation
 from simulation_core.visualization import SimulationVisualizer
 

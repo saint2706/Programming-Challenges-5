@@ -31,23 +31,23 @@ Additionally:
 
 1. **Clone the repository:**
 
-    ```bash
-    git clone https://github.com/saint2706/Programming-Challenges-5.git
-    cd Programming-Challenges-5
-    ```
+   ```bash
+   git clone https://github.com/saint2706/Programming-Challenges-5.git
+   cd Programming-Challenges-5
+   ```
 
 2. **Create a Python virtual environment:**
 
-    ```bash
-    python -m venv .venv
-    source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-    ```
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
 
 3. **Install dependencies:**
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ## 3. Running Challenges
 
@@ -75,15 +75,15 @@ We use `pytest` for Python tests.
 
 - **Run all tests:**
 
-    ```bash
-    pytest
-    ```
+  ```bash
+  pytest
+  ```
 
 - **Run tests for a specific category:**
 
-    ```bash
-    pytest tests/test_algorithmic.py
-    ```
+  ```bash
+  pytest tests/test_algorithmic.py
+  ```
 
 ## 5. Running Benchmarks
 

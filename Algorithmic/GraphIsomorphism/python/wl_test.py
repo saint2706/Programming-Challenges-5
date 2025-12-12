@@ -4,7 +4,7 @@ Uses Weisfeiler-Lehman (WL) Color Refinement algorithm.
 """
 
 import hashlib
-from typing import Dict, List, Tuple
+from typing import List
 
 
 def get_graph_hash(adj: List[List[int]], iterations: int = 3) -> str:

@@ -1,9 +1,7 @@
 const cloneTable = (table) => table.map((row) => row.slice());
 
 export function createEmptyTable(rows, cols, fillValue = null) {
-  return Array.from({ length: rows }, () =>
-    Array.from({ length: cols }, () => fillValue)
-  );
+  return Array.from({ length: rows }, () => Array.from({ length: cols }, () => fillValue));
 }
 
 export function parseDependencies(recurrence) {
@@ -48,26 +46,12 @@ export function dependenciesForCell(i, j, recurrence, rows, cols) {
 }
 
 export function evaluateRecurrence(recurrence, i, j, table, context = {}) {
-  const safeTable = cloneTable(table).map((row) =>
-    row.map((cell) => (cell == null ? 0 : cell))
-  );
-  const evaluator = new Function(
-    'i',
-    'j',
-    'dp',
-    'ctx',
-    `return ${recurrence};`
-  );
+  const safeTable = cloneTable(table).map((row) => row.map((cell) => (cell == null ? 0 : cell)));
+  const evaluator = new Function('i', 'j', 'dp', 'ctx', `return ${recurrence};`);
   return evaluator(i, j, safeTable, context);
 }
 
-export function buildSteps(
-  rows,
-  cols,
-  recurrence,
-  initializer = () => null,
-  context = {}
-) {
+export function buildSteps(rows, cols, recurrence, initializer = () => null, context = {}) {
   const table = createEmptyTable(rows, cols);
   const steps = [];
 

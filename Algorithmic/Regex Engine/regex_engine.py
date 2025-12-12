@@ -77,8 +77,6 @@ class RegexEngine:
             processed.append(char)
             if i + 1 < len(pattern):
                 next_char = pattern[i + 1]
-                is_curr_literal = char not in "(|"
-                is_next_literal = next_char not in ")|*"
 
                 # Add concat if:
                 # Literal followed by Literal (a b)

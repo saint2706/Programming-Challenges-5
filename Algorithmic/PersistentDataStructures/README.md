@@ -57,13 +57,7 @@ _Note: Version 0 is the initial empty array._
 **Output:**
 
 ```json
-[
-  { "version": 1 },
-  { "version": 2 },
-  { "version": 3 },
-  { "value": 10 },
-  { "value": 99 }
-]
+[{ "version": 1 }, { "version": 2 }, { "version": 3 }, { "value": 10 }, { "value": 99 }]
 ```
 
 ## 📊 Complexity Analysis

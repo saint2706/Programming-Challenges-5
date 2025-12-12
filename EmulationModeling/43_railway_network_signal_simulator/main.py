@@ -1,7 +1,6 @@
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 import matplotlib.pyplot as plt
-import networkx as nx
 import simpy
 from simulation_core.discrete_event import DiscreteEventSimulation
 from simulation_core.visualization import SimulationVisualizer

@@ -18,17 +18,11 @@
         {% if data.personal_info.contact.phone %}
         <p><strong>Phone:</strong> {{ data.personal_info.contact.phone }}</p>
         {% endif %} {% if data.personal_info.contact.location %}
-        <p>
-          <strong>Location:</strong> {{ data.personal_info.contact.location }}
-        </p>
+        <p><strong>Location:</strong> {{ data.personal_info.contact.location }}</p>
         {% endif %} {% if data.personal_info.contact.website %}
-        <p>
-          <strong>Website:</strong> {{ data.personal_info.contact.website }}
-        </p>
+        <p><strong>Website:</strong> {{ data.personal_info.contact.website }}</p>
         {% endif %} {% if data.personal_info.contact.linkedin %}
-        <p>
-          <strong>LinkedIn:</strong> {{ data.personal_info.contact.linkedin }}
-        </p>
+        <p><strong>LinkedIn:</strong> {{ data.personal_info.contact.linkedin }}</p>
         {% endif %} {% if data.personal_info.contact.github %}
         <p><strong>GitHub:</strong> {{ data.personal_info.contact.github }}</p>
         {% endif %}
@@ -39,8 +33,7 @@
     <section>
       <h2>Skills</h2>
       <div class="skills">
-        {% for category, items in data.personal_info.skills.items() %} {% if
-        items %}
+        {% for category, items in data.personal_info.skills.items() %} {% if items %}
         <div>
           <h3>{{ category|capitalize }}</h3>
           <ul>
@@ -62,8 +55,7 @@
           <div>
             <h3>{{ job.role }} • {{ job.company }}</h3>
             <p class="muted">
-              {{ job.start_date }} – {{ job.end_date or "Present" }} • {{
-              job.location }}
+              {{ job.start_date }} – {{ job.end_date or "Present" }} • {{ job.location }}
             </p>
           </div>
           {% if job.technologies %}
@@ -86,9 +78,7 @@
         <div class="card-header">
           <div>
             <h3>{{ edu.degree }}</h3>
-            <p class="muted">
-              {{ edu.institution }} • {{ edu.start_date }} – {{ edu.end_date }}
-            </p>
+            <p class="muted">{{ edu.institution }} • {{ edu.start_date }} – {{ edu.end_date }}</p>
           </div>
         </div>
         {% if edu.achievements %}

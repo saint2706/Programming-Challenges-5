@@ -183,7 +183,7 @@ def run_sample_animation() -> None:
             scatter.set_offsets(np.empty((0, 2)))
         return (scatter,)
 
-    ani = FuncAnimation(fig, update, init_func=init, interval=30, blit=True)
+    FuncAnimation(fig, update, init_func=init, interval=30, blit=True)
     plt.show()
 
 

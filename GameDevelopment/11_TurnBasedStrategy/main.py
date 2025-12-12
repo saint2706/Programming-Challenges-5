@@ -10,8 +10,6 @@ Controls:
     R: Restart (when game over)
 """
 
-import math
-import random
 import sys
 from enum import Enum
 

@@ -3,7 +3,6 @@
 Supports point update and range sum in O(log N * log M).
 """
 
-from typing import List
 
 
 class FenwickTree2D:

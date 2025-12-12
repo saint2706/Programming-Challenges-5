@@ -3,7 +3,7 @@
 Constructs a Suffix Automaton in O(N) time.
 """
 
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 
 class State:

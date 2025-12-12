@@ -69,7 +69,7 @@ class SIRVisualizer:
         return (self.scatter,)
 
     def run(self):
-        ani = animation.FuncAnimation(
+        animation.FuncAnimation(
             self.fig, self.update, frames=range(1000), interval=50, blit=False
         )
         plt.show()

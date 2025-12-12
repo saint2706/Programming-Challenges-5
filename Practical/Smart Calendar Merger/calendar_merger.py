@@ -20,7 +20,8 @@ from typing import Iterator
 import pytz
 from dateutil import rrule
 from dateutil.parser import parse as parse_date
-from icalendar import Calendar, Event as ICalEvent
+from icalendar import Calendar
+from icalendar import Event as ICalEvent
 
 
 @dataclass
@@ -104,7 +105,9 @@ class Conflict:
         }
 
 
-def normalize_datetime(dt: datetime | date, timezone: pytz.BaseTzInfo | None = None) -> datetime:
+def normalize_datetime(
+    dt: datetime | date, timezone: pytz.BaseTzInfo | None = None
+) -> datetime:
     """
     Normalize a date or datetime to a timezone-aware datetime.
 
@@ -260,7 +263,9 @@ def expand_recurring_events(
     return expanded
 
 
-def merge_calendars(calendar_paths: list[Path], deduplicate: bool = True) -> list[Event]:
+def merge_calendars(
+    calendar_paths: list[Path], deduplicate: bool = True
+) -> list[Event]:
     """
     Merge events from multiple calendar files.
 
@@ -345,7 +350,9 @@ def filter_events(
     return filtered
 
 
-def create_merged_calendar(events: list[Event], calendar_name: str = "Merged Calendar") -> Calendar:
+def create_merged_calendar(
+    events: list[Event], calendar_name: str = "Merged Calendar"
+) -> Calendar:
     """
     Create an iCalendar object from a list of events.
 
@@ -372,7 +379,9 @@ def format_event(event: Event) -> str:
     if event.all_day:
         time_str = event.start.strftime("%Y-%m-%d") + " (all day)"
     else:
-        time_str = f"{event.start.strftime('%Y-%m-%d %H:%M')} - {event.end.strftime('%H:%M')}"
+        time_str = (
+            f"{event.start.strftime('%Y-%m-%d %H:%M')} - {event.end.strftime('%H:%M')}"
+        )
 
     location_str = f" @ {event.location}" if event.location else ""
     return f"  [{time_str}] {event.summary}{location_str}"
@@ -561,10 +570,16 @@ def create_parser() -> argparse.ArgumentParser:
     merge_parser.set_defaults(func=cmd_merge)
 
     # Conflicts command
-    conflicts_parser = subparsers.add_parser("conflicts", help="Find scheduling conflicts")
-    conflicts_parser.add_argument("calendars", nargs="*", help="Calendar files to check")
+    conflicts_parser = subparsers.add_parser(
+        "conflicts", help="Find scheduling conflicts"
+    )
+    conflicts_parser.add_argument(
+        "calendars", nargs="*", help="Calendar files to check"
+    )
     conflicts_parser.add_argument("--dir", "-d", help="Directory containing .ics files")
-    conflicts_parser.add_argument("--start", help="Start date for filtering (YYYY-MM-DD)")
+    conflicts_parser.add_argument(
+        "--start", help="Start date for filtering (YYYY-MM-DD)"
+    )
     conflicts_parser.add_argument("--end", help="End date for filtering (YYYY-MM-DD)")
     conflicts_parser.add_argument("--json", action="store_true", help="Output as JSON")
     conflicts_parser.set_defaults(func=cmd_conflicts)
@@ -575,7 +590,9 @@ def create_parser() -> argparse.ArgumentParser:
     filter_parser.add_argument("--dir", "-d", help="Directory containing .ics files")
     filter_parser.add_argument("--start", help="Start date (YYYY-MM-DD)")
     filter_parser.add_argument("--end", help="End date (YYYY-MM-DD)")
-    filter_parser.add_argument("--search", "-s", help="Search query for summary/description")
+    filter_parser.add_argument(
+        "--search", "-s", help="Search query for summary/description"
+    )
     filter_parser.add_argument("--output", "-o", help="Output file path")
     filter_parser.add_argument("--json", action="store_true", help="Output as JSON")
     filter_parser.set_defaults(func=cmd_filter)

@@ -71,7 +71,5 @@ jobs:
           fi
           python3 -m pip install pytest
 
-
-
       - name: Run tests
         run: python3 -m pytest tests/

@@ -41,13 +41,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": [
-          "company",
-          "role",
-          "start_date",
-          "location",
-          "achievements"
-        ],
+        "required": ["company", "role", "start_date", "location", "achievements"],
         "properties": {
           "company": { "type": "string" },
           "role": { "type": "string" },

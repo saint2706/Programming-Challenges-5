@@ -104,10 +104,10 @@ def main():
     add_parser.add_argument("answer", help="The answer text")
 
     # List command
-    list_parser = subparsers.add_parser("list", help="List all questions")
+    subparsers.add_parser("list", help="List all questions")
 
     # Review command
-    review_parser = subparsers.add_parser("review", help="Start review session")
+    subparsers.add_parser("review", help="Start review session")
 
     args = parser.parse_args()
 

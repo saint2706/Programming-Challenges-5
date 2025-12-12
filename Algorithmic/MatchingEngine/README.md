@@ -42,10 +42,7 @@ The `main` program accepts JSON commands.
 **Output:**
 
 ```json
-[
-  { "trades": [] },
-  { "trades": [{ "buy_id": 2, "sell_id": 1, "price": 100, "quantity": 5 }] }
-]
+[{ "trades": [] }, { "trades": [{ "buy_id": 2, "sell_id": 1, "price": 100, "quantity": 5 }] }]
 ```
 
 ## 📊 Complexity Analysis

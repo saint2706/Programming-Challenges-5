@@ -52,10 +52,7 @@
       "degree": "B.S. Computer Science",
       "start_date": "2015",
       "end_date": "2019",
-      "achievements": [
-        "Graduated magna cum laude",
-        "ACM programming team captain"
-      ]
+      "achievements": ["Graduated magna cum laude", "ACM programming team captain"]
     }
   ],
   "projects": [

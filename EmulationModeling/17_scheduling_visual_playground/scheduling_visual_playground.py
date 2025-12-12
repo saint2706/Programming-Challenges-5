@@ -122,7 +122,7 @@ def run_rr(processes: Iterable[Process], quantum: int) -> Schedule:
 
     procs = sorted(processes, key=lambda p: p.arrival)
     remaining: Dict[str, int] = {p.pid: p.burst for p in procs}
-    arrivals: Dict[str, int] = {p.pid: p.arrival for p in procs}
+    {p.pid: p.arrival for p in procs}
     ready: deque[Process] = deque()
     schedule: Schedule = []
     time = 0

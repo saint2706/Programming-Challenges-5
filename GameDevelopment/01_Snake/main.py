@@ -76,7 +76,7 @@ class Snake:
     def move(self):
         cur = self.get_head_position()
         x, y = self.direction
-        new = (
+        (
             ((cur[0] + (x * GRID_SIZE)) % SCREEN_WIDTH),
             (cur[1] + (y * GRID_SIZE)) % SCREEN_HEIGHT,
         )

@@ -81,7 +81,7 @@ class Scheduler:
 
             elif self.algorithm == "RR":
                 # Check quantum
-                time_running = (
+                (
                     self.current_process.burst_time
                     - self.current_process.remaining_time
                 )
@@ -118,7 +118,7 @@ class Kernel:
                 # For simplicity, let's implement RR logic inside tick better
                 pass
 
-            proc = self.scheduler.schedule()
+            self.scheduler.schedule()
 
             # RR Preemption logic needs to happen after one tick?
             # Or before schedule?

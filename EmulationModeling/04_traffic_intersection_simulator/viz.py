@@ -68,7 +68,7 @@ class SimVisualizer:
         return self.line_ns, self.line_ew, *self.bars
 
     def run(self):
-        ani = animation.FuncAnimation(self.fig, self.update, interval=50, blit=False)
+        animation.FuncAnimation(self.fig, self.update, interval=50, blit=False)
         plt.show()
 
 

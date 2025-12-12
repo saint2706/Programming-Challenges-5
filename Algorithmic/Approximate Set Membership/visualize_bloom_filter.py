@@ -32,7 +32,6 @@ class BloomFilterDemo(Scene):
 
         # Parameters
         size = 10
-        num_hashes = 3
         bit_array = [0] * size
 
         # Create array visualization

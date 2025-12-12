@@ -104,7 +104,6 @@ class AutocompleteEngine:
 
         ngram = relevant_context + (word,)
 
-        count_context = 0
         # Iterate over all ngrams to find how many times this context appeared
         # This is inefficient for large corpora; a real implementation would store context counts separately.
         # But for this challenge, we can approximate or store context counts.

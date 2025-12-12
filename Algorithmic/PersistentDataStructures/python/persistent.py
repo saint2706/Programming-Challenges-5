@@ -4,7 +4,7 @@ Implements a Persistent Binary Search Tree (Map).
 Every update returns a new root, preserving previous versions.
 """
 
-from typing import Any, Optional, Tuple
+from typing import Any, Optional
 
 
 class Node:

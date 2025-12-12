@@ -1,10 +1,8 @@
 import math
 import random
-from typing import Dict, List, Tuple
 
 import matplotlib.pyplot as plt
 import networkx as nx
-import simpy
 from simulation_core.discrete_event import DiscreteEventSimulation
 from simulation_core.visualization import SimulationVisualizer
 
@@ -175,7 +173,7 @@ class LogisticsSimulation(DiscreteEventSimulation):
         )
 
         # Draw Trucks
-        truck_pos = {t["id"]: t["pos"] for t in self.trucks}
+        {t["id"]: t["pos"] for t in self.trucks}
         # Since trucks might be between nodes, we use their stored pos
         # But nx.draw expects node IDs. We'll just scatter plot them.
         tx = [t["pos"][0] for t in self.trucks]

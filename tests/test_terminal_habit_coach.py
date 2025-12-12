@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 import pytest
-
 from Practical.TerminalHabitCoach.database import HabitRepository
 from Practical.TerminalHabitCoach.service import TerminalHabitCoach
 

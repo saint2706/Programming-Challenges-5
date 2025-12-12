@@ -9,8 +9,7 @@ import {
 
 describe('table creation and steps', () => {
   it('initializes base cells and computes recurrence-driven updates', () => {
-    const initializer = (i, j, _table, _ctx, base) =>
-      i === 0 || j === 0 ? base : null;
+    const initializer = (i, j, _table, _ctx, base) => (i === 0 || j === 0 ? base : null);
     const recurrence = 'dp[i-1][j] + dp[i][j-1] + 1';
     const { steps } = buildSteps(3, 3, recurrence, (i, j, table, ctx) =>
       initializer(i, j, table, ctx, 0)

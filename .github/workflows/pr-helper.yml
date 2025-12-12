@@ -23,20 +23,20 @@ jobs:
               repo,
               pull_number: number,
             });
-            
+
             const body = pr.data.body || "";
             const title = pr.data.title || "";
-            
+
             let comments = [];
-            
+
             if (title.length < 10) {
               comments.push("- ⚠️ Title seems too short. Please use a descriptive title.");
             }
-            
+
             if (body.length < 20) {
               comments.push("- ⚠️ Description seems too short. Please explain your changes.");
             }
-            
+
             if (comments.length > 0) {
               await github.rest.issues.createComment({
                 owner,

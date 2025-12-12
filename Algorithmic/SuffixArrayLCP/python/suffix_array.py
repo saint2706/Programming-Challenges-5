@@ -3,7 +3,7 @@
 Uses O(N log^2 N) prefix doubling construction.
 """
 
-from typing import List, Tuple
+from typing import List
 
 
 class SuffixArray:

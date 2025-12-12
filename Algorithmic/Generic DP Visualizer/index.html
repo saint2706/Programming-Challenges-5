@@ -10,8 +10,8 @@
     <header>
       <h1>Dynamic Programming Visualizer</h1>
       <p>
-        Enter a recurrence, choose a table size, and watch each cell fill with
-        highlighted dependencies.
+        Enter a recurrence, choose a table size, and watch each cell fill with highlighted
+        dependencies.
       </p>
     </header>
 
@@ -36,14 +36,10 @@
       </div>
       <div class="field">
         <label for="recurrence">Recurrence</label>
-        <textarea
-          id="recurrence"
-          rows="3"
-          placeholder="dp[i-1][j] + dp[i][j-1]"
-        ></textarea>
+        <textarea id="recurrence" rows="3" placeholder="dp[i-1][j] + dp[i][j-1]"></textarea>
         <small
-          >Use <code>i</code>, <code>j</code>, <code>dp</code> (2D array), and
-          <code>ctx</code> for preset helpers.</small
+          >Use <code>i</code>, <code>j</code>, <code>dp</code> (2D array), and <code>ctx</code> for
+          preset helpers.</small
         >
       </div>
       <div class="actions">
@@ -73,13 +69,9 @@
     <section class="notes">
       <h2>How this works</h2>
       <ul>
+        <li><strong>Initialization</strong> cells use the base value and show as gray.</li>
         <li>
-          <strong>Initialization</strong> cells use the base value and show as
-          gray.
-        </li>
-        <li>
-          <strong>Updates</strong> highlight the active cell in blue and its
-          dependencies in amber.
+          <strong>Updates</strong> highlight the active cell in blue and its dependencies in amber.
         </li>
         <li>You can pause, rewind, or jump through steps at any time.</li>
       </ul>

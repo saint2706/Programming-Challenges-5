@@ -54,7 +54,7 @@ class TrieDemo(Scene):
             # Determine child index
             char = prefix[-1]
             # Spread -6 to +6 roughly
-            offset = (ord(char) - ord("a") - 12) * 0.5
+            (ord(char) - ord("a") - 12) * 0.5
 
             # Adjust based on depth to avoid overlap
             # x_spread = 4 / (depth) # Unused logic in original code, simplified here

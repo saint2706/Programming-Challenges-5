@@ -39,14 +39,14 @@ python main.py
 
 ## 🎮 Controls
 
-| Action                | Control                      |
-| :-------------------- | :--------------------------- |
-| **Select Unit**       | Left click on your unit      |
-| **Move**              | Left click on green tile     |
-| **Attack**            | Left click on orange tile    |
-| **End Turn**          | Click "End Turn" button or SPACE |
-| **Restart**           | R (when game over)           |
-| **Quit**              | ESC                          |
+| Action          | Control                          |
+| :-------------- | :------------------------------- |
+| **Select Unit** | Left click on your unit          |
+| **Move**        | Left click on green tile         |
+| **Attack**      | Left click on orange tile        |
+| **End Turn**    | Click "End Turn" button or SPACE |
+| **Restart**     | R (when game over)               |
+| **Quit**        | ESC                              |
 
 ## 🎯 Gameplay
 
