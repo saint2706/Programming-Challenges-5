@@ -31,3 +31,5 @@ ImageHash
 torch
 torchvision
 tensorboard
+simpy
+imageio
