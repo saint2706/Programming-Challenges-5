@@ -1,12 +1,4 @@
-import sys
-from pathlib import Path
-
-ROOT = Path(__file__).resolve().parents[1]
-SCHEDULER_DIR = ROOT / "Algorithmic" / "Advanced Interval Scheduler"
-if str(SCHEDULER_DIR) not in sys.path:
-    sys.path.insert(0, str(SCHEDULER_DIR))
-
-from main import AdvancedIntervalScheduler, Interval  # noqa: E402
+from Algorithmic.AdvancedIntervalScheduler import AdvancedIntervalScheduler, Interval
 
 
 def test_finds_optimal_weight_and_schedule():

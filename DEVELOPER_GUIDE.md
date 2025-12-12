@@ -71,19 +71,43 @@ Refer to the `README.md` within each challenge folder for specific instructions.
 
 ## 4. Running Tests
 
-We use `pytest` for Python tests.
+We use `pytest` for Python tests. The test configuration is in `pyproject.toml`.
 
 - **Run all tests:**
 
   ```bash
-  pytest
+  python -m pytest
   ```
 
-- **Run tests for a specific category:**
+- **Run tests with verbose output:**
 
   ```bash
-  pytest tests/test_algorithmic.py
+  python -m pytest -v
   ```
+
+- **Run tests for a specific module:**
+
+  ```bash
+  python -m pytest tests/test_randomized_structures.py
+  ```
+
+- **Run EmulationModeling tests:**
+
+  ```bash
+  python -m pytest tests/EmulationModeling/
+  ```
+
+- **Run tests including dependency-heavy AI tests** (requires torch, torchvision):
+
+  ```bash
+  python -m pytest --ignore-glob="" tests/
+  ```
+
+### Test Categories
+
+- **Core tests** (~90 tests): Run by default, covering Practical, Algorithmic, and EmulationModeling challenges.
+- **AI/ML tests** (6 tests): Skipped by default due to heavy dependencies (PyTorch, TensorFlow). Enable by removing `--ignore` flags from `pyproject.toml`.
+- **Platform-specific tests**: Some tests (e.g., symlink tests) are skipped on Windows.
 
 ## 5. Running Benchmarks
 

@@ -1,20 +1,32 @@
 import importlib
 import os
 import shutil
+import sys
 import unittest
+from pathlib import Path
+
+# Get repository root for imports
+ROOT = Path(__file__).resolve().parents[2]
+EMULATION_DIR = ROOT / "EmulationModeling"
+
+# Ensure paths are set up
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+if str(EMULATION_DIR) not in sys.path:
+    sys.path.insert(0, str(EMULATION_DIR))
 
 
 # Dynamic import helper since folder starts with number
 def import_challenge_module(challenge_num, module_name):
     # e.g. "EmulationModeling.40_logistics_routing_simulator.main"
     # Find the full directory name
-    base_dir = "EmulationModeling"
+    base_dir = EMULATION_DIR
     dirs = [d for d in os.listdir(base_dir) if d.startswith(f"{challenge_num}_")]
     if not dirs:
         raise ImportError(f"Could not find challenge {challenge_num} directory")
 
     dir_name = dirs[0]
-    module_path = f"{base_dir}.{dir_name}.{module_name}"
+    module_path = f"EmulationModeling.{dir_name}.{module_name}"
     return importlib.import_module(module_path)
 
 

@@ -1,11 +1,23 @@
 import os
 import shutil
+import sys
 import tempfile
 import unittest
+
+import pytest
 
 from Practical.DotfilesManager.__main__ import install_dotfiles
 
 
+# Skip symlink tests on Windows unless running with elevated privileges
+SKIP_SYMLINK = sys.platform == "win32" and not os.path.islink(
+    os.path.dirname(__file__)
+)
+
+
+@pytest.mark.skipif(
+    SKIP_SYMLINK, reason="Symlinks require elevated privileges on Windows"
+)
 class TestDotfilesManager(unittest.TestCase):
     def setUp(self):
         self.test_dir = tempfile.mkdtemp()

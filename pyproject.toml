@@ -14,3 +14,17 @@ target-version = "py38"
 [tool.ruff.lint]
 select = ["E", "F", "I"]
 ignore = ["E402", "E501", "E741", "F403", "F405", "I001"]
+
+[tool.pytest.ini_options]
+# Only run tests from the central tests/ directory by default
+# Challenge-specific tests can be run individually with: pytest Algorithmic/*/tests/
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+# Skip tests that require optional heavy dependencies
+addopts = "--ignore=tests/test_auto_image_tagger.py --ignore=tests/test_bloom_filter.py --ignore=tests/test_face_attendance.py --ignore=tests/test_nn_visual_debugger.py --ignore=tests/test_style_transfer.py --ignore=tests/test_toy_nmt_seq2seq.py"
+filterwarnings = [
+    "ignore::DeprecationWarning:imageio",
+    "ignore::DeprecationWarning:datetime",
+]

@@ -15,8 +15,10 @@ from Practical.PersonalTimeTracker.storage import SessionStore
 def run_cli(tmp_path, *args):
     env = os.environ.copy()
     env["PTT_DB_PATH"] = str(tmp_path / "sessions.json")
+    # Use script path directly since directory has spaces
+    script_path = ROOT / "Practical" / "Personal Time Tracker" / "__main__.py"
     result = subprocess.run(
-        [sys.executable, "-m", "Practical.PersonalTimeTracker", *args],
+        [sys.executable, str(script_path), *args],
         capture_output=True,
         text=True,
         env=env,
