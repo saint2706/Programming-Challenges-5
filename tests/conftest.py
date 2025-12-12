@@ -1,9 +1,8 @@
 """
 Pytest configuration for test discovery and module path setup.
 
-This conftest.py creates symlinks to allow tests to import modules
-from directories that have spaces in their names using Python-compatible
-import paths.
+This conftest.py adds module directories to sys.path to allow tests to import
+modules from directories that have spaces in their names.
 """
 
 import sys
@@ -16,75 +15,42 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+# Add all module directories to sys.path for direct imports
+MODULE_PATHS = [
+    # Practical modules
+    ROOT / "Practical" / "Dotfiles Manager",
+    ROOT / "Practical" / "Media Library Organizer",
+    ROOT / "Practical" / "Personal API Key Vault",
+    ROOT / "Practical" / "Password Data Breach Checker",
+    ROOT / "Practical" / "Personal Time Tracker",
+    ROOT / "Practical" / "Smart Expense Splitter",
+    ROOT / "Practical" / "Static Site Generator",
+    ROOT / "Practical" / "Terminal Habit Coach",
+    ROOT / "Practical" / "Universal Log Analyzer",
+    # Algorithmic modules
+    ROOT / "Algorithmic" / "Approximate String Matching",
+    ROOT / "Algorithmic" / "Autocomplete Engine",
+    ROOT / "Algorithmic" / "Top-K Frequent Items in Stream",
+    ROOT / "Algorithmic" / "Randomized Algorithms Suite",
+    ROOT / "Algorithmic" / "Matrix Algorithm Lab",
+    ROOT / "Algorithmic" / "Approximate Set Membership",
+    ROOT / "Algorithmic" / "Consistent Hashing Library",
+    ROOT / "Algorithmic" / "Advanced Interval Scheduler",
+    # EmulationModeling modules
+    ROOT / "EmulationModeling" / "14_simple_blockchain",
+    ROOT / "EmulationModeling" / "simulation_core",
+    # ArtificialIntelligence modules
+    ROOT / "ArtificialIntelligence",
+]
 
-# Directory mappings: import_name -> actual_directory_name
-ALGORITHMIC_MAPPINGS = {
-    "ApproximateStringMatching": "Approximate String Matching",
-    "AutocompleteEngine": "Autocomplete Engine",
-    "TopKFrequentItems": "Top-K Frequent Items in Stream",
-    "RandomizedAlgorithmsSuite": "Randomized Algorithms Suite",
-    "MatrixAlgorithmLab": "Matrix Algorithm Lab",
-}
+for module_path in MODULE_PATHS:
+    path_str = str(module_path)
+    if module_path.exists() and path_str not in sys.path:
+        sys.path.insert(0, path_str)
 
-PRACTICAL_MAPPINGS = {
-    "DotfilesManager": "Dotfiles Manager",
-    "MediaLibraryOrganizer": "Media Library Organizer",
-    "PersonalAPIKeyVault": "Personal API Key Vault",
-    "PasswordDataBreachChecker": "Password Data Breach Checker",
-    "PersonalTimeTracker": "Personal Time Tracker",
-    "SmartExpenseSplitter": "Smart Expense Splitter",
-    "StaticSiteGenerator": "Static Site Generator",
-    "TerminalHabitCoach": "Terminal Habit Coach",
-    "UniversalLogAnalyzer": "Universal Log Analyzer",
-}
+# Also add Practical and Algorithmic directories themselves for package imports
+for category in ["Practical", "Algorithmic", "EmulationModeling", "ArtificialIntelligence"]:
+    category_path = ROOT / category
+    if category_path.exists() and str(category_path) not in sys.path:
+        sys.path.insert(0, str(category_path))
 
-# Root level mappings (import from root level)
-ROOT_LEVEL_MAPPINGS = {
-    "approximate_set_membership": "Algorithmic/Approximate Set Membership",
-    "consistent_hashing": "Algorithmic/Consistent Hashing Library",
-}
-
-
-def create_symlink(link_path: Path, target_path: Path) -> None:
-    """Create a symlink, removing existing one if necessary."""
-    if link_path.exists() or link_path.is_symlink():
-        if link_path.is_symlink():
-            link_path.unlink()
-        elif link_path.is_dir():
-            # Skip if an actual directory exists - this can happen when running
-            # tests from the repo without act, or if the directory was created
-            # manually. In this case, the real directory should be used.
-            return
-
-    if target_path.exists():
-        try:
-            link_path.symlink_to(target_path)
-        except OSError:
-            pass  # Symlink creation might fail on some systems
-
-
-def setup_module_symlinks():
-    """Create symlinks for all module mappings."""
-    # Create Algorithmic symlinks
-    algorithmic_dir = ROOT / "Algorithmic"
-    for link_name, target_name in ALGORITHMIC_MAPPINGS.items():
-        link_path = algorithmic_dir / link_name
-        target_path = algorithmic_dir / target_name
-        create_symlink(link_path, target_path)
-
-    # Create Practical symlinks
-    practical_dir = ROOT / "Practical"
-    for link_name, target_name in PRACTICAL_MAPPINGS.items():
-        link_path = practical_dir / link_name
-        target_path = practical_dir / target_name
-        create_symlink(link_path, target_path)
-
-    # Create root level symlinks
-    for link_name, target_rel_path in ROOT_LEVEL_MAPPINGS.items():
-        link_path = ROOT / link_name
-        target_path = ROOT / target_rel_path
-        create_symlink(link_path, target_path)
-
-
-# Set up symlinks when conftest is loaded
-setup_module_symlinks()
