@@ -34,8 +34,8 @@ This repository contains programming challenges across six categories: **Practic
 | Emulation / Modeling    | ![76%](https://geps.dev/progress/76)   |       38 / 50 |
 | Artificial Intelligence | ![40%](https://geps.dev/progress/40)   |       20 / 50 |
 | Game Development        | ![22%](https://geps.dev/progress/22)   |       11 / 50 |
-| Web Development         | ![0%](https://geps.dev/progress/0)     |        0 / 50 |
-| **Total**               | ![51%](https://geps.dev/progress/51)   | **154 / 300** |
+| Web Development         | ![2%](https://geps.dev/progress/2)     |        1 / 50 |
+| **Total**               | ![52%](https://geps.dev/progress/52)   | **155 / 300** |
 
 ## 1. Practical Challenges
 
@@ -310,7 +310,7 @@ python ArtificialIntelligence/tsp_genetic.py
 
 | #   | Challenge                        | Difficulty | Status | Implementation Notes                                                                                 |
 | :-- | :------------------------------- | :--------- | :----- | :--------------------------------------------------------------------------------------------------- |
-| 1   | Responsive Portfolio Site        | (E)        |        | HTML/CSS only. Mobile-first design. Use CSS Grid/Flexbox. Include contact form (no backend).         |
+| 1   | [Responsive Portfolio Site](WebDevelopment/01_Responsive_Portfolio_Site)        | (E)        | Implemented (HTML/CSS/JS)  | HTML/CSS only. Mobile-first design. Use CSS Grid/Flexbox. Include contact form (no backend).         |
 | 2   | Landing Page with Animations     | (E)        |        | CSS animations and transitions. Smooth scroll. Hero section with parallax effect.                    |
 | 3   | CSS Component Library            | (E)        |        | Buttons, cards, modals, forms. BEM naming. CSS custom properties for theming.                        |
 | 4   | Dark Mode Toggle                 | (E)        |        | CSS variables + JavaScript. Persist preference in `localStorage`. Smooth transition.                 |
