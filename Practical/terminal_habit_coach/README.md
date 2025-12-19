@@ -14,13 +14,19 @@ A command-line assistant for tracking habits, logging progress, and monitoring s
 The package is self-contained inside this repository. You can run the CLI using Python's module execution:
 
 ```bash
-python -m Practical.TerminalHabitCoach.cli --help
+python -m Practical.terminal_habit_coach.cli --help
 ```
 
 For daily usage, consider creating an alias:
 
 ```bash
-alias thc="python -m Practical.TerminalHabitCoach.cli"
+alias thc="python -m Practical.terminal_habit_coach.cli"
+```
+
+You can also run it directly as a script:
+
+```bash
+python Practical/terminal_habit_coach/cli.py --help
 ```
 
 ## 🚀 Usage
