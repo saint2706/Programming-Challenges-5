@@ -17,7 +17,7 @@ pip install -r requirements.txt
 ## Usage
 
 ```bash
-python -m Practical.UniversalLogAnalyzer path/to/access.log --output my_report.png
+python -m Practical.universal_log_analyzer path/to/access.log --output my_report.png
 ```
 
 ## Features

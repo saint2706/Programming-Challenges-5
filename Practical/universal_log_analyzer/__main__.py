@@ -15,9 +15,6 @@ from typing import Dict, Optional
 import matplotlib.pyplot as plt
 import pandas as pd
 
-# Hack to support running as a script despite spaces in folder name
-sys.path.append(os.path.dirname(__file__))
-
 # Common Log Format (CLF) regex
 # 127.0.0.1 - - [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326
 LOG_PATTERN = re.compile(
