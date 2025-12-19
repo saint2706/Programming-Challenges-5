@@ -308,55 +308,55 @@ python ArtificialIntelligence/tsp_genetic.py
 
 ## 6. Web Development Challenges
 
-| #   | Challenge                        | Difficulty | Status | Implementation Notes                                                                                 |
-| :-- | :------------------------------- | :--------- | :----- | :--------------------------------------------------------------------------------------------------- |
-| 1   | [Responsive Portfolio Site](WebDevelopment/01_Responsive_Portfolio_Site)        | (E)        | Implemented (HTML/CSS/JS)  | HTML/CSS only. Mobile-first design. Use CSS Grid/Flexbox. Include contact form (no backend).         |
-| 2   | Landing Page with Animations     | (E)        |        | CSS animations and transitions. Smooth scroll. Hero section with parallax effect.                    |
-| 3   | CSS Component Library            | (E)        |        | Buttons, cards, modals, forms. BEM naming. CSS custom properties for theming.                        |
-| 4   | Dark Mode Toggle                 | (E)        |        | CSS variables + JavaScript. Persist preference in `localStorage`. Smooth transition.                 |
-| 5   | Markdown Previewer               | (E)        |        | Split pane: editor left, preview right. Use `marked` or `showdown` library. Live update.             |
-| 6   | Form Validation Library          | (E)        |        | Client-side validation. Custom error messages. Support email, password, phone patterns.              |
-| 7   | Interactive Pricing Table        | (E)        |        | Toggle monthly/annual. Highlight popular plan. Responsive grid layout.                               |
-| 8   | Accordion FAQ Component          | (E)        |        | Expand/collapse sections. Only one open at a time (optional). Smooth animations.                     |
-| 9   | Image Gallery with Lightbox      | (E)        |        | Grid of thumbnails. Click to open modal with full image. Keyboard navigation.                        |
-| 10  | Countdown Timer                  | (E)        |        | Target date input. Display days/hours/minutes/seconds. Handle timezone.                              |
-| 11  | Todo App with Local Storage      | (M)        |        | CRUD operations. Filter by status. Persist to `localStorage`. Drag-and-drop reordering.              |
-| 12  | Weather Dashboard                | (M)        |        | Fetch from OpenWeatherMap API. Search by city. Display forecast. Geolocation support.                |
-| 13  | Movie Search App                 | (M)        |        | OMDB or TMDB API. Search, pagination. Movie details modal. Favorites list.                           |
-| 14  | Infinite Scroll Feed             | (M)        |        | Intersection Observer API. Skeleton loading. Fetch more on scroll. Virtual scrolling (optional).     |
-| 15  | Drag-and-Drop Kanban Board       | (M)        |        | Multiple columns. Drag cards between columns. Persist state. Touch support.                          |
-| 16  | Real-time Chat UI                | (M)        |        | WebSocket or Socket.io. Message bubbles. Typing indicator. User presence.                            |
-| 17  | E-commerce Product Page          | (M)        |        | Image carousel. Size/color variants. Add to cart. Reviews section. Responsive.                       |
-| 18  | Blog with CMS                    | (M)        |        | Markdown posts. Categories/tags. Search. Admin panel for CRUD. Static generation or SSR.             |
-| 19  | Authentication System            | (M)        |        | Register/login/logout. JWT or session-based. Password reset flow. Protected routes.                  |
-| 20  | REST API with Express/Fastify    | (M)        |        | CRUD endpoints. Input validation. Error handling. Rate limiting. API documentation.                  |
-| 21  | GraphQL API Server               | (M)        |        | Schema definition. Resolvers. Queries and mutations. DataLoader for N+1. Subscriptions (optional).   |
-| 22  | File Upload Service              | (M)        |        | Multipart form handling. Progress indicator. Image preview. Cloud storage (S3/Cloudinary).           |
-| 23  | URL Shortener (Full Stack)       | (M)        |        | Generate short codes. Redirect. Click analytics. Custom aliases. Expiration dates.                   |
-| 24  | Social Media Dashboard Clone     | (M)        |        | Multi-platform stats display. Charts with Chart.js or D3. Dark/light mode. Responsive.               |
-| 25  | Recipe App with Search & Filters | (M)        |        | Ingredient-based search. Dietary filters. Save favorites. Shopping list generator.                   |
-| 26  | Music Player UI                  | (M)        |        | Playlist management. Progress bar. Volume control. Keyboard shortcuts. Album art display.            |
-| 27  | Interactive Data Visualization   | (M)        |        | D3.js or Chart.js. Multiple chart types. Tooltips. Responsive. Data from API.                        |
-| 28  | Browser Extension                | (M)        |        | Chrome/Firefox compatible. Popup UI. Background scripts. Storage API. Content scripts.               |
-| 29  | PWA Conversion                   | (M)        |        | Service Worker. App manifest. Offline support. Push notifications. Install prompt.                   |
-| 30  | Admin Dashboard Template         | (M)        |        | Sidebar navigation. Data tables with sorting/filtering. Charts. User management UI.                  |
-| 31  | Real-time Collaboration Editor   | (H)        |        | Operational Transform or CRDT. Cursor presence. WebSocket sync. Conflict resolution.                 |
-| 32  | Video Streaming Platform         | (H)        |        | HLS/DASH streaming. Video player controls. Chapters. Quality selection. Subtitles.                   |
-| 33  | E-commerce Backend               | (H)        |        | Product catalog. Cart/checkout. Payment integration (Stripe). Order management. Inventory.           |
-| 34  | OAuth2 Provider                  | (H)        |        | Authorization code flow. Token management. Scopes. Client registration. PKCE support.                |
-| 35  | Webhook Delivery System          | (H)        |        | Event subscription. Retry logic with exponential backoff. Signature verification. Delivery logs.     |
-| 36  | Database Migration Tool          | (H)        |        | Schema versioning. Up/down migrations. Transaction support. CLI interface. Multiple DB support.      |
-| 37  | API Rate Limiter                 | (H)        |        | Token bucket or sliding window. Redis-backed. Per-user/per-IP limits. Headers for remaining quota.   |
-| 38  | Search Engine with Elasticsearch | (H)        |        | Full-text search. Faceted filters. Autocomplete. Highlighting. Relevance tuning.                     |
-| 39  | Headless CMS                     | (H)        |        | Content types. Rich text editor. Media library. REST/GraphQL API. Webhooks.                          |
-| 40  | CI/CD Pipeline Dashboard         | (H)        |        | Build status display. Pipeline visualization. Logs viewer. Notifications. GitHub/GitLab integration. |
-| 41  | Feature Flag Service             | (H)        |        | Flag management UI. Targeting rules. A/B testing support. SDK for multiple languages. Audit logs.    |
-| 42  | Multi-tenant SaaS Boilerplate    | (H)        |        | Tenant isolation. Subscription billing. Role-based access. Custom domains. Onboarding flow.          |
-| 43  | Real-time Analytics Dashboard    | (H)        |        | Event ingestion. Time-series storage. Live charts. Funnel analysis. User segmentation.               |
-| 44  | Serverless Functions Framework   | (H)        |        | Cold start optimization. Local development. Deployment scripts. Logging/monitoring.                  |
-| 45  | WebRTC Video Chat                | (H)        |        | Peer connection. Signaling server. STUN/TURN. Screen sharing. Recording.                             |
-| 46  | Distributed Task Queue           | (I)        |        | Job scheduling. Worker processes. Priority queues. Dead letter queue. Dashboard.                     |
-| 47  | Container Orchestration UI       | (I)        |        | Docker/K8s management. Service status. Log streaming. Resource metrics. Deployment controls.         |
-| 48  | Low-Code Form Builder            | (I)        |        | Drag-and-drop fields. Conditional logic. Validation rules. Submission handling. Embedding.           |
-| 49  | Multiplayer Game Server          | (I)        |        | Game state synchronization. Lobby system. Matchmaking. Anti-cheat basics. Scalable architecture.     |
-| 50  | Full-Stack Framework             | (I)        |        | Router, templating, ORM, CLI. Convention over configuration. Hot reload. Production build.           |
+| #   | Challenge                                                                | Difficulty | Status                    | Implementation Notes                                                                                 |
+| :-- | :----------------------------------------------------------------------- | :--------- | :------------------------ | :--------------------------------------------------------------------------------------------------- |
+| 1   | [Responsive Portfolio Site](WebDevelopment/01_Responsive_Portfolio_Site) | (E)        | Implemented (HTML/CSS/JS) | HTML/CSS only. Mobile-first design. Use CSS Grid/Flexbox. Include contact form (no backend).         |
+| 2   | Landing Page with Animations                                             | (E)        |                           | CSS animations and transitions. Smooth scroll. Hero section with parallax effect.                    |
+| 3   | CSS Component Library                                                    | (E)        |                           | Buttons, cards, modals, forms. BEM naming. CSS custom properties for theming.                        |
+| 4   | Dark Mode Toggle                                                         | (E)        |                           | CSS variables + JavaScript. Persist preference in `localStorage`. Smooth transition.                 |
+| 5   | Markdown Previewer                                                       | (E)        |                           | Split pane: editor left, preview right. Use `marked` or `showdown` library. Live update.             |
+| 6   | Form Validation Library                                                  | (E)        |                           | Client-side validation. Custom error messages. Support email, password, phone patterns.              |
+| 7   | Interactive Pricing Table                                                | (E)        |                           | Toggle monthly/annual. Highlight popular plan. Responsive grid layout.                               |
+| 8   | Accordion FAQ Component                                                  | (E)        |                           | Expand/collapse sections. Only one open at a time (optional). Smooth animations.                     |
+| 9   | Image Gallery with Lightbox                                              | (E)        |                           | Grid of thumbnails. Click to open modal with full image. Keyboard navigation.                        |
+| 10  | Countdown Timer                                                          | (E)        |                           | Target date input. Display days/hours/minutes/seconds. Handle timezone.                              |
+| 11  | Todo App with Local Storage                                              | (M)        |                           | CRUD operations. Filter by status. Persist to `localStorage`. Drag-and-drop reordering.              |
+| 12  | Weather Dashboard                                                        | (M)        |                           | Fetch from OpenWeatherMap API. Search by city. Display forecast. Geolocation support.                |
+| 13  | Movie Search App                                                         | (M)        |                           | OMDB or TMDB API. Search, pagination. Movie details modal. Favorites list.                           |
+| 14  | Infinite Scroll Feed                                                     | (M)        |                           | Intersection Observer API. Skeleton loading. Fetch more on scroll. Virtual scrolling (optional).     |
+| 15  | Drag-and-Drop Kanban Board                                               | (M)        |                           | Multiple columns. Drag cards between columns. Persist state. Touch support.                          |
+| 16  | Real-time Chat UI                                                        | (M)        |                           | WebSocket or Socket.io. Message bubbles. Typing indicator. User presence.                            |
+| 17  | E-commerce Product Page                                                  | (M)        |                           | Image carousel. Size/color variants. Add to cart. Reviews section. Responsive.                       |
+| 18  | Blog with CMS                                                            | (M)        |                           | Markdown posts. Categories/tags. Search. Admin panel for CRUD. Static generation or SSR.             |
+| 19  | Authentication System                                                    | (M)        |                           | Register/login/logout. JWT or session-based. Password reset flow. Protected routes.                  |
+| 20  | REST API with Express/Fastify                                            | (M)        |                           | CRUD endpoints. Input validation. Error handling. Rate limiting. API documentation.                  |
+| 21  | GraphQL API Server                                                       | (M)        |                           | Schema definition. Resolvers. Queries and mutations. DataLoader for N+1. Subscriptions (optional).   |
+| 22  | File Upload Service                                                      | (M)        |                           | Multipart form handling. Progress indicator. Image preview. Cloud storage (S3/Cloudinary).           |
+| 23  | URL Shortener (Full Stack)                                               | (M)        |                           | Generate short codes. Redirect. Click analytics. Custom aliases. Expiration dates.                   |
+| 24  | Social Media Dashboard Clone                                             | (M)        |                           | Multi-platform stats display. Charts with Chart.js or D3. Dark/light mode. Responsive.               |
+| 25  | Recipe App with Search & Filters                                         | (M)        |                           | Ingredient-based search. Dietary filters. Save favorites. Shopping list generator.                   |
+| 26  | Music Player UI                                                          | (M)        |                           | Playlist management. Progress bar. Volume control. Keyboard shortcuts. Album art display.            |
+| 27  | Interactive Data Visualization                                           | (M)        |                           | D3.js or Chart.js. Multiple chart types. Tooltips. Responsive. Data from API.                        |
+| 28  | Browser Extension                                                        | (M)        |                           | Chrome/Firefox compatible. Popup UI. Background scripts. Storage API. Content scripts.               |
+| 29  | PWA Conversion                                                           | (M)        |                           | Service Worker. App manifest. Offline support. Push notifications. Install prompt.                   |
+| 30  | Admin Dashboard Template                                                 | (M)        |                           | Sidebar navigation. Data tables with sorting/filtering. Charts. User management UI.                  |
+| 31  | Real-time Collaboration Editor                                           | (H)        |                           | Operational Transform or CRDT. Cursor presence. WebSocket sync. Conflict resolution.                 |
+| 32  | Video Streaming Platform                                                 | (H)        |                           | HLS/DASH streaming. Video player controls. Chapters. Quality selection. Subtitles.                   |
+| 33  | E-commerce Backend                                                       | (H)        |                           | Product catalog. Cart/checkout. Payment integration (Stripe). Order management. Inventory.           |
+| 34  | OAuth2 Provider                                                          | (H)        |                           | Authorization code flow. Token management. Scopes. Client registration. PKCE support.                |
+| 35  | Webhook Delivery System                                                  | (H)        |                           | Event subscription. Retry logic with exponential backoff. Signature verification. Delivery logs.     |
+| 36  | Database Migration Tool                                                  | (H)        |                           | Schema versioning. Up/down migrations. Transaction support. CLI interface. Multiple DB support.      |
+| 37  | API Rate Limiter                                                         | (H)        |                           | Token bucket or sliding window. Redis-backed. Per-user/per-IP limits. Headers for remaining quota.   |
+| 38  | Search Engine with Elasticsearch                                         | (H)        |                           | Full-text search. Faceted filters. Autocomplete. Highlighting. Relevance tuning.                     |
+| 39  | Headless CMS                                                             | (H)        |                           | Content types. Rich text editor. Media library. REST/GraphQL API. Webhooks.                          |
+| 40  | CI/CD Pipeline Dashboard                                                 | (H)        |                           | Build status display. Pipeline visualization. Logs viewer. Notifications. GitHub/GitLab integration. |
+| 41  | Feature Flag Service                                                     | (H)        |                           | Flag management UI. Targeting rules. A/B testing support. SDK for multiple languages. Audit logs.    |
+| 42  | Multi-tenant SaaS Boilerplate                                            | (H)        |                           | Tenant isolation. Subscription billing. Role-based access. Custom domains. Onboarding flow.          |
+| 43  | Real-time Analytics Dashboard                                            | (H)        |                           | Event ingestion. Time-series storage. Live charts. Funnel analysis. User segmentation.               |
+| 44  | Serverless Functions Framework                                           | (H)        |                           | Cold start optimization. Local development. Deployment scripts. Logging/monitoring.                  |
+| 45  | WebRTC Video Chat                                                        | (H)        |                           | Peer connection. Signaling server. STUN/TURN. Screen sharing. Recording.                             |
+| 46  | Distributed Task Queue                                                   | (I)        |                           | Job scheduling. Worker processes. Priority queues. Dead letter queue. Dashboard.                     |
+| 47  | Container Orchestration UI                                               | (I)        |                           | Docker/K8s management. Service status. Log streaming. Resource metrics. Deployment controls.         |
+| 48  | Low-Code Form Builder                                                    | (I)        |                           | Drag-and-drop fields. Conditional logic. Validation rules. Submission handling. Embedding.           |
+| 49  | Multiplayer Game Server                                                  | (I)        |                           | Game state synchronization. Lobby system. Matchmaking. Anti-cheat basics. Scalable architecture.     |
+| 50  | Full-Stack Framework                                                     | (I)        |                           | Router, templating, ORM, CLI. Convention over configuration. Hot reload. Production build.           |

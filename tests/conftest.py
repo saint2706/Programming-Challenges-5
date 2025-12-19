@@ -73,9 +73,7 @@ def create_module_alias(parent_name: str, alias_name: str, actual_dir: Path):
         if parent_path.exists():
             parent_init = parent_path / "__init__.py"
             if parent_init.exists():
-                spec = importlib.util.spec_from_file_location(
-                    parent_name, parent_init
-                )
+                spec = importlib.util.spec_from_file_location(parent_name, parent_init)
                 if spec and spec.loader:
                     module = importlib.util.module_from_spec(spec)
                     sys.modules[parent_name] = module
@@ -147,7 +145,12 @@ for module_path in DIRECT_PATH_MODULES:
         sys.path.insert(0, path_str)
 
 # Add all category directories to path for fallback imports
-for category in ["Practical", "Algorithmic", "EmulationModeling", "ArtificialIntelligence"]:
+for category in [
+    "Practical",
+    "Algorithmic",
+    "EmulationModeling",
+    "ArtificialIntelligence",
+]:
     category_path = ROOT / category
     if category_path.exists() and str(category_path) not in sys.path:
         sys.path.insert(0, str(category_path))

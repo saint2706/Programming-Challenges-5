@@ -1,208 +1,285 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Rishabh Agrawal - Data Storyteller. Portfolio showcasing data science, analytics, and machine learning projects.">
-    <meta name="keywords" content="Data Science, Machine Learning, Analytics, Portfolio, Rishabh Agrawal">
-    <meta name="author" content="Rishabh Agrawal">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Rishabh Agrawal - Data Storyteller. Portfolio showcasing data science, analytics, and machine learning projects."
+    />
+    <meta
+      name="keywords"
+      content="Data Science, Machine Learning, Analytics, Portfolio, Rishabh Agrawal"
+    />
+    <meta name="author" content="Rishabh Agrawal" />
     <title>Rishabh Agrawal | Data Storyteller</title>
-    
+
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Styles -->
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <!-- Navigation -->
     <header class="header" id="header">
-        <nav class="nav container">
-            <a href="#hero" class="nav__logo">
-                <span class="nav__logo-bracket">&lt;</span>
-                <span class="nav__logo-text">RA</span>
-                <span class="nav__logo-bracket">/&gt;</span>
-            </a>
-            
-            <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list">
-                    <li class="nav__item">
-                        <a href="#hero" class="nav__link">Home</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#about" class="nav__link">About</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#projects" class="nav__link">Projects</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#skills" class="nav__link">Skills</a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#contact" class="nav__link">Contact</a>
-                    </li>
-                </ul>
-                
-                <button class="nav__close" id="nav-close" aria-label="Close menu">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            </div>
-            
-            <div class="nav__actions">
-                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-                    <svg class="theme-toggle__sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                    <svg class="theme-toggle__moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                </button>
-                
-                <button class="nav__toggle" id="nav-toggle" aria-label="Open menu">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
-                </button>
-            </div>
-        </nav>
+      <nav class="nav container">
+        <a href="#hero" class="nav__logo">
+          <span class="nav__logo-bracket">&lt;</span>
+          <span class="nav__logo-text">RA</span>
+          <span class="nav__logo-bracket">/&gt;</span>
+        </a>
+
+        <div class="nav__menu" id="nav-menu">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a href="#hero" class="nav__link">Home</a>
+            </li>
+            <li class="nav__item">
+              <a href="#about" class="nav__link">About</a>
+            </li>
+            <li class="nav__item">
+              <a href="#projects" class="nav__link">Projects</a>
+            </li>
+            <li class="nav__item">
+              <a href="#skills" class="nav__link">Skills</a>
+            </li>
+            <li class="nav__item">
+              <a href="#contact" class="nav__link">Contact</a>
+            </li>
+          </ul>
+
+          <button class="nav__close" id="nav-close" aria-label="Close menu">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div class="nav__actions">
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+            <svg
+              class="theme-toggle__sun"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg
+              class="theme-toggle__moon"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+
+          <button class="nav__toggle" id="nav-toggle" aria-label="Open menu">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </nav>
     </header>
 
     <main>
-        <!-- Hero Section -->
-        <section class="hero" id="hero">
-            <div class="hero__container container">
-                <div class="hero__content">
-                    <span class="hero__greeting">Hello, I'm</span>
-                    <h1 class="hero__title">
-                        Rishabh <span class="gradient-text">Agrawal</span>
-                    </h1>
-                    <p class="hero__subtitle">
-                        <span class="typing-text">Data Storyteller</span>
-                        <span class="cursor">|</span>
-                    </p>
-                    <p class="hero__description">
-                        Transforming complex data into compelling narratives. 
-                        I build data-driven solutions that bridge the gap between 
-                        analytics and actionable insights.
-                    </p>
-                    <div class="hero__buttons">
-                        <a href="#projects" class="btn btn--primary">
-                            <span>View Projects</span>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </a>
-                        <a href="#contact" class="btn btn--secondary">
-                            <span>Get in Touch</span>
-                        </a>
-                    </div>
-                    <div class="hero__social">
-                        <a href="https://github.com/saint2706" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                            </svg>
-                        </a>
-                        <a href="https://linkedin.com/in/rishabh-agrawal" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                            </svg>
-                        </a>
-                        <a href="mailto:rishabh.agrawal@example.com" class="social-link" aria-label="Email">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                <polyline points="22,6 12,13 2,6"></polyline>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <div class="hero__image">
-                    <div class="hero__image-wrapper">
-                        <div class="hero__image-glow"></div>
-                        <div class="hero__image-avatar">
-                            <div class="avatar-placeholder">
-                                <span>RA</span>
-                            </div>
-                        </div>
-                        <div class="hero__image-decoration"></div>
-                    </div>
-                </div>
+      <!-- Hero Section -->
+      <section class="hero" id="hero">
+        <div class="hero__container container">
+          <div class="hero__content">
+            <span class="hero__greeting">Hello, I'm</span>
+            <h1 class="hero__title">Rishabh <span class="gradient-text">Agrawal</span></h1>
+            <p class="hero__subtitle">
+              <span class="typing-text">Data Storyteller</span>
+              <span class="cursor">|</span>
+            </p>
+            <p class="hero__description">
+              Transforming complex data into compelling narratives. I build data-driven solutions
+              that bridge the gap between analytics and actionable insights.
+            </p>
+            <div class="hero__buttons">
+              <a href="#projects" class="btn btn--primary">
+                <span>View Projects</span>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+              <a href="#contact" class="btn btn--secondary">
+                <span>Get in Touch</span>
+              </a>
             </div>
-            <div class="hero__scroll">
-                <a href="#about" class="scroll-indicator" aria-label="Scroll down">
-                    <span class="scroll-indicator__mouse">
-                        <span class="scroll-indicator__wheel"></span>
-                    </span>
-                    <span class="scroll-indicator__text">Scroll Down</span>
-                </a>
+            <div class="hero__social">
+              <a
+                href="https://github.com/saint2706"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                aria-label="GitHub"
+              >
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                  />
+                </svg>
+              </a>
+              <a
+                href="https://linkedin.com/in/rishabh-agrawal"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-link"
+                aria-label="LinkedIn"
+              >
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                  />
+                </svg>
+              </a>
+              <a href="mailto:rishabh.agrawal@example.com" class="social-link" aria-label="Email">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  ></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </a>
             </div>
-        </section>
+          </div>
+          <div class="hero__image">
+            <div class="hero__image-wrapper">
+              <div class="hero__image-glow"></div>
+              <div class="hero__image-avatar">
+                <div class="avatar-placeholder">
+                  <span>RA</span>
+                </div>
+              </div>
+              <div class="hero__image-decoration"></div>
+            </div>
+          </div>
+        </div>
+        <div class="hero__scroll">
+          <a href="#about" class="scroll-indicator" aria-label="Scroll down">
+            <span class="scroll-indicator__mouse">
+              <span class="scroll-indicator__wheel"></span>
+            </span>
+            <span class="scroll-indicator__text">Scroll Down</span>
+          </a>
+        </div>
+      </section>
 
-        <!-- About Section -->
-        <section class="about section" id="about">
-            <div class="container">
-                <span class="section__subtitle">Get to know me</span>
-                <h2 class="section__title">About <span class="gradient-text">Me</span></h2>
-                
-                <div class="about__content">
-                    <div class="about__info">
-                        <p class="about__description">
-                            I'm a passionate <strong>Data Storyteller</strong> with expertise in transforming 
-                            raw data into meaningful insights. With a strong foundation in data science, 
-                            machine learning, and visualization, I help organizations make data-driven decisions.
-                        </p>
-                        <p class="about__description">
-                            My journey in data science began with a curiosity for patterns and a love for 
-                            problem-solving. Today, I work on diverse projects ranging from predictive analytics 
-                            to building intelligent systems that automate complex workflows.
-                        </p>
-                        <div class="about__stats">
-                            <div class="stat-card">
-                                <span class="stat-card__number">15+</span>
-                                <span class="stat-card__label">Projects Completed</span>
-                            </div>
-                            <div class="stat-card">
-                                <span class="stat-card__number">3+</span>
-                                <span class="stat-card__label">Years Experience</span>
-                            </div>
-                            <div class="stat-card">
-                                <span class="stat-card__number">10+</span>
-                                <span class="stat-card__label">Technologies</span>
-                            </div>
-                        </div>
-                        <a href="#contact" class="btn btn--primary">
-                            <span>Let's Connect</span>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                                <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="about__image">
-                        <div class="about__image-wrapper glass-card">
-                            <div class="code-block">
-                                <div class="code-block__header">
-                                    <span class="code-block__dot"></span>
-                                    <span class="code-block__dot"></span>
-                                    <span class="code-block__dot"></span>
-                                    <span class="code-block__title">about_me.py</span>
-                                </div>
-                                <pre class="code-block__content"><code><span class="code-keyword">class</span> <span class="code-class">DataStoryteller</span>:
+      <!-- About Section -->
+      <section class="about section" id="about">
+        <div class="container">
+          <span class="section__subtitle">Get to know me</span>
+          <h2 class="section__title">About <span class="gradient-text">Me</span></h2>
+
+          <div class="about__content">
+            <div class="about__info">
+              <p class="about__description">
+                I'm a passionate <strong>Data Storyteller</strong> with expertise in transforming
+                raw data into meaningful insights. With a strong foundation in data science, machine
+                learning, and visualization, I help organizations make data-driven decisions.
+              </p>
+              <p class="about__description">
+                My journey in data science began with a curiosity for patterns and a love for
+                problem-solving. Today, I work on diverse projects ranging from predictive analytics
+                to building intelligent systems that automate complex workflows.
+              </p>
+              <div class="about__stats">
+                <div class="stat-card">
+                  <span class="stat-card__number">15+</span>
+                  <span class="stat-card__label">Projects Completed</span>
+                </div>
+                <div class="stat-card">
+                  <span class="stat-card__number">3+</span>
+                  <span class="stat-card__label">Years Experience</span>
+                </div>
+                <div class="stat-card">
+                  <span class="stat-card__number">10+</span>
+                  <span class="stat-card__label">Technologies</span>
+                </div>
+              </div>
+              <a href="#contact" class="btn btn--primary">
+                <span>Let's Connect</span>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
+            <div class="about__image">
+              <div class="about__image-wrapper glass-card">
+                <div class="code-block">
+                  <div class="code-block__header">
+                    <span class="code-block__dot"></span>
+                    <span class="code-block__dot"></span>
+                    <span class="code-block__dot"></span>
+                    <span class="code-block__title">about_me.py</span>
+                  </div>
+                  <pre
+                    class="code-block__content"
+                  ><code><span class="code-keyword">class</span> <span class="code-class">DataStoryteller</span>:
     <span class="code-keyword">def</span> <span class="code-function">__init__</span>(self):
         self.name = <span class="code-string">"Rishabh Agrawal"</span>
         self.role = <span class="code-string">"Data Storyteller"</span>
@@ -215,418 +292,599 @@
     
     <span class="code-keyword">def</span> <span class="code-function">get_current_focus</span>(self):
         <span class="code-keyword">return</span> <span class="code-string">"Building AI solutions"</span></code></pre>
-                            </div>
-                        </div>
-                    </div>
                 </div>
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        <!-- Projects Section -->
-        <section class="projects section" id="projects">
-            <div class="container">
-                <span class="section__subtitle">My recent work</span>
-                <h2 class="section__title">Featured <span class="gradient-text">Projects</span></h2>
-                
-                <div class="projects__grid">
-                    <!-- Project Card 1 -->
-                    <article class="project-card glass-card">
-                        <div class="project-card__image">
-                            <div class="project-placeholder gradient-bg">
-                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                                    <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
-                                    <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
-                                    <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
-                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="project-card__content">
-                            <div class="project-card__tags">
-                                <span class="tag">Python</span>
-                                <span class="tag">TensorFlow</span>
-                                <span class="tag">OpenCV</span>
-                            </div>
-                            <h3 class="project-card__title">Face Recognition Attendance System</h3>
-                            <p class="project-card__description">
-                                An AI-powered attendance management system using facial recognition with 
-                                real-time detection and multi-face support.
-                            </p>
-                            <div class="project-card__links">
-                                <a href="https://github.com/saint2706" target="_blank" rel="noopener noreferrer" class="project-link">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                    </svg>
-                                    <span>Code</span>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                        <polyline points="15 3 21 3 21 9"></polyline>
-                                        <line x1="10" y1="14" x2="21" y2="3"></line>
-                                    </svg>
-                                    <span>Demo</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
+      <!-- Projects Section -->
+      <section class="projects section" id="projects">
+        <div class="container">
+          <span class="section__subtitle">My recent work</span>
+          <h2 class="section__title">Featured <span class="gradient-text">Projects</span></h2>
 
-                    <!-- Project Card 2 -->
-                    <article class="project-card glass-card">
-                        <div class="project-card__image">
-                            <div class="project-placeholder gradient-bg-alt">
-                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <line x1="18" y1="20" x2="18" y2="10"></line>
-                                    <line x1="12" y1="20" x2="12" y2="4"></line>
-                                    <line x1="6" y1="20" x2="6" y2="14"></line>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="project-card__content">
-                            <div class="project-card__tags">
-                                <span class="tag">Python</span>
-                                <span class="tag">Pandas</span>
-                                <span class="tag">Plotly</span>
-                            </div>
-                            <h3 class="project-card__title">Data Analytics Dashboard</h3>
-                            <p class="project-card__description">
-                                Interactive visualization dashboard for exploring complex datasets 
-                                with real-time filtering and drill-down capabilities.
-                            </p>
-                            <div class="project-card__links">
-                                <a href="https://github.com/saint2706" target="_blank" rel="noopener noreferrer" class="project-link">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                    </svg>
-                                    <span>Code</span>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                        <polyline points="15 3 21 3 21 9"></polyline>
-                                        <line x1="10" y1="14" x2="21" y2="3"></line>
-                                    </svg>
-                                    <span>Demo</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Project Card 3 -->
-                    <article class="project-card glass-card">
-                        <div class="project-card__image">
-                            <div class="project-placeholder gradient-bg-warm">
-                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="project-card__content">
-                            <div class="project-card__tags">
-                                <span class="tag">Python</span>
-                                <span class="tag">scikit-learn</span>
-                                <span class="tag">Flask</span>
-                            </div>
-                            <h3 class="project-card__title">ML Model Pipeline</h3>
-                            <p class="project-card__description">
-                                End-to-end machine learning pipeline with automated feature 
-                                engineering, model training, and deployment capabilities.
-                            </p>
-                            <div class="project-card__links">
-                                <a href="https://github.com/saint2706" target="_blank" rel="noopener noreferrer" class="project-link">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                                    </svg>
-                                    <span>Code</span>
-                                </a>
-                                <a href="#" class="project-link">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                        <polyline points="15 3 21 3 21 9"></polyline>
-                                        <line x1="10" y1="14" x2="21" y2="3"></line>
-                                    </svg>
-                                    <span>Demo</span>
-                                </a>
-                            </div>
-                        </div>
-                    </article>
+          <div class="projects__grid">
+            <!-- Project Card 1 -->
+            <article class="project-card glass-card">
+              <div class="project-card__image">
+                <div class="project-placeholder gradient-bg">
+                  <svg
+                    width="48"
+                    height="48"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <path
+                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                    ></path>
+                    <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
+                    <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
+                    <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                  </svg>
                 </div>
-                
-                <div class="projects__more">
-                    <a href="https://github.com/saint2706" target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
-                        <span>View All Projects</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                            <polyline points="15 3 21 3 21 9"></polyline>
-                            <line x1="10" y1="14" x2="21" y2="3"></line>
-                        </svg>
+              </div>
+              <div class="project-card__content">
+                <div class="project-card__tags">
+                  <span class="tag">Python</span>
+                  <span class="tag">TensorFlow</span>
+                  <span class="tag">OpenCV</span>
+                </div>
+                <h3 class="project-card__title">Face Recognition Attendance System</h3>
+                <p class="project-card__description">
+                  An AI-powered attendance management system using facial recognition with real-time
+                  detection and multi-face support.
+                </p>
+                <div class="project-card__links">
+                  <a
+                    href="https://github.com/saint2706"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="project-link"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                      />
+                    </svg>
+                    <span>Code</span>
+                  </a>
+                  <a href="#" class="project-link">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                    <span>Demo</span>
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Project Card 2 -->
+            <article class="project-card glass-card">
+              <div class="project-card__image">
+                <div class="project-placeholder gradient-bg-alt">
+                  <svg
+                    width="48"
+                    height="48"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                  </svg>
+                </div>
+              </div>
+              <div class="project-card__content">
+                <div class="project-card__tags">
+                  <span class="tag">Python</span>
+                  <span class="tag">Pandas</span>
+                  <span class="tag">Plotly</span>
+                </div>
+                <h3 class="project-card__title">Data Analytics Dashboard</h3>
+                <p class="project-card__description">
+                  Interactive visualization dashboard for exploring complex datasets with real-time
+                  filtering and drill-down capabilities.
+                </p>
+                <div class="project-card__links">
+                  <a
+                    href="https://github.com/saint2706"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="project-link"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                      />
+                    </svg>
+                    <span>Code</span>
+                  </a>
+                  <a href="#" class="project-link">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                    <span>Demo</span>
+                  </a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Project Card 3 -->
+            <article class="project-card glass-card">
+              <div class="project-card__image">
+                <div class="project-placeholder gradient-bg-warm">
+                  <svg
+                    width="48"
+                    height="48"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                  >
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="project-card__content">
+                <div class="project-card__tags">
+                  <span class="tag">Python</span>
+                  <span class="tag">scikit-learn</span>
+                  <span class="tag">Flask</span>
+                </div>
+                <h3 class="project-card__title">ML Model Pipeline</h3>
+                <p class="project-card__description">
+                  End-to-end machine learning pipeline with automated feature engineering, model
+                  training, and deployment capabilities.
+                </p>
+                <div class="project-card__links">
+                  <a
+                    href="https://github.com/saint2706"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="project-link"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                      />
+                    </svg>
+                    <span>Code</span>
+                  </a>
+                  <a href="#" class="project-link">
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                      <polyline points="15 3 21 3 21 9"></polyline>
+                      <line x1="10" y1="14" x2="21" y2="3"></line>
+                    </svg>
+                    <span>Demo</span>
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="projects__more">
+            <a
+              href="https://github.com/saint2706"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn--secondary"
+            >
+              <span>View All Projects</span>
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section class="skills section" id="skills">
+        <div class="container">
+          <span class="section__subtitle">What I work with</span>
+          <h2 class="section__title">Skills & <span class="gradient-text">Technologies</span></h2>
+
+          <div class="skills__grid">
+            <div class="skill-category glass-card">
+              <div class="skill-category__icon gradient-bg">
+                <svg
+                  width="28"
+                  height="28"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+              </div>
+              <h3 class="skill-category__title">Programming</h3>
+              <ul class="skill-category__list">
+                <li class="skill-item">
+                  <span class="skill-item__name">Python</span>
+                  <div class="skill-item__bar">
+                    <div class="skill-item__progress" style="--progress: 95%"></div>
+                  </div>
+                </li>
+                <li class="skill-item">
+                  <span class="skill-item__name">JavaScript</span>
+                  <div class="skill-item__bar">
+                    <div class="skill-item__progress" style="--progress: 80%"></div>
+                  </div>
+                </li>
+                <li class="skill-item">
+                  <span class="skill-item__name">SQL</span>
+                  <div class="skill-item__bar">
+                    <div class="skill-item__progress" style="--progress: 85%"></div>
+                  </div>
+                </li>
+                <li class="skill-item">
+                  <span class="skill-item__name">R</span>
+                  <div class="skill-item__bar">
+                    <div class="skill-item__progress" style="--progress: 70%"></div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="skill-category glass-card">
+              <div class="skill-category__icon gradient-bg-alt">
+                <svg
+                  width="28"
+                  height="28"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="skill-category__title">Data Science</h3>
+              <ul class="skill-category__list">
+                <li class="skill-item">
+                  <span class="skill-item__name">Machine Learning</span>
+                  <div class="skill-item__bar">
+                    <div class="skill-item__progress" style="--progress: 90%"></div>
+                  </div>
+                </li>
+                <li class="skill-item">
+                  <span class="skill-item__name">Deep Learning</span>
+                  <div class="skill-item__bar">
+                    <div class="skill-item__progress" style="--progress: 85%"></div>
+                  </div>
+                </li>
+                <li class="skill-item">
+                  <span class="skill-item__name">Data Visualization</span>
+                  <div class="skill-item__bar">
+                    <div class="skill-item__progress" style="--progress: 92%"></div>
+                  </div>
+                </li>
+                <li class="skill-item">
+                  <span class="skill-item__name">NLP</span>
+                  <div class="skill-item__bar">
+                    <div class="skill-item__progress" style="--progress: 78%"></div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="skill-category glass-card">
+              <div class="skill-category__icon gradient-bg-warm">
+                <svg
+                  width="28"
+                  height="28"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+              </div>
+              <h3 class="skill-category__title">Tools & Frameworks</h3>
+              <ul class="skill-category__list">
+                <li class="skill-item">
+                  <span class="skill-item__name">TensorFlow / PyTorch</span>
+                  <div class="skill-item__bar">
+                    <div class="skill-item__progress" style="--progress: 88%"></div>
+                  </div>
+                </li>
+                <li class="skill-item">
+                  <span class="skill-item__name">Pandas / NumPy</span>
+                  <div class="skill-item__bar">
+                    <div class="skill-item__progress" style="--progress: 95%"></div>
+                  </div>
+                </li>
+                <li class="skill-item">
+                  <span class="skill-item__name">Docker / Git</span>
+                  <div class="skill-item__bar">
+                    <div class="skill-item__progress" style="--progress: 82%"></div>
+                  </div>
+                </li>
+                <li class="skill-item">
+                  <span class="skill-item__name">AWS / GCP</span>
+                  <div class="skill-item__bar">
+                    <div class="skill-item__progress" style="--progress: 75%"></div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section class="contact section" id="contact">
+        <div class="container">
+          <span class="section__subtitle">Get in touch</span>
+          <h2 class="section__title">Contact <span class="gradient-text">Me</span></h2>
+
+          <div class="contact__content">
+            <div class="contact__info">
+              <p class="contact__description">
+                I'm always open to discussing new projects, creative ideas, or opportunities to be
+                part of your vision. Feel free to reach out!
+              </p>
+
+              <div class="contact__cards">
+                <div class="contact-card glass-card">
+                  <div class="contact-card__icon">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                      ></path>
+                      <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                  </div>
+                  <div class="contact-card__content">
+                    <h4 class="contact-card__title">Email</h4>
+                    <a href="mailto:rishabh.agrawal@example.com" class="contact-card__link">
+                      rishabh.agrawal@example.com
                     </a>
+                  </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Skills Section -->
-        <section class="skills section" id="skills">
-            <div class="container">
-                <span class="section__subtitle">What I work with</span>
-                <h2 class="section__title">Skills & <span class="gradient-text">Technologies</span></h2>
-                
-                <div class="skills__grid">
-                    <div class="skill-category glass-card">
-                        <div class="skill-category__icon gradient-bg">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <polyline points="16 18 22 12 16 6"></polyline>
-                                <polyline points="8 6 2 12 8 18"></polyline>
-                            </svg>
-                        </div>
-                        <h3 class="skill-category__title">Programming</h3>
-                        <ul class="skill-category__list">
-                            <li class="skill-item">
-                                <span class="skill-item__name">Python</span>
-                                <div class="skill-item__bar">
-                                    <div class="skill-item__progress" style="--progress: 95%"></div>
-                                </div>
-                            </li>
-                            <li class="skill-item">
-                                <span class="skill-item__name">JavaScript</span>
-                                <div class="skill-item__bar">
-                                    <div class="skill-item__progress" style="--progress: 80%"></div>
-                                </div>
-                            </li>
-                            <li class="skill-item">
-                                <span class="skill-item__name">SQL</span>
-                                <div class="skill-item__bar">
-                                    <div class="skill-item__progress" style="--progress: 85%"></div>
-                                </div>
-                            </li>
-                            <li class="skill-item">
-                                <span class="skill-item__name">R</span>
-                                <div class="skill-item__bar">
-                                    <div class="skill-item__progress" style="--progress: 70%"></div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="skill-category glass-card">
-                        <div class="skill-category__icon gradient-bg-alt">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="skill-category__title">Data Science</h3>
-                        <ul class="skill-category__list">
-                            <li class="skill-item">
-                                <span class="skill-item__name">Machine Learning</span>
-                                <div class="skill-item__bar">
-                                    <div class="skill-item__progress" style="--progress: 90%"></div>
-                                </div>
-                            </li>
-                            <li class="skill-item">
-                                <span class="skill-item__name">Deep Learning</span>
-                                <div class="skill-item__bar">
-                                    <div class="skill-item__progress" style="--progress: 85%"></div>
-                                </div>
-                            </li>
-                            <li class="skill-item">
-                                <span class="skill-item__name">Data Visualization</span>
-                                <div class="skill-item__bar">
-                                    <div class="skill-item__progress" style="--progress: 92%"></div>
-                                </div>
-                            </li>
-                            <li class="skill-item">
-                                <span class="skill-item__name">NLP</span>
-                                <div class="skill-item__bar">
-                                    <div class="skill-item__progress" style="--progress: 78%"></div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="skill-category glass-card">
-                        <div class="skill-category__icon gradient-bg-warm">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                                <line x1="8" y1="21" x2="16" y2="21"></line>
-                                <line x1="12" y1="17" x2="12" y2="21"></line>
-                            </svg>
-                        </div>
-                        <h3 class="skill-category__title">Tools & Frameworks</h3>
-                        <ul class="skill-category__list">
-                            <li class="skill-item">
-                                <span class="skill-item__name">TensorFlow / PyTorch</span>
-                                <div class="skill-item__bar">
-                                    <div class="skill-item__progress" style="--progress: 88%"></div>
-                                </div>
-                            </li>
-                            <li class="skill-item">
-                                <span class="skill-item__name">Pandas / NumPy</span>
-                                <div class="skill-item__bar">
-                                    <div class="skill-item__progress" style="--progress: 95%"></div>
-                                </div>
-                            </li>
-                            <li class="skill-item">
-                                <span class="skill-item__name">Docker / Git</span>
-                                <div class="skill-item__bar">
-                                    <div class="skill-item__progress" style="--progress: 82%"></div>
-                                </div>
-                            </li>
-                            <li class="skill-item">
-                                <span class="skill-item__name">AWS / GCP</span>
-                                <div class="skill-item__bar">
-                                    <div class="skill-item__progress" style="--progress: 75%"></div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="contact-card glass-card">
+                  <div class="contact-card__icon">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                      <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                  </div>
+                  <div class="contact-card__content">
+                    <h4 class="contact-card__title">Location</h4>
+                    <span class="contact-card__text">India</span>
+                  </div>
                 </div>
+              </div>
             </div>
-        </section>
 
-        <!-- Contact Section -->
-        <section class="contact section" id="contact">
-            <div class="container">
-                <span class="section__subtitle">Get in touch</span>
-                <h2 class="section__title">Contact <span class="gradient-text">Me</span></h2>
-                
-                <div class="contact__content">
-                    <div class="contact__info">
-                        <p class="contact__description">
-                            I'm always open to discussing new projects, creative ideas, or opportunities 
-                            to be part of your vision. Feel free to reach out!
-                        </p>
-                        
-                        <div class="contact__cards">
-                            <div class="contact-card glass-card">
-                                <div class="contact-card__icon">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                        <polyline points="22,6 12,13 2,6"></polyline>
-                                    </svg>
-                                </div>
-                                <div class="contact-card__content">
-                                    <h4 class="contact-card__title">Email</h4>
-                                    <a href="mailto:rishabh.agrawal@example.com" class="contact-card__link">
-                                        rishabh.agrawal@example.com
-                                    </a>
-                                </div>
-                            </div>
-                            
-                            <div class="contact-card glass-card">
-                                <div class="contact-card__icon">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                        <circle cx="12" cy="10" r="3"></circle>
-                                    </svg>
-                                </div>
-                                <div class="contact-card__content">
-                                    <h4 class="contact-card__title">Location</h4>
-                                    <span class="contact-card__text">India</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <form class="contact__form glass-card" id="contact-form">
-                        <div class="form-group">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" id="name" name="name" class="form-input" placeholder="Your name" required>
-                            <span class="form-error" id="name-error"></span>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" id="email" name="email" class="form-input" placeholder="your.email@example.com" required>
-                            <span class="form-error" id="email-error"></span>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="subject" class="form-label">Subject</label>
-                            <input type="text" id="subject" name="subject" class="form-input" placeholder="What's this about?" required>
-                            <span class="form-error" id="subject-error"></span>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message" class="form-label">Message</label>
-                            <textarea id="message" name="message" class="form-input form-textarea" placeholder="Your message..." rows="5" required></textarea>
-                            <span class="form-error" id="message-error"></span>
-                        </div>
-                        
-                        <button type="submit" class="btn btn--primary btn--full">
-                            <span>Send Message</span>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="22" y1="2" x2="11" y2="13"></line>
-                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                            </svg>
-                        </button>
-                        
-                        <div class="form-success" id="form-success">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                            </svg>
-                            <span>Message sent successfully! I'll get back to you soon.</span>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </section>
+            <form class="contact__form glass-card" id="contact-form">
+              <div class="form-group">
+                <label for="name" class="form-label">Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  class="form-input"
+                  placeholder="Your name"
+                  required
+                />
+                <span class="form-error" id="name-error"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-input"
+                  placeholder="your.email@example.com"
+                  required
+                />
+                <span class="form-error" id="email-error"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="subject" class="form-label">Subject</label>
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  class="form-input"
+                  placeholder="What's this about?"
+                  required
+                />
+                <span class="form-error" id="subject-error"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="message" class="form-label">Message</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  class="form-input form-textarea"
+                  placeholder="Your message..."
+                  rows="5"
+                  required
+                ></textarea>
+                <span class="form-error" id="message-error"></span>
+              </div>
+
+              <button type="submit" class="btn btn--primary btn--full">
+                <span>Send Message</span>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+
+              <div class="form-success" id="form-success">
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <span>Message sent successfully! I'll get back to you soon.</span>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer__content">
-                <div class="footer__brand">
-                    <a href="#hero" class="footer__logo">
-                        <span class="nav__logo-bracket">&lt;</span>
-                        <span class="nav__logo-text">RA</span>
-                        <span class="nav__logo-bracket">/&gt;</span>
-                    </a>
-                    <p class="footer__tagline">Turning data into stories.</p>
-                </div>
-                
-                <div class="footer__links">
-                    <a href="#about">About</a>
-                    <a href="#projects">Projects</a>
-                    <a href="#skills">Skills</a>
-                    <a href="#contact">Contact</a>
-                </div>
-                
-                <div class="footer__social">
-                    <a href="https://github.com/saint2706" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                        </svg>
-                    </a>
-                    <a href="https://linkedin.com/in/rishabh-agrawal" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                        </svg>
-                    </a>
-                    <a href="mailto:rishabh.agrawal@example.com" class="social-link" aria-label="Email">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                            <polyline points="22,6 12,13 2,6"></polyline>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="footer__bottom">
-                <p class="footer__copyright">
-                    &copy; 2024 Rishabh Agrawal. All rights reserved.
-                </p>
-                <p class="footer__credit">
-                    Built with <span class="heart">♥</span> using HTML, CSS & JavaScript
-                </p>
-            </div>
+      <div class="container">
+        <div class="footer__content">
+          <div class="footer__brand">
+            <a href="#hero" class="footer__logo">
+              <span class="nav__logo-bracket">&lt;</span>
+              <span class="nav__logo-text">RA</span>
+              <span class="nav__logo-bracket">/&gt;</span>
+            </a>
+            <p class="footer__tagline">Turning data into stories.</p>
+          </div>
+
+          <div class="footer__links">
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+          </div>
+
+          <div class="footer__social">
+            <a
+              href="https://github.com/saint2706"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-link"
+              aria-label="GitHub"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                />
+              </svg>
+            </a>
+            <a
+              href="https://linkedin.com/in/rishabh-agrawal"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-link"
+              aria-label="LinkedIn"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                />
+              </svg>
+            </a>
+            <a href="mailto:rishabh.agrawal@example.com" class="social-link" aria-label="Email">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                ></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </a>
+          </div>
         </div>
+
+        <div class="footer__bottom">
+          <p class="footer__copyright">&copy; 2024 Rishabh Agrawal. All rights reserved.</p>
+          <p class="footer__credit">
+            Built with <span class="heart">♥</span> using HTML, CSS & JavaScript
+          </p>
+        </div>
+      </div>
     </footer>
 
     <!-- Scripts -->
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

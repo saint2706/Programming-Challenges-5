@@ -1,15 +1,18 @@
 import os
 import shutil
 import unittest
-import time
+
 from lsm_store import LSMStore, SSTable
+
 
 class TestBinarySearch(unittest.TestCase):
     def setUp(self):
         self.data_dir = "test_lsm_binary_search"
         if os.path.exists(self.data_dir):
             shutil.rmtree(self.data_dir)
-        self.store = LSMStore(self.data_dir, memtable_limit=1024*1024) # Large limit to manually control flush
+        self.store = LSMStore(
+            self.data_dir, memtable_limit=1024 * 1024
+        )  # Large limit to manually control flush
 
     def tearDown(self):
         if os.path.exists(self.data_dir):
@@ -34,14 +37,14 @@ class TestBinarySearch(unittest.TestCase):
 
         # Verify non-existent keys
         self.assertIsNone(sst.get("key99999"))
-        self.assertIsNone(sst.get("key00000a")) # between keys potentially
+        self.assertIsNone(sst.get("key00000a"))  # between keys potentially
 
     def test_mixed_length_keys_and_values(self):
         # To test padding logic
         data = {
             "a": "short",
             "long_key_name": "long_value_content_to_test_padding",
-            "medium": "med"
+            "medium": "med",
         }
         sstable_path = os.path.join(self.data_dir, "sstable_mixed.sst")
         SSTable.create(sstable_path, data)
@@ -51,6 +54,7 @@ class TestBinarySearch(unittest.TestCase):
         self.assertEqual(sst.get("long_key_name"), "long_value_content_to_test_padding")
         self.assertEqual(sst.get("medium"), "med")
         self.assertIsNone(sst.get("b"))
+
 
 if __name__ == "__main__":
     unittest.main()

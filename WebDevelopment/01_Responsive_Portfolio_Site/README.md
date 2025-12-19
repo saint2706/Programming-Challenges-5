@@ -4,12 +4,12 @@
 
 ## 🎯 Challenge Requirements
 
-| Requirement | Status |
-|-------------|--------|
-| Mobile-first responsive design | ✅ |
-| CSS Grid/Flexbox layouts | ✅ |
-| Contact form (frontend) | ✅ |
-| HTML/CSS only (no frameworks) | ✅ |
+| Requirement                    | Status |
+| ------------------------------ | ------ |
+| Mobile-first responsive design | ✅     |
+| CSS Grid/Flexbox layouts       | ✅     |
+| Contact form (frontend)        | ✅     |
+| HTML/CSS only (no frameworks)  | ✅     |
 
 ## ✨ Features
 
@@ -49,11 +49,11 @@ python -m http.server 8080
 
 ## 📱 Responsive Breakpoints
 
-| Breakpoint | Design |
-|------------|--------|
-| < 768px | Mobile (hamburger menu, stacked layout) |
-| 768px+ | Tablet (2-column grids) |
-| 1024px+ | Desktop (3-column grids, full navigation) |
+| Breakpoint | Design                                    |
+| ---------- | ----------------------------------------- |
+| < 768px    | Mobile (hamburger menu, stacked layout)   |
+| 768px+     | Tablet (2-column grids)                   |
+| 1024px+    | Desktop (3-column grids, full navigation) |
 
 ## 🧪 Testing
 

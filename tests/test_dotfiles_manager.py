@@ -8,11 +8,8 @@ import pytest
 
 from Practical.DotfilesManager.__main__ import install_dotfiles
 
-
 # Skip symlink tests on Windows unless running with elevated privileges
-SKIP_SYMLINK = sys.platform == "win32" and not os.path.islink(
-    os.path.dirname(__file__)
-)
+SKIP_SYMLINK = sys.platform == "win32" and not os.path.islink(os.path.dirname(__file__))
 
 
 @pytest.mark.skipif(

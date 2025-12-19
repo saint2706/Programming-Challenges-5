@@ -10,6 +10,7 @@ import pytest
 # Check if Tkinter GUI is available (may not work in CI/headless environments)
 try:
     import tkinter
+
     tkinter.Tk().destroy()
     TKINTER_AVAILABLE = True
 except Exception:
