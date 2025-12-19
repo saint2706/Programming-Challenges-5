@@ -3,20 +3,17 @@
 from __future__ import annotations
 
 import argparse
-import os
-import sys
 from pathlib import Path
 from typing import List, Optional
 
-# Hack to support running as a script despite spaces in folder name
-sys.path.append(os.path.dirname(__file__))
-
 try:
-    from database import HabitRepository
-    from service import TerminalHabitCoach
-except ImportError:
+    # Module execution (preferred internal package style)
     from .database import HabitRepository
     from .service import TerminalHabitCoach
+except ImportError:
+    # Script execution (fallback)
+    from database import HabitRepository
+    from service import TerminalHabitCoach
 
 
 def build_parser() -> argparse.ArgumentParser:
