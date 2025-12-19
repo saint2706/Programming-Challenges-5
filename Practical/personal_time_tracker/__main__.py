@@ -8,13 +8,7 @@ import sys
 from datetime import timedelta
 from typing import Iterable
 
-# Hack to support running as a script despite spaces in folder name
-sys.path.append(os.path.dirname(__file__))
-try:
-    from logic import TimeTracker
-except ImportError:
-    # If installed as a package, fallback (though difficult with spaces)
-    from .logic import TimeTracker
+from .logic import TimeTracker
 
 
 def humanize(duration: timedelta) -> str:

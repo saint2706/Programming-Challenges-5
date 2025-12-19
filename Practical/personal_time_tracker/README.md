@@ -23,7 +23,7 @@ Ensure you have Python 3.8+ installed.
 View all available commands:
 
 ```bash
-python -m Practical.PersonalTimeTracker --help
+python -m Practical.personal_time_tracker --help
 ```
 
 ### Start a Session
@@ -31,7 +31,7 @@ python -m Practical.PersonalTimeTracker --help
 Start a timer for a specific category. You can optionally add notes.
 
 ```bash
-python -m Practical.PersonalTimeTracker start --category coding --notes "Morning feature work"
+python -m Practical.personal_time_tracker start --category coding --notes "Morning feature work"
 ```
 
 ### Stop a Session
@@ -39,7 +39,7 @@ python -m Practical.PersonalTimeTracker start --category coding --notes "Morning
 Stop the currently active session. You can append more notes upon stopping.
 
 ```bash
-python -m Practical.PersonalTimeTracker stop --notes "Done with the feature"
+python -m Practical.personal_time_tracker stop --notes "Done with the feature"
 ```
 
 ### List Sessions
@@ -47,7 +47,7 @@ python -m Practical.PersonalTimeTracker stop --notes "Done with the feature"
 View a chronological list of all recorded sessions.
 
 ```bash
-python -m Practical.PersonalTimeTracker list
+python -m Practical.personal_time_tracker list
 ```
 
 ### Reports
@@ -57,13 +57,13 @@ Generate aggregated reports of time spent per category.
 **Daily Report:**
 
 ```bash
-python -m Practical.PersonalTimeTracker report --period daily
+python -m Practical.personal_time_tracker report --period daily
 ```
 
 **Weekly Report:**
 
 ```bash
-python -m Practical.PersonalTimeTracker report --period weekly
+python -m Practical.personal_time_tracker report --period weekly
 ```
 
 ## 💾 Storage
@@ -77,5 +77,5 @@ You can override the storage location by setting the `PTT_DB_PATH` environment v
 
 ```bash
 export PTT_DB_PATH="./my_sessions.json"
-python -m Practical.PersonalTimeTracker list
+python -m Practical.personal_time_tracker list
 ```

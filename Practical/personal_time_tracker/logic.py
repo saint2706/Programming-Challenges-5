@@ -11,10 +11,7 @@ from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from typing import Any, Callable, Dict, Iterable, List, Optional
 
-try:
-    from .storage import SessionStore
-except ImportError:
-    from storage import SessionStore
+from .storage import SessionStore
 
 
 def utcnow() -> datetime:
