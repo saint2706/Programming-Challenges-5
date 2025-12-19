@@ -50,7 +50,7 @@ class SSTable:
         try:
             with open(self.filepath, "rb") as f:
                 # Check for header
-                header_snippet = f.read(21) # "FMT1 " + 16 chars + "\n"
+                header_snippet = f.read(21)  # "FMT1 " + 16 chars + "\n"
 
                 is_fixed_width = False
                 record_len = 0
@@ -62,8 +62,10 @@ class SSTable:
                         # Format: FMT1 <16 hex chars>\n
                         hex_len = header_snippet[5:21]
                         max_len = int(hex_len, 16)
-                        record_len = max_len + 1 # +1 for newline
-                        header_size = 22 # FMT1 + space + 16 hex + \n = 4 + 1 + 16 + 1 = 22
+                        record_len = max_len + 1  # +1 for newline
+                        header_size = (
+                            22  # FMT1 + space + 16 hex + \n = 4 + 1 + 16 + 1 = 22
+                        )
                         is_fixed_width = True
                 except ValueError:
                     # Not a valid header, fallback
@@ -91,7 +93,7 @@ class SSTable:
                             break
 
                         try:
-                            line_str = line_bytes.decode('utf-8').strip()
+                            line_str = line_bytes.decode("utf-8").strip()
                             entry = json.loads(line_str)
                             k = entry["k"]
 
@@ -118,7 +120,7 @@ class SSTable:
 
         # Fallback linear scan
         try:
-            with open(self.filepath, "r", encoding='utf-8') as f:
+            with open(self.filepath, "r", encoding="utf-8") as f:
                 for line in f:
                     # Skip header if it exists but wasn't handled (shouldn't happen with above logic but safe)
                     if line.startswith("FMT1 "):
@@ -156,7 +158,7 @@ class SSTable:
             # Python's binary file iterator yields lines ending in \n.
             for line in f:
                 try:
-                    line_str = line.decode('utf-8').strip()
+                    line_str = line.decode("utf-8").strip()
                     if not line_str:
                         continue
                     entry = json.loads(line_str)
@@ -192,12 +194,12 @@ class SSTable:
         with open(filepath, "wb") as f:
             # Write header
             header_str = header_fmt.format(max_len)
-            f.write(header_str.encode('utf-8'))
+            f.write(header_str.encode("utf-8"))
 
             for s in serialized_entries:
                 # Pad with spaces
                 padded = s.ljust(max_len) + "\n"
-                f.write(padded.encode('utf-8'))
+                f.write(padded.encode("utf-8"))
 
 
 class LSMStore:
