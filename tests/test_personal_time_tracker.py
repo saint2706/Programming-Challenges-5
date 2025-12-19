@@ -8,21 +8,21 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from Practical.PersonalTimeTracker.logic import TimeTracker
-from Practical.PersonalTimeTracker.storage import SessionStore
+from Practical.personal_time_tracker.logic import TimeTracker
+from Practical.personal_time_tracker.storage import SessionStore
 
 
 def run_cli(tmp_path, *args):
     env = os.environ.copy()
     env["PTT_DB_PATH"] = str(tmp_path / "sessions.json")
-    # Use script path directly since directory has spaces
-    script_path = ROOT / "Practical" / "Personal Time Tracker" / "__main__.py"
+    # Run as a module to support relative imports
     result = subprocess.run(
-        [sys.executable, str(script_path), *args],
+        [sys.executable, "-m", "Practical.personal_time_tracker", *args],
         capture_output=True,
         text=True,
         env=env,
         check=True,
+        cwd=str(ROOT),
     )
     return result.stdout.strip()
 

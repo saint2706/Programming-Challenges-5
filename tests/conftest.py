@@ -31,10 +31,10 @@ MODULE_MAPPINGS = [
     ("Practical", "MediaLibraryOrganizer", "Media Library Organizer"),
     ("Practical", "PersonalAPIKeyVault", "Personal API Key Vault"),
     ("Practical", "PasswordDataBreachChecker", "Password Data Breach Checker"),
-    ("Practical", "PersonalTimeTracker", "Personal Time Tracker"),
     ("Practical", "SmartExpenseSplitter", "Smart Expense Splitter"),
     ("Practical", "StaticSiteGenerator", "Static Site Generator"),
     ("Practical", "TerminalHabitCoach", "Terminal Habit Coach"),
+    ("Practical", "UniversalLogAnalyzer", "Universal Log Analyzer"),
     # Algorithmic modules - import as Algorithmic.ModuleName -> Algorithmic/Directory Name
     ("Algorithmic", "ApproximateStringMatching", "Approximate String Matching"),
     ("Algorithmic", "AutocompleteEngine", "Autocomplete Engine"),

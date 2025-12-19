@@ -3,8 +3,8 @@ from pathlib import Path
 
 import pytest
 
-from Practical.TerminalHabitCoach.database import HabitRepository
-from Practical.TerminalHabitCoach.service import TerminalHabitCoach
+from Practical.terminal_habit_coach.database import HabitRepository
+from Practical.terminal_habit_coach.service import TerminalHabitCoach
 
 
 def test_streaks_increment_and_reset(tmp_path: Path):
