@@ -10,10 +10,7 @@ from decimal import Decimal
 from pathlib import Path
 from typing import Iterable, List, Optional, Sequence, Union
 
-try:
-    from .models import Expense, Participant
-except ImportError:
-    from models import Expense, Participant
+from .models import Expense, Participant
 
 
 @dataclass

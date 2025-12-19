@@ -1,7 +1,7 @@
 from decimal import Decimal
 
-from Practical.SmartExpenseSplitter.models import Expense, Participant
-from Practical.SmartExpenseSplitter.settlement import (
+from Practical.smart_expense_splitter.models import Expense, Participant
+from Practical.smart_expense_splitter.settlement import (
     build_balance_sheet,
     optimize_settlements,
 )

@@ -32,7 +32,6 @@ MODULE_MAPPINGS = [
     ("Practical", "PersonalAPIKeyVault", "Personal API Key Vault"),
     ("Practical", "PasswordDataBreachChecker", "Password Data Breach Checker"),
     ("Practical", "PersonalTimeTracker", "Personal Time Tracker"),
-    ("Practical", "SmartExpenseSplitter", "Smart Expense Splitter"),
     ("Practical", "StaticSiteGenerator", "Static Site Generator"),
     ("Practical", "TerminalHabitCoach", "Terminal Habit Coach"),
     ("Practical", "UniversalLogAnalyzer", "Universal Log Analyzer"),

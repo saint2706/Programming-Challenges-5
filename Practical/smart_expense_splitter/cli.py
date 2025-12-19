@@ -7,22 +7,12 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
-import sys
 from pathlib import Path
 from typing import List
 
-# Hack to support running as a script despite spaces in folder name
-sys.path.append(os.path.dirname(__file__))
-try:
-    from parser import ExpenseInputParser, load_expenses_from_file, parse_cli_expenses
-
-    from models import Expense
-    from settlement import optimize_settlements
-except ImportError:
-    from .models import Expense
-    from .parser import ExpenseInputParser, load_expenses_from_file, parse_cli_expenses
-    from .settlement import optimize_settlements
+from .models import Expense
+from .parser import ExpenseInputParser, load_expenses_from_file, parse_cli_expenses
+from .settlement import optimize_settlements
 
 
 def build_argument_parser() -> argparse.ArgumentParser:

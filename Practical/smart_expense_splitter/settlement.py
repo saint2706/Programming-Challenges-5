@@ -9,16 +9,13 @@ from dataclasses import dataclass
 from decimal import Decimal
 from typing import Any, Dict, Iterable, List
 
-try:
-    from .models import (
-        DebtGraph,
-        Expense,
-        Participant,
-        PaymentPlanEntry,
-        quantize_money,
-    )
-except ImportError:
-    from models import DebtGraph, Expense, Participant, PaymentPlanEntry, quantize_money
+from .models import (
+    DebtGraph,
+    Expense,
+    Participant,
+    PaymentPlanEntry,
+    quantize_money,
+)
 
 
 @dataclass

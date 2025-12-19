@@ -33,7 +33,7 @@ Dinner;90.00;Carla;Bob,Carla
 The module exposes a CLI entry point:
 
 ```bash
-python -m Practical.SmartExpenseSplitter.cli --file trip.txt --pretty --output plan.json
+python -m Practical.smart_expense_splitter.cli --file trip.txt --pretty --output plan.json
 ```
 
 ### Options
