@@ -171,13 +171,17 @@ class Matrix:
             data_b: List[List[Number]] = other.data  # type: ignore
 
             for i in range(rows_a):
+                # Optimization: Hoist list lookups to avoid repeated indexing in inner loops
+                row_result = result[i]
+                row_a = data_a[i]
                 for k in range(cols_a):
-                    val_a = float(data_a[i][k])
+                    val_a = float(row_a[k])
                     # optimization: skip zero
                     if val_a == 0:
                         continue
+                    row_b = data_b[k]
                     for j in range(cols_b):
-                        result[i][j] += val_a * float(data_b[k][j])
+                        row_result[j] += val_a * row_b[j]
             return Matrix(result, backend="list")
 
         # NumPy backend

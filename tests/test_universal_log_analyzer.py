@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from Practical.UniversalLogAnalyzer.__main__ import analyze_logs, parse_log_line
+from Practical.universal_log_analyzer.__main__ import analyze_logs, parse_log_line
 
 
 class TestLogAnalyzer(unittest.TestCase):

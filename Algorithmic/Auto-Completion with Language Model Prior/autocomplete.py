@@ -21,15 +21,19 @@ class AutocompleteEngine:
     N-gram language model probabilities for ranking.
     """
 
-    def __init__(self, n: int = 2):
+    def __init__(self, n: int = 2, alpha: float = 0.4):
         """
         Args:
             n: Order of the N-gram model (e.g., 2 for bigram).
+            alpha: Weight for unigram probability in interpolation (0.0 to 1.0).
+                   Score = alpha * P(w) + (1 - alpha) * P(w|c)
         """
         self.root = TrieNode()
         self.n = n
+        self.alpha = alpha
         self.unigram_counts: Dict[str, int] = collections.defaultdict(int)
         self.ngram_counts: Dict[tuple, int] = collections.defaultdict(int)
+        self.context_counts: Dict[tuple, int] = collections.defaultdict(int)
         self.total_words = 0
 
     def train(self, corpus: List[str]):
@@ -60,13 +64,15 @@ class AutocompleteEngine:
             node.word = word
 
     def _update_ngrams(self, words: List[str]):
-        """Updates N-gram counts."""
+        """Updates N-gram counts and context counts."""
         if len(words) < self.n:
             return
 
         for i in range(len(words) - self.n + 1):
             ngram = tuple(words[i : i + self.n])
             self.ngram_counts[ngram] += 1
+            context = ngram[:-1]
+            self.context_counts[context] += 1
 
     def _get_candidates_from_trie(self, prefix: str) -> List[str]:
         """Returns all words in the Trie starting with prefix."""
@@ -90,41 +96,25 @@ class AutocompleteEngine:
     def _get_ngram_probability(self, word: str, context: List[str]) -> float:
         """
         Calculates P(word | context) using the N-gram model.
-        Uses simple smoothing.
         """
-        if self.n == 1 or not context:
-            # Fallback to unigram probability
-            return self.unigram_counts[word] / (
-                self.total_words + 1
-            )  # +1 for smoothing
+        if self.n == 1:
+            # For unigram model, conditional probability is just P(w)
+            return self.unigram_counts[word] / max(self.total_words, 1)
 
         # Try to use the largest context possible up to n-1
         context_len = min(len(context), self.n - 1)
         relevant_context = tuple(context[-context_len:])
 
-        ngram = relevant_context + (word,)
-
-        # Iterate over all ngrams to find how many times this context appeared
-        # This is inefficient for large corpora; a real implementation would store context counts separately.
-        # But for this challenge, we can approximate or store context counts.
-
-        # Optimization: Store context counts in a separate dict during training?
-        # For now, let's just use the ngram count directly.
-
         # P(w | c) = Count(c, w) / Count(c)
+        count_context = self.context_counts.get(relevant_context, 0)
 
-        # We need Count(c). Since we don't store it explicitly efficiently, let's hack it or re-architect.
-        # Let's assume we stored it. But wait, I can just sum over all words w' for Count(c, w').
+        if count_context == 0:
+            return 0.0
 
-        # Let's simplify: ranking score = alpha * unigram_freq + beta * ngram_prob
+        ngram = relevant_context + (word,)
+        count_ngram = self.ngram_counts.get(ngram, 0)
 
-        # Actually, let's just use the count of the ngram directly as a score booster.
-
-        ngram_count = self.ngram_counts.get(ngram, 0)
-        if ngram_count > 0:
-            return ngram_count * 100  # Boost significantly if it follows the context
-
-        return self.unigram_counts[word]  # Default to unigram freq
+        return count_ngram / count_context
 
     def complete(self, text: str, max_results: int = 5) -> List[str]:
         """
@@ -146,19 +136,20 @@ class AutocompleteEngine:
 
         candidates = self._get_candidates_from_trie(prefix)
 
-        # Rank candidates
-        # Score = (Frequency in Trie) + (Bonus if matches N-gram context)
+        # Rank candidates using interpolation:
+        # Score = alpha * P(w) + (1 - alpha) * P(w | c)
 
         scored_candidates = []
         for cand in candidates:
-            score = self.unigram_counts[cand]
+            # Unigram probability: P(w)
+            p_unigram = self.unigram_counts[cand] / max(self.total_words, 1)
 
-            # Check if this candidate completes an n-gram with the context
-            # We look at the last n-1 words of context
+            # Conditional probability: P(w | c)
+            p_ngram = 0.0
             if context:
-                prob = self._get_ngram_probability(cand, context)
-                # If prob is high (meaning it was found in ngrams), it dominates
-                score += prob
+                p_ngram = self._get_ngram_probability(cand, context)
+
+            score = (self.alpha * p_unigram) + ((1 - self.alpha) * p_ngram)
 
             scored_candidates.append((-score, cand))  # Max heap via negative score
 
