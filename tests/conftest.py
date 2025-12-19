@@ -34,7 +34,6 @@ MODULE_MAPPINGS = [
     ("Practical", "PersonalTimeTracker", "Personal Time Tracker"),
     ("Practical", "SmartExpenseSplitter", "Smart Expense Splitter"),
     ("Practical", "StaticSiteGenerator", "Static Site Generator"),
-    ("Practical", "TerminalHabitCoach", "Terminal Habit Coach"),
     ("Practical", "UniversalLogAnalyzer", "Universal Log Analyzer"),
     # Algorithmic modules - import as Algorithmic.ModuleName -> Algorithmic/Directory Name
     ("Algorithmic", "ApproximateStringMatching", "Approximate String Matching"),
