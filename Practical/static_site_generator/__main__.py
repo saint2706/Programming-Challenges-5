@@ -6,17 +6,11 @@ Entry point for generating static sites.
 from __future__ import annotations
 
 import argparse
-import os
-import sys
 from pathlib import Path
-
-# Hack to support running as a script despite spaces in folder name
-sys.path.append(os.path.dirname(__file__))
 
 try:
     from generator import SiteGenerator
 except ImportError:
-    # Fallback for package mode (unlikely with spaces)
     from .generator import SiteGenerator
 
 
