@@ -62,30 +62,31 @@ def find_vertical_seam(energy: np.ndarray) -> np.ndarray:
         prev_row = dp[r - 1]
 
         # Shifted versions for left, up, right neighbors
-        up = prev_row
-        left = np.roll(prev_row, 1)
-        right = np.roll(prev_row, -1)
+        # Optimization: Use np.pad instead of np.roll to avoid extra copies and allocations.
+        # padded: [inf, row[0], row[1], ..., row[W-1], inf]
+        padded = np.pad(prev_row, (1, 1), mode="constant", constant_values=np.inf)
 
-        # Handle boundaries: set invalid moves to infinity
-        # Since 'left', 'up', 'right' come from prev_row which is float (energy),
-        # they should be able to hold infinity.
-        # However, if energy is somehow int, this would fail.
-        # But calculate_energy returns abs(gradients) which are typically floats or can be cast.
-        # Let's ensure choices are float.
-
-        left[0] = np.inf
-        right[-1] = np.inf
+        left = padded[:-2]   # Shifted right (from perspective of index j, looks at j-1)
+        up = padded[1:-1]    # Same as prev_row
+        right = padded[2:]   # Shifted left (from perspective of index j, looks at j+1)
 
         # Find min of (left, up, right) for each column
-        # This is a bit tricky to vectorize cleanly with argmin for 3 choices,
-        # so we might do a column-wise loop or a stacked argmin.
-        # Let's do a stacked argmin.
+        # Optimization: Avoid np.stack and np.argmin to reduce allocations
+        # Compute min values directly
+        min_values = np.minimum(left, np.minimum(up, right))
 
-        choices = np.stack([left, up, right])  # Shape (3, W)
-        min_indices = np.argmin(
-            choices, axis=0
-        )  # Shape (W,), values 0, 1, 2 corresponding to left, up, right
-        min_values = np.min(choices, axis=0)
+        # Determine indices (0 for left, 1 for up, 2 for right)
+        # np.argmin returns the first occurrence of the minimum value.
+        # Logic: if left == min, choose 0. Else if up == min, choose 1. Else 2.
+
+        # Use np.where for vectorized conditional selection
+        # Note: min_indices will be 0, 1, or 2.
+        # We subtract 1 later to get -1, 0, 1.
+
+        # is_left = (left == min_values)
+        # min_indices = np.where(is_left, 0, np.where(up == min_values, 1, 2))
+
+        min_indices = np.where(left == min_values, 0, np.where(up == min_values, 1, 2))
 
         dp[r] += min_values
         backtrack[r] = min_indices - 1  # Convert 0,1,2 to -1,0,1
