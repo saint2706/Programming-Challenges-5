@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from Practical.StaticSiteGenerator.generator import SiteGenerator
+from Practical.static_site_generator.generator import SiteGenerator
 
 
 class TestStaticSiteGenerator(unittest.TestCase):
