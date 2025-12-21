@@ -51,51 +51,50 @@ def find_vertical_seam(energy: np.ndarray) -> np.ndarray:
 
     # dp[i][j] stores the minimum cumulative energy to reach pixel (i, j)
     # Ensure it's float to handle infinity
-    dp = energy.astype(float)
+    # Optimization: Pad once outside the loop to avoid O(H) allocations of size W
+    dp = np.pad(
+        energy.astype(float),
+        ((0, 0), (1, 1)),
+        mode="constant",
+        constant_values=np.inf,
+    )
 
     # backtrack[i][j] stores the offset (-1, 0, 1) from the previous row
-    backtrack = np.zeros_like(dp, dtype=int)
+    backtrack = np.zeros((rows, cols), dtype=int)
 
     for r in range(1, rows):
         # Vectorized implementation for speed
-        # Previous row values
+        # Previous row values from padded dp array
         prev_row = dp[r - 1]
 
-        # Shifted versions for left, up, right neighbors
-        # Optimization: Use np.pad instead of np.roll to avoid extra copies and allocations.
-        # padded: [inf, row[0], row[1], ..., row[W-1], inf]
-        padded = np.pad(prev_row, (1, 1), mode="constant", constant_values=np.inf)
+        # Valid columns are 1..cols
+        # left neighbor for col j (in 1..cols) is prev_row[j-1]
+        # up neighbor for col j is prev_row[j]
+        # right neighbor for col j is prev_row[j+1]
 
-        left = padded[:-2]   # Shifted right (from perspective of index j, looks at j-1)
-        up = padded[1:-1]    # Same as prev_row
-        right = padded[2:]   # Shifted left (from perspective of index j, looks at j+1)
+        left = prev_row[:-2]
+        up = prev_row[1:-1]
+        right = prev_row[2:]
 
         # Find min of (left, up, right) for each column
         # Optimization: Avoid np.stack and np.argmin to reduce allocations
         # Compute min values directly
         min_values = np.minimum(left, np.minimum(up, right))
 
-        # Determine indices (0 for left, 1 for up, 2 for right)
-        # np.argmin returns the first occurrence of the minimum value.
-        # Logic: if left == min, choose 0. Else if up == min, choose 1. Else 2.
+        # Determine offsets (-1 for left, 0 for up, 1 for right)
+        # Logic: if left == min, choose -1. Else if up == min, choose 0. Else 1.
+        offset = np.where(left == min_values, -1, np.where(up == min_values, 0, 1))
 
-        # Use np.where for vectorized conditional selection
-        # Note: min_indices will be 0, 1, or 2.
-        # We subtract 1 later to get -1, 0, 1.
-
-        # is_left = (left == min_values)
-        # min_indices = np.where(is_left, 0, np.where(up == min_values, 1, 2))
-
-        min_indices = np.where(left == min_values, 0, np.where(up == min_values, 1, 2))
-
-        dp[r] += min_values
-        backtrack[r] = min_indices - 1  # Convert 0,1,2 to -1,0,1
+        # Update dp table (valid region only)
+        dp[r, 1 : cols + 1] += min_values
+        backtrack[r] = offset
 
     # Backtrack from the bottom
     seam = np.zeros(rows, dtype=int)
 
     # Find the bottom pixel with min cumulative energy
-    min_col = np.argmin(dp[-1])
+    # We look at the valid region 1..cols+1
+    min_col = np.argmin(dp[-1, 1 : cols + 1])
     seam[-1] = min_col
 
     for r in range(rows - 2, -1, -1):
