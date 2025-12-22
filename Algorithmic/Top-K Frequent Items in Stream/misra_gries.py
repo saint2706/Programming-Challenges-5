@@ -7,7 +7,7 @@ to find frequent items in a data stream with bounded memory.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Dict, Iterable, List, Optional
+from typing import Any, Dict, Iterable, List, Optional, Set
 
 
 @dataclass(frozen=True)
@@ -164,6 +164,8 @@ class SpaceSavingCounter:
         self.counters: Dict[Any, int] = {}
         self.error: Dict[Any, int] = {}
         self.total: int = 0
+        self.buckets: Dict[int, Set[Any]] = {}
+        self.min_count: int = 0
 
     def update(self, item: Any, count: int = 1) -> None:
         """Update the counter with an item.
@@ -179,22 +181,72 @@ class SpaceSavingCounter:
             raise ValueError("count must be positive")
         self.total += count
 
+        # Case 1: Item already tracked
         if item in self.counters:
-            self.counters[item] += count
+            old_count = self.counters[item]
+            new_count = old_count + count
+            self.counters[item] = new_count
+
+            # Remove from old bucket
+            self.buckets[old_count].remove(item)
+            if not self.buckets[old_count]:
+                del self.buckets[old_count]
+
+            # Add to new bucket
+            if new_count not in self.buckets:
+                self.buckets[new_count] = set()
+            self.buckets[new_count].add(item)
+
+            # Update min_count if needed
+            if old_count == self.min_count and old_count not in self.buckets:
+                while self.min_count not in self.buckets:
+                    self.min_count += 1
             return
+
+        # Case 2: New item, have space
         if len(self.counters) < self.k:
             self.counters[item] = count
             self.error[item] = 0
+
+            if count not in self.buckets:
+                self.buckets[count] = set()
+            self.buckets[count].add(item)
+
+            # Update min_count if this is the first item or smaller than current min
+            if len(self.counters) == 1 or count < self.min_count:
+                self.min_count = count
             return
 
-        # Replace the minimum counter
-        min_item = min(self.counters, key=self.counters.get)  # type: ignore
-        min_count = self.counters[min_item]
+        # Case 3: New item, no space (replace min)
+        # Find an item with min_count
+        if self.min_count not in self.buckets:
+            # Fallback if min_count is somehow desynchronized
+            if self.buckets:
+                self.min_count = min(self.buckets.keys())
+            else:
+                self.min_count = 0
+
+        min_set = self.buckets[self.min_count]
+        min_item = min_set.pop()
+
+        if not min_set:
+            del self.buckets[self.min_count]
+
         del self.counters[min_item]
         del self.error[min_item]
 
-        self.counters[item] = min_count + count
-        self.error[item] = min_count
+        new_item_count = self.min_count + count
+        self.counters[item] = new_item_count
+        self.error[item] = self.min_count
+
+        if new_item_count not in self.buckets:
+            self.buckets[new_item_count] = set()
+        self.buckets[new_item_count].add(item)
+
+        # Update min_count if needed
+        if self.min_count not in self.buckets:
+            while self.min_count not in self.buckets:
+                self.min_count += 1
 
     def bulk_update(self, items: Iterable[Any]) -> None:
         """Update with a batch of items.
