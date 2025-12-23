@@ -61,24 +61,46 @@ class MisraGriesCounter:
         if count <= 0:
             raise ValueError("count must be positive")
         self.total += count
-        remaining = count
-        while remaining > 0:
-            if item in self.counters:
-                self.counters[item] += remaining
-                break
-            if len(self.counters) < self.k - 1:
-                self.counters[item] = remaining
-                break
+        # Case 1: Item already tracked
+        if item in self.counters:
+            self.counters[item] += count
+            return
 
-            # Decrement all counters
-            keys_to_delete = []
-            for key in list(self.counters.keys()):
-                self.counters[key] -= 1
-                if self.counters[key] == 0:
-                    keys_to_delete.append(key)
-            for key in keys_to_delete:
-                del self.counters[key]
-            remaining -= 1
+        # Case 2: Space available
+        if len(self.counters) < self.k - 1:
+            self.counters[item] = count
+            return
+
+        # Case 3: Map full, item not tracked -> Decrement phase
+        # We need to decrement all existing counters and the new item's count
+        # until either the new item is exhausted or some existing item is exhausted.
+
+        # Find minimum count among existing items
+        min_existing = min(self.counters.values())
+
+        if count <= min_existing:
+            # The new item is completely consumed by reducing existing items.
+            decrement = count
+            count = 0
+        else:
+            # New item has enough count to eliminate the smallest existing item(s).
+            decrement = min_existing
+            count -= min_existing
+
+        # Apply decrement to all existing items
+        keys_to_delete = []
+        for key, val in self.counters.items():
+            if val <= decrement:
+                keys_to_delete.append(key)
+            else:
+                self.counters[key] -= decrement
+
+        for key in keys_to_delete:
+            del self.counters[key]
+
+        # If we still have count left, we must have freed up space
+        if count > 0:
+            self.counters[item] = count
 
     def bulk_update(self, items: Iterable[Any]) -> None:
         """Update with a batch of items.
