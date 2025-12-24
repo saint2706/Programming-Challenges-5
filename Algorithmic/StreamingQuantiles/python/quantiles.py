@@ -20,7 +20,7 @@ class GKQuantile:
         if len(self.pool) < self.capacity:
             self.pool.append(v)
         else:
-            # Reservoir logic: replace element with prob capacity/n
+            # Reservoir sampling: replace element with probability capacity/n
             j = random.randint(0, self.n - 1)
             if j < self.capacity:
                 self.pool[j] = v
