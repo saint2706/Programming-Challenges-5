@@ -20,11 +20,9 @@ class GKQuantile:
         if len(self.pool) < self.capacity:
             self.pool.append(v)
         else:
-            # Reservoir logic: replace element with prob capacity/n.
-            # Optimization: Check probability first using random.random() (faster)
-            # instead of generating a random integer in a potentially large range.
-            if random.random() < self.capacity / self.n:
-                j = random.randint(0, self.capacity - 1)
+            # Reservoir sampling: replace element with probability capacity/n
+            j = random.randint(0, self.n - 1)
+            if j < self.capacity:
                 self.pool[j] = v
 
     def query(self, phi: float) -> float:
