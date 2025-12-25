@@ -21,8 +21,8 @@ class GKQuantile:
             self.pool.append(v)
         else:
             # Reservoir sampling: replace element with probability capacity/n
-            j = random.randint(0, self.n - 1)
-            if j < self.capacity:
+            if random.random() < self.capacity / self.n:
+                j = random.randint(0, self.capacity - 1)
                 self.pool[j] = v
 
     def query(self, phi: float) -> float:
