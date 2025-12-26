@@ -1,7 +1,5 @@
-
-import sys
 import random
-import pytest
+import sys
 from pathlib import Path
 
 # Add the specific directory to sys.path to ensure we can import the module
@@ -10,6 +8,7 @@ module_path = Path(__file__).parents[2] / "Algorithmic/StreamingQuantiles/python
 sys.path.append(str(module_path))
 
 from quantiles import GKQuantile
+
 
 def test_gk_quantile_basic():
     """Test basic quantile queries on a small dataset."""
@@ -23,6 +22,7 @@ def test_gk_quantile_basic():
     assert gk.query(0.5) == 49.0
     assert gk.query(0.0) == 0.0
     assert gk.query(1.0) == 99.0
+
 
 def test_gk_quantile_reservoir_logic():
     """Test that the reservoir sampling logic works correctly for large streams."""
@@ -40,6 +40,7 @@ def test_gk_quantile_reservoir_logic():
     # Check that the distribution is roughly uniform (median around 0.5)
     median = gk.query(0.5)
     assert 0.4 <= median <= 0.6
+
 
 def test_gk_quantile_optimization_correctness():
     """
