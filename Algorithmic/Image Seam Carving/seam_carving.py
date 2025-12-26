@@ -103,7 +103,8 @@ def find_vertical_seam(energy: np.ndarray) -> np.ndarray:
         seam[r] = prev_col + offset
 
         # Boundary check (should be handled by the logic above, but good for safety)
-        seam[r] = np.clip(seam[r], 0, cols - 1)
+        # Optimization: Use native Python min/max instead of np.clip for scalar
+        seam[r] = max(0, min(seam[r], cols - 1))
 
     return seam
 
