@@ -4,8 +4,8 @@ from pathlib import Path
 
 # Add the specific directory to sys.path to ensure we can import the module
 # This follows the pattern mentioned in memory for nested projects
-module_path = Path(__file__).parents[2] / "Algorithmic/StreamingQuantiles/python"
-sys.path.append(str(module_path))
+module_path = Path(__file__).parent.parent / "Algorithmic/StreamingQuantiles/python"
+sys.path.insert(0, str(module_path))
 
 from quantiles import GKQuantile
 
