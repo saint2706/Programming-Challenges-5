@@ -24,16 +24,37 @@ def calculate_energy(img_array: np.ndarray) -> np.ndarray:
         # Standard luminosity weights: 0.299 R + 0.587 G + 0.114 B
         gray = np.dot(img_array[..., :3], [0.299, 0.587, 0.114])
     else:
-        gray = img_array
+        gray = img_array.astype(float)
 
     # Gradients using simple difference
     # dy: (x, y+1) - (x, y-1)
     # dx: (x+1, y) - (x-1, y)
 
-    # We use np.gradient for convenience which handles boundaries
-    dy, dx = np.gradient(gray)
+    # Manual gradient calculation is faster than np.gradient
+    rows, cols = gray.shape
 
-    energy = np.abs(dx) + np.abs(dy)
+    # Calculate dx directly into energy buffer to save memory
+    energy = np.empty((rows, cols), dtype=gray.dtype)
+
+    # Interior: |I(x+1, y) - I(x-1, y)|
+    energy[:, 1:-1] = gray[:, 2:] - gray[:, :-2]
+    # Boundaries: 2 * |I(1, y) - I(0, y)| to match scale of interior
+    energy[:, 0] = 2 * (gray[:, 1] - gray[:, 0])
+    energy[:, -1] = 2 * (gray[:, -1] - gray[:, -2])
+
+    # Absolute value in-place
+    np.abs(energy, out=energy)
+
+    # Calculate dy
+    dy = np.empty((rows, cols), dtype=gray.dtype)
+    # Interior: |I(x, y+1) - I(x, y-1)|
+    dy[1:-1, :] = gray[2:, :] - gray[:-2, :]
+    # Boundaries
+    dy[0, :] = 2 * (gray[1, :] - gray[0, :])
+    dy[-1, :] = 2 * (gray[-1, :] - gray[-2, :])
+
+    # Add dy contribution
+    energy += np.abs(dy)
     return energy
 
 
