@@ -100,11 +100,21 @@ def find_vertical_seam(energy: np.ndarray) -> np.ndarray:
         # Find min of (left, up, right) for each column
         # Optimization: Avoid np.stack and np.argmin to reduce allocations
         # Compute min values directly
-        min_values = np.minimum(left, np.minimum(up, right))
+        # Break down minimum calc to re-use intermediate result for mask calculation
+        min_ur = np.minimum(up, right)
+        min_values = np.minimum(left, min_ur)
 
         # Determine offsets (-1 for left, 0 for up, 1 for right)
-        # Logic: if left == min, choose -1. Else if up == min, choose 0. Else 1.
-        offset = np.where(left == min_values, -1, np.where(up == min_values, 0, 1))
+        # Optimized boolean arithmetic to avoid expensive np.where calls
+        # We use .view(np.int8) on boolean arrays to avoid allocation during casting
+        m_left = left == min_values
+        m_up = (up == min_values) & (~m_left)
+
+        # Logic:
+        # If m_left is True: 1 - 2(1) - 0 = -1
+        # If m_up is True:   1 - 0 - 1 = 0
+        # If neither (right is min): 1 - 0 - 0 = 1
+        offset = 1 - 2 * m_left.view(np.int8) - m_up.view(np.int8)
 
         # Update dp table (valid region only)
         dp[r, 1 : cols + 1] += min_values
