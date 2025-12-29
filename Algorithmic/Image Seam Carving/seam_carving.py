@@ -9,22 +9,27 @@ import numpy as np
 from PIL import Image
 
 
-def calculate_energy(img_array: np.ndarray) -> np.ndarray:
+def calculate_energy(
+    img_array: np.ndarray, gray: np.ndarray | None = None
+) -> np.ndarray:
     """
     Calculates the energy map of the image using the dual-gradient energy function.
 
     Args:
         img_array: A 3D numpy array of shape (H, W, 3) or (H, W).
+        gray: Optional pre-calculated grayscale image of shape (H, W).
 
     Returns:
         A 2D numpy array of shape (H, W) representing energy.
     """
-    # Convert to grayscale for simpler gradient calculation if it's color
-    if len(img_array.shape) == 3:
-        # Standard luminosity weights: 0.299 R + 0.587 G + 0.114 B
-        gray = np.dot(img_array[..., :3], [0.299, 0.587, 0.114])
-    else:
-        gray = img_array.astype(float)
+    if gray is None:
+        # Convert to grayscale for simpler gradient calculation if it's color
+        if len(img_array.shape) == 3:
+            # Standard luminosity weights: 0.299 R + 0.587 G + 0.114 B
+            # Use float32 to save memory bandwidth during updates
+            gray = np.dot(img_array[..., :3], [0.299, 0.587, 0.114]).astype(np.float32)
+        else:
+            gray = img_array.astype(np.float32)
 
     # Gradients using simple difference
     # dy: (x, y+1) - (x, y-1)
@@ -73,6 +78,7 @@ def find_vertical_seam(energy: np.ndarray) -> np.ndarray:
     # dp[i][j] stores the minimum cumulative energy to reach pixel (i, j)
     # Ensure it's float to handle infinity
     # Optimization: Pad once outside the loop to avoid O(H) allocations of size W
+    # Note: astype(float) converts to float64, which is safer for accumulation
     dp = np.pad(
         energy.astype(float),
         ((0, 0), (1, 1)),
@@ -154,11 +160,13 @@ def remove_vertical_seam(img_array: np.ndarray, seam: np.ndarray) -> np.ndarray:
     rows, cols = img_array.shape[:2]
     channels = img_array.shape[2] if len(img_array.shape) == 3 else 1
 
-    # Mask to keep pixels
-    mask = np.ones((rows, cols), dtype=bool)
+    if channels == 1 and img_array.ndim == 2:
+        # Optimization for 2D arrays (like grayscale map):
+        # Use np.delete on flattened array which is faster than boolean masking
+        flat_indices = np.arange(rows) * cols + seam
+        return np.delete(img_array, flat_indices).reshape(rows, cols - 1)
 
-    # This is slow: for r in rows: mask[r, seam[r]] = False
-    # Vectorized mask creation:
+    # For 3D arrays, boolean masking is still effective
     col_indices = np.arange(cols)
     mask = col_indices != seam[:, None]
 
@@ -197,13 +205,22 @@ def seam_carve(
     if delta_w < 0:
         raise NotImplementedError("Upscaling (seam insertion) not implemented yet.")
 
+    # Optimization: Calculate grayscale once and update it incrementally
+    # to avoid expensive dot product in every iteration.
+    # Use float32 to reduce memory bandwidth requirements.
+    if len(img_array.shape) == 3:
+        gray = np.dot(img_array[..., :3], [0.299, 0.587, 0.114]).astype(np.float32)
+    else:
+        gray = img_array.astype(np.float32)
+
     for i in range(delta_w):
         if verbose and i % 10 == 0:
             print(f"Removing vertical seam {i+1}/{delta_w}")
 
-        energy = calculate_energy(img_array)
+        energy = calculate_energy(img_array, gray=gray)
         seam = find_vertical_seam(energy)
         img_array = remove_vertical_seam(img_array, seam)
+        gray = remove_vertical_seam(gray, seam)
 
     # Handle height reduction
     # To remove horizontal seams, we can rotate the image 90 degrees,
@@ -221,13 +238,20 @@ def seam_carve(
             else np.transpose(img_array)
         )
 
+        # Re-calculate grayscale for the rotated image
+        if len(img_array.shape) == 3:
+            gray = np.dot(img_array[..., :3], [0.299, 0.587, 0.114]).astype(np.float32)
+        else:
+            gray = img_array.astype(np.float32)
+
         for i in range(delta_h):
             if verbose and i % 10 == 0:
                 print(f"Removing horizontal seam {i+1}/{delta_h}")
 
-            energy = calculate_energy(img_array)
+            energy = calculate_energy(img_array, gray=gray)
             seam = find_vertical_seam(energy)
             img_array = remove_vertical_seam(img_array, seam)
+            gray = remove_vertical_seam(gray, seam)
 
         img_array = (
             np.transpose(img_array, (1, 0, 2))
