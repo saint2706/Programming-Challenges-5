@@ -50,16 +50,12 @@ def calculate_energy(
     # Absolute value in-place
     np.abs(energy, out=energy)
 
-    # Calculate dy
-    dy = np.empty((rows, cols), dtype=gray.dtype)
+    # Calculate dy contribution directly into energy to avoid allocating dy array
     # Interior: |I(x, y+1) - I(x, y-1)|
-    dy[1:-1, :] = gray[2:, :] - gray[:-2, :]
+    energy[1:-1, :] += np.abs(gray[2:, :] - gray[:-2, :])
     # Boundaries
-    dy[0, :] = 2 * (gray[1, :] - gray[0, :])
-    dy[-1, :] = 2 * (gray[-1, :] - gray[-2, :])
-
-    # Add dy contribution
-    energy += np.abs(dy)
+    energy[0, :] += np.abs(2 * (gray[1, :] - gray[0, :]))
+    energy[-1, :] += np.abs(2 * (gray[-1, :] - gray[-2, :]))
     return energy
 
 
