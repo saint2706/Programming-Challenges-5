@@ -162,18 +162,21 @@ def remove_vertical_seam(img_array: np.ndarray, seam: np.ndarray) -> np.ndarray:
         flat_indices = np.arange(rows) * cols + seam
         return np.delete(img_array, flat_indices).reshape(rows, cols - 1)
 
-    # For 3D arrays, boolean masking is still effective
-    col_indices = np.arange(cols)
-    mask = col_indices != seam[:, None]
+    # For 3D arrays, we can also use np.delete on a flattened view
+    # which avoids creating and applying a large boolean mask
+    flat_indices = np.arange(rows) * cols + seam
 
     if channels > 1:
-        # Reshape mask to (H, W, 1) to broadcast or apply per channel
-        # Actually simplest is to just reshape the output
-        new_img = img_array[mask].reshape(rows, cols - 1, channels)
+        # Reshape to (H*W, C) to delete rows corresponding to pixels
+        flat_img = img_array.reshape(-1, channels)
+        new_flat = np.delete(flat_img, flat_indices, axis=0)
+        return new_flat.reshape(rows, cols - 1, channels)
     else:
-        new_img = img_array[mask].reshape(rows, cols - 1)
-
-    return new_img
+        # Fallback for 3D array with 1 channel (rare but possible)
+        # Treated same as 2D basically but preserving last dim
+        flat_img = img_array.reshape(-1)
+        new_flat = np.delete(flat_img, flat_indices)
+        return new_flat.reshape(rows, cols - 1, 1)
 
 
 def seam_carve(
