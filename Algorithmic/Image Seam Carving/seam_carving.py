@@ -74,16 +74,21 @@ def find_vertical_seam(energy: np.ndarray) -> np.ndarray:
     # dp[i][j] stores the minimum cumulative energy to reach pixel (i, j)
     # Ensure it's float to handle infinity
     # Optimization: Pad once outside the loop to avoid O(H) allocations of size W
-    # Note: astype(float) converts to float64, which is safer for accumulation
+    # Note: Using float32 (if energy is float32) is sufficient for precision and saves memory/bandwidth
+    # Note: If energy is int (e.g. from tests), we must cast to float to support np.inf
+    if not np.issubdtype(energy.dtype, np.floating):
+        energy = energy.astype(float)
+
     dp = np.pad(
-        energy.astype(float),
+        energy,
         ((0, 0), (1, 1)),
         mode="constant",
         constant_values=np.inf,
     )
 
     # backtrack[i][j] stores the offset (-1, 0, 1) from the previous row
-    backtrack = np.zeros((rows, cols), dtype=int)
+    # Use int8 to save significant memory (1 byte vs 8 bytes per pixel)
+    backtrack = np.zeros((rows, cols), dtype=np.int8)
 
     for r in range(1, rows):
         # Vectorized implementation for speed
