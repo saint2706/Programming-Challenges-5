@@ -28,7 +28,11 @@ class GKQuantile:
     def query(self, phi: float) -> float:
         if not self.pool:
             return 0.0
-        # Sort pool to find quantile
-        sorted_pool = sorted(self.pool)
-        idx = int(phi * (len(sorted_pool) - 1))
-        return sorted_pool[idx]
+        # Sort pool in-place to find quantile.
+        # This is significantly faster than sorted(self.pool) for interleaved
+        # query/insert workloads because Timsort is efficient on nearly-sorted data.
+        # Since reservoir sampling eviction is based on random indices (not values),
+        # changing the order of elements in the pool does not affect the statistical properties.
+        self.pool.sort()
+        idx = int(phi * (len(self.pool) - 1))
+        return self.pool[idx]

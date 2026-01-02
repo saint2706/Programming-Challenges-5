@@ -79,3 +79,59 @@ def test_gk_quantile_optimization_correctness():
 
     # Check if observed probability is within margin of error
     assert abs(observed_prob - expected_prob) < 0.05
+
+
+def test_gk_quantile_interleaved_query_insert():
+    """
+    Test correctness for interleaved query/insert workloads.
+    This validates the in-place sort optimization: the pool remains nearly-sorted
+    between queries, and Timsort efficiently handles insertions that slightly perturb order.
+    Pattern: insert batch → query → insert more → query → repeat.
+    """
+    random.seed(789)
+    capacity = 50
+    gk = GKQuantile(capacity=capacity)
+    
+    # Phase 1: Insert initial batch
+    for i in range(30):
+        gk.insert(float(i))
+    
+    # Query 1: Should get median around 14.5
+    median1 = gk.query(0.5)
+    assert 13.0 <= median1 <= 16.0, f"Expected median ~14.5, got {median1}"
+    
+    # Phase 2: Insert more values
+    for i in range(30, 60):
+        gk.insert(float(i))
+    
+    # Query 2: Should get median around 29.5
+    median2 = gk.query(0.5)
+    assert 27.0 <= median2 <= 32.0, f"Expected median ~29.5, got {median2}"
+    
+    # Phase 3: Insert values that will partially replace existing pool
+    for i in range(60, 120):
+        gk.insert(float(i))
+    
+    # Query 3: After many insertions beyond capacity, median should shift higher
+    median3 = gk.query(0.5)
+    # With reservoir sampling, we expect a mix of old and new values
+    # The median should be somewhere between the early values and late values
+    assert median3 > median2, f"Expected median to increase, but {median3} <= {median2}"
+    
+    # Phase 4: Multiple queries without inserts should give consistent results
+    q1 = gk.query(0.25)
+    q2 = gk.query(0.5)
+    q3 = gk.query(0.75)
+    
+    # Verify ordering: 25th percentile < median < 75th percentile
+    assert q1 < q2 < q3, f"Expected {q1} < {q2} < {q3}"
+    
+    # Phase 5: Insert more and query again
+    for i in range(120, 150):
+        gk.insert(float(i))
+    
+    final_median = gk.query(0.5)
+    # Pool size should remain at capacity
+    assert len(gk.pool) == capacity
+    # Final median should be reasonable given the data distribution
+    assert 0 <= final_median <= 150
