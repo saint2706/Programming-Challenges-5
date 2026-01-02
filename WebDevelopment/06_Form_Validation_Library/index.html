@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lightweight form validation library with real-time feedback">
+    <title>Form Validation Library Demo</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Form Validation Library</h1>
+            <p class="subtitle">Lightweight, flexible form validation with real-time feedback</p>
+        </header>
+
+        <main class="main">
+            <!-- Demo Form -->
+            <section class="demo-section">
+                <h2>Interactive Demo</h2>
+                <form id="demoForm" class="form" novalidate>
+                    <!-- Name Field -->
+                    <div class="form-group">
+                        <label for="name" class="form-label">
+                            Full Name <span class="required">*</span>
+                        </label>
+                        <input type="text" id="name" name="name" class="form-input"
+                            data-validate="required|minLength:3|maxLength:50" data-label="Full Name"
+                            placeholder="John Doe">
+                        <div class="form-error"></div>
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="form-group">
+                        <label for="email" class="form-label">
+                            Email Address <span class="required">*</span>
+                        </label>
+                        <input type="email" id="email" name="email" class="form-input" data-validate="required|email"
+                            data-label="Email" placeholder="john@example.com">
+                        <div class="form-error"></div>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-group">
+                        <label for="password" class="form-label">
+                            Password <span class="required">*</span>
+                        </label>
+                        <input type="password" id="password" name="password" class="form-input"
+                            data-validate="required|minLength:8|password" data-label="Password" placeholder="••••••••">
+                        <div class="form-error"></div>
+                        <div class="form-hint">Must be at least 8 characters with uppercase, lowercase, and number</div>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="form-group">
+                        <label for="confirmPassword" class="form-label">
+                            Confirm Password <span class="required">*</span>
+                        </label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" class="form-input"
+                            data-validate="required|matchField:password" data-label="Confirm Password"
+                            data-match-label="Password" placeholder="••••••••">
+                        <div class="form-error"></div>
+                    </div>
+
+                    <!-- Phone Field -->
+                    <div class="form-group">
+                        <label for="phone" class="form-label">
+                            Phone Number
+                        </label>
+                        <input type="tel" id="phone" name="phone" class="form-input" data-validate="phone"
+                            data-label="Phone" placeholder="+1 (555) 123-4567">
+                        <div class="form-error"></div>
+                    </div>
+
+                    <!-- URL Field -->
+                    <div class="form-group">
+                        <label for="website" class="form-label">
+                            Website
+                        </label>
+                        <input type="url" id="website" name="website" class="form-input" data-validate="url"
+                            data-label="Website" placeholder="https://example.com">
+                        <div class="form-error"></div>
+                    </div>
+
+                    <!-- Age Field -->
+                    <div class="form-group">
+                        <label for="age" class="form-label">
+                            Age <span class="required">*</span>
+                        </label>
+                        <input type="number" id="age" name="age" class="form-input"
+                            data-validate="required|min:18|max:120" data-label="Age" placeholder="25">
+                        <div class="form-error"></div>
+                    </div>
+
+                    <!-- Terms Checkbox -->
+                    <div class="form-group">
+                        <label class="form-checkbox">
+                            <input type="checkbox" id="terms" name="terms" data-validate="required"
+                                data-label="Terms and Conditions">
+                            <span>I agree to the Terms and Conditions <span class="required">*</span></span>
+                        </label>
+                        <div class="form-error"></div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary">Submit Form</button>
+                </form>
+
+                <!-- Success Message -->
+                <div id="successMessage" class="alert alert-success" style="display: none;">
+                    <strong>Success!</strong> Form submitted successfully.
+                </div>
+            </section>
+
+            <!-- Documentation -->
+            <section class="doc-section">
+                <h2>Usage</h2>
+
+                <div class="doc-block">
+                    <h3>1. Add Validation Attributes</h3>
+                    <pre><code>&lt;input 
+  type="text" 
+  data-validate="required|minLength:3|maxLength:50"
+  data-label="Full Name"
+&gt;</code></pre>
+                </div>
+
+                <div class="doc-block">
+                    <h3>2. Initialize Validator</h3>
+                    <pre><code>const validator = new FormValidator('#myForm');
+validator.init();</code></pre>
+                </div>
+
+                <div class="doc-block">
+                    <h3>Available Validation Rules</h3>
+                    <ul class="rules-list">
+                        <li><code>required</code> - Field must not be empty</li>
+                        <li><code>email</code> - Valid email format</li>
+                        <li><code>url</code> - Valid URL format</li>
+                        <li><code>phone</code> - Valid phone number</li>
+                        <li><code>password</code> - Strong password (8+ chars, upper, lower, number)</li>
+                        <li><code>minLength:n</code> - Minimum length</li>
+                        <li><code>maxLength:n</code> - Maximum length</li>
+                        <li><code>min:n</code> - Minimum numeric value</li>
+                        <li><code>max:n</code> - Maximum numeric value</li>
+                        <li><code>matchField:fieldName</code> - Must match another field</li>
+                    </ul>
+                </div>
+
+                <div class="doc-block">
+                    <h3>Features</h3>
+                    <ul class="features-list">
+                        <li>✅ Real-time validation on blur</li>
+                        <li>✅ Custom error messages</li>
+                        <li>✅ Multiple validation rules per field</li>
+                        <li>✅ Chained validations</li>
+                        <li>✅ No dependencies</li>
+                        <li>✅ Lightweight (~3KB)</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="form-validator.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
