@@ -163,9 +163,10 @@ class Matrix:
 
         if self.backend == "list":
             # Initialize result with zeros
-            result: List[List[float]] = [
-                [0.0 for _ in range(cols_b)] for _ in range(rows_a)
-            ]
+            # Optimization: Use list multiplication which is implemented in C and much faster
+            # than list comprehension for simple initialization
+            result: List[List[float]] = [[0.0] * cols_b for _ in range(rows_a)]
+
             # data is guaranteed to be List[List] here
             data_a: List[List[Number]] = self.data  # type: ignore
             data_b: List[List[Number]] = other.data  # type: ignore
@@ -175,7 +176,9 @@ class Matrix:
                 row_result = result[i]
                 row_a = data_a[i]
                 for k in range(cols_a):
-                    val_a = float(row_a[k])
+                    # Optimization: Avoid unnecessary float() conversion overhead
+                    # Python automatically handles int/float mixed arithmetic and result is float
+                    val_a = row_a[k]
                     # optimization: skip zero
                     if val_a == 0:
                         continue
