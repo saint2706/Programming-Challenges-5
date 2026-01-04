@@ -86,10 +86,6 @@ def find_vertical_seam(energy: np.ndarray) -> np.ndarray:
         constant_values=np.inf,
     )
 
-    # backtrack[i][j] stores the offset (-1, 0, 1) from the previous row
-    # Use int8 to save significant memory (1 byte vs 8 bytes per pixel)
-    backtrack = np.zeros((rows, cols), dtype=np.int8)
-
     for r in range(1, rows):
         # Vectorized implementation for speed
         # Previous row values from padded dp array
@@ -107,25 +103,11 @@ def find_vertical_seam(energy: np.ndarray) -> np.ndarray:
         # Find min of (left, up, right) for each column
         # Optimization: Avoid np.stack and np.argmin to reduce allocations
         # Compute min values directly
-        # Break down minimum calc to re-use intermediate result for mask calculation
         min_ur = np.minimum(up, right)
         min_values = np.minimum(left, min_ur)
 
-        # Determine offsets (-1 for left, 0 for up, 1 for right)
-        # Optimized boolean arithmetic to avoid expensive np.where calls
-        # We use .view(np.int8) on boolean arrays to avoid allocation during casting
-        m_left = left == min_values
-        m_up = (up == min_values) & (~m_left)
-
-        # Logic:
-        # If m_left is True: 1 - 2(1) - 0 = -1
-        # If m_up is True:   1 - 0 - 1 = 0
-        # If neither (right is min): 1 - 0 - 0 = 1
-        offset = 1 - 2 * m_left.view(np.int8) - m_up.view(np.int8)
-
         # Update dp table (valid region only)
         dp[r, 1 : cols + 1] += min_values
-        backtrack[r] = offset
 
     # Backtrack from the bottom
     seam = np.zeros(rows, dtype=int)
@@ -137,7 +119,24 @@ def find_vertical_seam(energy: np.ndarray) -> np.ndarray:
 
     for r in range(rows - 2, -1, -1):
         prev_col = seam[r + 1]
-        offset = backtrack[r + 1, prev_col]
+
+        # Reconstruct path by looking at the 3 neighbors above
+        # dp is padded, so prev_col in original img corresponds to prev_col + 1 in dp
+        c = prev_col + 1
+
+        val_left = dp[r, c - 1]
+        val_up = dp[r, c]
+        val_right = dp[r, c + 1]
+
+        # Determine which neighbor minimized the cost
+        # Preference order for ties: Left, Up, Right (matches original logic)
+        if val_left <= val_up and val_left <= val_right:
+            offset = -1
+        elif val_up <= val_right:
+            offset = 0
+        else:
+            offset = 1
+
         seam[r] = prev_col + offset
 
         # Boundary check (should be handled by the logic above, but good for safety)
