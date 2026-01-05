@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Any, Dict, Iterable, List, Optional, Set
+import heapq
 
 
 @dataclass(frozen=True)
@@ -30,6 +31,9 @@ class MisraGriesCounter:
 
     Maintains at most ``k - 1`` counters and returns approximate frequencies
     for items appearing frequently in a stream.
+
+    Optimized implementation using an offset-based strategy and bucketed counts
+    to handle decrement operations in amortized constant time.
     """
 
     def __init__(self, k: int) -> None:
@@ -45,8 +49,47 @@ class MisraGriesCounter:
         if k < 2:
             raise ValueError("k must be at least 2 for Misra-Gries")
         self.k = k
-        self.counters: Dict[Any, int] = {}
+        # internal counters store stored_count = actual_count + offset
+        self._counters: Dict[Any, int] = {}
+        # buckets map stored_count -> set of items
+        self._buckets: Dict[int, Set[Any]] = {}
+        # min-heap of stored_counts present in buckets (may contain stale entries)
+        self._heap: List[int] = []
+
+        self.offset: int = 0
         self.total: int = 0
+
+    def _add_to_bucket(self, item: Any, stored_count: int) -> None:
+        if stored_count not in self._buckets:
+            self._buckets[stored_count] = set()
+            heapq.heappush(self._heap, stored_count)
+            # Prune heap if it grows too large due to lazy deletion
+            # This prevents memory leaks and latency spikes in long streams
+            if len(self._heap) > 20 * self.k: # 20x overhead allowed before rebuild
+                self._rebuild_heap()
+
+        self._buckets[stored_count].add(item)
+
+    def _remove_from_bucket(self, item: Any, stored_count: int) -> None:
+        if stored_count in self._buckets:
+            self._buckets[stored_count].discard(item)
+            if not self._buckets[stored_count]:
+                del self._buckets[stored_count]
+                # We don't remove from heap immediately (lazy deletion)
+
+    def _rebuild_heap(self) -> None:
+        """Rebuild the heap from active bucket keys to remove stale entries."""
+        self._heap = list(self._buckets.keys())
+        heapq.heapify(self._heap)
+
+    def _get_min_stored(self) -> int:
+        """Return the minimum stored count currently in the map."""
+        while self._heap and self._heap[0] not in self._buckets:
+            heapq.heappop(self._heap)
+
+        if not self._heap:
+            return 0 # Should not happen if map not empty
+        return self._heap[0]
 
     def update(self, item: Any, count: int = 1) -> None:
         """Update the counter with an item.
@@ -61,46 +104,62 @@ class MisraGriesCounter:
         if count <= 0:
             raise ValueError("count must be positive")
         self.total += count
+
         # Case 1: Item already tracked
-        if item in self.counters:
-            self.counters[item] += count
+        if item in self._counters:
+            old_stored = self._counters[item]
+            new_stored = old_stored + count
+            self._counters[item] = new_stored
+
+            self._remove_from_bucket(item, old_stored)
+            self._add_to_bucket(item, new_stored)
             return
 
         # Case 2: Space available
-        if len(self.counters) < self.k - 1:
-            self.counters[item] = count
+        if len(self._counters) < self.k - 1:
+            stored = count + self.offset
+            self._counters[item] = stored
+            self._add_to_bucket(item, stored)
             return
 
         # Case 3: Map full, item not tracked -> Decrement phase
-        # We need to decrement all existing counters and the new item's count
-        # until either the new item is exhausted or some existing item is exhausted.
+        min_stored = self._get_min_stored()
+        min_actual = min_stored - self.offset
 
-        # Find minimum count among existing items
-        min_existing = min(self.counters.values())
+        # We decrement all existing items and the new item by d
+        d = min(min_actual, count)
 
-        if count <= min_existing:
-            # The new item is completely consumed by reducing existing items.
-            decrement = count
-            count = 0
-        else:
-            # New item has enough count to eliminate the smallest existing item(s).
-            decrement = min_existing
-            count -= min_existing
+        self.offset += d
+        count -= d
 
-        # Apply decrement to all existing items
-        keys_to_delete = []
-        for key, val in self.counters.items():
-            if val <= decrement:
-                keys_to_delete.append(key)
+        # Remove items that have effectively reached 0 (stored <= offset)
+        while self._heap:
+            # clean top of heap
+            while self._heap and self._heap[0] not in self._buckets:
+                heapq.heappop(self._heap)
+
+            if not self._heap:
+                break
+
+            current_min = self._heap[0]
+            if current_min <= self.offset:
+                # Remove all items in this bucket
+                items_to_remove = self._buckets[current_min]
+                # We copy the set because we modify _counters
+                # But we can just iterate and clear
+                for it in list(items_to_remove):
+                    del self._counters[it]
+
+                del self._buckets[current_min]
+                heapq.heappop(self._heap)
             else:
-                self.counters[key] -= decrement
+                break
 
-        for key in keys_to_delete:
-            del self.counters[key]
-
-        # If we still have count left, we must have freed up space
+        # If we still have count left, add the new item
         if count > 0:
-            self.counters[item] = count
+            stored = count + self.offset
+            self._counters[item] = stored
+            self._add_to_bucket(item, stored)
 
     def bulk_update(self, items: Iterable[Any]) -> None:
         """Update with a batch of items.
@@ -120,7 +179,10 @@ class MisraGriesCounter:
         Returns:
             int: Estimated count.
         """
-        return self.counters.get(item, 0)
+        if item in self._counters:
+            val = self._counters[item] - self.offset
+            return max(0, val)
+        return 0
 
     def approximate_counts(self) -> Dict[Any, int]:
         """Get all current approximate counts.
@@ -128,7 +190,17 @@ class MisraGriesCounter:
         Returns:
             Dict[Any, int]: Dictionary of item counts.
         """
-        return dict(self.counters)
+        return {item: val - self.offset for item, val in self._counters.items()}
+
+    @property
+    def counters(self) -> Dict[Any, int]:
+        """Backward compatibility property.
+
+        Returns a COPY of the counters with adjusted values.
+        Note: Modifying this dict will not affect the internal state.
+        This is expensive (O(k)), so prefer approximate_counts().
+        """
+        return self.approximate_counts()
 
     def heavy_hitters(
         self,
@@ -149,17 +221,22 @@ class MisraGriesCounter:
         if min_fraction is not None:
             threshold = max(threshold, int(min_fraction * self.total))
 
+        # Build list using corrected counts
+        current_counts = self.approximate_counts()
+
         hitters = [
             FrequentItem(item=item, estimate=count, error=0)
-            for item, count in self.counters.items()
+            for item, count in current_counts.items()
             if count >= threshold
         ]
+
         # If no threshold provided but we have items, return all
-        if not hitters and threshold == 0 and self.counters:
+        if not hitters and threshold == 0 and current_counts:
             hitters = [
                 FrequentItem(item=item, estimate=count, error=0)
-                for item, count in self.counters.items()
+                for item, count in current_counts.items()
             ]
+
         hitters.sort(key=lambda fi: fi.estimate, reverse=True)
         return hitters
 

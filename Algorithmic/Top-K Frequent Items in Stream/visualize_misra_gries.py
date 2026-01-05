@@ -53,7 +53,8 @@ class MisraGriesDemo(Scene):
             """Create a new VGroup representing the current state of counters."""
             new_group = VGroup()
             # Sort keys for stable visualization
-            sorted_items = sorted(mg.counters.items())
+            # Use approximate_counts() to get corrected values if optimized
+            sorted_items = sorted(mg.approximate_counts().items())
 
             count_items = len(sorted_items)
             if count_items == 0:
