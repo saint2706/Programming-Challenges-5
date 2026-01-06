@@ -86,9 +86,8 @@ def find_vertical_seam(energy: np.ndarray) -> np.ndarray:
         constant_values=np.inf,
     )
 
-    # backtrack[i][j] stores the offset (-1, 0, 1) from the previous row
-    # Use int8 to save significant memory (1 byte vs 8 bytes per pixel)
-    backtrack = np.zeros((rows, cols), dtype=np.int8)
+    # No backtrack array needed to save memory and allocation time.
+    # We can reconstruct the path by looking at the DP table values during backtracking.
 
     for r in range(1, rows):
         # Vectorized implementation for speed
@@ -107,25 +106,11 @@ def find_vertical_seam(energy: np.ndarray) -> np.ndarray:
         # Find min of (left, up, right) for each column
         # Optimization: Avoid np.stack and np.argmin to reduce allocations
         # Compute min values directly
-        # Break down minimum calc to re-use intermediate result for mask calculation
         min_ur = np.minimum(up, right)
         min_values = np.minimum(left, min_ur)
 
-        # Determine offsets (-1 for left, 0 for up, 1 for right)
-        # Optimized boolean arithmetic to avoid expensive np.where calls
-        # We use .view(np.int8) on boolean arrays to avoid allocation during casting
-        m_left = left == min_values
-        m_up = (up == min_values) & (~m_left)
-
-        # Logic:
-        # If m_left is True: 1 - 2(1) - 0 = -1
-        # If m_up is True:   1 - 0 - 1 = 0
-        # If neither (right is min): 1 - 0 - 0 = 1
-        offset = 1 - 2 * m_left.view(np.int8) - m_up.view(np.int8)
-
         # Update dp table (valid region only)
         dp[r, 1 : cols + 1] += min_values
-        backtrack[r] = offset
 
     # Backtrack from the bottom
     seam = np.zeros(rows, dtype=int)
@@ -137,7 +122,23 @@ def find_vertical_seam(energy: np.ndarray) -> np.ndarray:
 
     for r in range(rows - 2, -1, -1):
         prev_col = seam[r + 1]
-        offset = backtrack[r + 1, prev_col]
+
+        # Reconstruct path by looking at the 3 neighbors in the previous row
+        # Padded index for prev_col is prev_col + 1
+        # Neighbors are at padded indices: prev_col, prev_col+1, prev_col+2
+        l_val = dp[r, prev_col]
+        u_val = dp[r, prev_col + 1]
+        r_val = dp[r, prev_col + 2]
+
+        # Find which neighbor has the minimum value to determine offset
+        # This replaces the lookup in the backtrack table
+        if l_val <= u_val and l_val <= r_val:
+            offset = -1
+        elif u_val <= r_val:
+            offset = 0
+        else:
+            offset = 1
+
         seam[r] = prev_col + offset
 
         # Boundary check (should be handled by the logic above, but good for safety)
