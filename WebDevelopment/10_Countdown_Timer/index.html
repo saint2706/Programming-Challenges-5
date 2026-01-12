@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Countdown Timer</h1>
+
+        <div class="input-section">
+            <label for="targetDate">Select Target Date & Time:</label>
+            <input type="datetime-local" id="targetDate">
+            <button id="startBtn">Start Countdown</button>
+        </div>
+
+        <div class="countdown" id="countdown">
+            <div class="time-box">
+                <div class="flip-card">
+                    <span id="days">00</span>
+                </div>
+                <div class="label">Days</div>
+            </div>
+            <div class="time-box">
+                <div class="flip-card">
+                    <span id="hours">00</span>
+                </div>
+                <div class="label">Hours</div>
+            </div>
+            <div class="time-box">
+                <div class="flip-card">
+                    <span id="minutes">00</span>
+                </div>
+                <div class="label">Minutes</div>
+            </div>
+            <div class="time-box">
+                <div class="flip-card">
+                    <span id="seconds">00</span>
+                </div>
+                <div class="label">Seconds</div>
+            </div>
+        </div>
+
+        <div class="message" id="message"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

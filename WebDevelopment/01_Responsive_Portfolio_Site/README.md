@@ -2,14 +2,25 @@
 
 **Web Development Challenge #1** — A modern, responsive portfolio site built with pure HTML, CSS, and JavaScript.
 
+## 📸 Preview
+
+![Desktop Light Mode](./screenshots/desktop-light.png)
+*Desktop view with light theme*
+
+![Desktop Dark Mode](./screenshots/desktop-dark.png)
+*Desktop view with dark theme*
+
+![Mobile View](./screenshots/mobile.png)
+*Responsive mobile layout*
+
 ## 🎯 Challenge Requirements
 
 | Requirement                    | Status |
 | ------------------------------ | ------ |
-| Mobile-first responsive design | ✅     |
-| CSS Grid/Flexbox layouts       | ✅     |
-| Contact form (frontend)        | ✅     |
-| HTML/CSS only (no frameworks)  | ✅     |
+| Mobile-first responsive design | ✅      |
+| CSS Grid/Flexbox layouts       | ✅      |
+| Contact form (frontend)        | ✅      |
+| HTML/CSS only (no frameworks)  | ✅      |
 
 ## ✨ Features
 

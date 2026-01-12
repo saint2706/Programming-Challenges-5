@@ -2,6 +2,14 @@
 
 A stunning, modern landing page showcasing advanced CSS animations, parallax scrolling effects, and smooth user interactions. Built with pure HTML, CSS, and JavaScript—no frameworks required.
 
+## 📸 Preview
+
+![Desktop View](./screenshots/desktop.png)
+*Desktop view with smooth animations and modern design*
+
+![Mobile View](./screenshots/mobile.png)
+*Responsive mobile layout*
+
 ## Features
 
 ### Visual Design

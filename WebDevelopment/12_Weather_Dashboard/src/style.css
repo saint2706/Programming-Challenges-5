@@ -1,0 +1,261 @@
+:root {
+    --primary: #3b82f6;
+    --bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --card: #ffffff;
+    --text: #1f2937;
+    --text-light: #6b7280;
+    --border: #e5e7eb;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: white;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.search-box {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 500px;
+    margin: 0 auto 1rem;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 0.875rem 1.25rem;
+    border: none;
+    border-radius: 2rem;
+    font-size: 1rem;
+}
+
+.search-box button {
+    padding: 0.875rem 1.5rem;
+    background: white;
+    border: none;
+    border-radius: 2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.search-box button:hover {
+    transform: scale(1.05);
+}
+
+#locationBtn {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.25rem;
+}
+
+.units-toggle {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.unit-btn {
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid transparent;
+    border-radius: 0.5rem;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.unit-btn.active {
+    background: white;
+    color: var(--text);
+}
+
+.error {
+    background: #fee2e2;
+    color: #991b1b;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.placeholder {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 3rem;
+    border-radius: 1rem;
+    text-align: center;
+    color: var(--text-light);
+    font-size: 1.125rem;
+}
+
+.current-weather {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.weather-main {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.location h2 {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+}
+
+.date {
+    color: var(--text-light);
+}
+
+.temperature {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.temp-value {
+    font-size: 4rem;
+    font-weight: 700;
+}
+
+.weather-icon {
+    font-size: 4rem;
+}
+
+.weather-desc {
+    font-size: 1.5rem;
+    text-transform: capitalize;
+    color: var(--text-light);
+}
+
+.feels-like {
+    margin-top: 0.5rem;
+    color: var(--text-light);
+}
+
+.weather-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background: var(--bg);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    border-radius: 0.5rem;
+}
+
+.detail-label {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+}
+
+.detail-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.forecast {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.forecast h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.forecast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+}
+
+.forecast-card {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    border-radius: 0.75rem;
+    transition: transform 0.2s;
+}
+
+.forecast-card:hover {
+    transform: translateY(-4px);
+}
+
+.forecast-day {
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.forecast-icon {
+    font-size: 2.5rem;
+    margin: 0.5rem 0;
+}
+
+.forecast-temp {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+}
+
+.forecast-desc {
+    font-size: 0.875rem;
+    color: var(--text-light);
+}
+
+@media (max-width: 640px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .search-box {
+        flex-direction: column;
+    }
+
+    .temp-value {
+        font-size: 3rem;
+    }
+
+    .weather-icon {
+        font-size: 3rem;
+    }
+}
