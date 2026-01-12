@@ -1,0 +1,4 @@
+# Ruff configuration
+
+[lint]
+extend-ignore = ["F403", "F405"]

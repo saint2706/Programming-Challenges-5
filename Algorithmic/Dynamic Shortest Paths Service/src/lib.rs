@@ -1,5 +1,5 @@
-use std::collections::{BinaryHeap, HashMap};
 use std::cmp::Ordering;
+use std::collections::{BinaryHeap, HashMap};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct NodeId(pub usize);
@@ -27,7 +27,10 @@ impl PartialOrd for State {
 impl Ord for State {
     fn cmp(&self, other: &Self) -> Ordering {
         // Min-heap (reverse ordering)
-        other.cost.partial_cmp(&self.cost).unwrap_or(Ordering::Equal)
+        other
+            .cost
+            .partial_cmp(&self.cost)
+            .unwrap_or(Ordering::Equal)
     }
 }
 
@@ -44,15 +47,14 @@ impl Ord for State {
 ///
 /// Let's implement a robust Dijkstra service that allows graph updates.
 /// Implementing full D* Lite on a generic graph is quite involved (needs rhs values, keys, priority queue management with updates).
+#[derive(Default)]
 pub struct DynamicGraph {
     adj: HashMap<NodeId, Vec<Edge>>,
 }
 
 impl DynamicGraph {
     pub fn new() -> Self {
-        DynamicGraph {
-            adj: HashMap::new(),
-        }
+        Self::default()
     }
 
     pub fn add_edge(&mut self, u: NodeId, v: NodeId, weight: f64) {
@@ -68,9 +70,12 @@ impl DynamicGraph {
                 }
             }
             // If not found, add it?
-            edges.push(Edge { to: v, weight: new_weight });
+            edges.push(Edge {
+                to: v,
+                weight: new_weight,
+            });
         } else {
-             self.add_edge(u, v, new_weight);
+            self.add_edge(u, v, new_weight);
         }
     }
 
@@ -80,7 +85,10 @@ impl DynamicGraph {
         let mut parent = HashMap::new();
 
         dist.insert(start, 0.0);
-        heap.push(State { cost: 0.0, node: start });
+        heap.push(State {
+            cost: 0.0,
+            node: start,
+        });
 
         while let Some(State { cost, node }) = heap.pop() {
             if node == goal {
@@ -105,7 +113,10 @@ impl DynamicGraph {
                     if next_cost < *dist.get(&edge.to).unwrap_or(&f64::MAX) {
                         dist.insert(edge.to, next_cost);
                         parent.insert(edge.to, node);
-                        heap.push(State { cost: next_cost, node: edge.to });
+                        heap.push(State {
+                            cost: next_cost,
+                            node: edge.to,
+                        });
                     }
                 }
             }

@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Tabular Q-learning in a gridworld with hazardous cells.
 
 The environment is a simple 2D grid with a single start, goal, and one or
@@ -7,6 +5,8 @@ more hazardous cells that deliver a strong negative reward and end the
 episode. The script exposes a CLI for running training and printing the
 resulting greedy policy.
 """
+
+from __future__ import annotations
 
 import argparse
 import dataclasses

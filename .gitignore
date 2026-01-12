@@ -58,6 +58,7 @@ jspm_packages/
 
 # Rust
 /target
+**/target/
 **/*.rs.bk
 Cargo.lock
 

@@ -1,3 +1,5 @@
+# ruff: noqa: F403, F405
+
 """Visualization of Misra-Gries Algorithm using Manim.
 
 This script demonstrates the Misra-Gries heavy hitter algorithm processing a stream

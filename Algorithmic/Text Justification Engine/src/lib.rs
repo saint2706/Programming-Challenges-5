@@ -1,5 +1,3 @@
-use std::cmp::min;
-
 /// Justifies text into a list of lines with a maximum width.
 /// Uses a dynamic programming approach to minimize "badness" (sum of squares of extra spaces).
 pub struct TextJustifier {
@@ -69,7 +67,7 @@ impl TextJustifier {
 
             // If it's the last line, left justify
             if next_i == n {
-                let mut line = line_words.join(" ");
+                let line = line_words.join(" ");
                 // Optional: pad with spaces to width? Usually last line is not fully justified.
                 // But "justified" usually means block. However, standard rule is last line left-aligned.
                 lines.push(line);

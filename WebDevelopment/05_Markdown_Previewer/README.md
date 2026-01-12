@@ -46,20 +46,25 @@ Simply open `index.html` in your browser - no installation required!
 ## Supported Markdown
 
 ### Headers
+
 ```markdown
 # H1
+
 ## H2
+
 ### H3
 ```
 
 ### Emphasis
+
 ```markdown
 **bold text**
-*italic text*
-***bold and italic***
+_italic text_
+**_bold and italic_**
 ```
 
 ### Lists
+
 ```markdown
 - Unordered item
 - Another item
@@ -69,30 +74,37 @@ Simply open `index.html` in your browser - no installation required!
 ```
 
 ### Links & Images
+
 ```markdown
 [Link text](https://example.com)
 ![Alt text](image.jpg)
 ```
 
 ### Code
-```markdown
+
+`````markdown
 Inline `code` has backticks
 
-```javascript
+````javascript
 // Code block
 function hello() {
   console.log('Hello!');
 }
 \```
-```
+````
+`````
+
+````
 
 ### Blockquotes
+
 ```markdown
 > This is a blockquote
 > It can span multiple lines
 ```
 
 ### Tables
+
 ```markdown
 | Header 1 | Header 2 |
 | -------- | -------- |
@@ -100,6 +112,7 @@ function hello() {
 ```
 
 ### Horizontal Rules
+
 ```markdown
 ---
 ```
@@ -131,9 +144,9 @@ Edit CSS variables in `style.css`:
 
 ```css
 :root {
-    --color-bg-primary: #0f172a;
-    --color-accent: #3b82f6;
-    /* ... more variables */
+  --color-bg-primary: #0f172a;
+  --color-accent: #3b82f6;
+  /* ... more variables */
 }
 ```
 
@@ -142,7 +155,10 @@ Edit CSS variables in `style.css`:
 Change the Highlight.js theme in `index.html`:
 
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+/>
 ```
 
 Available themes: `github-dark`, `monokai`, `atom-one-dark`, `vs2015`, etc.
@@ -153,21 +169,22 @@ Modify Marked.js options in `script.js`:
 
 ```javascript
 marked.setOptions({
-    breaks: true,        // GitHub-flavored line breaks
-    gfm: true,          // GitHub Flavored Markdown
-    headerIds: false,   // Generate heading IDs
-    // ... more options
+  breaks: true, // GitHub-flavored line breaks
+  gfm: true, // GitHub Flavored Markdown
+  headerIds: false, // Generate heading IDs
+  // ... more options
 });
 ```
 
 ## Browser Support
 
-✅ Chrome/Edge 90+  
-✅ Firefox 88+  
-✅ Safari 14+  
+✅ Chrome/Edge 90+
+✅ Firefox 88+
+✅ Safari 14+
 ✅ Mobile browsers
 
 Requires:
+
 - ES6 JavaScript
 - CSS Grid
 - localStorage API
@@ -190,18 +207,23 @@ Requires:
 ## Features Breakdown
 
 ### Live Preview
+
 As you type in the editor, the preview pane updates instantly. This uses Marked.js to convert markdown to HTML.
 
 ### Syntax Highlighting
+
 Code blocks are automatically detected and highlighted using Highlight.js. Supports 190+ languages.
 
 ### Export HTML
+
 Generates a standalone HTML file with embedded CSS, perfect for sharing or archiving.
 
 ### Auto-Save
+
 Content is automatically saved to localStorage after 1 second of inactivity. Never lose your work!
 
 ### View Modes
+
 - **Split**: Editor and preview side-by-side (default)
 - **Editor Only**: Focus on writing
 - **Preview Only**: See final result
@@ -256,6 +278,7 @@ This project demonstrates:
 
 ---
 
-**Challenge Difficulty**: Easy  
-**Estimated Time**: 3-4 hours  
+**Challenge Difficulty**: Easy
+**Estimated Time**: 3-4 hours
 **Key Concepts**: Markdown Parsing, Live Preview, Text Manipulation
+````

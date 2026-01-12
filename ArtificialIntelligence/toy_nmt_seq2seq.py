@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 """Toy Neural Machine Translation model with attention.
 
 This module implements a small encoder-decoder LSTM with dot-product
@@ -8,6 +6,8 @@ self-contained: building the dataset, defining vocabularies, training the
 model, and running sample translations can all be done by executing the
 file directly.
 """
+
+from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Dict, Iterable, List, Sequence, Tuple

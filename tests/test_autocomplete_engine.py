@@ -6,7 +6,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from Algorithmic.AutocompleteEngine.trie import AutocompleteEngine
+from Algorithmic.AutocompleteEngine.trie import AutocompleteEngine  # noqa: E402
 
 
 def test_top_k_orders_by_frequency_then_lexicographic():

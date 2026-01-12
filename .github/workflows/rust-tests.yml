@@ -3,16 +3,16 @@ name: Rust Tests
 on:
   push:
     paths:
-      - '**/*.rs'
-      - '**/Cargo.toml'
-      - '**/Cargo.lock'
-      - '.github/workflows/rust-tests.yml'
+      - "**/*.rs"
+      - "**/Cargo.toml"
+      - "**/Cargo.lock"
+      - ".github/workflows/rust-tests.yml"
   pull_request:
     paths:
-      - '**/*.rs'
-      - '**/Cargo.toml'
-      - '**/Cargo.lock'
-      - '.github/workflows/rust-tests.yml'
+      - "**/*.rs"
+      - "**/Cargo.toml"
+      - "**/Cargo.lock"
+      - ".github/workflows/rust-tests.yml"
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -24,16 +24,16 @@ jobs:
     strategy:
       matrix:
         manifest:
-          - 'Algorithmic/Generic Flow Library/Cargo.toml'
-          - 'Algorithmic/Constraint Solver/Cargo.toml'
-          - 'Algorithmic/HyperLogLog Implementation/Cargo.toml'
-          - 'Algorithmic/Edit Distance with Custom Costs/Cargo.toml'
-          - 'Algorithmic/Online Caching Simulator/Cargo.toml'
-          - 'Algorithmic/Large Integer Arithmetic Library/Cargo.toml'
-          - 'Algorithmic/Dynamic Shortest Paths Service/Cargo.toml'
-          - 'Algorithmic/Clustering Algorithms Suite/Cargo.toml'
-          - 'Algorithmic/Text Justification Engine/Cargo.toml'
-          - 'Algorithmic/Game Tree Search Framework/Cargo.toml'
+          - "Algorithmic/Generic Flow Library/Cargo.toml"
+          - "Algorithmic/Constraint Solver/Cargo.toml"
+          - "Algorithmic/HyperLogLog Implementation/Cargo.toml"
+          - "Algorithmic/Edit Distance with Custom Costs/Cargo.toml"
+          - "Algorithmic/Online Caching Simulator/Cargo.toml"
+          - "Algorithmic/Large Integer Arithmetic Library/Cargo.toml"
+          - "Algorithmic/Dynamic Shortest Paths Service/Cargo.toml"
+          - "Algorithmic/Clustering Algorithms Suite/Cargo.toml"
+          - "Algorithmic/Text Justification Engine/Cargo.toml"
+          - "Algorithmic/Game Tree Search Framework/Cargo.toml"
     steps:
       - name: Check environment
         id: check-env

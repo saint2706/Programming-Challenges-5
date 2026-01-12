@@ -18,21 +18,21 @@ pip install -r "Practical/Email Newsletter Engine/requirements.txt"
 Campaign settings are defined in a YAML or JSON file. See `config.sample.yaml` for a complete example:
 
 ```yaml
-sender: 'News Bot <newsletter@example.com>'
-subject: 'Weekly Highlights'
-template_path: 'Practical/Email Newsletter Engine/templates/newsletter.html'
-subscribers_path: 'Practical/Email Newsletter Engine/subscribers.sample.yaml'
+sender: "News Bot <newsletter@example.com>"
+subject: "Weekly Highlights"
+template_path: "Practical/Email Newsletter Engine/templates/newsletter.html"
+subscribers_path: "Practical/Email Newsletter Engine/subscribers.sample.yaml"
 batch_size: 100
 delay_between_batches: 1
-unsubscribe_key: 'unsubscribe'
+unsubscribe_key: "unsubscribe"
 default_context:
-  company: 'Example Corp'
-  unsubscribe_url: 'https://example.com/unsubscribe'
+  company: "Example Corp"
+  unsubscribe_url: "https://example.com/unsubscribe"
 smtp:
-  host: 'smtp.example.com'
+  host: "smtp.example.com"
   port: 587
-  username: 'smtp-user'
-  password: 'smtp-password'
+  username: "smtp-user"
+  password: "smtp-password"
   use_tls: true
 ```
 

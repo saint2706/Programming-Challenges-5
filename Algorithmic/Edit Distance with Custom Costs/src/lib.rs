@@ -7,18 +7,19 @@ pub struct EditCosts {
     pub substitution: usize,
 }
 
-impl EditCosts {
-    /// Default costs (1 for all).
-    pub fn default() -> Self {
-        EditCosts {
+impl Default for EditCosts {
+    fn default() -> Self {
+        Self {
             insertion: 1,
             deletion: 1,
             substitution: 1,
         }
     }
+}
 
+impl EditCosts {
     pub fn new(insertion: usize, deletion: usize, substitution: usize) -> Self {
-        EditCosts {
+        Self {
             insertion,
             deletion,
             substitution,
@@ -37,11 +38,11 @@ pub fn edit_distance(s1: &str, s2: &str, costs: &EditCosts) -> usize {
     let mut dp = vec![vec![0; n + 1]; m + 1];
 
     // Initialization
-    for i in 0..=m {
-        dp[i][0] = i * costs.deletion; // Deleting all chars from s1
+    for (i, row) in dp.iter_mut().enumerate() {
+        row[0] = i * costs.deletion; // Deleting all chars from s1
     }
-    for j in 0..=n {
-        dp[0][j] = j * costs.insertion; // Inserting all chars into s1 to match s2
+    for (j, cell) in dp[0].iter_mut().enumerate() {
+        *cell = j * costs.insertion; // Inserting all chars into s1 to match s2
     }
 
     for i in 1..=m {

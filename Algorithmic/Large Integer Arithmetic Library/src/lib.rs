@@ -1,6 +1,6 @@
 use std::cmp::max;
 use std::fmt;
-use std::ops::{Add, Sub, Mul};
+use std::ops::{Add, Mul, Sub};
 
 /// A large integer represented by a vector of digits.
 /// Base is 10 for simplicity in string conversion, though 2^32 or 2^64 is better for performance.
@@ -14,7 +14,10 @@ pub struct BigInt {
 impl BigInt {
     pub fn new(s: &str) -> Self {
         if s.is_empty() {
-            return BigInt { digits: vec![0], is_negative: false };
+            return BigInt {
+                digits: vec![0],
+                is_negative: false,
+            };
         }
 
         let mut chars = s.chars().peekable();
@@ -37,7 +40,10 @@ impl BigInt {
 
         // Normalize (remove trailing zeros in storage -> leading zeros in number)
         // E.g. "007" -> [7, 0, 0] -> [7]
-        let mut bigint = BigInt { digits, is_negative };
+        let mut bigint = BigInt {
+            digits,
+            is_negative,
+        };
         bigint.normalize();
         bigint
     }
@@ -118,8 +124,8 @@ impl BigInt {
     pub fn karatsuba(x: &BigInt, y: &BigInt) -> BigInt {
         // Base case
         if x.digits.len() < 2 || y.digits.len() < 2 {
-             // Fallback to simple multiplication
-             return BigInt::simple_mul(x, y);
+            // Fallback to simple multiplication
+            return BigInt::simple_mul(x, y);
         }
 
         let n = max(x.digits.len(), y.digits.len());
@@ -146,27 +152,27 @@ impl BigInt {
     }
 
     fn simple_mul(x: &BigInt, y: &BigInt) -> BigInt {
-         // Schoolbook for small numbers
-         let mut result = vec![0; x.digits.len() + y.digits.len()];
+        // Schoolbook for small numbers
+        let mut result = vec![0; x.digits.len() + y.digits.len()];
 
-         for (i, d1) in x.digits.iter().enumerate() {
-             let mut carry = 0;
-             for (j, d2) in y.digits.iter().enumerate() {
-                 let prod = (d1 * d2) as u16 + result[i + j] as u16 + carry;
-                 result[i + j] = (prod % 10) as u8;
-                 carry = prod / 10;
-             }
-             if carry > 0 {
-                 result[i + y.digits.len()] += carry as u8;
-             }
-         }
+        for (i, d1) in x.digits.iter().enumerate() {
+            let mut carry = 0;
+            for (j, d2) in y.digits.iter().enumerate() {
+                let prod = (d1 * d2) as u16 + result[i + j] as u16 + carry;
+                result[i + j] = (prod % 10) as u8;
+                carry = prod / 10;
+            }
+            if carry > 0 {
+                result[i + y.digits.len()] += carry as u8;
+            }
+        }
 
-         let mut res = BigInt {
-             digits: result,
-             is_negative: x.is_negative ^ y.is_negative,
-         };
-         res.normalize();
-         res
+        let mut res = BigInt {
+            digits: result,
+            is_negative: x.is_negative ^ y.is_negative,
+        };
+        res.normalize();
+        res
     }
 
     fn split_at(&self, m: usize) -> (BigInt, BigInt) {
@@ -180,8 +186,14 @@ impl BigInt {
             vec![0]
         };
 
-        let mut low = BigInt { digits: low_digits, is_negative: false }; // Split usually ignores sign logic inside karatsuba
-        let mut high = BigInt { digits: high_digits, is_negative: false };
+        let mut low = BigInt {
+            digits: low_digits,
+            is_negative: false,
+        }; // Split usually ignores sign logic inside karatsuba
+        let mut high = BigInt {
+            digits: high_digits,
+            is_negative: false,
+        };
         low.normalize();
         high.normalize();
         (high, low)
@@ -218,7 +230,10 @@ impl Add for &BigInt {
     fn add(self, other: Self) -> BigInt {
         if self.is_negative == other.is_negative {
             let digits = self.abs_add(other);
-            let mut res = BigInt { digits, is_negative: self.is_negative };
+            let mut res = BigInt {
+                digits,
+                is_negative: self.is_negative,
+            };
             res.normalize();
             res
         } else {
@@ -226,19 +241,23 @@ impl Add for &BigInt {
             match self.abs_cmp(other) {
                 std::cmp::Ordering::Greater => {
                     let digits = self.abs_sub(other);
-                    let mut res = BigInt { digits, is_negative: self.is_negative };
+                    let mut res = BigInt {
+                        digits,
+                        is_negative: self.is_negative,
+                    };
                     res.normalize();
                     res
-                },
+                }
                 std::cmp::Ordering::Less => {
                     let digits = other.abs_sub(self);
-                    let mut res = BigInt { digits, is_negative: other.is_negative };
+                    let mut res = BigInt {
+                        digits,
+                        is_negative: other.is_negative,
+                    };
                     res.normalize();
                     res
-                },
-                std::cmp::Ordering::Equal => {
-                    BigInt::from_i64(0)
                 }
+                std::cmp::Ordering::Equal => BigInt::from_i64(0),
             }
         }
     }

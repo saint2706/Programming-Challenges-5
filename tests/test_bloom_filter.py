@@ -6,7 +6,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from approximate_set_membership.bloom import BloomFilter, BloomFilterAnalyzer
+from approximate_set_membership.bloom import BloomFilter, BloomFilterAnalyzer  # noqa: E402
 
 
 def test_bloom_filter_add_and_contains():

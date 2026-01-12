@@ -8,8 +8,8 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from Practical.personal_time_tracker.logic import TimeTracker
-from Practical.personal_time_tracker.storage import SessionStore
+from Practical.personal_time_tracker.logic import TimeTracker  # noqa: E402
+from Practical.personal_time_tracker.storage import SessionStore  # noqa: E402
 
 
 def run_cli(tmp_path, *args):

@@ -4,10 +4,10 @@ use std::hash::{Hash, Hasher};
 /// HyperLogLog is a probabilistic data structure for estimating the cardinality of a set.
 /// It uses significantly less memory than storing the set itself.
 pub struct HyperLogLog {
-    b: u8,             // Number of bits used for the register index
-    m: usize,          // Number of registers (2^b)
+    b: u8,              // Number of bits used for the register index
+    m: usize,           // Number of registers (2^b)
     registers: Vec<u8>, // The registers storing the max leading zeros
-    alpha_m: f64,      // Correction constant
+    alpha_m: f64,       // Correction constant
 }
 
 impl HyperLogLog {
@@ -89,7 +89,9 @@ impl HyperLogLog {
     /// Estimates the cardinality of the set.
     pub fn count(&self) -> u64 {
         let m = self.m as f64;
-        let sum_inverse_powers: f64 = self.registers.iter()
+        let sum_inverse_powers: f64 = self
+            .registers
+            .iter()
             .map(|&val| 2.0f64.powi(-(val as i32)))
             .sum();
 
@@ -181,7 +183,10 @@ mod tests {
         let actual = true_set.len() as u64;
         let error = (estimated as f64 - actual as f64).abs() / actual as f64;
 
-        println!("Estimated: {}, Actual: {}, Error: {:.4}", estimated, actual, error);
+        println!(
+            "Estimated: {}, Actual: {}, Error: {:.4}",
+            estimated, actual, error
+        );
 
         // Expected error is around 1.04/sqrt(m). With 0.01 target, should be around 1%.
         // We allow a bit of margin (3 sigma is usually safe).
@@ -206,7 +211,10 @@ mod tests {
         // Union is 0..1500 -> 1500 items
         let actual = 1500;
         let error = (count as f64 - actual as f64).abs() / actual as f64;
-         println!("Merged Estimated: {}, Actual: {}, Error: {:.4}", count, actual, error);
+        println!(
+            "Merged Estimated: {}, Actual: {}, Error: {:.4}",
+            count, actual, error
+        );
         assert!(error < 0.10); // Loose bound for small m
     }
 }

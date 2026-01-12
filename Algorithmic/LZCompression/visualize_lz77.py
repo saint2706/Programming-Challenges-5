@@ -2,6 +2,7 @@
 
 Demonstrates the sliding window compression algorithm.
 """
+ # ruff: noqa: F403, F405
 
 import os
 import sys

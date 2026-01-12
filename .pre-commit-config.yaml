@@ -39,7 +39,7 @@ repos:
       - id: black
         name: Black - Python formatter
         language_version: python3.11
-        args: ['--line-length=88']
+        args: ["--line-length=88"]
         files: '\.py$'
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
@@ -47,7 +47,7 @@ repos:
     hooks:
       - id: ruff
         name: Ruff - Python linter
-        args: ['--fix', '--show-fixes']
+        args: ["--fix", "--show-fixes"]
         files: '\.py$'
       - id: ruff-format
         name: Ruff - Python formatter
@@ -65,10 +65,10 @@ repos:
         files: '\.(js|jsx|ts|tsx)$'
         types: [file]
         additional_dependencies:
-          - 'eslint'
-          - 'eslint-config-prettier'
-          - 'eslint-plugin-prettier'
-        args: ['--fix']
+          - "eslint"
+          - "eslint-config-prettier"
+          - "eslint-plugin-prettier"
+        args: ["--fix"]
 
   # ============================================================================
   # C / C++: clang-format (formatting)
@@ -79,8 +79,8 @@ repos:
       - id: clang-format
         name: Clang-Format - C/C++ formatter
         files: '\.(c|cc|cpp|cxx|h|hpp|hxx|C)$'
-        args: ['-i', '-style=Google']
-        language_version: '17.0.6'
+        args: ["-i", "-style=Google"]
+        language_version: "17.0.6"
 
   # ============================================================================
   # JAVA: google-java-format (formatting)
@@ -91,7 +91,7 @@ repos:
       - id: pretty-format-java
         name: Google Java Format - Java formatter
         files: '\.java$'
-        args: ['--autofix']
+        args: ["--autofix"]
 
   # ============================================================================
   # GO: gofmt + golangci-lint (formatting and linting)
@@ -127,7 +127,7 @@ repos:
       - id: fmt
         name: Rustfmt - Rust formatter
         files: '\.rs$'
-        args: ['--edition=2021']
+        args: ["--edition=2021"]
 
   # ============================================================================
   # MARKDOWN: Markdownlint (linting)
@@ -140,7 +140,7 @@ repos:
       - id: markdownlint
         name: Markdownlint - Markdown linter
         files: '\.md$'
-        args: ['--fix']
+        args: ["--fix"]
 
   # ============================================================================
   # YAML / JSON: Validation
@@ -186,7 +186,7 @@ repos:
       - id: shfmt
         name: Shfmt - Shell script formatter
         files: '\.(sh|bash)$'
-        args: ['-i', '2', '-w']
+        args: ["-i", "2", "-w"]
 
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.9.0.6
@@ -214,7 +214,7 @@ repos:
       - id: codespell
         name: Codespell - Spell checker
         files: '\.(py|js|ts|java|cpp|c|go|rs|md|yaml|yml|json|html|css|scss|sh)$'
-        args: ['--ignore-words-list=crate,ser']
+        args: ["--ignore-words-list=crate,ser"]
 
   # ============================================================================
   # OPTIONAL: Security checks with bandit (Python)
@@ -225,7 +225,7 @@ repos:
       - id: bandit
         name: Bandit - Python security linter
         files: '\.py$'
-        args: ['-c', '.bandit', '-r']
+        args: ["-c", ".bandit", "-r"]
 
 # ============================================================================
 # IMPORTANT NOTE: Prettier and Web Formatting

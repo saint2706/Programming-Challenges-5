@@ -1,7 +1,9 @@
 const cloneTable = (table) => table.map((row) => row.slice());
 
 export function createEmptyTable(rows, cols, fillValue = null) {
-  return Array.from({ length: rows }, () => Array.from({ length: cols }, () => fillValue));
+  return Array.from({ length: rows }, () =>
+    Array.from({ length: cols }, () => fillValue),
+  );
 }
 
 export function parseDependencies(recurrence) {
@@ -12,18 +14,18 @@ export function parseDependencies(recurrence) {
   let match;
   while ((match = twoDRegex.exec(recurrence)) !== null) {
     const [_, iPart, jPart] = match;
-    deps.add(JSON.stringify({ axis: '2d', iPart, jPart }));
+    deps.add(JSON.stringify({ axis: "2d", iPart, jPart }));
   }
   while ((match = oneDRegex.exec(recurrence)) !== null) {
     const [_, iPart] = match;
-    deps.add(JSON.stringify({ axis: '1d', iPart }));
+    deps.add(JSON.stringify({ axis: "1d", iPart }));
   }
 
   return Array.from(deps).map((entry) => JSON.parse(entry));
 }
 
 const toIndex = (base, token) => {
-  if (token.startsWith('i') || token.startsWith('j')) {
+  if (token.startsWith("i") || token.startsWith("j")) {
     const offset = token.slice(1);
     return base + (offset ? Number(offset) : 0);
   }
@@ -33,7 +35,7 @@ const toIndex = (base, token) => {
 export function dependenciesForCell(i, j, recurrence, rows, cols) {
   return parseDependencies(recurrence)
     .map((dep) => {
-      if (dep.axis === '1d') {
+      if (dep.axis === "1d") {
         const targetRow = 0;
         const targetCol = toIndex(i, dep.iPart);
         return { row: targetRow, col: targetCol };
@@ -46,12 +48,26 @@ export function dependenciesForCell(i, j, recurrence, rows, cols) {
 }
 
 export function evaluateRecurrence(recurrence, i, j, table, context = {}) {
-  const safeTable = cloneTable(table).map((row) => row.map((cell) => (cell == null ? 0 : cell)));
-  const evaluator = new Function('i', 'j', 'dp', 'ctx', `return ${recurrence};`);
+  const safeTable = cloneTable(table).map((row) =>
+    row.map((cell) => (cell == null ? 0 : cell)),
+  );
+  const evaluator = new Function(
+    "i",
+    "j",
+    "dp",
+    "ctx",
+    `return ${recurrence};`,
+  );
   return evaluator(i, j, safeTable, context);
 }
 
-export function buildSteps(rows, cols, recurrence, initializer = () => null, context = {}) {
+export function buildSteps(
+  rows,
+  cols,
+  recurrence,
+  initializer = () => null,
+  context = {},
+) {
   const table = createEmptyTable(rows, cols);
   const steps = [];
 
@@ -65,14 +81,14 @@ export function buildSteps(rows, cols, recurrence, initializer = () => null, con
           col: j,
           value: baseValue,
           dependencies: [],
-          type: 'init',
+          type: "init",
         });
         continue;
       }
       const dependencies = dependenciesForCell(i, j, recurrence, rows, cols);
       const value = evaluateRecurrence(recurrence, i, j, table, context);
       table[i][j] = value;
-      steps.push({ row: i, col: j, value, dependencies, type: 'update' });
+      steps.push({ row: i, col: j, value, dependencies, type: "update" });
     }
   }
 
@@ -93,7 +109,7 @@ export function exportSnapshot(table, steps, currentStepIndex) {
       history: steps.slice(0, currentStepIndex),
     },
     null,
-    2
+    2,
   );
 }
 

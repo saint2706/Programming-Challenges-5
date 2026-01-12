@@ -5,20 +5,22 @@ A stunning, modern landing page showcasing advanced CSS animations, parallax scr
 ## 📸 Preview
 
 ![Desktop View](./screenshots/desktop.png)
-*Desktop view with smooth animations and modern design*
+_Desktop view with smooth animations and modern design_
 
 ![Mobile View](./screenshots/mobile.png)
-*Responsive mobile layout*
+_Responsive mobile layout_
 
 ## Features
 
 ### Visual Design
+
 - **Gradient Background**: Animated gradient orbs creating a dynamic, colorful background
 - **Modern Typography**: Clean, readable Inter font with responsive sizing
 - **Glassmorphism**: Semi-transparent cards with backdrop blur effects
 - **Dark Theme**: Sleek dark color scheme with vibrant accent colors
 
 ### Animations
+
 - **Scroll-Triggered Animations**: Elements fade in and slide up as you scroll
 - **Parallax Effects**: Background elements move at different speeds for depth
 - **Floating Cards**: Hero section cards with gentle floating animations
@@ -26,6 +28,7 @@ A stunning, modern landing page showcasing advanced CSS animations, parallax scr
 - **Counter Animation**: Stats numbers animate up when scrolled into view
 
 ### Interactions
+
 - **Sticky Navigation**: Navbar becomes sticky and compact on scroll
 - **Smooth Scrolling**: Links navigate with smooth scroll behavior and offset adjustment
 - **Mobile Menu**: Hamburger menu with slide-in animation
@@ -33,11 +36,13 @@ A stunning, modern landing page showcasing advanced CSS animations, parallax scr
 - **Form Handling**: Contact form with visual feedback on submission
 
 ### Responsive Design
+
 - **Mobile-First**: Optimized for all screen sizes from 320px to 1920px+
 - **Flexible Grid**: CSS Grid and Flexbox for adaptive layouts
 - **Touch-Friendly**: Properly sized touch targets for mobile devices
 
 ### Accessibility
+
 - **Semantic HTML**: Proper heading hierarchy and ARIA labels
 - **Keyboard Navigation**: Full keyboard support for all interactive elements
 - **Reduced Motion**: Respects `prefers-reduced-motion` user preference
@@ -66,10 +71,10 @@ Edit CSS custom properties in `style.css`:
 
 ```css
 :root {
-    --primary-color: #6366f1;      /* Main brand color */
-    --secondary-color: #ec4899;    /* Accent color */
-    --bg-primary: #0f172a;         /* Background color */
-    /* ... more variables */
+  --primary-color: #6366f1; /* Main brand color */
+  --secondary-color: #ec4899; /* Accent color */
+  --bg-primary: #0f172a; /* Background color */
+  /* ... more variables */
 }
 ```
 
@@ -86,9 +91,9 @@ Adjust animation timing in CSS:
 
 ```css
 :root {
-    --transition-fast: 150ms ease;
-    --transition-base: 300ms ease;
-    --transition-slow: 500ms ease;
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 500ms ease;
 }
 ```
 
@@ -110,6 +115,7 @@ Adjust animation timing in CSS:
 - ✅ Mobile browsers (iOS Safari, Chrome Mobile)
 
 Requires browsers with support for:
+
 - CSS Grid and Flexbox
 - CSS Custom Properties
 - Intersection Observer API

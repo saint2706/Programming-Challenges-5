@@ -27,10 +27,10 @@ class RopeNode:
     def length(self) -> int:
         if self.left is None and self.right is None:
             return self.weight
-        l = self.weight
+        length_total = self.weight
         if self.right:
-            l += self.right.length()
-        return l
+            length_total += self.right.length()
+        return length_total
 
     def _collect(self) -> str:
         if self.left is None and self.right is None:
@@ -90,8 +90,8 @@ class Rope:
         if i >= len(self):
             return self, Rope("")
 
-        l, r = self._split_node(self.root, i)
-        return Rope(l), Rope(r)
+        left_node, right_node = self._split_node(self.root, i)
+        return Rope(left_node), Rope(right_node)
 
     def _split_node(
         self, node: RopeNode, i: int

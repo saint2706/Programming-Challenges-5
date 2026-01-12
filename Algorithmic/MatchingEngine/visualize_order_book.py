@@ -1,3 +1,5 @@
+# ruff: noqa: F403, F405
+
 """Visualization of Order Book Matching Engine using Manim.
 
 Demonstrates price-time priority order matching.

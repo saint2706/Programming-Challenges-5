@@ -21,14 +21,14 @@ func TestQuantileEstimator(t *testing.T) {
 	if err != nil {
 		t.Errorf("Query failed: %v", err)
 	}
-	if math.Abs(val - 50.0) > 10.0 {
+	if math.Abs(val-50.0) > 10.0 {
 		t.Errorf("Query(0.5) = %f, want approx 50 (+/- 10)", val)
 	}
 
 	// Query 0.9
 	// Expected ~90. Error +/- 10
 	val, _ = qe.Query(0.9)
-	if math.Abs(val - 90.0) > 10.0 {
+	if math.Abs(val-90.0) > 10.0 {
 		t.Errorf("Query(0.9) = %f, want approx 90 (+/- 10)", val)
 	}
 }
@@ -48,11 +48,13 @@ func TestQuantileEstimatorExact(t *testing.T) {
 	checkQuantile := func(phi float64) {
 		got, _ := qe.Query(phi)
 		idx := int(phi * 1000)
-		if idx >= 1000 { idx = 999 }
+		if idx >= 1000 {
+			idx = 999
+		}
 		want := data[idx]
 
 		// Allowed error: epsilon * N = 0.01 * 1000 = 10
-		if math.Abs(got - want) > 10.0 {
+		if math.Abs(got-want) > 10.0 {
 			t.Errorf("Query(%f) = %f, want %f (+/- 10)", phi, got, want)
 		}
 	}

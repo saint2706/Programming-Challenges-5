@@ -1,6 +1,6 @@
-from __future__ import annotations
-
 """Tests for the toy seq2seq neural machine translation model."""
+
+from __future__ import annotations
 
 import torch
 

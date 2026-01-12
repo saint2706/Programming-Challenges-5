@@ -9,11 +9,11 @@ import (
 
 // Node represents a node in the persistent tree.
 type Node struct {
-	Value    int // Only used if IsLeaf is true
-	Left     *Node
-	Right    *Node
-	Size     int  // Number of elements in the subtree
-	IsLeaf   bool
+	Value  int // Only used if IsLeaf is true
+	Left   *Node
+	Right  *Node
+	Size   int // Number of elements in the subtree
+	IsLeaf bool
 }
 
 // PersistentArray represents the handle to a specific version of the array.
@@ -77,7 +77,7 @@ func getRecursive(node *Node, i int) int {
 	if i < leftSize {
 		return getRecursive(node.Left, i)
 	}
-	return getRecursive(node.Right, i - leftSize)
+	return getRecursive(node.Right, i-leftSize)
 }
 
 // Set updates the value at index i and returns a NEW PersistentArray.
@@ -115,7 +115,7 @@ func setRecursive(node *Node, i int, val int) *Node {
 	if i < leftSize {
 		newNode.Left = setRecursive(node.Left, i, val)
 	} else {
-		newNode.Right = setRecursive(node.Right, i - leftSize, val)
+		newNode.Right = setRecursive(node.Right, i-leftSize, val)
 	}
 	return newNode
 }
@@ -152,9 +152,9 @@ func (pa *PersistentArray) pushBinaryTrie(val int) *PersistentArray {
 		// Need to grow. Old root becomes left child of new root.
 		// New root height = height + 1
 		newRoot = &Node{
-			Left: root,
-			Right: createPath(height, val), // Create a tree of height `height` with item at index 0 (relative)
-			Size: root.Size + 1,
+			Left:   root,
+			Right:  createPath(height, val), // Create a tree of height `height` with item at index 0 (relative)
+			Size:   root.Size + 1,
 			IsLeaf: false,
 		}
 	}
@@ -170,9 +170,9 @@ func createPath(height int, val int) *Node {
 		return &Node{Value: val, IsLeaf: true, Size: 1}
 	}
 	return &Node{
-		Left: createPath(height-1, val),
-		Right: nil, // Empty
-		Size: 1,
+		Left:   createPath(height-1, val),
+		Right:  nil, // Empty
+		Size:   1,
 		IsLeaf: false,
 	}
 }
@@ -180,10 +180,10 @@ func createPath(height int, val int) *Node {
 func insertIntoTrie(node *Node, height int, idx int, val int) *Node {
 	// Copy node
 	newNode := &Node{
-		Value: node.Value,
-		Left: node.Left,
-		Right: node.Right,
-		Size: node.Size + 1, // We are adding one element
+		Value:  node.Value,
+		Left:   node.Left,
+		Right:  node.Right,
+		Size:   node.Size + 1, // We are adding one element
 		IsLeaf: node.IsLeaf,
 	}
 
@@ -210,7 +210,7 @@ func insertIntoTrie(node *Node, height int, idx int, val int) *Node {
 		if node.Right == nil {
 			newNode.Right = createPath(height-1, val) // FIX: Pass val directly, do not subtract
 		} else {
-			newNode.Right = insertIntoTrie(node.Right, height-1, idx - halfCap, val)
+			newNode.Right = insertIntoTrie(node.Right, height-1, idx-halfCap, val)
 		}
 	}
 	return newNode

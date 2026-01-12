@@ -6,9 +6,9 @@ to find frequent items in a data stream with bounded memory.
 
 from __future__ import annotations
 
+import heapq
 from dataclasses import dataclass
 from typing import Any, Dict, Iterable, List, Optional, Set
-import heapq
 
 
 @dataclass(frozen=True)
@@ -65,7 +65,7 @@ class MisraGriesCounter:
             heapq.heappush(self._heap, stored_count)
             # Prune heap if it grows too large due to lazy deletion
             # This prevents memory leaks and latency spikes in long streams
-            if len(self._heap) > 20 * self.k: # 20x overhead allowed before rebuild
+            if len(self._heap) > 20 * self.k:  # 20x overhead allowed before rebuild
                 self._rebuild_heap()
 
         self._buckets[stored_count].add(item)
@@ -88,7 +88,7 @@ class MisraGriesCounter:
             heapq.heappop(self._heap)
 
         if not self._heap:
-            return 0 # Should not happen if map not empty
+            return 0  # Should not happen if map not empty
         return self._heap[0]
 
     def update(self, item: Any, count: int = 1) -> None:

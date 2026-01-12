@@ -3,26 +3,26 @@ name: Node.js Tests
 on:
   push:
     paths:
-      - '**/*.ts'
-      - '**/*.tsx'
-      - '**/*.js'
-      - '**/*.jsx'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'vitest.config.*'
-      - 'tests/**'
-      - '.github/workflows/node-tests.yml'
+      - "**/*.ts"
+      - "**/*.tsx"
+      - "**/*.js"
+      - "**/*.jsx"
+      - "package.json"
+      - "package-lock.json"
+      - "vitest.config.*"
+      - "tests/**"
+      - ".github/workflows/node-tests.yml"
   pull_request:
     paths:
-      - '**/*.ts'
-      - '**/*.tsx'
-      - '**/*.js'
-      - '**/*.jsx'
-      - 'package.json'
-      - 'package-lock.json'
-      - 'vitest.config.*'
-      - 'tests/**'
-      - '.github/workflows/node-tests.yml'
+      - "**/*.ts"
+      - "**/*.tsx"
+      - "**/*.js"
+      - "**/*.jsx"
+      - "package.json"
+      - "package-lock.json"
+      - "vitest.config.*"
+      - "tests/**"
+      - ".github/workflows/node-tests.yml"
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}

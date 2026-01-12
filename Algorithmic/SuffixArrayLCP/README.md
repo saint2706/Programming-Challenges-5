@@ -49,7 +49,11 @@ The `main` program accepts JSON commands.
 **Output:**
 
 ```json
-[{ "result": [5, 3, 1, 0, 4, 2] }, { "result": [0, 1, 3, 0, 0, 2] }, { "result": 15 }]
+[
+  { "result": [5, 3, 1, 0, 4, 2] },
+  { "result": [0, 1, 3, 0, 0, 2] },
+  { "result": 15 }
+]
 ```
 
 ## 📊 Complexity Analysis

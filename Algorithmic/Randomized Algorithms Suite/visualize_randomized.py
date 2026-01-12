@@ -1,3 +1,5 @@
+# ruff: noqa: F403, F405
+
 """Visualization of Randomized Data Structures (Skip List) using Manim.
 
 This script demonstrates the structure and search operation of a Skip List.

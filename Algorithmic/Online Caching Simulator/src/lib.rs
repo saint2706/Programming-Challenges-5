@@ -26,11 +26,17 @@ pub struct LRUPolicy<K> {
     access_order: VecDeque<K>,
 }
 
-impl<K: Clone + PartialEq> LRUPolicy<K> {
-    pub fn new() -> Self {
-        LRUPolicy {
+impl<K: Clone + PartialEq> Default for LRUPolicy<K> {
+    fn default() -> Self {
+        Self {
             access_order: VecDeque::new(),
         }
+    }
+}
+
+impl<K: Clone + PartialEq> LRUPolicy<K> {
+    pub fn new() -> Self {
+        Self::default()
     }
 }
 
@@ -64,11 +70,17 @@ pub struct FIFOPolicy<K> {
     queue: VecDeque<K>,
 }
 
-impl<K> FIFOPolicy<K> {
-    pub fn new() -> Self {
-        FIFOPolicy {
+impl<K> Default for FIFOPolicy<K> {
+    fn default() -> Self {
+        Self {
             queue: VecDeque::new(),
         }
+    }
+}
+
+impl<K> FIFOPolicy<K> {
+    pub fn new() -> Self {
+        Self::default()
     }
 }
 
@@ -130,14 +142,18 @@ where
             self.policy.on_access(&key);
             self.store.insert(key, value);
         } else {
-            if self.store.len() >= self.capacity {
-                if let Some(evicted) = self.policy.evict() {
-                    self.store.remove(&evicted);
-                }
+            if self.store.len() >= self.capacity
+                && let Some(evicted) = self.policy.evict()
+            {
+                self.store.remove(&evicted);
             }
             self.policy.on_insert(key.clone());
             self.store.insert(key, value);
         }
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.store.is_empty()
     }
 
     pub fn len(&self) -> usize {

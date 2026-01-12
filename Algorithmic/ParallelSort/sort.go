@@ -122,7 +122,7 @@ func quickSort(nums []int, threshold int) {
 // IsSorted reports whether the slice is sorted in non-decreasing order.
 // This helper is shared by tests and the CLI.
 func IsSorted(nums []int) bool {
-    return sort.SliceIsSorted(nums, func(i, j int) bool {
-        return nums[i] < nums[j]
-    })
+	return sort.SliceIsSorted(nums, func(i, j int) bool {
+		return nums[i] < nums[j]
+	})
 }

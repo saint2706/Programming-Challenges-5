@@ -55,12 +55,21 @@ impl MinimaxSolver {
 
             // Handle overflow if beta is MIN (shouldn't be, but good to be safe)
             let next_beta = if beta == i32::MIN { i32::MAX } else { -beta };
-            let next_alpha = if current_alpha == i32::MIN { i32::MAX } else { -current_alpha };
+            let next_alpha = if current_alpha == i32::MIN {
+                i32::MAX
+            } else {
+                -current_alpha
+            };
 
             let next_player = next_state.current_player();
-             let score = if next_player != player {
-                 let recursive_val = Self::negamax(&next_state, depth - 1, next_beta, next_alpha, next_player);
-                 if recursive_val == i32::MIN { i32::MAX } else { -recursive_val }
+            let score = if next_player != player {
+                let recursive_val =
+                    Self::negamax(&next_state, depth - 1, next_beta, next_alpha, next_player);
+                if recursive_val == i32::MIN {
+                    i32::MAX
+                } else {
+                    -recursive_val
+                }
             } else {
                 Self::negamax(&next_state, depth - 1, current_alpha, beta, player)
             };
@@ -78,14 +87,20 @@ impl MinimaxSolver {
         best_move
     }
 
-    fn negamax<G: GameState>(state: &G, depth: u32, mut alpha: i32, beta: i32, player: G::Player) -> i32 {
+    fn negamax<G: GameState>(
+        state: &G,
+        depth: u32,
+        mut alpha: i32,
+        beta: i32,
+        player: G::Player,
+    ) -> i32 {
         if depth == 0 || state.is_terminal() {
             return state.evaluate(player);
         }
 
         let moves = state.legal_moves();
         if moves.is_empty() {
-             return state.evaluate(player);
+            return state.evaluate(player);
         }
 
         let mut value = i32::MIN + 1;
@@ -95,8 +110,13 @@ impl MinimaxSolver {
             let next_player = next_state.current_player();
 
             let score = if next_player != player {
-                 let recursive_val = Self::negamax(&next_state, depth - 1, -beta, -alpha, next_player);
-                 if recursive_val == i32::MIN { i32::MAX } else { -recursive_val }
+                let recursive_val =
+                    Self::negamax(&next_state, depth - 1, -beta, -alpha, next_player);
+                if recursive_val == i32::MIN {
+                    i32::MAX
+                } else {
+                    -recursive_val
+                }
             } else {
                 Self::negamax(&next_state, depth - 1, alpha, beta, player)
             };
@@ -138,16 +158,22 @@ mod tests {
 
         fn check_winner(&self) -> Option<Player> {
             const LINES: [[usize; 3]; 8] = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Cols
-                [0, 4, 8], [2, 4, 6],            // Diags
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8], // Rows
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8], // Cols
+                [0, 4, 8],
+                [2, 4, 6], // Diags
             ];
 
             for line in LINES {
-                if let Some(p) = self.board[line[0]] {
-                    if self.board[line[1]] == Some(p) && self.board[line[2]] == Some(p) {
-                        return Some(p);
-                    }
+                if let Some(p) = self.board[line[0]]
+                    && self.board[line[1]] == Some(p)
+                    && self.board[line[2]] == Some(p)
+                {
+                    return Some(p);
                 }
             }
             None
@@ -166,7 +192,9 @@ mod tests {
             if self.check_winner().is_some() {
                 return vec![];
             }
-            self.board.iter().enumerate()
+            self.board
+                .iter()
+                .enumerate()
                 .filter(|(_, c)| c.is_none())
                 .map(|(i, _)| i)
                 .collect()
@@ -203,9 +231,15 @@ mod tests {
     fn test_block_win() {
         let mut game = TicTacToe::new();
         game.board = [
-            Some(Player::X), Some(Player::O), Some(Player::X),
-            Some(Player::O), Some(Player::O), None,
-            None, None, None
+            Some(Player::X),
+            Some(Player::O),
+            Some(Player::X),
+            Some(Player::O),
+            Some(Player::O),
+            None,
+            None,
+            None,
+            None,
         ];
         game.turn = Player::X;
 
@@ -217,9 +251,15 @@ mod tests {
     fn test_win_immediately() {
         let mut game = TicTacToe::new();
         game.board = [
-            Some(Player::X), Some(Player::X), None,
-            None, Some(Player::O), None,
-            None, None, Some(Player::O)
+            Some(Player::X),
+            Some(Player::X),
+            None,
+            None,
+            Some(Player::O),
+            None,
+            None,
+            None,
+            Some(Player::O),
         ];
         game.turn = Player::X;
 

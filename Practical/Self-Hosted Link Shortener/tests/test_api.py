@@ -8,8 +8,8 @@ ROOT = Path(__file__).resolve().parents[3]
 if str(ROOT) not in sys.path:
     sys.path.append(str(ROOT))
 
-from Practical.SelfHostedLinkShortener import database
-from Practical.SelfHostedLinkShortener.app import app
+from Practical.SelfHostedLinkShortener import database  # noqa: E402
+from Practical.SelfHostedLinkShortener.app import app  # noqa: E402
 
 
 @pytest.fixture()

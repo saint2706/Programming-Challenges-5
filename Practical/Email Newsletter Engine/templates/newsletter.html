@@ -9,9 +9,12 @@
     <p>Here are your updates from {{ company }}:</p>
     <ul>
       <li>
-        Top topic interests: {{ preferences.topics | join(', ') if preferences else 'All updates' }}
+        Top topic interests: {{ preferences.topics | join(', ') if preferences
+        else 'All updates' }}
       </li>
-      <li>Sent on {{ send_date | default(none) or now().strftime('%Y-%m-%d') }}</li>
+      <li>
+        Sent on {{ send_date | default(none) or now().strftime('%Y-%m-%d') }}
+      </li>
     </ul>
     <p>
       If you would like to unsubscribe, visit

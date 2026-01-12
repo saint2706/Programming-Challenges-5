@@ -5,22 +5,22 @@
 ## 📸 Preview
 
 ![Desktop Light Mode](./screenshots/desktop-light.png)
-*Desktop view with light theme*
+_Desktop view with light theme_
 
 ![Desktop Dark Mode](./screenshots/desktop-dark.png)
-*Desktop view with dark theme*
+_Desktop view with dark theme_
 
 ![Mobile View](./screenshots/mobile.png)
-*Responsive mobile layout*
+_Responsive mobile layout_
 
 ## 🎯 Challenge Requirements
 
 | Requirement                    | Status |
 | ------------------------------ | ------ |
-| Mobile-first responsive design | ✅      |
-| CSS Grid/Flexbox layouts       | ✅      |
-| Contact form (frontend)        | ✅      |
-| HTML/CSS only (no frameworks)  | ✅      |
+| Mobile-first responsive design | ✅     |
+| CSS Grid/Flexbox layouts       | ✅     |
+| Contact form (frontend)        | ✅     |
+| HTML/CSS only (no frameworks)  | ✅     |
 
 ## ✨ Features
 

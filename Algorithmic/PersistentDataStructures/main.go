@@ -15,8 +15,8 @@ type Command struct {
 }
 
 type Output struct {
-	Version int `json:"version,omitempty"` // ID of the new version created
-	Value   int `json:"value,omitempty"`   // Result of get
+	Version int    `json:"version,omitempty"` // ID of the new version created
+	Value   int    `json:"value,omitempty"`   // Result of get
 	Error   string `json:"error,omitempty"`
 }
 

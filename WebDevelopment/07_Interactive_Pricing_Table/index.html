@@ -1,125 +1,167 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Interactive pricing table with monthly/annual toggle">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Interactive pricing table with monthly/annual toggle"
+    />
     <title>Pricing Plans</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <div class="container">
-        <header class="header">
-            <h1>Choose Your Plan</h1>
-            <p class="subtitle">Flexible pricing for teams of all sizes</p>
-            
-            <!-- Billing Toggle -->
-            <div class="billing-toggle">
-                <span class="billing-option" id="monthlyLabel">Monthly</span>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="billingToggle">
-                    <span class="slider"></span>
-                </label>
-                <span class="billing-option" id="annualLabel">
-                    Annual <span class="discount-badge">Save 20%</span>
-                </span>
-            </div>
-        </header>
+      <header class="header">
+        <h1>Choose Your Plan</h1>
+        <p class="subtitle">Flexible pricing for teams of all sizes</p>
 
-        <div class="pricing-grid">
-            <!-- Starter Plan -->
-            <div class="pricing-card">
-                <div class="plan-header">
-                    <h2 class="plan-name">Starter</h2>
-                    <p class="plan-description">Perfect for individuals</p>
-                </div>
-                <div class="plan-price">
-                    <span class="currency">$</span>
-                    <span class="price" data-monthly="9" data-annual="7">9</span>
-                    <span class="period">/month</span>
-                </div>
-                <ul class="features-list">
-                    <li class="feature"><span class="check">✓</span> 5 Projects</li>
-                    <li class="feature"><span class="check">✓</span> 10GB Storage</li>
-                    <li class="feature"><span class="check">✓</span> Basic Support</li>
-                    <li class="feature"><span class="check">✓</span> Community Access</li>
-                    <li class="feature disabled"><span class="cross">✗</span> Advanced Analytics</li>
-                    <li class="feature disabled"><span class="cross">✗</span> Priority Support</li>
-                </ul>
-                <button class="btn btn-secondary">Get Started</button>
-            </div>
+        <!-- Billing Toggle -->
+        <div class="billing-toggle">
+          <span class="billing-option" id="monthlyLabel">Monthly</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="billingToggle" />
+            <span class="slider"></span>
+          </label>
+          <span class="billing-option" id="annualLabel">
+            Annual <span class="discount-badge">Save 20%</span>
+          </span>
+        </div>
+      </header>
 
-            <!-- Pro Plan (Popular) -->
-            <div class="pricing-card featured">
-                <div class="popular-badge">Most Popular</div>
-                <div class="plan-header">
-                    <h2 class="plan-name">Professional</h2>
-                    <p class="plan-description">For growing teams</p>
-                </div>
-                <div class="plan-price">
-                    <span class="currency">$</span>
-                    <span class="price" data-monthly="29" data-annual="23">29</span>
-                    <span class="period">/month</span>
-                </div>
-                <ul class="features-list">
-                    <li class="feature"><span class="check">✓</span> Unlimited Projects</li>
-                    <li class="feature"><span class="check">✓</span> 100GB Storage</li>
-                    <li class="feature"><span class="check">✓</span> Priority Support</li>
-                    <li class="feature"><span class="check">✓</span> Advanced Analytics</li>
-                    <li class="feature"><span class="check">✓</span> Custom Domains</li>
-                    <li class="feature"><span class="check">✓</span> Team Collaboration</li>
-                </ul>
-                <button class="btn btn-primary">Get Started</button>
-            </div>
-
-            <!-- Enterprise Plan -->
-            <div class="pricing-card">
-                <div class="plan-header">
-                    <h2 class="plan-name">Enterprise</h2>
-                    <p class="plan-description">For large organizations</p>
-                </div>
-                <div class="plan-price">
-                    <span class="currency">$</span>
-                    <span class="price" data-monthly="99" data-annual="79">99</span>
-                    <span class="period">/month</span>
-                </div>
-                <ul class="features-list">
-                    <li class="feature"><span class="check">✓</span> Everything in Pro</li>
-                    <li class="feature"><span class="check">✓</span> Unlimited Storage</li>
-                    <li class="feature"><span class="check">✓</span> 24/7 Dedicated Support</li>
-                    <li class="feature"><span class="check">✓</span> Advanced Security</li>
-                    <li class="feature"><span class="check">✓</span> SLA Guarantee</li>
-                    <li class="feature"><span class="check">✓</span> Custom Integrations</li>
-                </ul>
-                <button class="btn btn-secondary">Contact Sales</button>
-            </div>
+      <div class="pricing-grid">
+        <!-- Starter Plan -->
+        <div class="pricing-card">
+          <div class="plan-header">
+            <h2 class="plan-name">Starter</h2>
+            <p class="plan-description">Perfect for individuals</p>
+          </div>
+          <div class="plan-price">
+            <span class="currency">$</span>
+            <span class="price" data-monthly="9" data-annual="7">9</span>
+            <span class="period">/month</span>
+          </div>
+          <ul class="features-list">
+            <li class="feature"><span class="check">✓</span> 5 Projects</li>
+            <li class="feature"><span class="check">✓</span> 10GB Storage</li>
+            <li class="feature"><span class="check">✓</span> Basic Support</li>
+            <li class="feature">
+              <span class="check">✓</span> Community Access
+            </li>
+            <li class="feature disabled">
+              <span class="cross">✗</span> Advanced Analytics
+            </li>
+            <li class="feature disabled">
+              <span class="cross">✗</span> Priority Support
+            </li>
+          </ul>
+          <button class="btn btn-secondary">Get Started</button>
         </div>
 
-        <!-- FAQ Section -->
-        <section class="faq-section">
-            <h2>Frequently Asked Questions</h2>
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>Can I change plans later?</h3>
-                    <p>Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>What payment methods do you accept?</h3>
-                    <p>We accept all major credit cards, PayPal, and wire transfers for enterprise plans.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>Is there a free trial?</h3>
-                    <p>Yes! All plans come with a 14-day free trial. No credit card required.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>What happens after my trial ends?</h3>
-                    <p>You can choose to subscribe or your account will revert to the free plan with limited features.</p>
-                </div>
-            </div>
-        </section>
+        <!-- Pro Plan (Popular) -->
+        <div class="pricing-card featured">
+          <div class="popular-badge">Most Popular</div>
+          <div class="plan-header">
+            <h2 class="plan-name">Professional</h2>
+            <p class="plan-description">For growing teams</p>
+          </div>
+          <div class="plan-price">
+            <span class="currency">$</span>
+            <span class="price" data-monthly="29" data-annual="23">29</span>
+            <span class="period">/month</span>
+          </div>
+          <ul class="features-list">
+            <li class="feature">
+              <span class="check">✓</span> Unlimited Projects
+            </li>
+            <li class="feature"><span class="check">✓</span> 100GB Storage</li>
+            <li class="feature">
+              <span class="check">✓</span> Priority Support
+            </li>
+            <li class="feature">
+              <span class="check">✓</span> Advanced Analytics
+            </li>
+            <li class="feature"><span class="check">✓</span> Custom Domains</li>
+            <li class="feature">
+              <span class="check">✓</span> Team Collaboration
+            </li>
+          </ul>
+          <button class="btn btn-primary">Get Started</button>
+        </div>
+
+        <!-- Enterprise Plan -->
+        <div class="pricing-card">
+          <div class="plan-header">
+            <h2 class="plan-name">Enterprise</h2>
+            <p class="plan-description">For large organizations</p>
+          </div>
+          <div class="plan-price">
+            <span class="currency">$</span>
+            <span class="price" data-monthly="99" data-annual="79">99</span>
+            <span class="period">/month</span>
+          </div>
+          <ul class="features-list">
+            <li class="feature">
+              <span class="check">✓</span> Everything in Pro
+            </li>
+            <li class="feature">
+              <span class="check">✓</span> Unlimited Storage
+            </li>
+            <li class="feature">
+              <span class="check">✓</span> 24/7 Dedicated Support
+            </li>
+            <li class="feature">
+              <span class="check">✓</span> Advanced Security
+            </li>
+            <li class="feature"><span class="check">✓</span> SLA Guarantee</li>
+            <li class="feature">
+              <span class="check">✓</span> Custom Integrations
+            </li>
+          </ul>
+          <button class="btn btn-secondary">Contact Sales</button>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <h3>Can I change plans later?</h3>
+            <p>
+              Yes, you can upgrade or downgrade your plan at any time. Changes
+              take effect immediately.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3>What payment methods do you accept?</h3>
+            <p>
+              We accept all major credit cards, PayPal, and wire transfers for
+              enterprise plans.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3>Is there a free trial?</h3>
+            <p>
+              Yes! All plans come with a 14-day free trial. No credit card
+              required.
+            </p>
+          </div>
+          <div class="faq-item">
+            <h3>What happens after my trial ends?</h3>
+            <p>
+              You can choose to subscribe or your account will revert to the
+              free plan with limited features.
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

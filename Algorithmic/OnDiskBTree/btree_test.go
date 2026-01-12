@@ -48,7 +48,7 @@ func TestBTree(t *testing.T) {
 	}
 
 	// 3. More splits (depth increase)
-	for i := 60; i <= 100; i+=10 {
+	for i := 60; i <= 100; i += 10 {
 		bt.Insert(int64(i), int64(i*10))
 	}
 

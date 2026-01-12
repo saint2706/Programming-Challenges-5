@@ -33,7 +33,7 @@ providers:
     enabled: true
     options:
       webhook_url: https://hooks.slack.com/services/T000/B000/XXXX
-      channel: '#alerts'
+      channel: "#alerts"
   - name: sms
     enabled: false # disable temporarily
 plugins_dir: ./plugins # optional, for local plugin modules

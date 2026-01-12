@@ -31,8 +31,8 @@
       <header class="mb-4">
         <h1 class="mb-0">Markdown Search Knowledge Graph</h1>
         <p class="text-muted">
-          Search Markdown knowledge base files with Elasticsearch and explore their cross-reference
-          network.
+          Search Markdown knowledge base files with Elasticsearch and explore
+          their cross-reference network.
         </p>
       </header>
 
@@ -52,7 +52,9 @@
           </div>
         </form>
         {% if search_error %}
-        <div class="alert alert-danger mt-3" role="alert">{{ search_error }}</div>
+        <div class="alert alert-danger mt-3" role="alert">
+          {{ search_error }}
+        </div>
         {% elif results %}
         <div class="mt-3">
           <h2 class="h5">Results for "{{ query }}"</h2>
@@ -61,13 +63,19 @@
             <li class="list-group-item">
               <div class="d-flex justify-content-between align-items-start">
                 <div>
-                  <a class="fw-semibold" href="{{ url_for('show_document', doc_id=hit.id) }}"
+                  <a
+                    class="fw-semibold"
+                    href="{{ url_for('show_document', doc_id=hit.id) }}"
                     >{{ hit.title }}</a
                   >
-                  <div class="text-muted small">Score: {{ '%.2f' | format(hit.score) }}</div>
+                  <div class="text-muted small">
+                    Score: {{ '%.2f' | format(hit.score) }}
+                  </div>
                 </div>
                 {% if hit.highlight %}
-                <div class="ms-3 text-secondary small">{{ hit.highlight | safe }}</div>
+                <div class="ms-3 text-secondary small">
+                  {{ hit.highlight | safe }}
+                </div>
                 {% endif %}
               </div>
             </li>
@@ -86,11 +94,16 @@
               <h2 class="h5">Knowledge base documents</h2>
               <ul class="list-group list-group-flush">
                 {% for doc in documents.values() %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <a href="{{ url_for('show_document', doc_id=doc.identifier) }}"
+                <li
+                  class="list-group-item d-flex justify-content-between align-items-center"
+                >
+                  <a
+                    href="{{ url_for('show_document', doc_id=doc.identifier) }}"
                     >{{ doc.title }}</a
                   >
-                  <span class="badge bg-light text-dark">{{ doc.identifier }}</span>
+                  <span class="badge bg-light text-dark"
+                    >{{ doc.identifier }}</span
+                  >
                 </li>
                 {% endfor %}
               </ul>
@@ -102,9 +115,14 @@
             <div class="card-body">
               <h2 class="h5">Cross-reference graph</h2>
               <p class="text-muted">
-                Nodes represent Markdown files; arrows represent links between them.
+                Nodes represent Markdown files; arrows represent links between
+                them.
               </p>
-              <div id="graph" class="graph-container" aria-label="Markdown link graph"></div>
+              <div
+                id="graph"
+                class="graph-container"
+                aria-label="Markdown link graph"
+              ></div>
             </div>
           </div>
         </div>

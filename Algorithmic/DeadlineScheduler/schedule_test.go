@@ -49,11 +49,11 @@ func TestDPHandlesImpossibleDeadlines(t *testing.T) {
 }
 
 func TestGreedyAndDPAgreeOnTies(t *testing.T) {
-    jobs := []Job{
-        {ID: 1, Deadline: 2, Duration: 1, Penalty: 5},
-        {ID: 2, Deadline: 2, Duration: 1, Penalty: 5},
-        {ID: 3, Deadline: 2, Duration: 1, Penalty: 5},
-    }
+	jobs := []Job{
+		{ID: 1, Deadline: 2, Duration: 1, Penalty: 5},
+		{ID: 2, Deadline: 2, Duration: 1, Penalty: 5},
+		{ID: 3, Deadline: 2, Duration: 1, Penalty: 5},
+	}
 
 	greedy, err := GreedySchedule(jobs)
 	if err != nil {

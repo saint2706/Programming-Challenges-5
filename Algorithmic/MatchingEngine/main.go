@@ -8,11 +8,11 @@ import (
 )
 
 type Command struct {
-	Type      string  `json:"type"` // "limit"
-	Side      string  `json:"side"` // "buy", "sell"
-	Price     float64 `json:"price"`
-	Quantity  float64 `json:"quantity"`
-	OrderID   int     `json:"id"`
+	Type     string  `json:"type"` // "limit"
+	Side     string  `json:"side"` // "buy", "sell"
+	Price    float64 `json:"price"`
+	Quantity float64 `json:"quantity"`
+	OrderID  int     `json:"id"`
 }
 
 type Output struct {

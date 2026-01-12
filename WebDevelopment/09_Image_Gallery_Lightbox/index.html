@@ -1,64 +1,102 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Image Gallery with Lightbox</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<body>
+  <body>
     <div class="container">
-        <h1>Image Gallery</h1>
-        <p class="subtitle">Click any image to view in fullscreen</p>
+      <h1>Image Gallery</h1>
+      <p class="subtitle">Click any image to view in fullscreen</p>
 
-        <div class="gallery" id="gallery">
-            <div class="gallery-item" data-index="0">
-                <div class="placeholder-img" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                    <span>Image 1</span>
-                </div>
-            </div>
-            <div class="gallery-item" data-index="1">
-                <div class="placeholder-img" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                    <span>Image 2</span>
-                </div>
-            </div>
-            <div class="gallery-item" data-index="2">
-                <div class="placeholder-img" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                    <span>Image 3</span>
-                </div>
-            </div>
-            <div class="gallery-item" data-index="3">
-                <div class="placeholder-img" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
-                    <span>Image 4</span>
-                </div>
-            </div>
-            <div class="gallery-item" data-index="4">
-                <div class="placeholder-img" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-                    <span>Image 5</span>
-                </div>
-            </div>
-            <div class="gallery-item" data-index="5">
-                <div class="placeholder-img" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
-                    <span>Image 6</span>
-                </div>
-            </div>
+      <div class="gallery" id="gallery">
+        <div class="gallery-item" data-index="0">
+          <div
+            class="placeholder-img"
+            style="
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            "
+          >
+            <span>Image 1</span>
+          </div>
         </div>
+        <div class="gallery-item" data-index="1">
+          <div
+            class="placeholder-img"
+            style="
+              background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            "
+          >
+            <span>Image 2</span>
+          </div>
+        </div>
+        <div class="gallery-item" data-index="2">
+          <div
+            class="placeholder-img"
+            style="
+              background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            "
+          >
+            <span>Image 3</span>
+          </div>
+        </div>
+        <div class="gallery-item" data-index="3">
+          <div
+            class="placeholder-img"
+            style="
+              background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            "
+          >
+            <span>Image 4</span>
+          </div>
+        </div>
+        <div class="gallery-item" data-index="4">
+          <div
+            class="placeholder-img"
+            style="
+              background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            "
+          >
+            <span>Image 5</span>
+          </div>
+        </div>
+        <div class="gallery-item" data-index="5">
+          <div
+            class="placeholder-img"
+            style="
+              background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+            "
+          >
+            <span>Image 6</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox">
-        <button class="lightbox-close" id="closeBtn" aria-label="Close">&times;</button>
-        <button class="lightbox-nav lightbox-prev" id="prevBtn" aria-label="Previous">‹</button>
-        <button class="lightbox-nav lightbox-next" id="nextBtn" aria-label="Next">›</button>
-        <div class="lightbox-content">
-            <div class="lightbox-img" id="lightboxImg"></div>
-            <div class="lightbox-caption" id="lightboxCaption">Image 1 of 6</div>
-        </div>
+      <button class="lightbox-close" id="closeBtn" aria-label="Close">
+        &times;
+      </button>
+      <button
+        class="lightbox-nav lightbox-prev"
+        id="prevBtn"
+        aria-label="Previous"
+      >
+        ‹
+      </button>
+      <button class="lightbox-nav lightbox-next" id="nextBtn" aria-label="Next">
+        ›
+      </button>
+      <div class="lightbox-content">
+        <div class="lightbox-img" id="lightboxImg"></div>
+        <div class="lightbox-caption" id="lightboxCaption">Image 1 of 6</div>
+      </div>
     </div>
 
     <script src="script.js"></script>
-</body>
-
+  </body>
 </html>

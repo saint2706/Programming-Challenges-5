@@ -1,5 +1,4 @@
 use rand::Rng;
-use std::collections::HashSet;
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct Point {
@@ -115,14 +114,14 @@ impl KMeans {
                 counts[cluster] += 1;
             }
 
-            for j in 0..self.k {
+            for (j, centroid) in centroids.iter_mut().enumerate() {
                 if counts[j] > 0 {
-                    for d in 0..centroids[j].coords.len() {
-                        centroids[j].coords[d] = new_centroids[j][d] / counts[j] as f64;
+                    for (d, coord) in centroid.coords.iter_mut().enumerate() {
+                        *coord = new_centroids[j][d] / counts[j] as f64;
                     }
                 } else {
                     // If a cluster is empty, re-initialize it to a random point
-                     centroids[j] = points[rng.random_range(0..points.len())].clone();
+                    *centroid = points[rng.random_range(0..points.len())].clone();
                 }
             }
         }
@@ -166,7 +165,14 @@ impl DBSCAN {
         labels
     }
 
-    fn expand(&self, points: &[Point], labels: &mut Vec<i32>, root: usize, mut neighbors: Vec<usize>, c: i32) {
+    fn expand(
+        &self,
+        points: &[Point],
+        labels: &mut [i32],
+        root: usize,
+        mut neighbors: Vec<usize>,
+        c: i32,
+    ) {
         labels[root] = c;
 
         let mut i = 0;
@@ -186,7 +192,8 @@ impl DBSCAN {
     }
 
     fn region_query(&self, points: &[Point], idx: usize) -> Vec<usize> {
-        points.iter()
+        points
+            .iter()
             .enumerate()
             .filter(|(_, p)| points[idx].distance(p) <= self.epsilon)
             .map(|(i, _)| i)
@@ -224,11 +231,15 @@ mod tests {
         // Cluster 2: (10,10), (10,11), (11,10), (11,11)
 
         let points = vec![
-            Point::new(vec![0.0, 0.0]), Point::new(vec![0.0, 1.0]),
-            Point::new(vec![1.0, 0.0]), Point::new(vec![1.0, 1.0]),
+            Point::new(vec![0.0, 0.0]),
+            Point::new(vec![0.0, 1.0]),
+            Point::new(vec![1.0, 0.0]),
+            Point::new(vec![1.0, 1.0]),
             Point::new(vec![5.0, 5.0]), // Noise
-            Point::new(vec![10.0, 10.0]), Point::new(vec![10.0, 11.0]),
-            Point::new(vec![11.0, 10.0]), Point::new(vec![11.0, 11.0]),
+            Point::new(vec![10.0, 10.0]),
+            Point::new(vec![10.0, 11.0]),
+            Point::new(vec![11.0, 10.0]),
+            Point::new(vec![11.0, 11.0]),
         ];
 
         // Eps=1.5, MinPts=3

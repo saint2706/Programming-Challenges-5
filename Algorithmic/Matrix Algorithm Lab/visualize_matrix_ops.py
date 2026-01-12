@@ -1,3 +1,5 @@
+# ruff: noqa: F403, F405
+
 """Visualization of Matrix Multiplication using Manim.
 
 This script visualizes the step-by-step computation of multiplying two 2x2 matrices.

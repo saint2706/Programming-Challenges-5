@@ -2,9 +2,9 @@ package main
 
 // State represents a node in the Suffix Automaton (DAWG).
 type State struct {
-	Len  int             // Length of the longest substring ending at this state
-	Link int             // Suffix link (index of the state)
-	Next map[rune]int    // Transitions
+	Len  int          // Length of the longest substring ending at this state
+	Link int          // Suffix link (index of the state)
+	Next map[rune]int // Transitions
 }
 
 // SuffixAutomaton encapsulates the automaton logic.

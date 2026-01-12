@@ -5,6 +5,7 @@ A complete dark mode implementation with smooth transitions, localStorage persis
 ## Features
 
 ### Core Functionality
+
 - **Instant Theme Switching**: Toggle between light and dark modes with one click
 - **Smooth Transitions**: Elegant 300ms color transitions across all elements
 - **Persistent Storage**: Remembers your theme preference using localStorage
@@ -12,12 +13,14 @@ A complete dark mode implementation with smooth transitions, localStorage persis
 - **No Flash**: Prevents flash of unstyled content on page load
 
 ### User Experience
+
 - **Floating Toggle Button**: Fixed position toggle button always accessible
 - **Keyboard Shortcut**: `Ctrl/Cmd + Shift + D` to toggle theme
 - **Visual Feedback**: Animated sun/moon icons with rotation effects
 - **Settings Panel**: Control panel to view and manage theme preferences
 
 ### Technical Implementation
+
 - **CSS Variables**: Complete theme defined via custom properties
 - **Prefers Color Scheme**: Respects `@media (prefers-color-scheme: dark)`
 - **Accessible**: ARIA labels and keyboard support
@@ -39,15 +42,15 @@ The entire theme is controlled via CSS custom properties:
 
 ```css
 :root {
-    --color-bg-primary: #ffffff;
-    --color-text-primary: #1f2937;
-    --color-primary: #3b82f6;
+  --color-bg-primary: #ffffff;
+  --color-text-primary: #1f2937;
+  --color-primary: #3b82f6;
 }
 
 [data-theme="dark"] {
-    --color-bg-primary: #111827;
-    --color-text-primary: #f9fafb;
-    --color-primary: #60a5fa;
+  --color-bg-primary: #111827;
+  --color-text-primary: #f9fafb;
+  --color-primary: #60a5fa;
 }
 ```
 
@@ -55,8 +58,8 @@ All components reference these variables:
 
 ```css
 body {
-    background-color: var(--color-bg-primary);
-    color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
 }
 ```
 
@@ -66,15 +69,15 @@ Simple theme switching logic:
 
 ```javascript
 // Get saved theme or default to system preference
-const savedTheme = localStorage.getItem('theme') || 'light';
-document.documentElement.setAttribute('data-theme', savedTheme);
+const savedTheme = localStorage.getItem("theme") || "light";
+document.documentElement.setAttribute("data-theme", savedTheme);
 
 // Toggle on button click
-themeToggle.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
+themeToggle.addEventListener("click", () => {
+  const current = document.documentElement.getAttribute("data-theme");
+  const next = current === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  localStorage.setItem("theme", next);
 });
 ```
 
@@ -83,13 +86,13 @@ themeToggle.addEventListener('click', () => {
 Automatically detect and respond to OS theme:
 
 ```javascript
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
 // Listen for changes
-prefersDark.addEventListener('change', (e) => {
-    if (useSystemPref) {
-        setTheme(e.matches ? 'dark' : 'light');
-    }
+prefersDark.addEventListener("change", (e) => {
+  if (useSystemPref) {
+    setTheme(e.matches ? "dark" : "light");
+  }
 });
 ```
 
@@ -101,21 +104,21 @@ Create two complete color schemes in `:root` and `[data-theme="dark"]`:
 
 ```css
 :root {
-    /* Light theme */
-    --color-bg-primary: #ffffff;
-    --color-bg-secondary: #f9fafb;
-    --color-text-primary: #1f2937;
-    --color-text-secondary: #6b7280;
-    --color-primary: #3b82f6;
+  /* Light theme */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f9fafb;
+  --color-text-primary: #1f2937;
+  --color-text-secondary: #6b7280;
+  --color-primary: #3b82f6;
 }
 
 [data-theme="dark"] {
-    /* Dark theme overrides */
-    --color-bg-primary: #111827;
-    --color-bg-secondary: #1f2937;
-    --color-text-primary: #f9fafb;
-    --color-text-secondary: #d1d5db;
-    --color-primary: #60a5fa;
+  /* Dark theme overrides */
+  --color-bg-primary: #111827;
+  --color-bg-secondary: #1f2937;
+  --color-text-primary: #f9fafb;
+  --color-text-secondary: #d1d5db;
+  --color-primary: #60a5fa;
 }
 ```
 
@@ -125,9 +128,9 @@ Reference variables instead of hard-coded colors:
 
 ```css
 .card {
-    background-color: var(--color-bg-secondary);
-    color: var(--color-text-primary);
-    border: 1px solid var(--color-border);
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
 }
 ```
 
@@ -137,11 +140,12 @@ Define a transition for color properties:
 
 ```css
 :root {
-    --transition-colors: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  --transition-colors:
+    background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 body {
-    transition: var(--transition-colors);
+  transition: var(--transition-colors);
 }
 ```
 
@@ -149,15 +153,15 @@ body {
 
 ```javascript
 // Initialize theme
-const theme = localStorage.getItem('theme') || 'light';
-document.documentElement.setAttribute('data-theme', theme);
+const theme = localStorage.getItem("theme") || "light";
+document.documentElement.setAttribute("data-theme", theme);
 
 // Toggle function
 function toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
+  const current = document.documentElement.getAttribute("data-theme");
+  const next = current === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  localStorage.setItem("theme", next);
 }
 ```
 
@@ -169,11 +173,11 @@ Edit the CSS variables in `style.css`:
 
 ```css
 :root {
-    --color-primary: #your-color; /* Change primary color */
+  --color-primary: #your-color; /* Change primary color */
 }
 
 [data-theme="dark"] {
-    --color-primary: #your-dark-color; /* Dark mode version */
+  --color-primary: #your-dark-color; /* Dark mode version */
 }
 ```
 
@@ -183,9 +187,9 @@ Use the established variables:
 
 ```css
 .new-component {
-    background-color: var(--color-bg-secondary);
-    color: var(--color-text-primary);
-    border: 1px solid var(--color-border);
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
 }
 ```
 
@@ -195,7 +199,7 @@ Adjust transition duration:
 
 ```css
 :root {
-    --transition-colors: background-color 0.5s ease, color 0.5s ease;
+  --transition-colors: background-color 0.5s ease, color 0.5s ease;
 }
 ```
 
@@ -209,7 +213,7 @@ Adjust transition duration:
 - Hover and active states
 - Accessible (ARIA label)
 
-### System  Preference
+### System Preference
 
 - Detects OS dark mode via `prefers-color-scheme`
 - Optional toggle to follow system
@@ -219,6 +223,7 @@ Adjust transition duration:
 ### Settings Panel
 
 Displays:
+
 - Current theme (Light/Dark)
 - System preference (Light/Dark)
 - Toggle to use system preference
@@ -237,6 +242,7 @@ Displays:
 ✅ Mobile browsers
 
 Requires:
+
 - CSS Custom Properties
 - `prefers-color-scheme` media query
 - localStorage API
@@ -290,9 +296,9 @@ Requires:
 
 ```css
 [data-theme="high-contrast"] {
-    --color-bg-primary: #000000;
-    --color-text-primary: #ffffff;
-    --color-primary: #ffff00;
+  --color-bg-primary: #000000;
+  --color-text-primary: #ffffff;
+  --color-primary: #ffff00;
 }
 ```
 
@@ -300,7 +306,7 @@ Requires:
 
 ```css
 :root {
-    --transition-colors: all 0.3s ease;
+  --transition-colors: all 0.3s ease;
 }
 ```
 
@@ -308,8 +314,8 @@ Requires:
 
 ```css
 .theme-toggle {
-    /* Customize button appearance */
-    border-radius: 0.5rem; /* Square instead of circle */
+  /* Customize button appearance */
+  border-radius: 0.5rem; /* Square instead of circle */
 }
 ```
 

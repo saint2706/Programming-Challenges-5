@@ -29,14 +29,14 @@ A lightweight, dependency-free form validation library with real-time feedback a
   name="email"
   data-validate="required|email"
   data-label="Email Address"
->
+/>
 <div class="form-error"></div>
 ```
 
 ### 3. Initialize
 
 ```javascript
-const validator = new FormValidator('#myForm');
+const validator = new FormValidator("#myForm");
 validator.init();
 ```
 
@@ -68,15 +68,15 @@ validator.init();
       name="email"
       data-validate="required|email"
       data-label="Email"
-    >
+    />
     <div class="form-error"></div>
   </div>
-  
+
   <button type="submit">Submit</button>
 </form>
 
 <script>
-  const validator = new FormValidator('#myForm');
+  const validator = new FormValidator("#myForm");
   validator.init();
 </script>
 ```
@@ -89,7 +89,7 @@ validator.init();
   name="username"
   data-validate="required|minLength:3|maxLength:20"
   data-label="Username"
->
+/>
 ```
 
 ### Password Matching
@@ -100,7 +100,7 @@ validator.init();
   name="password"
   data-validate="required|password"
   data-label="Password"
->
+/>
 
 <input
   type="password"
@@ -108,7 +108,7 @@ validator.init();
   data-validate="required|matchField:password"
   data-label="Confirm Password"
   data-match-label="Password"
->
+/>
 ```
 
 ### Numeric Validation
@@ -119,15 +119,15 @@ validator.init();
   name="age"
   data-validate="required|min:18|max:120"
   data-label="Age"
->
+/>
 ```
 
 ## Configuration Options
 
 ```javascript
-const validator = new FormValidator('#myForm', {
-  validateOnBlur: true,    // Validate when field loses focus
-  validateOnInput: false   // Validate on every keystroke
+const validator = new FormValidator("#myForm", {
+  validateOnBlur: true, // Validate when field loses focus
+  validateOnInput: false, // Validate on every keystroke
 });
 ```
 
@@ -136,12 +136,12 @@ const validator = new FormValidator('#myForm', {
 Add your own validation rules:
 
 ```javascript
-validator.addValidator('custom', {
+validator.addValidator("custom", {
   validate: (value) => {
     // Your validation logic
-    return { isValid: value.startsWith('ABC') };
+    return { isValid: value.startsWith("ABC") };
   },
-  message: (label) => `${label} must start with ABC`
+  message: (label) => `${label} must start with ABC`,
 });
 ```
 
@@ -151,16 +151,14 @@ Required structure for each form field:
 
 ```html
 <div class="form-group">
-  <label class="form-label">
-    Field Name <span class="required">*</span>
-  </label>
+  <label class="form-label"> Field Name <span class="required">*</span> </label>
   <input
     type="text"
     name="fieldName"
     class="form-input"
     data-validate="required"
     data-label="Field Name"
-  >
+  />
   <div class="form-error"></div>
 </div>
 ```
@@ -192,6 +190,7 @@ Style them in your CSS:
 ## Methods
 
 ### `init()`
+
 Initialize the validator and attach event listeners.
 
 ```javascript
@@ -199,14 +198,16 @@ validator.init();
 ```
 
 ### `validateField(field)`
+
 Validate a single field.
 
 ```javascript
-const field = document.querySelector('#email');
+const field = document.querySelector("#email");
 const isValid = validator.validateField(field);
 ```
 
 ### `validateAll()`
+
 Validate all fields in the form.
 
 ```javascript
@@ -214,14 +215,15 @@ const isValid = validator.validateAll();
 ```
 
 ### `addValidator(name, validator)`
+
 Add a custom validation rule.
 
 ```javascript
-validator.addValidator('zipcode', {
+validator.addValidator("zipcode", {
   validate: (value) => {
     return { isValid: /^\d{5}$/.test(value) };
   },
-  message: (label) => `${label} must be a 5-digit ZIP code`
+  message: (label) => `${label} must be a 5-digit ZIP code`,
 });
 ```
 
@@ -248,16 +250,12 @@ This library has zero dependencies. Just include the JavaScript file and you're 
 
 ```html
 <form id="loginForm">
-  <input
-    type="email"
-    data-validate="required|email"
-    data-label="Email"
-  >
+  <input type="email" data-validate="required|email" data-label="Email" />
   <input
     type="password"
     data-validate="required|minLength:8"
     data-label="Password"
-  >
+  />
   <button type="submit">Login</button>
 </form>
 ```
@@ -270,22 +268,18 @@ This library has zero dependencies. Just include the JavaScript file and you're 
     type="text"
     data-validate="required|minLength:3|maxLength:50"
     data-label="Full Name"
-  >
-  <input
-    type="email"
-    data-validate="required|email"
-    data-label="Email"
-  >
+  />
+  <input type="email" data-validate="required|email" data-label="Email" />
   <input
     type="password"
     data-validate="required|password"
     data-label="Password"
-  >
+  />
   <input
     type="password"
     data-validate="required|matchField:password"
     data-label="Confirm Password"
-  >
+  />
   <button type="submit">Register</button>
 </form>
 ```
@@ -297,16 +291,16 @@ This library has zero dependencies. Just include the JavaScript file and you're 
 Override the `onSuccess` method:
 
 ```javascript
-validator.onSuccess = function() {
+validator.onSuccess = function () {
   const formData = new FormData(this.form);
-  
+
   // Send to API
-  fetch('/api/submit', {
-    method: 'POST',
-    body: formData
+  fetch("/api/submit", {
+    method: "POST",
+    body: formData,
   })
-  .then(response => response.json())
-  .then(data => console.log('Success:', data));
+    .then((response) => response.json())
+    .then((data) => console.log("Success:", data));
 };
 ```
 
@@ -314,14 +308,14 @@ validator.onSuccess = function() {
 
 ```javascript
 // Validate specific field
-const emailField = document.querySelector('#email');
+const emailField = document.querySelector("#email");
 if (validator.validateField(emailField)) {
-  console.log('Email is valid');
+  console.log("Email is valid");
 }
 
 // Validate entire form
 if (validator.validateAll()) {
-  console.log('All fields are valid');
+  console.log("All fields are valid");
 }
 ```
 

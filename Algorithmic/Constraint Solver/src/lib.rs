@@ -1,4 +1,4 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 
 /// A literal is a variable ID and a boolean indicating if it's negated.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
@@ -51,7 +51,11 @@ impl SatSolver {
         self.dpll_solve(self.clauses.clone(), HashMap::new())
     }
 
-    fn dpll_solve(&self, mut clauses: Vec<Clause>, mut assignment: HashMap<usize, bool>) -> Solution {
+    fn dpll_solve(
+        &self,
+        mut clauses: Vec<Clause>,
+        mut assignment: HashMap<usize, bool>,
+    ) -> Solution {
         // 1. Unit Propagation
         loop {
             let mut unit_lit = None;
@@ -65,10 +69,8 @@ impl SatSolver {
             if let Some(lit) = unit_lit {
                 let val = !lit.negated;
                 // Check for conflict
-                if let Some(&existing) = assignment.get(&lit.id) {
-                    if existing != val {
-                         return Solution::Unsatisfiable;
-                    }
+                if let Some(&existing) = assignment.get(&lit.id) && existing != val {
+                    return Solution::Unsatisfiable;
                 }
                 assignment.insert(lit.id, val);
 
@@ -98,19 +100,20 @@ impl SatSolver {
         }
 
         // 3. Branching
-        // Pick a variable not in assignment
-        // Find first variable appearing in first clause?
-        let var = clauses[0][0].id;
+        // Pick the first unassigned variable if provided, otherwise fall back to first literal
+        let var = (1..=self.num_vars)
+            .find(|id| !assignment.contains_key(id))
+            .unwrap_or(clauses[0][0].id);
 
         // Try true
         let mut left_clauses = clauses.clone();
         let mut left_assignment = assignment.clone();
         left_assignment.insert(var, true);
         let lit_true = Literal::new(var, false);
-        if self.simplify(&mut left_clauses, lit_true) {
-             if let Solution::Satisfiable(res) = self.dpll_solve(left_clauses, left_assignment) {
-                 return Solution::Satisfiable(res);
-             }
+        if self.simplify(&mut left_clauses, lit_true)
+            && let Solution::Satisfiable(res) = self.dpll_solve(left_clauses, left_assignment)
+        {
+            return Solution::Satisfiable(res);
         }
 
         // Try false
@@ -118,9 +121,9 @@ impl SatSolver {
         let mut right_assignment = assignment;
         right_assignment.insert(var, false);
         let lit_false = Literal::new(var, true);
-         if self.simplify(&mut right_clauses, lit_false) {
-             return self.dpll_solve(right_clauses, right_assignment);
-         }
+        if self.simplify(&mut right_clauses, lit_false) {
+            return self.dpll_solve(right_clauses, right_assignment);
+        }
 
         Solution::Unsatisfiable
     }
@@ -143,12 +146,6 @@ impl SatSolver {
         }
         true
     }
-
-    // Helper for initial call
-    fn dpll(&self, _clauses: &[Clause], _assignments: HashMap<usize, bool>) -> bool {
-        // Deprecated, using dpll_solve
-        false
-    }
 }
 
 #[cfg(test)]
@@ -168,12 +165,12 @@ mod tests {
 
         let mut solver = SatSolver::new(2);
         solver.add_clause(vec![Literal::new(1, false), Literal::new(2, false)]); // x1 or x2
-        solver.add_clause(vec![Literal::new(1, true), Literal::new(2, false)]);  // !x1 or x2
+        solver.add_clause(vec![Literal::new(1, true), Literal::new(2, false)]); // !x1 or x2
 
         match solver.solve() {
             Solution::Satisfiable(assign) => {
                 assert_eq!(assign.get(&2), Some(&true));
-            },
+            }
             Solution::Unsatisfiable => panic!("Should be satisfiable"),
         }
     }
@@ -187,7 +184,7 @@ mod tests {
 
         match solver.solve() {
             Solution::Satisfiable(_) => panic!("Should be unsatisfiable"),
-            Solution::Unsatisfiable => {},
+            Solution::Unsatisfiable => {}
         }
     }
 }

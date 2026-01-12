@@ -41,10 +41,10 @@ index_dir: ./.local_index
 
 # Glob patterns to skip
 ignored:
-  - '**/.git/**'
-  - '**/__pycache__/**'
-  - '*.log'
-  - '*.tmp'
+  - "**/.git/**"
+  - "**/__pycache__/**"
+  - "*.log"
+  - "*.tmp"
 
 # Parallel workers used for parsing
 max_workers: 4

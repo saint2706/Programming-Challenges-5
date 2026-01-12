@@ -107,7 +107,7 @@ func (r *Rope) Split(i int) (*Rope, *Rope) {
 func splitRecursive(n *RopeNode, i int) (*RopeNode, *RopeNode) {
 	if n.IsLeaf {
 		return &RopeNode{Value: n.Value[:i], Weight: i, IsLeaf: true},
-		       &RopeNode{Value: n.Value[i:], Weight: len(n.Value) - i, IsLeaf: true}
+			&RopeNode{Value: n.Value[i:], Weight: len(n.Value) - i, IsLeaf: true}
 	}
 
 	if i < n.Weight {

@@ -1,126 +1,168 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dark mode toggle implementation with CSS variables and localStorage persistence">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Dark mode toggle implementation with CSS variables and localStorage persistence"
+    />
     <title>Dark Mode Toggle - Demo</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <!-- Theme Toggle Button (Fixed) -->
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
-        <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <circle cx="12" cy="12" r="5"/>
-            <line x1="12" y1="1" x2="12" y2="3"/>
-            <line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/>
-            <line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-        </svg>
-        <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
+      <svg
+        class="theme-toggle__icon theme-toggle__icon--sun"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+      >
+        <circle cx="12" cy="12" r="5" />
+        <line x1="12" y1="1" x2="12" y2="3" />
+        <line x1="12" y1="21" x2="12" y2="23" />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+        <line x1="1" y1="12" x2="3" y2="12" />
+        <line x1="21" y1="12" x2="23" y2="12" />
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+      </svg>
+      <svg
+        class="theme-toggle__icon theme-toggle__icon--moon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+      >
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+      </svg>
     </button>
 
     <!-- Header -->
     <header class="header">
-        <div class="container">
-            <h1 class="header__title">Dark Mode Toggle</h1>
-            <p class="header__subtitle">Seamless theme switching with CSS variables</p>
-        </div>
+      <div class="container">
+        <h1 class="header__title">Dark Mode Toggle</h1>
+        <p class="header__subtitle">
+          Seamless theme switching with CSS variables
+        </p>
+      </div>
     </header>
 
     <!-- Main Content -->
     <main class="main">
-        <div class="container">
-            <!-- Features Section -->
-            <section class="section">
-                <h2 class="section__title">Features</h2>
-                <div class="grid">
-                    <div class="card">
-                        <div class="card__icon">🎨</div>
-                        <h3 class="card__title">CSS Variables</h3>
-                        <p class="card__text">Uses CSS custom properties for dynamic theme switching without page reload.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card__icon">💾</div>
-                        <h3 class="card__title">Persistent</h3>
-                        <p class="card__text">Remembers your preference using localStorage across sessions.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card__icon">⚡</div>
-                        <h3 class="card__title">Smooth Transitions</h3>
-                        <p class="card__text">Elegant color transitions that are easy on the eyes.</p>
-                    </div>
-                    <div class="card">
-                        <div class="card__icon">🖥️</div>
-                        <h3 class="card__title">System Detection</h3>
-                        <p class="card__text">Automatically detects your system's dark mode preference.</p>
-                    </div>
+      <div class="container">
+        <!-- Features Section -->
+        <section class="section">
+          <h2 class="section__title">Features</h2>
+          <div class="grid">
+            <div class="card">
+              <div class="card__icon">🎨</div>
+              <h3 class="card__title">CSS Variables</h3>
+              <p class="card__text">
+                Uses CSS custom properties for dynamic theme switching without
+                page reload.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card__icon">💾</div>
+              <h3 class="card__title">Persistent</h3>
+              <p class="card__text">
+                Remembers your preference using localStorage across sessions.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card__icon">⚡</div>
+              <h3 class="card__title">Smooth Transitions</h3>
+              <p class="card__text">
+                Elegant color transitions that are easy on the eyes.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card__icon">🖥️</div>
+              <h3 class="card__title">System Detection</h3>
+              <p class="card__text">
+                Automatically detects your system's dark mode preference.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Demo Section -->
+        <section class="section">
+          <h2 class="section__title">Interactive Demo</h2>
+          <div class="demo-area">
+            <div class="demo-controls">
+              <button class="btn btn--primary">Primary Button</button>
+              <button class="btn btn--secondary">Secondary Button</button>
+              <button class="btn btn--outline">Outline Button</button>
+            </div>
+
+            <div class="demo-form">
+              <h3>Sample Form</h3>
+              <form>
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    class="form-input"
+                    placeholder="Enter your name"
+                  />
                 </div>
-            </section>
-
-            <!-- Demo Section -->
-            <section class="section">
-                <h2 class="section__title">Interactive Demo</h2>
-                <div class="demo-area">
-                    <div class="demo-controls">
-                        <button class="btn btn--primary">Primary Button</button>
-                        <button class="btn btn--secondary">Secondary Button</button>
-                        <button class="btn btn--outline">Outline Button</button>
-                    </div>
-                    
-                    <div class="demo-form">
-                        <h3>Sample Form</h3>
-                        <form>
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" id="name" class="form-input" placeholder="Enter your name">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" class="form-input" placeholder="your@email.com">
-                            </div>
-                            <div class="form-group">
-                                <label for="message">Message</label>
-                                <textarea id="message" class="form-input" rows="3" placeholder="Your message"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn--primary">Submit</button>
-                        </form>
-                    </div>
-
-                    <div class="demo-alerts">
-                        <div class="alert alert--info">
-                            <strong>Info:</strong> This is an informational message.
-                        </div>
-                        <div class="alert alert--success">
-                            <strong>Success:</strong> Operation completed successfully!
-                        </div>
-                        <div class="alert alert--warning">
-                            <strong>Warning:</strong> Please review this action.
-                        </div>
-                        <div class="alert alert--error">
-                            <strong>Error:</strong> Something went wrong.
-                        </div>
-                    </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    class="form-input"
+                    placeholder="your@email.com"
+                  />
                 </div>
-            </section>
+                <div class="form-group">
+                  <label for="message">Message</label>
+                  <textarea
+                    id="message"
+                    class="form-input"
+                    rows="3"
+                    placeholder="Your message"
+                  ></textarea>
+                </div>
+                <button type="submit" class="btn btn--primary">Submit</button>
+              </form>
+            </div>
 
-            <!-- Code Example -->
-            <section class="section">
-                <h2 class="section__title">Implementation</h2>
-                <div class="code-block">
-                    <div class="code-block__header">
-                        <span>CSS Variables</span>
-                    </div>
-                    <pre class="code-block__content"><code>:root {
+            <div class="demo-alerts">
+              <div class="alert alert--info">
+                <strong>Info:</strong> This is an informational message.
+              </div>
+              <div class="alert alert--success">
+                <strong>Success:</strong> Operation completed successfully!
+              </div>
+              <div class="alert alert--warning">
+                <strong>Warning:</strong> Please review this action.
+              </div>
+              <div class="alert alert--error">
+                <strong>Error:</strong> Something went wrong.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Code Example -->
+        <section class="section">
+          <h2 class="section__title">Implementation</h2>
+          <div class="code-block">
+            <div class="code-block__header">
+              <span>CSS Variables</span>
+            </div>
+            <pre class="code-block__content"><code>:root {
   --color-bg-primary: #ffffff;
   --color-text-primary: #1f2937;
   --color-primary: #3b82f6;
@@ -131,13 +173,15 @@
   --color-text-primary: #f9fafb;
   --color-primary: #60a5fa;
 }</code></pre>
-                </div>
+          </div>
 
-                <div class="code-block">
-                    <div class="code-block__header">
-                        <span>JavaScript Toggle</span>
-                    </div>
-                    <pre class="code-block__content"><code>const theme = localStorage.getItem('theme') || 'light';
+          <div class="code-block">
+            <div class="code-block__header">
+              <span>JavaScript Toggle</span>
+            </div>
+            <pre
+              class="code-block__content"
+            ><code>const theme = localStorage.getItem('theme') || 'light';
 document.documentElement.setAttribute('data-theme', theme);
 
 themeToggle.addEventListener('click', () => {
@@ -146,47 +190,53 @@ themeToggle.addEventListener('click', () => {
   document.documentElement.setAttribute('data-theme', next);
   localStorage.setItem('theme', next);
 });</code></pre>
-                </div>
-            </section>
+          </div>
+        </section>
 
-            <!-- Settings Panel -->
-            <section class="section">
-                <h2 class="section__title">Theme Settings</h2>
-                <div class="settings-panel">
-                    <div class="setting-item">
-                        <div class="setting-item__info">
-                            <h3 class="setting-item__title">Current Theme</h3>
-                            <p class="setting-item__description" id="currentTheme">Light Mode</p>
-                        </div>
-                    </div>
-                    <div class="setting-item">
-                        <div class="setting-item__info">
-                            <h3 class="setting-item__title">System Preference</h3>
-                            <p class="setting-item__description" id="systemPreference">Light</p>
-                        </div>
-                    </div>
-                    <div class="setting-item">
-                        <div class="setting-item__info">
-                            <h3 class="setting-item__title">Use System Preference</h3>
-                            <p class="setting-item__description">Automatically match your system theme</p>
-                        </div>
-                        <label class="toggle">
-                            <input type="checkbox" id="useSystemPreference">
-                            <span class="toggle__slider"></span>
-                        </label>
-                    </div>
-                </div>
-            </section>
-        </div>
+        <!-- Settings Panel -->
+        <section class="section">
+          <h2 class="section__title">Theme Settings</h2>
+          <div class="settings-panel">
+            <div class="setting-item">
+              <div class="setting-item__info">
+                <h3 class="setting-item__title">Current Theme</h3>
+                <p class="setting-item__description" id="currentTheme">
+                  Light Mode
+                </p>
+              </div>
+            </div>
+            <div class="setting-item">
+              <div class="setting-item__info">
+                <h3 class="setting-item__title">System Preference</h3>
+                <p class="setting-item__description" id="systemPreference">
+                  Light
+                </p>
+              </div>
+            </div>
+            <div class="setting-item">
+              <div class="setting-item__info">
+                <h3 class="setting-item__title">Use System Preference</h3>
+                <p class="setting-item__description">
+                  Automatically match your system theme
+                </p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="useSystemPreference" />
+                <span class="toggle__slider"></span>
+              </label>
+            </div>
+          </div>
+        </section>
+      </div>
     </main>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <p>&copy; 2026 Dark Mode Toggle Demo. Built with CSS variables.</p>
-        </div>
+      <div class="container">
+        <p>&copy; 2026 Dark Mode Toggle Demo. Built with CSS variables.</p>
+      </div>
     </footer>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

@@ -1,5 +1,5 @@
-use std::collections::{HashMap, VecDeque};
 use std::cmp::min;
+use std::collections::{HashMap, VecDeque};
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct NodeId(pub usize);
@@ -13,15 +13,14 @@ struct Edge {
 }
 
 /// Edmonds-Karp algorithm implementation for Max Flow.
+#[derive(Default)]
 pub struct MaxFlow {
     adj: HashMap<NodeId, Vec<Edge>>,
 }
 
 impl MaxFlow {
     pub fn new() -> Self {
-        MaxFlow {
-            adj: HashMap::new(),
-        }
+        Self::default()
     }
 
     /// Adds a directed edge with capacity.

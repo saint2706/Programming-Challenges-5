@@ -4,12 +4,12 @@ on:
   push:
     branches: [main]
     paths:
-      - '**/*.py'
-      - '.github/workflows/lint.yml'
+      - "**/*.py"
+      - ".github/workflows/lint.yml"
   pull_request:
     paths:
-      - '**/*.py'
-      - '.github/workflows/lint.yml'
+      - "**/*.py"
+      - ".github/workflows/lint.yml"
 
 concurrency:
   group: lint-${{ github.workflow }}-${{ github.ref }}
@@ -25,8 +25,8 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-          cache: 'pip'
+          python-version: "3.11"
+          cache: "pip"
 
       - name: Install linting dependencies
         run: pip install black isort ruff

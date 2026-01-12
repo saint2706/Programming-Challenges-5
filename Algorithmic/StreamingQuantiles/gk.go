@@ -48,7 +48,7 @@ func (qe *QuantileEstimator) Insert(v float64) {
 	copy(qe.summary[idx+1:], qe.summary[idx:])
 	qe.summary[idx] = t
 
-	if qe.n % (1 + int(1.0/qe.epsilon)) == 0 {
+	if qe.n%(1+int(1.0/qe.epsilon)) == 0 {
 		qe.Compress()
 	}
 }
@@ -65,7 +65,7 @@ func (qe *QuantileEstimator) Compress() {
 		t_right := qe.summary[rightIdx]
 
 		// Condition: g_curr + g_right + delta_right <= limit
-		if t_curr.g + t_right.g + t_right.delta <= limit {
+		if t_curr.g+t_right.g+t_right.delta <= limit {
 			// Merge current into right.
 			qe.summary[rightIdx].g += t_curr.g
 			qe.summary[i].g = -1 // Mark deleted
@@ -102,7 +102,7 @@ func (qe *QuantileEstimator) Query(phi float64) (float64, error) {
 		currentRankMin += t.g
 		rMax := currentRankMin + t.delta
 
-		if rMax > targetRank + margin {
+		if rMax > targetRank+margin {
 			if i == 0 {
 				return t.v, nil // Should not happen for typical phi, but fallback
 			}

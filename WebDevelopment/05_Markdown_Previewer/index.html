@@ -1,111 +1,244 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Live markdown editor with split-pane preview and syntax highlighting">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Live markdown editor with split-pane preview and syntax highlighting"
+    />
     <title>Markdown Previewer</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-        rel="stylesheet">
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
     <!-- Marked.js for Markdown parsing -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <!-- Highlight.js for syntax highlighting -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- Toolbar -->
     <div class="toolbar">
-        <div class="toolbar__brand">
-            <svg class="toolbar__logo" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            <span>Markdown Previewer</span>
-        </div>
-        <div class="toolbar__controls">
-            <button class="toolbar__btn" id="boldBtn" title="Bold (Ctrl+B)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M6 4h8a4 4 0 014 4 4 4 0 01-4 4H6z M6 12h9a4 4 0 014 4 4 4 0 01-4 4H6z" />
-                </svg>
-            </button>
-            <button class="toolbar__btn" id="italicBtn" title="Italic (Ctrl+I)">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <line x1="19" y1="4" x2="10" y2="4" stroke-width="2" stroke-linecap="round" />
-                    <line x1="14" y1="20" x2="5" y2="20" stroke-width="2" stroke-linecap="round" />
-                    <line x1="15" y1="4" x2="9" y2="20" stroke-width="2" stroke-linecap="round" />
-                </svg>
-            </button>
-            <button class="toolbar__btn" id="headingBtn" title="Heading">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 6h6M4 12h6M4 18h6M14 6h6M14 12h6M14 18h6" />
-                </svg>
-            </button>
-            <button class="toolbar__btn" id="linkBtn" title="Link">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                </svg>
-            </button>
-            <button class="toolbar__btn" id="codeBtn" title="Code Block">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-                </svg>
-            </button>
-            <button class="toolbar__btn" id="listBtn" title="List">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <line x1="8" y1="6" x2="21" y2="6" stroke-width="2" stroke-linecap="round" />
-                    <line x1="8" y1="12" x2="21" y2="12" stroke-width="2" stroke-linecap="round" />
-                    <line x1="8" y1="18" x2="21" y2="18" stroke-width="2" stroke-linecap="round" />
-                    <line x1="3" y1="6" x2="3.01" y2="6" stroke-width="2" stroke-linecap="round" />
-                    <line x1="3" y1="12" x2="3.01" y2="12" stroke-width="2" stroke-linecap="round" />
-                    <line x1="3" y1="18" x2="3.01" y2="18" stroke-width="2" stroke-linecap="round" />
-                </svg>
-            </button>
-            <div class="toolbar__divider"></div>
-            <button class="toolbar__btn" id="exportBtn" title="Export HTML">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-            </button>
-            <button class="toolbar__btn" id="toggleModeBtn" title="Toggle View Mode">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <rect x="3" y="3" width="7" height="7" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                    <rect x="14" y="3" width="7" height="7" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                    <rect x="14" y="14" width="7" height="7" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                    <rect x="3" y="14" width="7" height="7" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                </svg>
-            </button>
-        </div>
+      <div class="toolbar__brand">
+        <svg
+          class="toolbar__logo"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+          />
+        </svg>
+        <span>Markdown Previewer</span>
+      </div>
+      <div class="toolbar__controls">
+        <button class="toolbar__btn" id="boldBtn" title="Bold (Ctrl+B)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 4h8a4 4 0 014 4 4 4 0 01-4 4H6z M6 12h9a4 4 0 014 4 4 4 0 01-4 4H6z"
+            />
+          </svg>
+        </button>
+        <button class="toolbar__btn" id="italicBtn" title="Italic (Ctrl+I)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <line
+              x1="19"
+              y1="4"
+              x2="10"
+              y2="4"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <line
+              x1="14"
+              y1="20"
+              x2="5"
+              y2="20"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <line
+              x1="15"
+              y1="4"
+              x2="9"
+              y2="20"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+        <button class="toolbar__btn" id="headingBtn" title="Heading">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h6M4 12h6M4 18h6M14 6h6M14 12h6M14 18h6"
+            />
+          </svg>
+        </button>
+        <button class="toolbar__btn" id="linkBtn" title="Link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+            />
+          </svg>
+        </button>
+        <button class="toolbar__btn" id="codeBtn" title="Code Block">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+            />
+          </svg>
+        </button>
+        <button class="toolbar__btn" id="listBtn" title="List">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <line
+              x1="8"
+              y1="6"
+              x2="21"
+              y2="6"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <line
+              x1="8"
+              y1="12"
+              x2="21"
+              y2="12"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <line
+              x1="8"
+              y1="18"
+              x2="21"
+              y2="18"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <line
+              x1="3"
+              y1="6"
+              x2="3.01"
+              y2="6"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <line
+              x1="3"
+              y1="12"
+              x2="3.01"
+              y2="12"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <line
+              x1="3"
+              y1="18"
+              x2="3.01"
+              y2="18"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+        <div class="toolbar__divider"></div>
+        <button class="toolbar__btn" id="exportBtn" title="Export HTML">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+            />
+          </svg>
+        </button>
+        <button
+          class="toolbar__btn"
+          id="toggleModeBtn"
+          title="Toggle View Mode"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect
+              x="3"
+              y="3"
+              width="7"
+              height="7"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <rect
+              x="14"
+              y="3"
+              width="7"
+              height="7"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <rect
+              x="14"
+              y="14"
+              width="7"
+              height="7"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <rect
+              x="3"
+              y="14"
+              width="7"
+              height="7"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
 
     <!-- Main Container -->
     <div class="container" id="mainContainer">
-        <!-- Editor Panel -->
-        <div class="panel panel--editor">
-            <div class="panel__header">
-                <h2 class="panel__title">Editor</h2>
-                <div class="panel__stats">
-                    <span id="wordCount">0 words</span>
-                    <span>•</span>
-                    <span id="charCount">0 characters</span>
-                </div>
-            </div>
-            <textarea id="editor" class="editor" placeholder="# Start typing your markdown here...
+      <!-- Editor Panel -->
+      <div class="panel panel--editor">
+        <div class="panel__header">
+          <h2 class="panel__title">Editor</h2>
+          <div class="panel__stats">
+            <span id="wordCount">0 words</span>
+            <span>•</span>
+            <span id="charCount">0 characters</span>
+          </div>
+        </div>
+        <textarea
+          id="editor"
+          class="editor"
+          placeholder="# Start typing your markdown here...
 
 Try using:
 - **Bold text**
@@ -126,19 +259,19 @@ function hello() {
 3. Third item
 
 > Blockquotes look great too!
-"></textarea>
-        </div>
+"
+        ></textarea>
+      </div>
 
-        <!-- Preview Panel -->
-        <div class="panel panel--preview">
-            <div class="panel__header">
-                <h2 class="panel__title">Preview</h2>
-            </div>
-            <div id="preview" class="preview"></div>
+      <!-- Preview Panel -->
+      <div class="panel panel--preview">
+        <div class="panel__header">
+          <h2 class="panel__title">Preview</h2>
         </div>
+        <div id="preview" class="preview"></div>
+      </div>
     </div>
 
     <script src="script.js"></script>
-</body>
-
+  </body>
 </html>

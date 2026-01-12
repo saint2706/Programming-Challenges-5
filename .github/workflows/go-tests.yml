@@ -3,16 +3,16 @@ name: Go Module Tests
 on:
   push:
     paths:
-      - 'Algorithmic/**/*.go'
-      - 'Algorithmic/**/go.mod'
-      - 'Algorithmic/**/go.sum'
-      - '.github/workflows/go-tests.yml'
+      - "Algorithmic/**/*.go"
+      - "Algorithmic/**/go.mod"
+      - "Algorithmic/**/go.sum"
+      - ".github/workflows/go-tests.yml"
   pull_request:
     paths:
-      - 'Algorithmic/**/*.go'
-      - 'Algorithmic/**/go.mod'
-      - 'Algorithmic/**/go.sum'
-      - '.github/workflows/go-tests.yml'
+      - "Algorithmic/**/*.go"
+      - "Algorithmic/**/go.mod"
+      - "Algorithmic/**/go.sum"
+      - ".github/workflows/go-tests.yml"
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -68,7 +68,7 @@ jobs:
         if: ${{ steps.check-env.outputs.is_act != 'true' }}
         uses: actions/setup-go@v5
         with:
-          go-version: '1.21'
+          go-version: "1.21"
           cache: true
           cache-dependency-path: ${{ matrix.module }}/go.sum
 
