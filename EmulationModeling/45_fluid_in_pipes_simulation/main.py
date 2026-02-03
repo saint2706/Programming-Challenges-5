@@ -1,8 +1,6 @@
-import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 from scipy.integrate import odeint
-from simulation_core.visualization import SimulationVisualizer
 
 from .models import PipeConfig
 
@@ -10,9 +8,6 @@ from .models import PipeConfig
 class PipeSimulation:
     def __init__(self, config: PipeConfig):
         self.config = config
-        self.visualizer = SimulationVisualizer(
-            output_dir=f"EmulationModeling/45_fluid_in_pipes_simulation/{config.output_dir}"
-        )
         self.graph = nx.Graph()
         self.state = None  # Pressures at nodes
         self.setup_network()
@@ -85,38 +80,14 @@ class PipeSimulation:
             print(f"DEBUG: odeint failed with {e}")
             raise e
 
-        # Visualize results
-        for i in range(0, len(t), 5):  # skip frames
-            self.snapshot(solution[i], t[i])
-
-        self.visualizer.save_gif("pipe_flow.gif")
-
-    def snapshot(self, P, t):
-        fig, ax = plt.subplots(figsize=(6, 4))
-
-        # Draw nodes colored by Pressure
-        nx.draw(
-            self.graph,
-            self.pos,
-            node_color=P,
-            cmap=plt.cm.coolwarm,
-            vmin=0,
-            vmax=100,
-            node_size=500,
-            with_labels=True,
-            ax=ax,
+        final_pressures = solution[-1]
+        pressure_summary = ", ".join(
+            f"{idx}:{pressure:.2f}" for idx, pressure in enumerate(final_pressures)
         )
-
-        # Draw edge widths by Flow magnitude
-        for u, v, data in self.graph.edges(data=True):
-            flow = abs(P[u] - P[v]) / data["resistance"]
-            nx.draw_networkx_edges(
-                self.graph, self.pos, edgelist=[(u, v)], width=1 + flow / 5, ax=ax
-            )
-
-        ax.set_title(f"Fluid Pressure (t={t:.2f})")
-        self.visualizer.add_frame(fig)
-        plt.close(fig)
+        print(
+            "Final pressures:",
+            pressure_summary,
+        )
 
 
 def run_simulation():

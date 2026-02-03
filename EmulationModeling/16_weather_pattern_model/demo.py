@@ -4,12 +4,6 @@ from __future__ import annotations
 
 import argparse
 
-import matplotlib
-
-# Use a non-interactive backend for environments without display servers.
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-
 try:  # Allow running via `python demo.py` without a package import error.
     from .weather_model import WeatherGrid
 except ImportError:  # pragma: no cover - fallback for direct execution
@@ -45,24 +39,12 @@ def parse_args() -> argparse.Namespace:
         "--seed", type=int, default=7, help="Random seed for reproducibility"
     )
     parser.add_argument(
-        "--output",
+        "--summary",
         type=str,
-        default="pressure_heatmap.png",
-        help="Where to save the final pressure heatmap",
+        default="pressure_summary.txt",
+        help="Where to save the final pressure summary",
     )
     return parser.parse_args()
-
-
-def render_pressure(grid: WeatherGrid, output_path: str) -> None:
-    fig, ax = plt.subplots(figsize=(6, 5))
-    im = ax.imshow(grid.pressure, cmap="coolwarm")
-    fig.colorbar(im, ax=ax, shrink=0.75, label="Pressure (hPa)")
-    ax.set_title("Cellular Weather Pressure")
-    ax.set_xlabel("x")
-    ax.set_ylabel("y")
-    fig.tight_layout()
-    fig.savefig(output_path, dpi=150)
-    plt.close(fig)
 
 
 def main() -> None:
@@ -79,8 +61,18 @@ def main() -> None:
     for _ in range(args.steps):
         grid.step()
 
-    render_pressure(grid, args.output)
-    print(f"Saved pressure heatmap to {args.output}")
+    pressure = grid.pressure
+    summary = "\n".join(
+        [
+            f"min={pressure.min():.3f}",
+            f"max={pressure.max():.3f}",
+            f"mean={pressure.mean():.3f}",
+            f"std={pressure.std():.3f}",
+        ]
+    )
+    with open(args.summary, "w", encoding="utf-8") as handle:
+        handle.write(summary)
+    print(f"Saved pressure summary to {args.summary}")
 
 
 if __name__ == "__main__":

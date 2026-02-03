@@ -1,6 +1,6 @@
 # Epidemic Spread Model
 
-An agent-based SIR (Susceptible-Infected-Recovered) model for simulating disease spread with a visualization.
+An agent-based SIR (Susceptible-Infected-Recovered) model for simulating disease spread in a bounded 2D space.
 
 ## 📋 Table of Contents
 
@@ -11,86 +11,97 @@ An agent-based SIR (Susceptible-Infected-Recovered) model for simulating disease
 
 ## 🧠 Theory
 
-### SIR Model
+### Model Overview
 
-A compartmental model dividing population into three states:
+Each individual is an **agent** with:
+- A 2D position and velocity.
+- A health state: **S**, **I**, or **R**.
+- An infection timer that counts down to recovery.
 
-- **S (Susceptible)**: Can catch disease
-- **I (Infected)**: Has disease, can spread it
-- **R (Recovered)**: Had disease, now immune
+The simulation advances in discrete steps:
+1. **Movement:** Every agent updates position and bounces off walls.
+2. **Recovery:** Infected agents decrement their timers and become recovered at zero.
+3. **Transmission:** Infected agents attempt to infect nearby susceptible agents within a given radius, using a probability check.
 
-### Disease Dynamics
+### Ideal Example Test Case (Exercises Edge Cases)
 
-```
-S → I → R
-```
+Use a tiny, deterministic scenario that covers:
+- **Immediate transmission**
+- **No transmission due to distance**
+- **Recovery at timer boundary**
+- **Wall bounce behavior**
 
-Transitions occur based on:
+**Setup:**
+- Bounds: width=10, height=10
+- Infection radius = 2.0
+- Infection probability = 1.0 (guaranteed transmission)
+- Recovery time = 1 (recover in one step)
+- Agents (positions, velocities):
+  - A: infected, position (1, 1), velocity (1, 0)
+  - B: susceptible, position (2, 1), velocity (0, 0)
+  - C: susceptible, position (9, 9), velocity (1, 0) (will hit wall)
 
-1. **Contact**: Susceptible meets infected
-2. **Transmission**: Disease spreads with probability p
-3. **Recovery**: After fixed time, infected becomes recovered
+### Step-by-Step Walkthrough
 
-### Agent-Based Modeling
+#### Step 0 (Initial State)
+- **A** is infected with timer=1.
+- **B** is susceptible and within distance 1 of A (inside radius).
+- **C** is far away, outside infection radius.
 
-Instead of differential equations, we simulate individual agents:
+#### Step 1 (Movement)
+1. A moves from (1,1) → (2,1).
+2. B stays at (2,1).
+3. C moves from (9,9) → (10,9), hits the wall, and bounces (velocity x flips).
 
-- Each person is an agent with position and state
-- Agents move randomly in space
-- Contact occurs when agents are close
-- Stochastic transmission based on probability
+#### Step 1 (Recovery)
+- A's timer decreases from 1 to 0 → A transitions to **R**.
+
+#### Step 1 (Transmission)
+- A was infected during this step's transmission phase before recovery completes.
+- Distance between A and B is 0 (same position), so B becomes **I** with timer=1.
+- C remains **S** because it is far away.
+
+#### Step 2 (Movement)
+- A (now R) continues moving but no longer infects.
+- B (now I) moves and may attempt to infect others.
+- C continues after bounce with reversed x-velocity.
+
+#### Step 2 (Recovery)
+- B's timer hits 0 → B transitions to **R**.
+
+**Outcome:**
+- A and B become recovered, C remains susceptible. The example demonstrates infection, recovery boundary, distance-based non-infection, and wall bounce.
 
 ## 💻 Installation
 
-Requires Python 3.8+ with pygame and numpy:
+Requires Python 3.8+ and NumPy:
 
 ```bash
-pip install pygame numpy
+pip install numpy
 ```
 
 ## 🚀 Usage
-
-### Running Simulation
 
 ```bash
 cd EmulationModeling/09_epidemic_spread_model
 python main.py
 ```
 
-### With Visualization
-
-```bash
-python viz.py
-```
-
-Visualization shows:
-
-- **Blue dots**: Susceptible individuals
-- **Red dots**: Infected individuals
-- **Green dots**: Recovered individuals
-
 ## 📐 Parameters
 
 ### Transmission Rate (β)
 
 Probability of disease transmission upon contact:
-
 - Higher β → Faster spread
 - Typical range: 0.1 - 0.5
 
 ### Recovery Time
 
-Days until infected person recovers:
-
-- Affects peak infection time
-- Typical range: 7-14 days
+Number of steps until an infected agent recovers.
 
 ### Contact Distance
 
-Radius within which transmission can occur:
-
-- Smaller distance → Slower spread
-- Models social distancing
+Radius within which transmission can occur.
 
 ### Population Parameters
 
@@ -101,32 +112,6 @@ Radius within which transmission can occur:
 ## 📊 Metrics
 
 The simulation tracks over time:
-
 - **S(t)**: Number of susceptible
 - **I(t)**: Number of infected
 - **R(t)**: Number of recovered
-
-### Epidemic Curve
-
-Plot of infected over time shows:
-
-- **Exponential Growth**: Early phase
-- **Peak**: Maximum infected simultaneously
-- **Decline**: As susceptible depleted
-
-### R₀ (Basic Reproduction Number)
-
-Average number of people one infected person infects:
-
-- R₀ < 1: Epidemic dies out
-- R₀ > 1: Epidemic spreads
-- R₀ = β × contacts × recovery_time
-
-## ✨ Features
-
-- Agent-based SIR model
-- Real-time visualization
-- Configurable disease parameters
-- Spatial movement simulation
-- Time-series plots of compartments
-- Support for intervention strategies (e.g., lockdown)

@@ -1,10 +1,8 @@
 import math
 import random
 
-import matplotlib.pyplot as plt
 import networkx as nx
 from simulation_core.discrete_event import DiscreteEventSimulation
-from simulation_core.visualization import SimulationVisualizer
 
 from .models import LogisticsConfig
 
@@ -17,9 +15,6 @@ class LogisticsSimulation(DiscreteEventSimulation):
         self.depots = []
         self.customers = []
         self.trucks = []
-        self.visualizer = SimulationVisualizer(
-            output_dir=f"EmulationModeling/40_logistics_routing_simulator/{config.output_dir}"
-        )
         self.setup_world()
 
     def setup_world(self):
@@ -128,69 +123,12 @@ class LogisticsSimulation(DiscreteEventSimulation):
                 truck["load"] = 0
                 yield self.env.timeout(5)  # loading time
 
-            # Visualization step (snapshot)
-            if int(self.env.now) % 10 == 0:
-                self.snapshot()
-
-    def snapshot(self):
-        fig, ax = plt.subplots(figsize=(8, 8))
-        pos = nx.get_node_attributes(self.graph, "pos")
-
-        # Draw edges
-        # nx.draw_networkx_edges(self.graph, pos, alpha=0.1, ax=ax)
-
-        # Draw Depots
-        nx.draw_networkx_nodes(
-            self.graph,
-            pos,
-            nodelist=[d["id"] for d in self.depots],
-            node_color="red",
-            node_size=100,
-            label="Depot",
-            ax=ax,
-        )
-
-        # Draw Customers (served vs unserved)
-        unserved = [c["id"] for c in self.customers if not c["served"]]
-        served = [c["id"] for c in self.customers if c["served"]]
-        nx.draw_networkx_nodes(
-            self.graph,
-            pos,
-            nodelist=unserved,
-            node_color="blue",
-            node_size=50,
-            label="Customer (Wait)",
-            ax=ax,
-        )
-        nx.draw_networkx_nodes(
-            self.graph,
-            pos,
-            nodelist=served,
-            node_color="green",
-            node_size=50,
-            label="Customer (Done)",
-            ax=ax,
-        )
-
-        # Draw Trucks
-        {t["id"]: t["pos"] for t in self.trucks}
-        # Since trucks might be between nodes, we use their stored pos
-        # But nx.draw expects node IDs. We'll just scatter plot them.
-        tx = [t["pos"][0] for t in self.trucks]
-        ty = [t["pos"][1] for t in self.trucks]
-        ax.scatter(tx, ty, c="orange", s=80, marker="s", label="Truck")
-
-        ax.legend()
-        ax.set_title(f"Logistics Simulation (t={self.env.now:.1f})")
-        self.visualizer.add_frame(fig)
-        plt.close(fig)
 
 
 def run_simulation():
     config = LogisticsConfig()
     sim = LogisticsSimulation(config)
     sim.run(until=config.duration)
-    sim.visualizer.save_gif("simulation.gif", fps=10)
 
 
 if __name__ == "__main__":

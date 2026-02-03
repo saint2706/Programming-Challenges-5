@@ -1,7 +1,5 @@
-import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
-from simulation_core.visualization import SimulationVisualizer
 
 from .models import NCAConfig
 
@@ -53,9 +51,6 @@ class CAModel(nn.Module):
 class NCASimulation:
     def __init__(self, config: NCAConfig):
         self.config = config
-        self.visualizer = SimulationVisualizer(
-            output_dir=f"EmulationModeling/50_neural_cellular_automata/{config.output_dir}"
-        )
         self.device = torch.device("cpu")  # Keep it simple
         self.model = CAModel(config.channels, config.hidden_size).to(self.device)
 
@@ -78,25 +73,12 @@ class NCASimulation:
                 # Clip to [0, 1] for stability (usually sigmoid is used but this is simplified)
                 self.state = torch.clamp(self.state, -10.0, 10.0)
 
-            if i % 5 == 0:
-                self.snapshot(i)
-
-        self.visualizer.save_gif("nca_evolution.gif")
-
-    def snapshot(self, step):
-        fig, ax = plt.subplots(figsize=(6, 6))
-
-        # Visualize first 3 channels as RGB
-        rgb = self.state[0, :3, :, :].permute(1, 2, 0).cpu().numpy()
-        # Normalize for display
-        rgb = (rgb - rgb.min()) / (rgb.max() - rgb.min() + 1e-6)
-
-        ax.imshow(rgb)
-        ax.set_title(f"NCA Step {step}")
-        ax.axis("off")
-
-        self.visualizer.add_frame(fig)
-        plt.close(fig)
+        summary = {
+            "min": float(self.state.min().item()),
+            "max": float(self.state.max().item()),
+            "mean": float(self.state.mean().item()),
+        }
+        print(f"Final NCA state summary: {summary}")
 
 
 def run_simulation():

@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 import numpy as np
 from nn import Linear, MSELoss, NeuralNetwork, ReLU, Sigmoid
 
@@ -62,37 +61,7 @@ def main():
 
     print(f"Final Loss: {loss:.4f}")
 
-    # Visualization
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
-
-    # Loss Curve
-    ax1.plot(losses)
-    ax1.set_title("Training Loss")
-    ax1.set_xlabel("Epoch")
-    ax1.set_ylabel("MSE Loss")
-
-    # Decision Boundary
-    ax2.set_title("Decision Boundary")
-
-    # Grid for contour plot
-    xx, yy = np.meshgrid(np.linspace(-1.2, 1.2, 50), np.linspace(-1.2, 1.2, 50))
-    grid = np.c_[xx.ravel(), yy.ravel()]
-
-    preds_grid = net.forward(grid).reshape(xx.shape)
-
-    ax2.contourf(xx, yy, preds_grid, levels=20, cmap="RdBu_r", alpha=0.6)
-
-    # Scatter points
-    ax2.scatter(
-        X[y.flatten() == 0, 0], X[y.flatten() == 0, 1], c="blue", label="Class 0"
-    )
-    ax2.scatter(
-        X[y.flatten() == 1, 0], X[y.flatten() == 1, 1], c="red", label="Class 1"
-    )
-    ax2.legend()
-
-    plt.tight_layout()
-    plt.show()
+    print(f"Tracked {len(losses)} loss values for diagnostics.")
 
 
 if __name__ == "__main__":

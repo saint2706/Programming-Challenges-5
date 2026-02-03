@@ -1,10 +1,8 @@
 import random
 from typing import List
 
-import matplotlib.pyplot as plt
 import numpy as np
 from simulation_core.agent_based import Agent, AgentBasedModel
-from simulation_core.visualization import SimulationVisualizer
 
 from .models import EconomyConfig
 
@@ -88,9 +86,6 @@ class EconomyModel(AgentBasedModel):
         self.config = config
         self.households: List[Household] = []
         self.firms: List[Firm] = []
-        self.visualizer = SimulationVisualizer(
-            output_dir=f"EmulationModeling/41_economy_market_simulator/{config.output_dir}"
-        )
 
         self.history_avg_price = []
         self.history_avg_wage = []
@@ -123,30 +118,15 @@ class EconomyModel(AgentBasedModel):
         self.history_avg_price.append(avg_price)
         self.history_avg_wage.append(avg_wage)
 
-        if self.time % 10 == 0:
-            self.snapshot()
-
-    def snapshot(self):
-        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 10))
-
-        ax1.plot(self.history_avg_price, label="Avg Price")
-        ax1.plot(self.history_avg_wage, label="Avg Wage")
-        ax1.set_title("Market Trends")
-        ax1.legend()
-
-        wealths = [h.money for h in self.households]
-        ax2.hist(wealths, bins=10, color="skyblue", edgecolor="black")
-        ax2.set_title("Wealth Distribution")
-
-        self.visualizer.add_frame(fig)
-        plt.close(fig)
 
 
 def run_simulation():
     config = EconomyConfig(duration=100)
     model = EconomyModel(config)
     model.run(steps=int(config.duration))
-    model.visualizer.save_gif("market_dynamics.gif")
+    final_price = model.history_avg_price[-1]
+    final_wage = model.history_avg_wage[-1]
+    print(f"Final avg price={final_price:.2f} avg wage={final_wage:.2f}")
 
 
 if __name__ == "__main__":

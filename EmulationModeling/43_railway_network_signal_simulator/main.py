@@ -1,9 +1,7 @@
 from typing import Dict, List
 
-import matplotlib.pyplot as plt
 import simpy
 from simulation_core.discrete_event import DiscreteEventSimulation
-from simulation_core.visualization import SimulationVisualizer
 
 from .models import RailwayConfig
 
@@ -31,9 +29,6 @@ class RailwaySimulation(DiscreteEventSimulation):
         self.config = config
         self.blocks: Dict[str, Block] = {}
         self.trains: List[Train] = []
-        self.visualizer = SimulationVisualizer(
-            output_dir=f"EmulationModeling/43_railway_network_signal_simulator/{config.output_dir}"
-        )
 
         self.setup_track()
         self.setup_trains()
@@ -72,8 +67,6 @@ class RailwaySimulation(DiscreteEventSimulation):
             while self.env.now - start_time < travel_time:
                 yield self.env.timeout(1.0)
                 train.distance_in_block = (self.env.now - start_time) * train.speed
-                if int(self.env.now) % 5 == 0:
-                    self.snapshot()
 
             # Request next
             next_idx = (int(curr_block.id[1:]) + 1) % self.config.num_blocks
@@ -92,42 +85,10 @@ class RailwaySimulation(DiscreteEventSimulation):
             train.current_block = curr_block.id
             train.distance_in_block = 0
 
-    def snapshot(self):
-        fig, ax = plt.subplots(figsize=(10, 4))
-
-        # Draw blocks as segments
-        for i in range(self.config.num_blocks):
-            color = "green"
-            if self.blocks[f"B{i}"].occupied_by:
-                color = "red"
-            ax.plot([i * 100, (i + 1) * 100], [0, 0], color=color, linewidth=5)
-            ax.text(i * 100 + 50, -10, f"B{i}", ha="center")
-
-        # Draw trains
-        for t in self.trains:
-            b_idx = int(t.current_block[1:])
-            # Position = block_start + fractional progress
-            # Visual length of block is 100 units
-            frac = t.distance_in_block / self.config.block_length
-            x = (b_idx + frac) * 100
-            ax.scatter(x, 0, s=200, label=t.id, zorder=10)
-            ax.text(x, 20, t.id, ha="center")
-
-        ax.set_ylim(-50, 50)
-        ax.set_title(f"Railway Signal Sim (t={self.env.now:.1f})")
-        # ax.axis('off')
-
-        self.visualizer.add_frame(fig)
-        plt.close(fig)
-
-    # Override schedule not needed anymore
-
-
 def run_simulation():
     config = RailwayConfig(duration=200)
     sim = RailwaySimulation(config)
     sim.run(until=config.duration)
-    sim.visualizer.save_gif("railway.gif")
 
 
 if __name__ == "__main__":

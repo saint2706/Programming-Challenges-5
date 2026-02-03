@@ -1,11 +1,9 @@
 import random
 from typing import Dict, List
 
-import matplotlib.pyplot as plt
 import networkx as nx
 import simpy
 from simulation_core.discrete_event import DiscreteEventSimulation
-from simulation_core.visualization import SimulationVisualizer
 
 from .models import MicroserviceConfig
 
@@ -57,9 +55,6 @@ class MicroserviceSimulation(DiscreteEventSimulation):
         self.config = config
         self.services: Dict[str, Service] = {}
         self.graph = nx.DiGraph()
-        self.visualizer = SimulationVisualizer(
-            output_dir=f"EmulationModeling/42_microservices_system_emulator/{config.output_dir}"
-        )
         self.setup_system()
 
     def setup_system(self):
@@ -98,53 +93,23 @@ class MicroserviceSimulation(DiscreteEventSimulation):
         except Exception:
             pass  # Request failed
 
-        if req_id % 20 == 0:
-            self.snapshot()
-
-    def snapshot(self):
-        fig, ax = plt.subplots(figsize=(8, 6))
-
-        # Color nodes by failure rate or load
-        colors = []
-        for node in self.graph.nodes():
-            svc = self.services[node]
-            fail_rate = svc.stats["failures"] / max(1, svc.stats["requests"])
-            # Map fail rate to color (Green -> Red)
-            colors.append((fail_rate * 5, 1 - fail_rate * 5, 0))  # simplified
-
-        pos = nx.shell_layout(self.graph)
-        nx.draw(
-            self.graph,
-            pos,
-            with_labels=True,
-            node_color="lightblue",
-            node_size=2000,
-            font_weight="bold",
-            arrows=True,
-            ax=ax,
-        )
-
-        # Overlay stats
-        for node, (x, y) in pos.items():
-            svc = self.services[node]
-            ax.text(
-                x,
-                y - 0.1,
-                f"Req: {svc.stats['requests']}\nFail: {svc.stats['failures']}",
-                bbox=dict(facecolor="white", alpha=0.5),
-                ha="center",
-            )
-
-        ax.set_title(f"Microservices Tracing (t={self.env.now:.1f})")
-        self.visualizer.add_frame(fig)
-        plt.close(fig)
 
 
 def run_simulation():
     config = MicroserviceConfig(duration=50)
     sim = MicroserviceSimulation(config)
     sim.run(until=config.duration)
-    sim.visualizer.save_gif("microservices_trace.gif")
+    for name, service in sim.services.items():
+        failures = service.stats["failures"]
+        requests = service.stats["requests"]
+        avg_latency = (
+            sum(service.stats["latency"]) / len(service.stats["latency"])
+            if service.stats["latency"]
+            else 0.0
+        )
+        print(
+            f"{name}: requests={requests} failures={failures} avg_latency={avg_latency:.3f}"
+        )
 
 
 if __name__ == "__main__":

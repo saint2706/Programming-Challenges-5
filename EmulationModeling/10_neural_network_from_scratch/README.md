@@ -1,6 +1,6 @@
 # Neural Network From Scratch
 
-A pure NumPy implementation of a feedforward neural network with backpropagation and training visualization.
+A pure NumPy implementation of a feedforward neural network with manual backpropagation.
 
 ## 📋 Table of Contents
 
@@ -11,135 +11,73 @@ A pure NumPy implementation of a feedforward neural network with backpropagation
 
 ## 🧠 Theory
 
-### Feedforward Neural Network
+### Core Components
 
-A network where information flows forward from input to output:
+The implementation is a sequence of layers:
+- **Linear**: affine transformation `y = xW + b`
+- **ReLU**: non-linear activation
+- **Sigmoid**: outputs probabilities for binary classification
+- **MSELoss**: measures prediction error
 
-```
-Input → Hidden Layer(s) → Output
-```
+Backpropagation applies the chain rule to propagate gradients backward through each layer, updating weights with gradient descent.
 
-### Forward Pass
+### Ideal Example Test Case (Exercises Edge Cases)
 
-Compute output by passing data through layers:
+Use a tiny dataset that forces non-linearity, uses both classes, and includes borderline points:
 
-```
-z = W·x + b    (linear transformation)
-a = σ(z)       (activation function)
-```
+**Inputs (x1, x2) → label**
+1. (0.0, 0.0) → 0
+2. (1.0, 0.0) → 1
+3. (0.0, 1.0) → 1
+4. (1.0, 1.0) → 0
 
-### Backpropagation
+This is the XOR pattern, which a purely linear model cannot solve. It forces the network to use the hidden layers and activations.
 
-Learn by computing gradients via chain rule:
+### Step-by-Step Walkthrough
 
-1. **Forward pass**: Compute predictions
-2. **Compute loss**: Measure error
-3. **Backward pass**: Compute ∂Loss/∂W for each layer
-4. **Update weights**: W ← W - α·∂Loss/∂W
+#### 1) Forward Pass
+- Each input vector passes through **Linear → ReLU → Linear → ReLU → Linear → Sigmoid**.
+- The final sigmoid output is a value in (0,1), interpreted as class probability.
 
-### Activation Functions
+#### 2) Loss Computation
+- For each sample, compute **MSE**: `(pred − target)^2`.
+- The overall loss is the mean across samples.
 
-- **ReLU**: f(x) = max(0, x) - Fast, effective
-- **Sigmoid**: f(x) = 1/(1+e⁻ˣ) - For output probabilities
-- **Tanh**: f(x) = tanh(x) - Centered at zero
+#### 3) Backward Pass
+- Compute gradient of the loss with respect to the sigmoid output.
+- Backpropagate through the final Linear layer.
+- Apply ReLU gradient masking (negative activations pass 0 gradient).
+- Continue backward through earlier layers.
+
+#### 4) Parameter Updates
+- Each weight and bias is updated: `param = param − lr * grad`.
+- The XOR pattern gradually separates because the hidden layers learn a non-linear decision boundary.
+
+#### 5) Edge Case Handling
+- **Zero input (0,0):** ensures biases matter; without biases, activations could stall.
+- **Symmetry (1,0) vs (0,1):** tests whether the network can represent symmetry.
+- **Conflicting corners:** forces the network to discover a non-linear split.
 
 ## 💻 Installation
 
-Requires Python 3.8+ with NumPy and Matplotlib:
+Requires Python 3.8+ and NumPy:
 
 ```bash
-pip install numpy matplotlib
+pip install numpy
 ```
 
 ## 🚀 Usage
-
-### Training a Network
 
 ```bash
 cd EmulationModeling/10_neural_network_from_scratch
 python main.py
 ```
 
-The default configuration trains on synthetic data and displays:
+## 🧱 Architecture
 
-- Loss curve over training
-- Decision boundaries (for 2D data)
-- Final accuracy
-
-### Custom Architecture
-
-Edit `main.py` to configure:
-
-```python
-# Network with 2 hidden layers
-nn = NeuralNetwork([input_size, 64, 32, output_size])
-
-# Training parameters
-nn.train(X_train, y_train, epochs=1000, learning_rate=0.01)
+The default network is:
+```
+2 → 16 → 16 → 1
 ```
 
-## 🏗 Architecture
-
-### Layer Types
-
-#### Dense (Fully Connected)
-
-Every neuron connects to all neurons in previous layer
-
-```python
-output = activation(weights @ input + bias)
-```
-
-### Loss Functions
-
-#### Mean Squared Error (MSE)
-
-For regression:
-
-```
-MSE = (1/n) Σ(y_pred - y_true)²
-```
-
-#### Cross-Entropy
-
-For classification:
-
-```
-CE = -Σ y_true·log(y_pred)
-```
-
-### Optimization
-
-#### Gradient Descent
-
-Basic weight update rule:
-
-```
-W_new = W_old - learning_rate * gradient
-```
-
-#### Mini-batch Training
-
-- Process data in small batches
-- Faster convergence
-- Better generalization
-
-## 📊 Visualization
-
-The implementation includes:
-
-- **Loss Plot**: Training loss vs. epoch
-- **Decision Boundaries**: For 2D classification problems
-- **Weight Histograms**: Distribution of learned weights
-- **Activation Distributions**: Layer outputs during training
-
-## ✨ Features
-
-- Pure NumPy implementation (educational)
-- Modular layer design
-- Multiple activation functions
-- Configurable architecture
-- Training visualization
-- Support for regression and classification
-- Mini-batch gradient descent
-- Weight initialization strategies
+You can change layer sizes or activation choices by editing `main.py`.

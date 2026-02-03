@@ -1,7 +1,5 @@
-import matplotlib.pyplot as plt
 import numpy as np
 from scipy.spatial import KDTree
-from simulation_core.visualization import SimulationVisualizer
 
 from .models import RobotSwarmConfig
 
@@ -9,9 +7,6 @@ from .models import RobotSwarmConfig
 class RobotSwarmSimulation:
     def __init__(self, config: RobotSwarmConfig):
         self.config = config
-        self.visualizer = SimulationVisualizer(
-            output_dir=f"EmulationModeling/46_robot_swarm_simulator/{config.output_dir}"
-        )
         self.time = 0.0
 
         # State: [x, y, vx, vy]
@@ -89,26 +84,8 @@ class RobotSwarmSimulation:
         for i in range(steps):
             self.step()
             if i % 5 == 0:
-                self.snapshot()
-        self.visualizer.save_gif("swarm.gif")
-
-    def snapshot(self):
-        fig, ax = plt.subplots(figsize=(6, 6))
-        ax.set_xlim(0, self.config.width)
-        ax.set_ylim(0, self.config.height)
-
-        ax.quiver(
-            self.positions[:, 0],
-            self.positions[:, 1],
-            self.velocities[:, 0],
-            self.velocities[:, 1],
-            color="blue",
-            scale=50,
-        )
-
-        ax.set_title(f"Robot Swarm (t={self.time:.1f})")
-        self.visualizer.add_frame(fig)
-        plt.close(fig)
+                centroid = np.mean(self.positions, axis=0)
+                print(f"t={self.time:.1f}s centroid={centroid}")
 
 
 def run_simulation():

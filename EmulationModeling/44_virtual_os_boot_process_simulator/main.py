@@ -1,10 +1,8 @@
 from typing import Dict, List
 
-import matplotlib.pyplot as plt
 import networkx as nx
 import simpy
 from simulation_core.discrete_event import DiscreteEventSimulation
-from simulation_core.visualization import SimulationVisualizer
 
 from .models import BootConfig
 
@@ -26,9 +24,6 @@ class BootSimulation(DiscreteEventSimulation):
         self.config = config
         self.stages: Dict[str, BootStage] = {}
         self.graph = nx.DiGraph()
-        self.visualizer = SimulationVisualizer(
-            output_dir=f"EmulationModeling/44_virtual_os_boot_process_simulator/{config.output_dir}"
-        )
         self.setup_dag()
 
     def setup_dag(self):
@@ -78,47 +73,17 @@ class BootSimulation(DiscreteEventSimulation):
 
     def monitor(self):
         while True:
-            self.snapshot()
             if all(s.status == "DONE" for s in self.stages.values()):
                 break
             yield self.env.timeout(0.2)
-        self.snapshot()  # Final
-
-    def snapshot(self):
-        fig, ax = plt.subplots(figsize=(8, 6))
-
-        pos = nx.spring_layout(self.graph, seed=42)  # Fixed layout
-
-        colors = []
-        for n in self.graph.nodes():
-            s = self.stages[n]
-            if s.status == "DONE":
-                colors.append("green")
-            elif s.status == "RUNNING":
-                colors.append("orange")
-            else:
-                colors.append("gray")
-
-        nx.draw(
-            self.graph,
-            pos,
-            with_labels=True,
-            node_color=colors,
-            node_size=1500,
-            font_weight="bold",
-            ax=ax,
-        )
-        ax.set_title(f"Boot Process (t={self.env.now:.1f})")
-
-        self.visualizer.add_frame(fig)
-        plt.close(fig)
 
 
 def run_simulation():
     config = BootConfig(duration=10)
     sim = BootSimulation(config)
     sim.run(until=config.duration)
-    sim.visualizer.save_gif("boot_sequence.gif")
+    for stage in sim.stages.values():
+        print(f"{stage.name}: {stage.start_time:.2f} -> {stage.end_time:.2f}")
 
 
 if __name__ == "__main__":

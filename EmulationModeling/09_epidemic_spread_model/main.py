@@ -17,7 +17,6 @@ def main():
 
     stats = model.get_stats()
     print(f"Final: S={stats['S']} I={stats['I']} R={stats['R']}")
-    print("\nRun 'python viz.py' for visualization.")
 
 
 if __name__ == "__main__":

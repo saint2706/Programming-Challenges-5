@@ -9,4 +9,3 @@ class BaseSimulationConfig(BaseModel):
     seed: int = 42
     output_dir: str = "output"
     duration: float = 100.0
-    fps: int = 30  # For visualizations

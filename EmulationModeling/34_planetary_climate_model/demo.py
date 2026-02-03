@@ -3,9 +3,6 @@
 from __future__ import annotations
 
 import argparse
-from pathlib import Path
-
-import matplotlib.pyplot as plt
 
 try:  # pragma: no cover - allow running as a script
     from .climate_model import LatitudinalEnergyBalanceModel, ZeroDEnergyBalanceModel
@@ -55,17 +52,8 @@ def run_latitudinal(args: argparse.Namespace) -> None:
         f"  Final temperature range: {final_profile.min():.2f} – {final_profile.max():.2f} K"
     )
 
-    if args.plot:
-        fig, ax = plt.subplots(figsize=(8, 4))
-        ax.plot(model.latitudes, final_profile, marker="o")
-        ax.set_xlabel("Latitude (deg)")
-        ax.set_ylabel("Temperature (K)")
-        ax.set_title("Latitudinal energy balance equilibrium")
-        ax.grid(True, linestyle=":", alpha=0.5)
-        output = Path(args.output)
-        fig.tight_layout()
-        fig.savefig(output)
-        print(f"  Saved profile plot to {output}")
+    mid_idx = len(final_profile) // 2
+    print(f"  Equator temperature: {final_profile[mid_idx]:.2f} K")
 
 
 def parse_args() -> argparse.Namespace:
@@ -126,16 +114,6 @@ def parse_args() -> argparse.Namespace:
         type=float,
         default=0.5,
         help="Meridional thermal diffusivity (arbitrary units)",
-    )
-    parser.add_argument(
-        "--plot",
-        action="store_true",
-        help="Save a plot of the latitudinal equilibrium profile",
-    )
-    parser.add_argument(
-        "--output",
-        default="latitudinal_profile.png",
-        help="Output path for the profile plot",
     )
     return parser.parse_args()
 

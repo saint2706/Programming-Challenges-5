@@ -1,11 +1,9 @@
 import math
 import random
 
-import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 from simulation_core.discrete_event import DiscreteEventSimulation
-from simulation_core.visualization import SimulationVisualizer
 
 from .models import DroneConfig
 
@@ -14,9 +12,6 @@ class DroneSimulation(DiscreteEventSimulation):
     def __init__(self, config: DroneConfig):
         super().__init__(config.seed)
         self.config = config
-        self.visualizer = SimulationVisualizer(
-            output_dir=f"EmulationModeling/47_drones_delivery_simulator/{config.output_dir}"
-        )
         self.grid = np.zeros((config.map_size, config.map_size))  # 0=Free, 1=Obstacle
         self.orders = []
         self.drones = []
@@ -124,9 +119,6 @@ class DroneSimulation(DiscreteEventSimulation):
                 drone["battery"] = self.config.battery_capacity
                 drone["state"] = "idle"
 
-            if int(self.env.now) % 5 == 0:
-                self.snapshot()
-
     def move_drone(self, drone, path):
         for next_pos in path:
             if drone["battery"] <= 0:
@@ -140,36 +132,13 @@ class DroneSimulation(DiscreteEventSimulation):
             drone["pos"] = next_pos
             drone["battery"] -= 0.5 * dist
 
-    def snapshot(self):
-        fig, ax = plt.subplots(figsize=(6, 6))
-
-        # Draw obstacles
-        obs_x, obs_y = np.where(self.grid == 1)
-        ax.scatter(obs_x, obs_y, c="black", marker="s", s=20)
-
-        # Draw Orders
-        for o in self.orders:
-            if o["status"] == "pending":
-                ax.scatter(o["start"][0], o["start"][1], c="green", marker="^")
-                ax.scatter(o["end"][0], o["end"][1], c="red", marker="v")
-
-        # Draw Drones
-        for d in self.drones:
-            ax.scatter(d["pos"][0], d["pos"][1], c="blue", s=50, label="Drone")
-
-        ax.set_title(f"Drone Delivery (t={self.env.now:.1f})")
-        ax.set_xlim(0, self.config.map_size)
-        ax.set_ylim(0, self.config.map_size)
-
-        self.visualizer.add_frame(fig)
-        plt.close(fig)
-
-
 def run_simulation():
     config = DroneConfig(duration=50)
     sim = DroneSimulation(config)
     sim.run(until=config.duration)
-    sim.visualizer.save_gif("drones.gif")
+    delivered = sum(1 for o in sim.orders if o["status"] == "delivered")
+    pending = sum(1 for o in sim.orders if o["status"] != "delivered")
+    print(f"Orders delivered={delivered} pending={pending}")
 
 
 if __name__ == "__main__":

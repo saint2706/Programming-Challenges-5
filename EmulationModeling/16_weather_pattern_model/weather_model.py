@@ -113,7 +113,7 @@ class WeatherGrid:
         return shifted + field * kernel[1, 1]
 
     def snapshot(self) -> np.ndarray:
-        """Return a copy of the current pressure field for visualization."""
+        """Return a copy of the current pressure field."""
 
         return self.pressure.copy()
 

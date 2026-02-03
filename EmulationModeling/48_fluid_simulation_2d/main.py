@@ -1,7 +1,5 @@
-import matplotlib.pyplot as plt
 import numpy as np
 from simulation_core.pde_solvers import advect_step_2d, diffusion_step_2d
-from simulation_core.visualization import SimulationVisualizer
 
 from .models import Fluid2DConfig
 
@@ -12,9 +10,6 @@ from .models import Fluid2DConfig
 class Fluid2DSimulation:
     def __init__(self, config: Fluid2DConfig):
         self.config = config
-        self.visualizer = SimulationVisualizer(
-            output_dir=f"EmulationModeling/48_fluid_simulation_2d/{config.output_dir}"
-        )
         self.N = config.grid_size
         self.dt = config.dt
 
@@ -72,19 +67,10 @@ class Fluid2DSimulation:
                 self.u[center, center] += np.random.uniform(-1, 1)
                 self.v[center, center] += np.random.uniform(-1, 1)
 
-            if i % 5 == 0:
-                self.snapshot(i * self.dt)
-
-        self.visualizer.save_mp4("fluid.mp4")
-
-    def snapshot(self, t):
-        fig, ax = plt.subplots(figsize=(6, 6))
-        ax.imshow(self.dens, cmap="inferno", origin="lower", vmin=0, vmax=1)
-        ax.set_title(f"Fluid Density (t={t:.2f})")
-        ax.axis("off")
-
-        self.visualizer.add_frame(fig)
-        plt.close(fig)
+        print(
+            f"Final density summary: min={self.dens.min():.3f} "
+            f"max={self.dens.max():.3f} mean={self.dens.mean():.3f}"
+        )
 
 
 def run_simulation():
