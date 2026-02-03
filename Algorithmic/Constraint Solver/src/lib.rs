@@ -69,7 +69,9 @@ impl SatSolver {
             if let Some(lit) = unit_lit {
                 let val = !lit.negated;
                 // Check for conflict
-                if let Some(&existing) = assignment.get(&lit.id) && existing != val {
+                if let Some(&existing) = assignment.get(&lit.id)
+                    && existing != val
+                {
                     return Solution::Unsatisfiable;
                 }
                 assignment.insert(lit.id, val);

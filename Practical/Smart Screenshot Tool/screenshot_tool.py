@@ -38,16 +38,14 @@ class IndexStore:
     def _ensure_database(self) -> None:
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         with sqlite3.connect(self.db_path) as conn:
-            conn.execute(
-                """
+            conn.execute("""
                 CREATE TABLE IF NOT EXISTS screenshots (
                     id INTEGER PRIMARY KEY,
                     path TEXT UNIQUE,
                     created_at TEXT,
                     ocr_text TEXT
                 )
-                """
-            )
+                """)
             conn.commit()
 
     def index_image(self, image_path: Path, ocr_text: str) -> None:

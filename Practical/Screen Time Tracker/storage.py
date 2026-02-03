@@ -38,8 +38,7 @@ class SQLiteStorage(BaseStorage):
     def _ensure_tables(self) -> None:
         connection = sqlite3.connect(self.db_path)
         try:
-            connection.execute(
-                """
+            connection.execute("""
                 CREATE TABLE IF NOT EXISTS focus_intervals (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     application TEXT NOT NULL,
@@ -47,8 +46,7 @@ class SQLiteStorage(BaseStorage):
                     end_time TEXT NOT NULL,
                     duration_seconds REAL NOT NULL
                 )
-                """
-            )
+                """)
             connection.commit()
         finally:
             connection.close()
