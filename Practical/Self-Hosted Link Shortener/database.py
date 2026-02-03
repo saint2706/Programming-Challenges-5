@@ -51,8 +51,7 @@ def initialize_db() -> None:
     """Create the ``links`` table if it does not already exist."""
 
     with get_connection() as conn:
-        conn.execute(
-            """
+        conn.execute("""
             CREATE TABLE IF NOT EXISTS links (
                 slug TEXT PRIMARY KEY,
                 original_url TEXT NOT NULL,
@@ -60,8 +59,7 @@ def initialize_db() -> None:
                 last_accessed_at TEXT,
                 hit_count INTEGER NOT NULL DEFAULT 0
             )
-            """
-        )
+            """)
         conn.commit()
 
 

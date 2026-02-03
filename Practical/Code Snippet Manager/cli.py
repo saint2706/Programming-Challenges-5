@@ -20,8 +20,7 @@ class SnippetStore:
 
     def _ensure_schema(self) -> None:
         cursor = self.conn.cursor()
-        cursor.execute(
-            """
+        cursor.execute("""
             CREATE TABLE IF NOT EXISTS snippets (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 title TEXT NOT NULL,
@@ -29,18 +28,14 @@ class SnippetStore:
                 code TEXT NOT NULL,
                 created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
             );
-            """
-        )
-        cursor.execute(
-            """
+            """)
+        cursor.execute("""
             CREATE TABLE IF NOT EXISTS tags (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL UNIQUE
             );
-            """
-        )
-        cursor.execute(
-            """
+            """)
+        cursor.execute("""
             CREATE TABLE IF NOT EXISTS snippet_tags (
                 snippet_id INTEGER NOT NULL,
                 tag_id INTEGER NOT NULL,
@@ -48,18 +43,13 @@ class SnippetStore:
                 FOREIGN KEY (snippet_id) REFERENCES snippets(id) ON DELETE CASCADE,
                 FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
             );
-            """
-        )
-        cursor.execute(
-            """
+            """)
+        cursor.execute("""
             CREATE INDEX IF NOT EXISTS idx_snippets_title ON snippets(title);
-            """
-        )
-        cursor.execute(
-            """
+            """)
+        cursor.execute("""
             CREATE INDEX IF NOT EXISTS idx_snippets_code ON snippets(code);
-            """
-        )
+            """)
         self.conn.commit()
 
     def close(self) -> None:
@@ -107,16 +97,14 @@ class SnippetStore:
 
     def list_snippets(self):
         cursor = self.conn.cursor()
-        cursor.execute(
-            """
+        cursor.execute("""
             SELECT s.id, s.title, s.language, s.created_at, GROUP_CONCAT(t.name, ',') AS tags
             FROM snippets s
             LEFT JOIN snippet_tags st ON s.id = st.snippet_id
             LEFT JOIN tags t ON t.id = st.tag_id
             GROUP BY s.id
             ORDER BY s.created_at DESC;
-            """
-        )
+            """)
         return cursor.fetchall()
 
     def search_snippets(
@@ -182,8 +170,7 @@ class SnippetStore:
 
     def export_json(self, output_path: Path) -> None:
         cursor = self.conn.cursor()
-        cursor.execute(
-            """
+        cursor.execute("""
             SELECT s.id, s.title, s.language, s.code, s.created_at,
                    COALESCE(GROUP_CONCAT(t.name, ','), '') AS tags
             FROM snippets s
@@ -191,8 +178,7 @@ class SnippetStore:
             LEFT JOIN tags t ON t.id = st.tag_id
             GROUP BY s.id
             ORDER BY s.id;
-            """
-        )
+            """)
         data = []
         for row in cursor.fetchall():
             snippet_id, title, language, code, created_at, tags = row

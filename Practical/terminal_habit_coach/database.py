@@ -56,8 +56,7 @@ class HabitRepository:
     def _ensure_schema(self) -> None:
         """Create tables if they don't exist."""
         with self._connect() as conn:
-            conn.executescript(
-                """
+            conn.executescript("""
                 CREATE TABLE IF NOT EXISTS habits (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     name TEXT UNIQUE NOT NULL,
@@ -79,8 +78,7 @@ class HabitRepository:
                     current_streak INTEGER DEFAULT 0,
                     longest_streak INTEGER DEFAULT 0
                 );
-                """
-            )
+                """)
 
     # ------------------------------------------------------------------
     # Habit CRUD operations
