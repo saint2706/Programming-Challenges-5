@@ -2,7 +2,6 @@
 
 A space-efficient probabilistic data structure that is used to test whether an element is a member of a set. False positive matches are possible, but false negatives are not.
 
-![Bloom Filter Visualization](bloom_filter_viz.gif)
 
 ## 📋 Table of Contents
 
@@ -10,7 +9,6 @@ A space-efficient probabilistic data structure that is used to test whether an e
 - [Installation](#installation)
 - [Usage](#usage)
 - [Complexity Analysis](#complexity-analysis)
-- [Demos](#demos)
 
 ## 🧠 Theory
 
@@ -39,10 +37,8 @@ Ensure you have Python 3.8+ installed.
 2.  Install dependencies:
 
     ```bash
-    pip install mmh3 matplotlib numpy seaborn manim
+    pip install mmh3 matplotlib numpy seaborn
     ```
-
-    _Note: `manim` is only required for the animation script (`visualize_bloom_filter.py`)._
 
 ## 🚀 Usage
 
@@ -88,28 +84,3 @@ Where:
 - $m$ is the size of the bit array.
 
 **Note**: The space complexity is extremely low compared to storing the actual items. For example, for a 1% false positive rate, a Bloom filter requires only about **9.6 bits per element**, regardless of the size of the elements themselves.
-
-## 🎬 Demos
-
-### Running the Code Demo
-
-To see the Bloom Filter in action, including performance statistics and visualization plots:
-
-```bash
-python bloom.py
-```
-
-This will run:
-
-1.  **Basic Functionality Demo**: Adds items and checks membership.
-2.  **False Positive Rate Analysis**: Compares theoretical vs. actual error rates.
-3.  **Visualization**: Plots error rates and displays the bit array heatmap.
-4.  **Stress Test**: Tests with 1 million elements.
-
-### Generating the Animation
-
-To generate the explanation GIF using Manim:
-
-```bash
-manim -pql visualize_bloom_filter.py BloomFilterDemo
-```

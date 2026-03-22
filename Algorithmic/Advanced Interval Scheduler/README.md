@@ -2,7 +2,6 @@
 
 This project implements the **Weighted Interval Scheduling** algorithm using Dynamic Programming. Given a set of intervals, each with a start time, end time, and a weight (value), the goal is to find a subset of non-overlapping intervals that maximizes the total weight.
 
-![Interval Scheduler Visualization](interval_scheduler_viz.gif)
 _(Note: Visualization above shows the greedy strategy for the unweighted case, which is a simplified version of the problem)_
 
 ## 📋 Table of Contents
@@ -11,7 +10,6 @@ _(Note: Visualization above shows the greedy strategy for the unweighted case, w
 - [Installation](#installation)
 - [Usage](#usage)
 - [Complexity Analysis](#complexity-analysis)
-- [Demos](#demos)
 
 ## 🧠 Theory
 
@@ -37,11 +35,6 @@ Where:
 Ensure you have Python 3.8+ installed.
 
 1.  Clone the repository.
-2.  (Optional) Install `manim` if you wish to generate visualizations:
-    ```bash
-    pip install manim
-    ```
-
 ## 🚀 Usage
 
 ### Basic API
@@ -78,21 +71,3 @@ for interval in selected_intervals:
 | **Backtracking** | $O(n)$            | Reconstructing the solution takes linear time.               |
 | **Total Time**   | **$O(n \log n)$** | Dominated by sorting and binary search.                      |
 | **Total Space**  | **$O(n)$**        | To store the intervals, DP table, and $p$ array.             |
-
-## 🎬 Demos
-
-### Running the Code Demo
-
-Run the included demo script to see the algorithm handle various test cases and a performance benchmark.
-
-```bash
-python demo.py
-```
-
-### Generating the Animation
-
-To generate a visualization of the scheduling process (Greedy version for visual simplicity):
-
-```bash
-manim -pql visualize_interval_scheduler.py IntervalSchedulingDemo
-```

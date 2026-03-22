@@ -2,7 +2,6 @@
 
 Implementations of **Misra-Gries** and **Space-Saving** algorithms for finding frequent items (heavy hitters) in a data stream using bounded memory.
 
-![Misra-Gries Visualization](misra_gries_viz.gif)
 
 ## 📋 Table of Contents
 
@@ -10,7 +9,6 @@ Implementations of **Misra-Gries** and **Space-Saving** algorithms for finding f
 - [Installation](#installation)
 - [Usage](#usage)
 - [Complexity Analysis](#complexity-analysis)
-- [Demos](#demos)
 
 ## 🧠 Theory
 
@@ -37,11 +35,6 @@ Similar goal but provides better estimates in practice.
 Ensure you have Python 3.8+ installed.
 
 1.  Clone the repository.
-2.  (Optional) Install `manim` for visualization:
-    ```bash
-    pip install manim
-    ```
-
 ## 🚀 Usage
 
 ### Misra-Gries
@@ -74,13 +67,3 @@ print(ss.heavy_hitters())
 | :--------------- | :--------------- | :---------------------------------------- |
 | **Misra-Gries**  | $O(k)$           | $O(1)$ (Amortized) or $O(k)$ (Worst case) |
 | **Space-Saving** | $O(k)$           | $O(1)$ (using proper data structures)     |
-
-## 🎬 Demos
-
-### Generating the Animation
-
-To generate the Misra-Gries visualization:
-
-```bash
-manim -pql visualize_misra_gries.py MisraGriesDemo
-```

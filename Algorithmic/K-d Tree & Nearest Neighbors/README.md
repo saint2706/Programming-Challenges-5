@@ -2,7 +2,6 @@
 
 A Python implementation of a **k-dimensional tree (k-d tree)**, a space-partitioning data structure for organizing points in a k-dimensional space. This project demonstrates efficient **Nearest Neighbor** search algorithms.
 
-![K-d Tree Construction](kd_tree_viz.gif)
 
 ## 📋 Table of Contents
 
@@ -10,7 +9,6 @@ A Python implementation of a **k-dimensional tree (k-d tree)**, a space-partitio
 - [Installation](#installation)
 - [Usage](#usage)
 - [Complexity Analysis](#complexity-analysis)
-- [Demos](#demos)
 
 ## 🧠 Theory
 
@@ -36,11 +34,6 @@ Searching is done via **branch-and-bound**:
 Ensure you have Python 3.8+ installed.
 
 1.  Clone the repository.
-2.  (Optional) Install `manim` for visualization:
-    ```bash
-    pip install manim
-    ```
-
 ## 🚀 Usage
 
 ### Basic Usage
@@ -79,21 +72,3 @@ print(f"3-NN: {knn}")
 | **Search (NN)** | $O(\log N)$               | $O(N)$                  | $O(1)$ (recursion stack $O(\log N)$) |
 
 _Note: Curse of dimensionality applies. For very high dimensions ($d > 20$), k-d trees degrade to $O(N)$, similar to brute force._
-
-## 🎬 Demos
-
-### Running Tests & Benchmarks
-
-Run the included test script to verify correctness and compare performance against brute force search.
-
-```bash
-python test_kd_tree.py
-```
-
-### Generating the Animation
-
-To visualize the partitioning process:
-
-```bash
-manim -pql visualize_kd_tree.py KDTreeConstruction
-```

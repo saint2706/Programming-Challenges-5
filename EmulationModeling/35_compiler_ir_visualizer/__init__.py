@@ -1,1 +1,0 @@
-"""Compiler IR visualizer package."""

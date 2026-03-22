@@ -2,7 +2,6 @@
 
 An efficient Autocomplete Engine implemented using a **Trie** (Prefix Tree). It supports fast prefix lookups, word frequency tracking, and JSON persistence.
 
-![Trie Visualization](trie_viz.gif)
 
 ## 📋 Table of Contents
 
@@ -10,7 +9,6 @@ An efficient Autocomplete Engine implemented using a **Trie** (Prefix Tree). It 
 - [Installation](#installation)
 - [Usage](#usage)
 - [Complexity Analysis](#complexity-analysis)
-- [Demos](#demos)
 
 ## 🧠 Theory
 
@@ -31,11 +29,6 @@ A **Trie** (pronounced "try") is a tree-based data structure used to efficiently
 Ensure you have Python 3.8+ installed.
 
 1.  Clone the repository.
-2.  (Optional) Install `manim` for visualization:
-    ```bash
-    pip install manim
-    ```
-
 ## 🚀 Usage
 
 ### Basic Usage
@@ -78,13 +71,3 @@ Let $L$ be the length of the word/prefix.
 | **Top-K**         | $O(L + N \log N)$ | $O(N)$                         |
 
 _Note: Top-K involves traversing the subtree (size $N$) and sorting the results._
-
-## 🎬 Demos
-
-### Generating the Animation
-
-To generate the Trie construction visualization:
-
-```bash
-manim -pql visualize_trie.py TrieDemo
-```

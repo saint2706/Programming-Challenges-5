@@ -2,7 +2,6 @@
 
 Implementations of **Skip Lists** and **Treaps**, two randomized data structures that provide balanced tree-like performance ($O(\log N)$) with simpler implementation logic than AVL or Red-Black trees.
 
-![Skip List Visualization](skip_list_viz.gif)
 
 ## 📋 Table of Contents
 
@@ -10,7 +9,6 @@ Implementations of **Skip Lists** and **Treaps**, two randomized data structures
 - [Installation](#installation)
 - [Usage](#usage)
 - [Complexity Analysis](#complexity-analysis)
-- [Demos](#demos)
 
 ## 🧠 Theory
 
@@ -35,11 +33,6 @@ A Treap is a binary search tree that assigns a random **priority** to each node.
 Ensure you have Python 3.8+ installed.
 
 1.  Clone the repository.
-2.  (Optional) Install `manim` for visualization:
-    ```bash
-    pip install manim
-    ```
-
 ## 🚀 Usage
 
 ### Skip List
@@ -77,13 +70,3 @@ t.delete("banana")
 | **Treap**     | $O(\log N)$  | $O(\log N)$  | $O(\log N)$  | $O(N)$      |
 
 _Worst case is $O(N)$ for both, but the probability of this occurring is exponentially small._
-
-## 🎬 Demos
-
-### Generating the Animation
-
-To generate the Skip List search visualization:
-
-```bash
-manim -pql visualize_randomized.py SkipListDemo
-```

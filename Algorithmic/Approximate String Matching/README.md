@@ -2,7 +2,6 @@
 
 This project implements algorithms for approximate string matching, primarily focusing on **Levenshtein Distance** and efficient data structures for fuzzy search like **BK-Trees** and **N-gram Indices**.
 
-![Levenshtein Distance Visualization](levenshtein_viz.gif)
 
 ## 📋 Table of Contents
 
@@ -10,7 +9,6 @@ This project implements algorithms for approximate string matching, primarily fo
 - [Installation](#installation)
 - [Usage](#usage)
 - [Complexity Analysis](#complexity-analysis)
-- [Demos](#demos)
 
 ## 🧠 Theory
 
@@ -31,11 +29,6 @@ $$|dist(A, B) - dist(B, C)| \le dist(A, C) \le dist(A, B) + dist(B, C)$$
 Ensure you have Python 3.8+ installed.
 
 1.  Clone the repository.
-2.  (Optional) Install `manim` for visualization:
-    ```bash
-    pip install manim
-    ```
-
 ## 🚀 Usage
 
 ### Basic Distance Calculation
@@ -69,13 +62,3 @@ print(matches)
 | **Levenshtein**    | $O(m \cdot n)$  | $O(\min(m, n))$  | Optimized to use only two rows.               |
 | **BK-Tree Build**  | $O(N \log N)$   | $O(N)$           | Average case.                                 |
 | **BK-Tree Search** | $O(N)$ (Worst)  | $O(N)$           | In practice, prunes significant search space. |
-
-## 🎬 Demos
-
-### Generating the Animation
-
-To generate the DP table visualization:
-
-```bash
-manim -pql visualize_levenshtein.py LevenshteinDemo
-```

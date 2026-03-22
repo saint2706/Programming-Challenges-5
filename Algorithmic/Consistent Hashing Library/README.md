@@ -2,7 +2,6 @@
 
 A demonstration of Consistent Hashing, a technique used in distributed systems to distribute data across nodes in a way that minimizes reorganization when nodes are added or removed.
 
-![Consistent Hashing Visualization](hash_ring_viz.gif)
 
 ## 📋 Table of Contents
 
@@ -10,7 +9,6 @@ A demonstration of Consistent Hashing, a technique used in distributed systems t
 - [Installation](#installation)
 - [Usage](#usage)
 - [Complexity Analysis](#complexity-analysis)
-- [Demos](#demos)
 
 ## 🧠 Theory
 
@@ -29,11 +27,6 @@ A demonstration of Consistent Hashing, a technique used in distributed systems t
 Ensure you have Python 3.8+ installed.
 
 1.  Clone the repository.
-2.  (Optional) Install `manim` for visualization:
-    ```bash
-    pip install manim
-    ```
-
 ## 🚀 Usage
 
 ```python
@@ -65,13 +58,3 @@ print(f"Replicas: {nodes}")
 | **Lookup**      | $O(\log (V \cdot N))$ (Binary Search)     |
 
 Where $N$ is the number of physical nodes and $V$ is the number of virtual nodes per physical node.
-
-## 🎬 Demos
-
-### Generating the Animation
-
-To generate the Consistent Hashing visualization:
-
-```bash
-manim -pql visualize_hash_ring.py ConsistentHashingDemo
-```

@@ -2,7 +2,6 @@
 
 A Python library for matrix operations, featuring both naive and advanced multiplication algorithms.
 
-![Matrix Ops Visualization](matrix_ops_viz.gif)
 
 ## 📋 Table of Contents
 
@@ -10,7 +9,6 @@ A Python library for matrix operations, featuring both naive and advanced multip
 - [Installation](#installation)
 - [Usage](#usage)
 - [Complexity Analysis](#complexity-analysis)
-- [Demos](#demos)
 
 ## 🧠 Theory
 
@@ -33,11 +31,6 @@ Ensure you have Python 3.8+ installed.
     ```bash
     pip install numpy
     ```
-3.  (Optional) Install `manim` for visualization:
-    ```bash
-    pip install manim
-    ```
-
 ## 🚀 Usage
 
 ### Basic Operations
@@ -78,13 +71,3 @@ for res in results:
 | :----------- | :-------------- | :------------------------------ |
 | **Naive**    | $O(N^3)$        | $O(N^2)$                        |
 | **Strassen** | $O(N^{2.81})$   | $O(N^2)$ (high constant factor) |
-
-## 🎬 Demos
-
-### Generating the Animation
-
-To generate the matrix multiplication visualization:
-
-```bash
-manim -pql visualize_matrix_ops.py MatrixOpsDemo
-```
