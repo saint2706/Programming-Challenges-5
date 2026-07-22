@@ -18,7 +18,6 @@ from __future__ import annotations
 import sys
 
 import pygame
-
 from levels import GameStatus, Level, PuzzleGame, discover_levels
 from physics import Body, Rect, Vec2
 
