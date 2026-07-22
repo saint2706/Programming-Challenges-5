@@ -1,0 +1,20 @@
+{
+  "name": "Mind the Gap",
+  "description": "Launch the target across the pit and onto the far platform. If it drops into the red pit, you lose.",
+  "width": 800,
+  "height": 600,
+  "gravity": [0, 900],
+  "max_power": 1500,
+  "launch": { "x": 90, "y": 462, "radius": 15, "restitution": 0.35, "friction": 0.02 },
+  "target": { "x": 320, "y": 461, "radius": 18, "restitution": 0.25, "friction": 0.02 },
+  "goal": { "x": 500, "y": 380, "w": 280, "h": 100, "name": "goal" },
+  "walls": [
+    { "x": 0, "y": 480, "w": 360, "h": 120, "name": "left_platform" },
+    { "x": 480, "y": 480, "w": 320, "h": 120, "name": "right_platform" },
+    { "x": 0, "y": 0, "w": 20, "h": 480, "name": "left_wall" }
+  ],
+  "obstacles": [],
+  "hazards": [
+    { "x": 360, "y": 480, "w": 120, "h": 120, "name": "pit" }
+  ]
+}

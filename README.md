@@ -33,9 +33,9 @@ This repository contains programming challenges across six categories: **Practic
 | Algorithmic             | ![100%](https://geps.dev/progress/100) |       50 / 50 |
 | Emulation / Modeling    | ![76%](https://geps.dev/progress/76)   |       38 / 50 |
 | Artificial Intelligence | ![40%](https://geps.dev/progress/40)   |       20 / 50 |
-| Game Development        | ![22%](https://geps.dev/progress/22)   |       11 / 50 |
+| Game Development        | ![26%](https://geps.dev/progress/26)   |       13 / 50 |
 | Web Development         | ![2%](https://geps.dev/progress/2)     |        1 / 50 |
-| **Total**               | ![52%](https://geps.dev/progress/52)   | **155 / 300** |
+| **Total**               | ![52%](https://geps.dev/progress/52)   | **157 / 300** |
 
 ## 1. Practical Challenges
 
@@ -266,8 +266,8 @@ python ArtificialIntelligence/tsp_genetic.py
 | 9   | [Platformer Prototype](GameDevelopment/09_Platformer)                 | (M)        | Implemented (Python) | Physics: `velocity_y += gravity`. AABB collision. `is_on_ground` flag for jumping.                                |
 | 10  | [Top-Down Shooter](GameDevelopment/10_TopDownShooter)                 | (M)        | Implemented (Python) | Player movement (WASD). Rotate player sprite towards mouse. Spawn/move bullets. AABB for hits.                    |
 | 11  | [Turn-Based Strategy Microgame](GameDevelopment/11_TurnBasedStrategy) | (M)        | Implemented (Python) | Grid-based map. Unit class (HP, move, attack). Simple AI: move towards player, attack if in range.                |
-| 12  | Card Game Engine                                                      | (M)        |                      | `Card` class, `Deck` class, `Player` class. Game state machine for turns (draw, play, discard).                   |
-| 13  | Physics Puzzle Game                                                   | (M)        |                      | Use a 2D physics engine (`Box2D` via `pygame`, or `pymunk`). Design levels as JSON.                               |
+| 12  | [Card Game Engine](GameDevelopment/12_CardGameEngine)                 | (M)        | Implemented (Python) | `Card` class, `Deck` class, `Player` class. Game state machine for turns (draw, play, discard).                   |
+| 13  | [Physics Puzzle Game](GameDevelopment/13_PhysicsPuzzle)               | (M)        | Implemented (Python) | Use a 2D physics engine (`Box2D` via `pygame`, or `pymunk`). Design levels as JSON.                               |
 | 14  | Online Multiplayer Tic-Tac-Toe or Connect-4                           | (M)        |                      | Use `WebSockets` (e.g., `websockets` library). Server state: `game_id`, `board`, `turn`.                          |
 | 15  | Tower Defense Game                                                    | (M)        |                      | Enemies follow a pre-defined path (e.g., list of waypoints). Towers scan for enemies in range.                    |
 | 16  | Idle / Incremental Game                                               | (M)        |                      | Core loop: `currency += generators * rate`. Balance upgrade costs vs. production increase.                        |
