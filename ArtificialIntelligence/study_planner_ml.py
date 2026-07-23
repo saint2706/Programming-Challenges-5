@@ -9,7 +9,7 @@ without pulling in scikit-learn.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import UTC, datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Iterable, List, Sequence, Tuple
 
 import numpy as np
@@ -170,7 +170,7 @@ def schedule_next_reviews(
 
     X, _ = build_feature_matrix(samples)
     predictions = model.predict(X)
-    today = datetime.now(UTC)
+    today = datetime.now(timezone.utc)
 
     rows = []
     for record, predicted_interval in zip(samples, predictions):

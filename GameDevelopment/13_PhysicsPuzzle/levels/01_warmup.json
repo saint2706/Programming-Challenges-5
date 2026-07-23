@@ -1,0 +1,17 @@
+{
+  "name": "Warmup Roll",
+  "description": "Knock the orange target ball along the floor and into the green goal on the right.",
+  "width": 800,
+  "height": 600,
+  "gravity": [0, 900],
+  "max_power": 1400,
+  "launch": { "x": 120, "y": 523, "radius": 15, "restitution": 0.4, "friction": 0.02 },
+  "target": { "x": 400, "y": 522, "radius": 18, "restitution": 0.3, "friction": 0.02 },
+  "goal": { "x": 620, "y": 460, "w": 170, "h": 100, "name": "goal" },
+  "walls": [
+    { "x": 0, "y": 560, "w": 800, "h": 40, "name": "floor" },
+    { "x": 0, "y": 0, "w": 20, "h": 600, "name": "left_wall" }
+  ],
+  "obstacles": [],
+  "hazards": []
+}

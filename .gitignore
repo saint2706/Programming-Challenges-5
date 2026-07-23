@@ -153,6 +153,14 @@ dmypy.json
 screenshots/
 replays/
 
+# ...but keep the committed preview screenshots for the Web Development demos
+!WebDevelopment/01_Responsive_Portfolio_Site/screenshots/
+!WebDevelopment/01_Responsive_Portfolio_Site/screenshots/**
+!WebDevelopment/02_Landing_Page_Animations/screenshots/
+!WebDevelopment/02_Landing_Page_Animations/screenshots/**
+!WebDevelopment/03_CSS_Component_Library/screenshots/
+!WebDevelopment/03_CSS_Component_Library/screenshots/**
+
 # Database Files
 *.db
 *.sqlite
