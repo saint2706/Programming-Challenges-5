@@ -192,3 +192,6 @@ replays/
 docs/_build/
 site/
 .doctrees/
+
+# Downloaded asset pack ZIPs (see GameDevelopment/*/fetch_assets.py)
+.asset-cache/

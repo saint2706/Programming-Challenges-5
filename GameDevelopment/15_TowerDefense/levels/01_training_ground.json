@@ -1,0 +1,104 @@
+{
+  "name": "Training Ground",
+  "description": "A gentle S-bend to learn the ropes. Grunts, then runners, then one armoured push.",
+  "cols": 16,
+  "rows": 11,
+  "tile_size": 48,
+  "starting_gold": 240,
+  "starting_lives": 20,
+  "wave_break": 10.0,
+  "waypoints": [
+    [0, 5],
+    [5, 5],
+    [5, 2],
+    [10, 2],
+    [10, 8],
+    [15, 8]
+  ],
+  "plots": [
+    [2, 4],
+    [2, 6],
+    [3, 4],
+    [3, 6],
+    [4, 3],
+    [6, 1],
+    [6, 3],
+    [7, 3],
+    [8, 1],
+    [8, 3],
+    [9, 4],
+    [7, 6],
+    [7, 7],
+    [9, 6],
+    [11, 7],
+    [12, 7],
+    [13, 7],
+    [11, 9],
+    [13, 9]
+  ],
+  "decor": [
+    [1, 1, "tree"],
+    [2, 9, "tree"],
+    [4, 9, "bush"],
+    [12, 1, "tree"],
+    [13, 3, "rock"],
+    [14, 5, "tree"],
+    [1, 8, "rock"],
+    [12, 4, "bush"]
+  ],
+  "waves": [
+    {
+      "name": "First contact",
+      "reward": 25,
+      "groups": [{ "enemy": "grunt", "count": 6, "interval": 1.1 }]
+    },
+    {
+      "name": "More of the same",
+      "reward": 28,
+      "groups": [{ "enemy": "grunt", "count": 9, "interval": 0.9 }]
+    },
+    {
+      "name": "Outriders",
+      "reward": 32,
+      "groups": [
+        { "enemy": "grunt", "count": 6, "interval": 1.0 },
+        { "enemy": "runner", "count": 4, "interval": 0.7, "delay": 4.0 }
+      ]
+    },
+    {
+      "name": "Sprint",
+      "reward": 36,
+      "groups": [{ "enemy": "runner", "count": 12, "interval": 0.55 }]
+    },
+    {
+      "name": "Steel",
+      "reward": 42,
+      "groups": [{ "enemy": "armoured", "count": 6, "interval": 1.4 }]
+    },
+    {
+      "name": "Mixed arms",
+      "reward": 48,
+      "groups": [
+        { "enemy": "grunt", "count": 8, "interval": 0.8 },
+        { "enemy": "runner", "count": 6, "interval": 0.6, "delay": 3.0 },
+        { "enemy": "armoured", "count": 3, "interval": 1.6, "delay": 7.0 }
+      ]
+    },
+    {
+      "name": "Air support",
+      "reward": 55,
+      "groups": [
+        { "enemy": "grunt", "count": 8, "interval": 0.9 },
+        { "enemy": "bomber", "count": 3, "interval": 2.0, "delay": 2.0 }
+      ]
+    },
+    {
+      "name": "Juggernaut",
+      "reward": 90,
+      "groups": [
+        { "enemy": "grunt", "count": 10, "interval": 0.7 },
+        { "enemy": "juggernaut", "count": 1, "delay": 5.0 }
+      ]
+    }
+  ]
+}

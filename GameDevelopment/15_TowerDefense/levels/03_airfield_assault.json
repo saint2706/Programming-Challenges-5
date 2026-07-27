@@ -1,0 +1,261 @@
+{
+  "name": "Airfield Assault",
+  "description": "Bombers cut straight across the map while the ground column takes the long way round. Bring flak.",
+  "cols": 16,
+  "rows": 12,
+  "tile_size": 48,
+  "starting_gold": 380,
+  "starting_lives": 20,
+  "wave_break": 10.0,
+  "waypoints": [
+    [0, 10],
+    [4, 10],
+    [4, 4],
+    [9, 4],
+    [9, 9],
+    [15, 9]
+  ],
+  "plots": [
+    [1, 8],
+    [2, 8],
+    [1, 11],
+    [2, 11],
+    [3, 3],
+    [5, 3],
+    [7, 3],
+    [5, 6],
+    [6, 6],
+    [8, 6],
+    [5, 8],
+    [6, 8],
+    [7, 7],
+    [10, 6],
+    [11, 6],
+    [11, 7],
+    [12, 7],
+    [10, 10],
+    [12, 10],
+    [13, 10],
+    [14, 6],
+    [2, 5]
+  ],
+  "decor": [
+    [0, 6, "tree"],
+    [2, 1, "rock"],
+    [6, 0, "tree"],
+    [11, 1, "bush"],
+    [14, 2, "tree"],
+    [13, 4, "rock"],
+    [8, 11, "bush"],
+    [15, 6, "tree"],
+    [0, 3, "rock"]
+  ],
+  "waves": [
+    {
+      "name": "Ground probe",
+      "reward": 34,
+      "groups": [
+        {
+          "enemy": "grunt",
+          "count": 6,
+          "interval": 1.2
+        }
+      ]
+    },
+    {
+      "name": "First sortie",
+      "reward": 40,
+      "groups": [
+        {
+          "enemy": "bomber",
+          "count": 3,
+          "interval": 2.4
+        },
+        {
+          "enemy": "grunt",
+          "count": 6,
+          "interval": 1.0,
+          "delay": 4.0
+        }
+      ]
+    },
+    {
+      "name": "Low pass",
+      "reward": 46,
+      "groups": [
+        {
+          "enemy": "bomber",
+          "count": 5,
+          "interval": 1.9
+        }
+      ]
+    },
+    {
+      "name": "Convoy",
+      "reward": 52,
+      "groups": [
+        {
+          "enemy": "armoured",
+          "count": 6,
+          "interval": 1.2
+        },
+        {
+          "enemy": "runner",
+          "count": 8,
+          "interval": 0.5,
+          "delay": 5.0
+        }
+      ]
+    },
+    {
+      "name": "Squadron",
+      "reward": 58,
+      "groups": [
+        {
+          "enemy": "bomber",
+          "count": 8,
+          "interval": 1.1,
+          "hp_scale": 1.15
+        }
+      ]
+    },
+    {
+      "name": "Two fronts",
+      "reward": 64,
+      "groups": [
+        {
+          "enemy": "grunt",
+          "count": 12,
+          "interval": 0.6,
+          "hp_scale": 1.2
+        },
+        {
+          "enemy": "bomber",
+          "count": 5,
+          "interval": 1.4,
+          "delay": 3.0
+        }
+      ]
+    },
+    {
+      "name": "Armoured wedge",
+      "reward": 72,
+      "groups": [
+        {
+          "enemy": "armoured",
+          "count": 10,
+          "interval": 0.9,
+          "hp_scale": 1.25
+        },
+        {
+          "enemy": "bomber",
+          "count": 4,
+          "interval": 1.8,
+          "delay": 6.0
+        }
+      ]
+    },
+    {
+      "name": "Swarm",
+      "reward": 68,
+      "groups": [
+        {
+          "enemy": "runner",
+          "count": 22,
+          "interval": 0.3,
+          "hp_scale": 1.35
+        },
+        {
+          "enemy": "bomber",
+          "count": 4,
+          "interval": 1.6,
+          "delay": 5.0
+        }
+      ]
+    },
+    {
+      "name": "Heavy escort",
+      "reward": 80,
+      "groups": [
+        {
+          "enemy": "juggernaut",
+          "count": 1
+        },
+        {
+          "enemy": "bomber",
+          "count": 8,
+          "interval": 1.0,
+          "delay": 2.0
+        },
+        {
+          "enemy": "armoured",
+          "count": 8,
+          "interval": 1.0,
+          "delay": 4.0
+        }
+      ]
+    },
+    {
+      "name": "Carpet bombing",
+      "reward": 95,
+      "groups": [
+        {
+          "enemy": "bomber",
+          "count": 14,
+          "interval": 0.7,
+          "hp_scale": 1.4
+        }
+      ]
+    },
+    {
+      "name": "Breakthrough",
+      "reward": 120,
+      "groups": [
+        {
+          "enemy": "juggernaut",
+          "count": 2,
+          "interval": 8.0,
+          "hp_scale": 1.3
+        },
+        {
+          "enemy": "runner",
+          "count": 16,
+          "interval": 0.35,
+          "delay": 2.0
+        },
+        {
+          "enemy": "armoured",
+          "count": 10,
+          "interval": 0.8,
+          "delay": 5.0
+        }
+      ]
+    },
+    {
+      "name": "Final assault",
+      "reward": 200,
+      "groups": [
+        {
+          "enemy": "juggernaut",
+          "count": 3,
+          "interval": 7.0,
+          "hp_scale": 1.6
+        },
+        {
+          "enemy": "bomber",
+          "count": 12,
+          "interval": 0.8,
+          "hp_scale": 1.5,
+          "delay": 3.0
+        },
+        {
+          "enemy": "armoured",
+          "count": 14,
+          "interval": 0.7,
+          "hp_scale": 1.4,
+          "delay": 6.0
+        }
+      ]
+    }
+  ]
+}
