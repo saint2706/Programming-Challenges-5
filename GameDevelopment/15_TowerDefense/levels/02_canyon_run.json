@@ -1,0 +1,134 @@
+{
+  "name": "Canyon Run",
+  "description": "A long switchback with three build pockets. Ten waves, and the armour arrives early.",
+  "cols": 18,
+  "rows": 12,
+  "tile_size": 48,
+  "starting_gold": 275,
+  "starting_lives": 18,
+  "wave_break": 9.0,
+  "waypoints": [
+    [0, 1],
+    [3, 1],
+    [3, 6],
+    [8, 6],
+    [8, 2],
+    [12, 2],
+    [12, 10],
+    [17, 10]
+  ],
+  "plots": [
+    [1, 3],
+    [2, 3],
+    [1, 5],
+    [2, 8],
+    [4, 3],
+    [5, 3],
+    [5, 4],
+    [6, 4],
+    [4, 8],
+    [5, 8],
+    [6, 8],
+    [9, 4],
+    [10, 4],
+    [9, 7],
+    [10, 7],
+    [11, 7],
+    [13, 5],
+    [14, 5],
+    [13, 8],
+    [14, 8],
+    [15, 8],
+    [16, 8],
+    [13, 11],
+    [15, 11]
+  ],
+  "decor": [
+    [1, 10, "tree"],
+    [6, 10, "rock"],
+    [7, 0, "tree"],
+    [10, 0, "bush"],
+    [16, 2, "tree"],
+    [16, 5, "rock"],
+    [9, 10, "bush"],
+    [0, 8, "tree"],
+    [7, 9, "rock"]
+  ],
+  "waves": [
+    {
+      "name": "Probe",
+      "reward": 26,
+      "groups": [{ "enemy": "grunt", "count": 8, "interval": 1.0 }]
+    },
+    {
+      "name": "Scouts",
+      "reward": 30,
+      "groups": [
+        { "enemy": "runner", "count": 8, "interval": 0.6 },
+        { "enemy": "grunt", "count": 5, "interval": 1.0, "delay": 5.0 }
+      ]
+    },
+    {
+      "name": "Column",
+      "reward": 34,
+      "groups": [{ "enemy": "armoured", "count": 5, "interval": 1.3 }]
+    },
+    {
+      "name": "Pincer",
+      "reward": 40,
+      "groups": [
+        { "enemy": "grunt", "count": 10, "interval": 0.7 },
+        { "enemy": "runner", "count": 8, "interval": 0.5, "delay": 4.0 }
+      ]
+    },
+    {
+      "name": "First flight",
+      "reward": 46,
+      "groups": [
+        { "enemy": "bomber", "count": 4, "interval": 1.8 },
+        { "enemy": "grunt", "count": 8, "interval": 0.9, "delay": 3.0 }
+      ]
+    },
+    {
+      "name": "Heavy column",
+      "reward": 52,
+      "groups": [
+        { "enemy": "armoured", "count": 8, "interval": 1.1, "hp_scale": 1.15 },
+        { "enemy": "runner", "count": 6, "interval": 0.5, "delay": 6.0 }
+      ]
+    },
+    {
+      "name": "Blitz",
+      "reward": 58,
+      "groups": [
+        { "enemy": "runner", "count": 18, "interval": 0.35, "hp_scale": 1.2 }
+      ]
+    },
+    {
+      "name": "Combined assault",
+      "reward": 66,
+      "groups": [
+        { "enemy": "grunt", "count": 12, "interval": 0.6, "hp_scale": 1.3 },
+        { "enemy": "armoured", "count": 6, "interval": 1.2, "delay": 4.0 },
+        { "enemy": "bomber", "count": 4, "interval": 1.6, "delay": 8.0 }
+      ]
+    },
+    {
+      "name": "Vanguard",
+      "reward": 78,
+      "groups": [
+        { "enemy": "juggernaut", "count": 1 },
+        { "enemy": "runner", "count": 12, "interval": 0.4, "delay": 3.0 }
+      ]
+    },
+    {
+      "name": "Last push",
+      "reward": 140,
+      "groups": [
+        { "enemy": "juggernaut", "count": 2, "interval": 9.0, "hp_scale": 1.2 },
+        { "enemy": "armoured", "count": 10, "interval": 0.9, "delay": 2.0 },
+        { "enemy": "bomber", "count": 6, "interval": 1.4, "delay": 6.0 }
+      ]
+    }
+  ]
+}
