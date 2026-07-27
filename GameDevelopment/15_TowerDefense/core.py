@@ -15,10 +15,11 @@ from __future__ import annotations
 import json
 import math
 import random
+from collections.abc import Iterable, Iterator, Sequence
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
-from typing import Any, Iterable, Iterator, Sequence
+from typing import Any
 
 #: Length of one simulation tick, in seconds. 60 Hz keeps the maths stable.
 TICK = 1.0 / 60.0
@@ -38,13 +39,13 @@ class Vec2:
     x: float = 0.0
     y: float = 0.0
 
-    def __add__(self, other: "Vec2") -> "Vec2":
+    def __add__(self, other: Vec2) -> Vec2:
         return Vec2(self.x + other.x, self.y + other.y)
 
-    def __sub__(self, other: "Vec2") -> "Vec2":
+    def __sub__(self, other: Vec2) -> Vec2:
         return Vec2(self.x - other.x, self.y - other.y)
 
-    def __mul__(self, scalar: float) -> "Vec2":
+    def __mul__(self, scalar: float) -> Vec2:
         return Vec2(self.x * scalar, self.y * scalar)
 
     __rmul__ = __mul__
@@ -52,10 +53,10 @@ class Vec2:
     def length(self) -> float:
         return math.hypot(self.x, self.y)
 
-    def distance_to(self, other: "Vec2") -> float:
+    def distance_to(self, other: Vec2) -> float:
         return math.hypot(self.x - other.x, self.y - other.y)
 
-    def normalised(self) -> "Vec2":
+    def normalised(self) -> Vec2:
         length = self.length()
         return Vec2(self.x / length, self.y / length) if length else Vec2()
 
@@ -333,7 +334,7 @@ class SpawnGroup:
     hp_scale: float = 1.0
 
     @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> "SpawnGroup":
+    def from_dict(cls, data: dict[str, Any]) -> SpawnGroup:
         if data["enemy"] not in ENEMY_KINDS:
             raise ValueError(f"unknown enemy {data['enemy']!r}")
         return cls(
@@ -359,7 +360,7 @@ class Wave:
     name: str = ""
 
     @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> "Wave":
+    def from_dict(cls, data: dict[str, Any]) -> Wave:
         return cls(
             groups=tuple(SpawnGroup.from_dict(g) for g in data["groups"]),
             reward=int(data.get("reward", 25)),
@@ -460,7 +461,7 @@ class Level:
 
     # -- loading --------------------------------------------------------
     @classmethod
-    def from_dict(cls, data: dict[str, Any]) -> "Level":
+    def from_dict(cls, data: dict[str, Any]) -> Level:
         return cls(
             name=str(data.get("name", "Unnamed")),
             cols=int(data["cols"]),
@@ -479,7 +480,7 @@ class Level:
         )
 
     @classmethod
-    def load(cls, path: str | Path) -> "Level":
+    def load(cls, path: str | Path) -> Level:
         with open(path, "r", encoding="utf-8") as handle:
             return cls.from_dict(json.load(handle))
 
@@ -918,7 +919,7 @@ class TowerDefenseGame:
 
     def run_seconds(self, seconds: float, dt: float = TICK) -> None:
         """Advance roughly ``seconds`` of simulation in fixed ticks."""
-        self.run_ticks(max(0, int(round(seconds / dt))), dt)
+        self.run_ticks(max(0, round(seconds / dt)), dt)
 
     def _release_spawns(self) -> None:
         while self._spawn_plan and self._spawn_plan[0][0] <= self._wave_clock:

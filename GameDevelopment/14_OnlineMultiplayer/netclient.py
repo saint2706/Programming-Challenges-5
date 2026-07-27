@@ -98,8 +98,10 @@ class NetClient:
         if self._socket is not None:
             try:
                 self._socket.close()
-            except Exception:  # pragma: no cover - transport specific
-                pass
+            except Exception as exc:  # pragma: no cover - transport specific
+                # Already-broken sockets raise here; record it rather than
+                # swallowing it silently, but never block shutdown.
+                self.error = f"{type(exc).__name__}: {exc}"
             self._socket = None
 
 

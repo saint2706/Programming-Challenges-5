@@ -703,11 +703,10 @@ def test_chat_reaches_the_whole_room():
     guest_conn, guest = join(lobby, "guest")
     lobby.handle(guest, proto.message(proto.JOIN_ROOM, code=code))
     lobby.handle(guest, proto.message(proto.CHAT, text="hello!"))
-    assert host_conn.last(proto.CHAT) == {
-        "type": proto.CHAT,
-        "from": "guest",
-        "text": "hello!",
-    }
+    expected = {"type": proto.CHAT, "from": "guest", "text": "hello!"}
+    assert host_conn.last(proto.CHAT) == expected
+    # The sender is part of the room too, so it echoes back to them as well.
+    assert guest_conn.last(proto.CHAT) == expected
 
 
 def test_list_rooms_hides_private_rooms():

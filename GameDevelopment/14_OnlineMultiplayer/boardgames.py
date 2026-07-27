@@ -15,8 +15,9 @@ terminal client and the Pygame client alike.
 
 from __future__ import annotations
 
+from collections.abc import Iterator, Sequence
 from enum import IntEnum
-from typing import ClassVar, Iterator, Sequence
+from typing import ClassVar
 
 #: The four line directions to probe for a win: E, S, SE, SW.
 _DIRECTIONS: tuple[tuple[int, int], ...] = ((1, 0), (0, 1), (1, 1), (-1, 1))
@@ -30,7 +31,7 @@ class Mark(IntEnum):
     P2 = 2
 
     @property
-    def other(self) -> "Mark":
+    def other(self) -> Mark:
         """The opposing mark (``EMPTY`` is its own opposite)."""
         if self is Mark.P1:
             return Mark.P2
@@ -231,7 +232,7 @@ class GridGame:
         }
 
     @classmethod
-    def from_dict(cls, data: dict) -> "GridGame":
+    def from_dict(cls, data: dict) -> GridGame:
         """Rebuild a game from :meth:`to_dict` output by replaying its history."""
         game = create_game(
             data["game"],
@@ -243,7 +244,7 @@ class GridGame:
             game.play(move)
         return game
 
-    def copy(self) -> "GridGame":
+    def copy(self) -> GridGame:
         """A deep copy that shares no mutable state with ``self``."""
         clone = create_game(
             self.key, rows=self.rows, cols=self.cols, connect=self.connect

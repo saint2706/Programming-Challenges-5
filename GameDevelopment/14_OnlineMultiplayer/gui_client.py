@@ -176,9 +176,12 @@ class TextField:
                 self.value = self.value[:-1]
             elif event.key in (pygame.K_RETURN, pygame.K_TAB, pygame.K_ESCAPE):
                 self.focused = False
-            elif event.unicode and event.unicode.isprintable():
-                if len(self.value) < self.limit:
-                    self.value += event.unicode
+            elif (
+                event.unicode
+                and event.unicode.isprintable()
+                and len(self.value) < self.limit
+            ):
+                self.value += event.unicode
 
     def draw(
         self, surface: pygame.Surface, font: pygame.font.Font, placeholder: str = ""
@@ -254,9 +257,9 @@ class BoardView:
         Connect Four resolves any click in a column to that column's drop.
         """
         if self.connect_style:
-            if not self.rect.collidepoint((self.rect.centerx, position[1])):
-                if not (self.rect.x <= position[0] < self.rect.right):
-                    return None
+            # A click anywhere in the column counts, even above or below the grid.
+            if not self.rect.x <= position[0] < self.rect.right:
+                return None
             col = (position[0] - self.rect.x) // self.cell
             if 0 <= col < self.game.cols and col in self.game.legal_moves():
                 return int(col)
