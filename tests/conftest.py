@@ -55,6 +55,8 @@ MODULE_MAPPINGS = [
     ("Algorithmic", "MultidimensionalIndex", "Multidimensional Index"),
     ("Algorithmic", "AutoCompletionLM", "Auto-Completion with Language Model Prior"),
     ("Algorithmic", "KdTreeNearestNeighbors", "K-d Tree & Nearest Neighbors"),
+    ("Practical", "SelfHostedLinkShortener", "Self-Hosted Link Shortener"),
+    ("Practical", "UniversalUnitConverter", "Universal Unit Converter API"),
 ]
 
 

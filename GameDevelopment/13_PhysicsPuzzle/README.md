@@ -116,7 +116,7 @@ The physics engine and puzzle logic are covered by a headless test suite
 (no Pygame required):
 
 ```bash
-python test_game.py        # standalone runner with tick-marks
+python tests/GameDevelopment/test_13_physics_puzzle.py  # standalone runner with tick-marks
 # or
-python -m pytest test_game.py
+python -m pytest tests/GameDevelopment/test_13_physics_puzzle.py
 ```

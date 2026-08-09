@@ -89,7 +89,7 @@ Crazy Eights rules as implemented:
 The engine and game logic are covered by an I/O-free test suite:
 
 ```bash
-python test_game.py        # standalone runner with tick-marks
+python tests/GameDevelopment/test_12_card_game_engine.py  # standalone runner with tick-marks
 # or
-python -m pytest test_game.py
+python -m pytest tests/GameDevelopment/test_12_card_game_engine.py
 ```

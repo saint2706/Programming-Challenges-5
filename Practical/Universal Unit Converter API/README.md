@@ -77,5 +77,5 @@ The configuration file defines categories, a base unit for each, and conversion 
 Run the test suite using pytest:
 
 ```bash
-pytest Practical/UniversalUnitConverter/tests
+pytest tests/Practical/test_unit_converter.py tests/Practical/test_unit_converter_api.py
 ```

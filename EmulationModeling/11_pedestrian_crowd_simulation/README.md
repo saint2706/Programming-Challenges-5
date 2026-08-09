@@ -23,7 +23,7 @@ An interactive matplotlib window will display blue dots for pedestrians and red 
 From the repository root:
 
 ```bash
-python -m unittest discover EmulationModeling/11_pedestrian_crowd_simulation/tests
+python -m pytest tests/EmulationModeling/test_11_pedestrian_crowd_simulation.py
 ```
 
 ## 🛠️ Configuration

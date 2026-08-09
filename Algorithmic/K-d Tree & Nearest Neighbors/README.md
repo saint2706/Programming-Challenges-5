@@ -87,7 +87,7 @@ _Note: Curse of dimensionality applies. For very high dimensions ($d > 20$), k-d
 Run the included test script to verify correctness and compare performance against brute force search.
 
 ```bash
-python test_kd_tree.py
+python tests/Algorithmic/test_kd_tree.py
 ```
 
 ### Generating the Animation

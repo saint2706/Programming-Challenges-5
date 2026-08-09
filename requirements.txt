@@ -15,6 +15,7 @@ nltk
 PyQt6
 keyboard
 fastapi
+httpx
 uvicorn
 cryptography
 pyperclip
