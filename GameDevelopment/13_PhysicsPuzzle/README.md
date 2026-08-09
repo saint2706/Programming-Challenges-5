@@ -69,19 +69,19 @@ python main.py
 
 ## 🎮 Controls
 
-| Action        | Control                                             |
-| :------------ | :-------------------------------------------------- |
-| **Aim/Launch** | Click and drag on the blue ball, release to fire    |
-| **Retry**     | R                                                   |
-| **Next level** | N                                                   |
-| **Prev level** | P                                                   |
-| **Quit**      | ESC                                                 |
+| Action         | Control                                          |
+| :------------- | :----------------------------------------------- |
+| **Aim/Launch** | Click and drag on the blue ball, release to fire |
+| **Retry**      | R                                                |
+| **Next level** | N                                                |
+| **Prev level** | P                                                |
+| **Quit**       | ESC                                              |
 
 Pull back from the ball slingshot-style; a dotted yellow line previews the arc.
 
 ## 🧩 Level Format
 
-Levels are JSON. Coordinates use screen conventions (``y`` increases downward).
+Levels are JSON. Coordinates use screen conventions (`y` increases downward).
 
 ```json
 {
@@ -93,10 +93,10 @@ Levels are JSON. Coordinates use screen conventions (``y`` increases downward).
   "max_power": 1400,
   "launch": { "x": 120, "y": 523, "radius": 15, "restitution": 0.4 },
   "target": { "x": 400, "y": 522, "radius": 18, "friction": 0.02 },
-  "goal":   { "x": 620, "y": 460, "w": 170, "h": 100 },
-  "walls":  [ { "x": 0, "y": 560, "w": 800, "h": 40, "name": "floor" } ],
-  "obstacles": [ { "x": 300, "y": 400, "radius": 20, "mass": 1.5 } ],
-  "hazards": [ { "x": 340, "y": 470, "w": 180, "h": 130, "name": "pit" } ]
+  "goal": { "x": 620, "y": 460, "w": 170, "h": 100 },
+  "walls": [{ "x": 0, "y": 560, "w": 800, "h": 40, "name": "floor" }],
+  "obstacles": [{ "x": 300, "y": 400, "radius": 20, "mass": 1.5 }],
+  "hazards": [{ "x": 340, "y": 470, "w": 180, "h": 130, "name": "pit" }]
 }
 ```
 
