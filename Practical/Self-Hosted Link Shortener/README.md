@@ -69,7 +69,7 @@ Auto-generated docs are available at `http://127.0.0.1:8000/docs`.
 The test suite spins up the FastAPI TestClient and points the app at a temporary SQLite file.
 
 ```bash
-pytest Practical/SelfHostedLinkShortener/tests -q
+pytest tests/Practical/test_link_shortener_api.py -q
 ```
 
 ## ☁️ Deployment

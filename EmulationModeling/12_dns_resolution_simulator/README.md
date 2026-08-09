@@ -21,6 +21,5 @@ You should see the resolver walk the hierarchy, then reuse cached entries, and f
 ## 🧪 Tests
 
 ```bash
-cd EmulationModeling/12_dns_resolution_simulator
-python -m pytest
+python -m pytest tests/EmulationModeling/test_12_dns_resolution_simulator.py
 ```

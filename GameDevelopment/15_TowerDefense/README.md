@@ -62,8 +62,10 @@ main.py        Pygame renderer: map, sprites, sidebar shop, effects, sound
 terminal.py    Tick-based ASCII front-end with a command shell
 fetch_assets.py  Downloads the CC0 Kenney packs and slices the tilesheet
 assets/        Committed sprites, fonts, sound (+ CREDITS.md)
-test_game.py   58 headless tests (no pygame, no display)
 ```
+
+58 headless tests (no pygame, no display) live in
+`tests/GameDevelopment/test_15_tower_defense.py`.
 
 The engine exposes a small event queue (`shoot`, `hit`, `kill`, `leak`, `build`,
 `wave`, `end`) that the renderer turns into sounds and particles. The engine
@@ -283,9 +285,9 @@ targeting, damage/armour/slow/splash, wave scheduling and the win/lose
 conditions — no display required:
 
 ```bash
-python test_game.py          # standalone runner with tick-marks
+python tests/GameDevelopment/test_15_tower_defense.py  # standalone runner with tick-marks
 # or
-python -m pytest test_game.py
+python -m pytest tests/GameDevelopment/test_15_tower_defense.py
 ```
 
 Because the engine is deterministic, one of the tests simply plays the same

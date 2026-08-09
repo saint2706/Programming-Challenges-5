@@ -5,8 +5,20 @@
   "height": 600,
   "gravity": [0, 900],
   "max_power": 1500,
-  "launch": { "x": 110, "y": 523, "radius": 15, "restitution": 0.35, "friction": 0.02 },
-  "target": { "x": 560, "y": 522, "radius": 18, "restitution": 0.3, "friction": 0.02 },
+  "launch": {
+    "x": 110,
+    "y": 523,
+    "radius": 15,
+    "restitution": 0.35,
+    "friction": 0.02
+  },
+  "target": {
+    "x": 560,
+    "y": 522,
+    "radius": 18,
+    "restitution": 0.3,
+    "friction": 0.02
+  },
   "goal": { "x": 650, "y": 440, "w": 150, "h": 120, "name": "goal" },
   "walls": [
     { "x": 0, "y": 560, "w": 800, "h": 40, "name": "floor" },

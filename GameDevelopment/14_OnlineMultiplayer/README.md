@@ -58,8 +58,10 @@ terminal_client.py ANSI front-end: hotseat / vs bot / online
 gui_client.py      Pygame front-end: menu, board, sidebar, online message pump
 fetch_assets.py    Downloads the CC0 Kenney assets used by the GUI
 assets/            Committed sprites, fonts and sound effects (+ CREDITS.md)
-test_game.py       Headless tests (no pygame, no sockets)
 ```
+
+Headless tests (no pygame, no sockets) live in
+`tests/GameDevelopment/test_14_online_multiplayer.py`.
 
 `boardgames.py`, `ai.py`, `protocol.py` and `lobby.py` import nothing beyond the
 standard library — that is what lets the whole multiplayer flow be tested without
@@ -210,9 +212,9 @@ placeholder pieces and warning in the corner.
 no display and no sockets required:
 
 ```bash
-python test_game.py          # standalone runner with tick-marks
+python tests/GameDevelopment/test_14_online_multiplayer.py  # standalone runner with tick-marks
 # or
-python -m pytest test_game.py
+python -m pytest tests/GameDevelopment/test_14_online_multiplayer.py
 ```
 
 Highlights: Connect Four's stacking/undo, a full-board draw, the bot never losing
