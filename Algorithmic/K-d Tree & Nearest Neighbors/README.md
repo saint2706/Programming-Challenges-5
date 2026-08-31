@@ -80,6 +80,20 @@ print(f"3-NN: {knn}")
 
 _Note: Curse of dimensionality applies. For very high dimensions ($d > 20$), k-d trees degrade to $O(N)$, similar to brute force._
 
+## 🏆 Optimal Solution
+
+This directory also contains a research-backed analysis of the _optimal_ solution to
+this challenge, the alternatives that lose and why, and a measured
+implementation of an implicit pointer-free k-d tree, vectorised brute force, and HNSW.
+
+- **[OPTIMAL.md](OPTIMAL.md)** — the analysis, benchmarks and references.
+- **[`optimal_nn.py`](optimal_nn.py)** — the implementation. Run it directly to
+  reproduce the benchmarks:
+
+  ```bash
+  python optimal_nn.py
+  ```
+
 ## 🎬 Demos
 
 ### Running Tests & Benchmarks

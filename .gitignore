@@ -195,3 +195,6 @@ site/
 
 # Downloaded asset pack ZIPs (see GameDevelopment/*/fetch_assets.py)
 .asset-cache/
+
+# Generated DP trace visualisations (reproduce with `python optimal_dp.py`)
+Algorithmic/Generic DP Visualizer/dp_trace.html

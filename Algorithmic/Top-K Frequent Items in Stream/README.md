@@ -75,6 +75,20 @@ print(ss.heavy_hitters())
 | **Misra-Gries**  | $O(k)$           | $O(1)$ (Amortized) or $O(k)$ (Worst case) |
 | **Space-Saving** | $O(k)$           | $O(1)$ (using proper data structures)     |
 
+## 🏆 Optimal Solution
+
+This directory also contains a research-backed analysis of the _optimal_ solution to
+this challenge, the alternatives that lose and why, and a measured
+implementation of O(1) worst-case Space-Saving, mergeable Misra-Gries, and HeavyKeeper.
+
+- **[OPTIMAL.md](OPTIMAL.md)** — the analysis, benchmarks and references.
+- **[`optimal_topk.py`](optimal_topk.py)** — the implementation. Run it directly to
+  reproduce the benchmarks:
+
+  ```bash
+  python optimal_topk.py
+  ```
+
 ## 🎬 Demos
 
 ### Generating the Animation

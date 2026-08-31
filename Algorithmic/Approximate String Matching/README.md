@@ -70,6 +70,20 @@ print(matches)
 | **BK-Tree Build**  | $O(N \log N)$   | $O(N)$           | Average case.                                 |
 | **BK-Tree Search** | $O(N)$ (Worst)  | $O(N)$           | In practice, prunes significant search space. |
 
+## 🏆 Optimal Solution
+
+This directory also contains a research-backed analysis of the _optimal_ solution to
+this challenge, the alternatives that lose and why, and a measured
+implementation of Myers' bit-parallel distance and automaton-based dictionary search.
+
+- **[OPTIMAL.md](OPTIMAL.md)** — the analysis, benchmarks and references.
+- **[`optimal_matching.py`](optimal_matching.py)** — the implementation. Run it directly to
+  reproduce the benchmarks:
+
+  ```bash
+  python optimal_matching.py
+  ```
+
 ## 🎬 Demos
 
 ### Generating the Animation

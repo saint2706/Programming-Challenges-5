@@ -79,6 +79,20 @@ for interval in selected_intervals:
 | **Total Time**   | **$O(n \log n)$** | Dominated by sorting and binary search.                      |
 | **Total Space**  | **$O(n)$**        | To store the intervals, DP table, and $p$ array.             |
 
+## 🏆 Optimal Solution
+
+This directory also contains a research-backed analysis of the _optimal_ solution to
+this challenge, the alternatives that lose and why, and a measured
+implementation of the event-sweep DP, a linear-time variant, and k-machine min-cost flow.
+
+- **[OPTIMAL.md](OPTIMAL.md)** — the analysis, benchmarks and references.
+- **[`optimal_scheduler.py`](optimal_scheduler.py)** — the implementation. Run it directly to
+  reproduce the benchmarks:
+
+  ```bash
+  python optimal_scheduler.py
+  ```
+
 ## 🎬 Demos
 
 ### Running the Code Demo

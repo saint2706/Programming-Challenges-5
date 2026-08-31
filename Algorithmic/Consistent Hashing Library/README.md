@@ -66,6 +66,20 @@ print(f"Replicas: {nodes}")
 
 Where $N$ is the number of physical nodes and $V$ is the number of virtual nodes per physical node.
 
+## 🏆 Optimal Solution
+
+This directory also contains a research-backed analysis of the _optimal_ solution to
+this challenge, the alternatives that lose and why, and a measured
+implementation of AnchorHash, jump hash, rendezvous hashing and Maglev.
+
+- **[OPTIMAL.md](OPTIMAL.md)** — the analysis, benchmarks and references.
+- **[`optimal_hashing.py`](optimal_hashing.py)** — the implementation. Run it directly to
+  reproduce the benchmarks:
+
+  ```bash
+  python optimal_hashing.py
+  ```
+
 ## 🎬 Demos
 
 ### Generating the Animation
