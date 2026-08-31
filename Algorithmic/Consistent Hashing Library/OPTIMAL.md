@@ -197,4 +197,4 @@ needs replacing.
 - Mirrokni, Thorup, Zadimoghaddam, _Consistent Hashing with Bounded Loads_, SODA 2018 (arXiv 2016).
 - Mendelson, Vargaftik, Barabash, Hay, Keslassy, Orda, [_AnchorHash: A Scalable Consistent Hash_](https://arxiv.org/abs/1812.09674), IEEE/ACM ToN 29(6), 2021.
 - Coluzzi et al., [_MementoHash: A Stateful, Minimal Memory, Best Performing Consistent Hash Algorithm_](https://arxiv.org/abs/2306.09783), 2023.
-- Gryski, [_Consistent Hashing: Algorithmic Tradeoffs_](https://dgryski.medium.com/consistent-hashing-algorithmic-tradeoffs-ef6b8e2fcae8). (The best short survey of this space.)
+- Gryski, _Consistent Hashing: Algorithmic Tradeoffs_ (dgryski.medium.com, 2018). The best short survey of this space.

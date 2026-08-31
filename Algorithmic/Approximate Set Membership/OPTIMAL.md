@@ -249,5 +249,5 @@ The structural analysis above is unchanged; only the hash needs replacing.
 - Fan, Andersen, Kaminsky, Mitzenmacher, _Cuckoo Filter: Practically Better Than Bloom_, CoNEXT 2014.
 - Graf, Lemire, _Xor Filters: Faster and Smaller Than Bloom and Cuckoo Filters_, ACM JEA 2020.
 - Graf, Lemire, [_Binary Fuse Filters: Fast and Smaller Than Xor Filters_](https://arxiv.org/abs/2201.01174), ACM JEA 2022.
-- Dillinger, Hübschle-Schneider, Sanders, Walzer, [_Fast Succinct Retrieval and Approximate Membership Using Ribbon_](https://arxiv.org/abs/2109.01892), SEA 2022 (best paper); journal version [_Ribbon: Fast Succinct Static Retrieval and Approximate Membership_](https://dl.acm.org/doi/10.1145/3785417), JACM 2025.
+- Dillinger, Hübschle-Schneider, Sanders, Walzer, [_Fast Succinct Retrieval and Approximate Membership Using Ribbon_](https://arxiv.org/abs/2109.01892), SEA 2022 (best paper); journal version _Ribbon: Fast Succinct Static Retrieval and Approximate Membership_, JACM 2025, doi:10.1145/3785417.
 - [BuRR reference implementation](https://github.com/lorenzhs/BuRR).
