@@ -4,7 +4,7 @@
 terms starting with a query prefix.
 
 **Short answer:** the trie is the easy half and the wrong thing to optimise. A
-plain trie finds the prefix in `O(p)` and then enumerates and sorts the *entire*
+plain trie finds the prefix in `O(p)` and then enumerates and sorts the _entire_
 subtree — so answering "top 10 for `a`" over a million terms touches a hundred
 thousand nodes. Augment every node with the best completion in its subtree and a
 best-first traversal returns the same answer in **`O(p + k log k)`**, touching
@@ -16,14 +16,14 @@ best-first traversal returns the same answer in **`O(p + k log k)`**, touching
 ## 1. What the naive solution actually costs
 
 The standard advice — "use a trie, prefix lookup is `O(p)`" — is true and
-misleading. Prefix *lookup* is `O(p)`; prefix *ranking* is not:
+misleading. Prefix _lookup_ is `O(p)`; prefix _ranking_ is not:
 
-| Step | Cost |
-| :-- | :-- |
-| Descend to the prefix node | `O(p)` |
-| Enumerate the subtree | `O(N_p)` nodes, where `N_p` = terms sharing the prefix |
-| Sort by score | `O(N_p log N_p)` |
-| Return the first `k` | `O(k)` |
+| Step                       | Cost                                                   |
+| :------------------------- | :----------------------------------------------------- |
+| Descend to the prefix node | `O(p)`                                                 |
+| Enumerate the subtree      | `O(N_p)` nodes, where `N_p` = terms sharing the prefix |
+| Sort by score              | `O(N_p log N_p)`                                       |
+| Return the first `k`       | `O(k)`                                                 |
 
 The dominant term is `N_p`, and `N_p` is largest exactly when the user has typed
 least — the first keystroke, the one where latency matters most. This is
@@ -45,7 +45,7 @@ holds two kinds of entry — "emit this term" and "expand this node" — ordered
 rank key. Repeatedly pop the minimum:
 
 - **Expand entry:** replace the node with its own term (if terminal) and each of
-  its children, each keyed by *their* best.
+  its children, each keyed by _their_ best.
 - **Emit entry:** it is the next result.
 
 **Why this is correct.** A node's key is the minimum of its own term's key and
@@ -61,7 +61,7 @@ Crucially the traversal never enters a subtree whose best is worse than the
 
 **Path compression is not cosmetic.** Without it, a 10-character prefix costs 10
 node visits before the locus, and every emitted completion costs one heap
-operation per *character* rather than per *branch point*. With compressed edges,
+operation per _character_ rather than per _branch point_. With compressed edges,
 `k` results cost `O(k)` heap operations in the typical case.
 
 **Rank key = `(-score, word)`.** Negating the score lets one plain tuple
@@ -71,15 +71,15 @@ lexicographic" with no custom comparators, and makes tie-breaking deterministic
 equality.
 
 **Recompute the augmentation bottom-up, not top-down.** It is tempting to fold a
-running `min` downward as you insert. That is correct for *raising* a score and
-silently wrong for *lowering* one: the stale best survives in the ancestors and
+running `min` downward as you insert. That is correct for _raising_ a score and
+silently wrong for _lowering_ one: the stale best survives in the ancestors and
 keeps ranking a term that no longer deserves the position. Walking back up the
 insertion path and recomputing costs the same `O(p)` and handles both.
 `test_trie_handles_a_score_being_lowered` pins this.
 
 **Prefixes ending mid-edge.** With compression, `"appl"` may end partway along
 the edge leading to `apple`/`application`. The locus is then the node at the
-*far* end of that edge, since everything below it still shares the prefix.
+_far_ end of that edge, since everything below it still shares the prefix.
 Getting this wrong silently returns nothing for exactly the queries users type.
 
 ## 3. The static alternative: prefix range + RMQ
@@ -119,7 +119,7 @@ says otherwise.
 sorting after every string with that prefix — increment the last character, and
 if it is already the maximum code point, strip it and retry; if the prefix is
 entirely maximum code points, the range runs to the end of the dictionary.
-Separately, the segment tree stores *indices* and breaks ties leftward, which,
+Separately, the segment tree stores _indices_ and breaks ties leftward, which,
 because the terms are sorted, makes ties break lexicographically for free —
 matching the trie exactly.
 
@@ -127,12 +127,12 @@ matching the trie exactly.
 
 200 000 random terms over an 8-letter alphabet, CPython 3.11, `k = 10`:
 
-| Prefix | Terms matching | Filter + sort | CompletionTrie | RmqIndex | Speedup |
-| :-- | --: | --: | --: | --: | --: |
-| `a` | 25 100 | 51.20 ms | **0.164 ms** | 0.069 ms | **312×** |
-| `ab` | 3 095 | 22.55 ms | 0.117 ms | 0.061 ms | 193× |
-| `abc` | 383 | 19.11 ms | 0.090 ms | 0.047 ms | 212× |
-| `abcd` | 52 | 18.70 ms | 0.040 ms | 0.031 ms | 466× |
+| Prefix | Terms matching | Filter + sort | CompletionTrie | RmqIndex |  Speedup |
+| :----- | -------------: | ------------: | -------------: | -------: | -------: |
+| `a`    |         25 100 |      51.20 ms |   **0.164 ms** | 0.069 ms | **312×** |
+| `ab`   |          3 095 |      22.55 ms |       0.117 ms | 0.061 ms |     193× |
+| `abc`  |            383 |      19.11 ms |       0.090 ms | 0.047 ms |     212× |
+| `abcd` |             52 |      18.70 ms |       0.040 ms | 0.031 ms |     466× |
 
 Build: trie 5.51 s, RMQ index 0.48 s.
 
@@ -142,17 +142,17 @@ growth is the deeper heap, not subtree enumeration.
 
 ## 5. Non-optimal alternatives, and why each loses
 
-| Alternative | Verdict |
-| :-- | :-- |
-| **Plain trie + enumerate + sort** | The baseline. `O(p + N_p log N_p)`; cost peaks on the first keystroke. What everything here exists to replace. |
-| **Trie + per-node cached top-k list** | Genuinely `O(p + k)` queries — faster than best-first. But it stores `k` entries per node (so `k` must be fixed at build time), and an update touches every ancestor's cached list. Right for a frozen index with a known `k`; wrong as a general structure. Hsu & Ottaviano's "Completion Trie" is the refined version, which may still visit `Ω(k·l)` nodes. |
-| **Hash map from every prefix to its top-k** | `O(1)` queries and quadratic space: a term of length `l` appears under `l` prefixes. Viable only for short terms or a capped prefix length, which is a real production tactic but not a general solution. |
-| **Ternary search tree** | Better constant factors than a 26-way trie and less memory, but the ranking problem is *identical* — it optimises the half that was never the bottleneck. |
-| **DAWG / MA-FSA** | Excellent compression by merging equivalent suffixes. Incompatible with per-node score augmentation, because merged nodes are shared between terms with different scores. Choose compression or ranking, not both. |
-| **FST with weights** (Lucene, `fst` crate) | The production answer in a search engine: near-succinct, and weights along transitions do support ranked traversal. Substantially more machinery — minimisation, output pushing — and effectively static. The right choice at Lucene's scale, over-engineered below it. |
-| **Succinct trie (LOUDS) + score-decomposed encoding** | The most space-efficient known approach: Hsu & Ottaviano report sizes competitive with `gzip`, and after locating the locus only `k−1` nodes need visiting. Rank/select structures make it slow in pure Python and much more code. Documented as the frontier, not implemented. |
-| **Sorted array + linear scan of the prefix range** | Simple and correct, `O(log n + N_p)`. Strictly dominated by the RMQ index, which shares the array and the binary search and replaces the scan with `k` range-max queries. |
-| **Full-text search engine (Elasticsearch, etc.)** | Correct and enormous. Justified when the requirement is really fuzzy matching, multi-field ranking, and analysers; not for prefix completion over a word list. |
+| Alternative                                           | Verdict                                                                                                                                                                                                                                                                                                                                                        |
+| :---------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Plain trie + enumerate + sort**                     | The baseline. `O(p + N_p log N_p)`; cost peaks on the first keystroke. What everything here exists to replace.                                                                                                                                                                                                                                                 |
+| **Trie + per-node cached top-k list**                 | Genuinely `O(p + k)` queries — faster than best-first. But it stores `k` entries per node (so `k` must be fixed at build time), and an update touches every ancestor's cached list. Right for a frozen index with a known `k`; wrong as a general structure. Hsu & Ottaviano's "Completion Trie" is the refined version, which may still visit `Ω(k·l)` nodes. |
+| **Hash map from every prefix to its top-k**           | `O(1)` queries and quadratic space: a term of length `l` appears under `l` prefixes. Viable only for short terms or a capped prefix length, which is a real production tactic but not a general solution.                                                                                                                                                      |
+| **Ternary search tree**                               | Better constant factors than a 26-way trie and less memory, but the ranking problem is _identical_ — it optimises the half that was never the bottleneck.                                                                                                                                                                                                      |
+| **DAWG / MA-FSA**                                     | Excellent compression by merging equivalent suffixes. Incompatible with per-node score augmentation, because merged nodes are shared between terms with different scores. Choose compression or ranking, not both.                                                                                                                                             |
+| **FST with weights** (Lucene, `fst` crate)            | The production answer in a search engine: near-succinct, and weights along transitions do support ranked traversal. Substantially more machinery — minimisation, output pushing — and effectively static. The right choice at Lucene's scale, over-engineered below it.                                                                                        |
+| **Succinct trie (LOUDS) + score-decomposed encoding** | The most space-efficient known approach: Hsu & Ottaviano report sizes competitive with `gzip`, and after locating the locus only `k−1` nodes need visiting. Rank/select structures make it slow in pure Python and much more code. Documented as the frontier, not implemented.                                                                                |
+| **Sorted array + linear scan of the prefix range**    | Simple and correct, `O(log n + N_p)`. Strictly dominated by the RMQ index, which shares the array and the binary search and replaces the scan with `k` range-max queries.                                                                                                                                                                                      |
+| **Full-text search engine (Elasticsearch, etc.)**     | Correct and enormous. Justified when the requirement is really fuzzy matching, multi-field ranking, and analysers; not for prefix completion over a word list.                                                                                                                                                                                                 |
 
 ### Deliberately not implemented
 
@@ -177,18 +177,18 @@ Does the dictionary change at query time?
 
 ## 7. Complexity summary
 
-| Operation | `CompletionTrie` | `RmqCompletionIndex` | Plain trie |
-| :-- | :-- | :-- | :-- |
-| Build | `O(total chars)` | `O(n log n)` | `O(total chars)` |
-| `top_k(prefix, k)` | `O(p + k·b·log(k·b))` | `O(log n + k log k log n)` | `O(p + N_p log N_p)` |
-| Insert / re-score | `O(p)` | not supported | `O(p)` |
-| Space | node per branch point | `2n` ints + terms | node per branch point |
+| Operation          | `CompletionTrie`      | `RmqCompletionIndex`       | Plain trie            |
+| :----------------- | :-------------------- | :------------------------- | :-------------------- |
+| Build              | `O(total chars)`      | `O(n log n)`               | `O(total chars)`      |
+| `top_k(prefix, k)` | `O(p + k·b·log(k·b))` | `O(log n + k log k log n)` | `O(p + N_p log N_p)`  |
+| Insert / re-score  | `O(p)`                | not supported              | `O(p)`                |
+| Space              | node per branch point | `2n` ints + terms          | node per branch point |
 
 ---
 
 ## References
 
-- Hsu & Ottaviano, [*Space-efficient data structures for top-k completion*](http://groups.di.unipi.it/~ottavian/files/topk_completion_www13.pdf), WWW 2013. (Completion Trie, RMQ Trie, Score-Decomposed Trie.)
-- Bast & Weber, *Type less, find more: fast autocompletion search with a succinct index*, SIGIR 2006.
-- Morrison, *PATRICIA — Practical Algorithm To Retrieve Information Coded In Alphanumeric*, JACM 1968. (Path compression.)
-- Fischer & Heun, *Space-efficient preprocessing schemes for range minimum queries*, SIAM J. Comput. 2011. (Making the RMQ side succinct.)
+- Hsu & Ottaviano, [_Space-efficient data structures for top-k completion_](http://groups.di.unipi.it/~ottavian/files/topk_completion_www13.pdf), WWW 2013. (Completion Trie, RMQ Trie, Score-Decomposed Trie.)
+- Bast & Weber, _Type less, find more: fast autocompletion search with a succinct index_, SIGIR 2006.
+- Morrison, _PATRICIA — Practical Algorithm To Retrieve Information Coded In Alphanumeric_, JACM 1968. (Path compression.)
+- Fischer & Heun, _Space-efficient preprocessing schemes for range minimum queries_, SIAM J. Comput. 2011. (Making the RMQ side succinct.)

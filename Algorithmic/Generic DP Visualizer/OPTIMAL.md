@@ -4,11 +4,11 @@
 through filling it in.
 
 **Short answer:** the existing implementation animates the 0/1 knapsack table.
-That is a demonstration of *one* DP, not a generic tool — nothing about it
+That is a demonstration of _one_ DP, not a generic tool — nothing about it
 transfers to edit distance or matrix chain multiplication. What generalises is
 the **dependency graph**, and once a DP is expressed as one, the tool can do
-considerably more than animate it: it can *derive* the space optimisation and
-*detect* the asymptotic speedups that are normally applied by hand.
+considerably more than animate it: it can _derive_ the space optimisation and
+_detect_ the asymptotic speedups that are normally applied by hand.
 Implementation: [`optimal_dp.py`](optimal_dp.py).
 
 ---
@@ -73,7 +73,7 @@ tool also picking which dimension is better to roll. Nobody had to recognise the
 pattern.
 
 The analysis is careful about the case that breaks it: if any edge reaches
-*forward* along a dimension, that dimension cannot be rolled in the natural
+_forward_ along a dimension, that dimension cannot be rolled in the natural
 direction, and the analysis reports the full extent rather than a wrong window.
 
 ### The critical path, which bounds parallelism before you write any
@@ -82,11 +82,11 @@ The longest chain of dependencies is a hard floor on how long any parallel
 implementation can take. Comparing it against the state count answers "is
 parallelising worth attempting?" before any parallel code exists.
 
-| DP | States | Critical path | Peak width | Best possible speedup |
-| :-- | --: | --: | --: | --: |
-| Edit distance (6×7) | 56 | 13 | 14 | 4.3× |
-| Knapsack (40 items, cap 200) | 6 700 | 41 | 201 | **163×** |
-| A pure chain | 101 | 101 | 1 | **1.0×** — never parallelise |
+| DP                           | States | Critical path | Peak width |        Best possible speedup |
+| :--------------------------- | -----: | ------------: | ---------: | ---------------------------: |
+| Edit distance (6×7)          |     56 |            13 |         14 |                         4.3× |
+| Knapsack (40 items, cap 200) |  6 700 |            41 |        201 |                     **163×** |
+| A pure chain                 |    101 |           101 |          1 | **1.0×** — never parallelise |
 
 The knapsack number is the useful one: 163× available parallelism, with 201
 states ready at once, says a wavefront implementation is worth writing. The
@@ -104,21 +104,21 @@ restricted to a range that telescopes.
 
 `satisfies_quadrangle_inequality` checks it — exhaustively for small `n`,
 by sampling above that. **This check matters more than it looks**: applying
-Knuth's optimisation when the hypothesis fails produces a *wrong answer*, not a
+Knuth's optimisation when the hypothesis fails produces a _wrong answer_, not a
 slow one. Silent wrongness is exactly the failure mode a tool should catch.
 
 Measured, with both versions verified to return identical answers:
 
-| Recurrence | Naive | Optimised | Speedup |
-| :-- | --: | --: | --: |
-| Interval DP, `n = 260` | 268.9 ms `O(n³)` | **33.1 ms** `O(n²)` (Knuth) | 8× |
+| Recurrence                   |               Naive |                       Optimised | Speedup |
+| :--------------------------- | ------------------: | ------------------------------: | ------: |
+| Interval DP, `n = 260`       |    268.9 ms `O(n³)` |     **33.1 ms** `O(n²)` (Knuth) |      8× |
 | Layered DP, 1 500 × 8 layers | 1 523.8 ms `O(kn²)` | **26.1 ms** `O(kn log n)` (D&C) | **58×** |
 
 ### A correctness trap worth recording
 
 The first version of `divide_and_conquer_dp` implemented the one-dimensional
 recurrence `dp[i] = min_{j<i} (dp[j] + cost(j,i))`. That is wrong, and the
-reason is subtle: divide and conquer computes the *midpoint first*, so it reads
+reason is subtle: divide and conquer computes the _midpoint first_, so it reads
 `dp[j]` values for `j < mid` that have not been computed yet.
 
 The technique requires every candidate value to be **final before the layer
@@ -145,15 +145,15 @@ from knowledge of the problem.
 
 ## 5. Non-optimal alternatives, and why each loses
 
-| Alternative | Verdict |
-| :-- | :-- |
-| **Hard-coded per-problem visualiser** (the current `dpLogic.js`) | What is here today. Correct and clear for knapsack; zero transfer to any other DP, and it can say nothing about the DP's structure because the structure is baked into the code rather than represented. |
-| **Recurrence as a string, `eval`-ed** | The current `dpLogic.js` approach (`"dp[i-1][j] + dp[i][j-1] + 1"`). Genuinely generic over grid DPs, and its dependency extraction is a real feature. But it is limited to grids indexed by `i`/`j`, needs a parser or `eval`, and cannot express a DP over strings, sets, or bitmasks. Passing functions is both simpler and strictly more general. |
-| **Memoised recursion with a tracing decorator** | The obvious way to capture dependencies: wrap the recursive call, record who asked. Works, and gives a nicer API — one function instead of two. Two real costs: it dies at ~1000 states of recursion depth, and the dependency graph only exists *after* evaluation, so nothing can be analysed or reordered beforehand. Explicit dependencies trade a little ergonomics for both. |
-| **Full table fill, bottom-up** | Simplest possible engine, and often fastest. Evaluates states that are never needed — the knapsack example above reaches only 46 of ~1200 states from one target — and requires the caller to already know a valid evaluation order, which is the thing the tool should be deriving. |
-| **A DP DSL with its own syntax** | More expressive notation, at the cost of a parser, an evaluator, and a language for users to learn. Python functions are already a perfectly good DSL for this. |
-| **Symbolic analysis of the recurrence** (SymPy, AST inspection) | Could derive the stencil without running the DP, and handle unbounded state spaces. Substantially harder, and it fails exactly where DPs get interesting — data-dependent dependencies, like LCS branching on whether two characters match. Tracing handles that for free because it observes what actually happened. |
-| **Manual complexity analysis** | What everyone does. Correct when done carefully, and the failure mode is silent: a missed rolling-array opportunity is invisible, and a wrongly-applied Knuth optimisation returns a plausible wrong number. Both are exactly what a tool should catch. |
+| Alternative                                                      | Verdict                                                                                                                                                                                                                                                                                                                                                                            |
+| :--------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Hard-coded per-problem visualiser** (the current `dpLogic.js`) | What is here today. Correct and clear for knapsack; zero transfer to any other DP, and it can say nothing about the DP's structure because the structure is baked into the code rather than represented.                                                                                                                                                                           |
+| **Recurrence as a string, `eval`-ed**                            | The current `dpLogic.js` approach (`"dp[i-1][j] + dp[i][j-1] + 1"`). Genuinely generic over grid DPs, and its dependency extraction is a real feature. But it is limited to grids indexed by `i`/`j`, needs a parser or `eval`, and cannot express a DP over strings, sets, or bitmasks. Passing functions is both simpler and strictly more general.                              |
+| **Memoised recursion with a tracing decorator**                  | The obvious way to capture dependencies: wrap the recursive call, record who asked. Works, and gives a nicer API — one function instead of two. Two real costs: it dies at ~1000 states of recursion depth, and the dependency graph only exists _after_ evaluation, so nothing can be analysed or reordered beforehand. Explicit dependencies trade a little ergonomics for both. |
+| **Full table fill, bottom-up**                                   | Simplest possible engine, and often fastest. Evaluates states that are never needed — the knapsack example above reaches only 46 of ~1200 states from one target — and requires the caller to already know a valid evaluation order, which is the thing the tool should be deriving.                                                                                               |
+| **A DP DSL with its own syntax**                                 | More expressive notation, at the cost of a parser, an evaluator, and a language for users to learn. Python functions are already a perfectly good DSL for this.                                                                                                                                                                                                                    |
+| **Symbolic analysis of the recurrence** (SymPy, AST inspection)  | Could derive the stencil without running the DP, and handle unbounded state spaces. Substantially harder, and it fails exactly where DPs get interesting — data-dependent dependencies, like LCS branching on whether two characters match. Tracing handles that for free because it observes what actually happened.                                                              |
+| **Manual complexity analysis**                                   | What everyone does. Correct when done carefully, and the failure mode is silent: a missed rolling-array opportunity is invisible, and a wrongly-applied Knuth optimisation returns a plausible wrong number. Both are exactly what a tool should catch.                                                                                                                            |
 
 ### Deliberately not implemented
 
@@ -172,22 +172,22 @@ doing it silently would hide the analysis that motivated it.
 
 ## 6. Complexity summary
 
-| Operation | Cost |
-| :-- | :-- |
-| `DP.solve` | `O(V + E)` beyond the user's `combine` calls |
-| `analyze` | `O(V + E)` |
-| `satisfies_quadrangle_inequality` | `O(n⁴)` exhaustive, `O(sample)` sampled |
-| `naive_interval_dp` | `O(n³)` |
-| `knuth_interval_dp` | `O(n²)` |
-| `divide_and_conquer_dp` (one layer) | `O(n log n)` |
-| `render_html` | `O(V + E)` |
+| Operation                           | Cost                                         |
+| :---------------------------------- | :------------------------------------------- |
+| `DP.solve`                          | `O(V + E)` beyond the user's `combine` calls |
+| `analyze`                           | `O(V + E)`                                   |
+| `satisfies_quadrangle_inequality`   | `O(n⁴)` exhaustive, `O(sample)` sampled      |
+| `naive_interval_dp`                 | `O(n³)`                                      |
+| `knuth_interval_dp`                 | `O(n²)`                                      |
+| `divide_and_conquer_dp` (one layer) | `O(n log n)`                                 |
+| `render_html`                       | `O(V + E)`                                   |
 
 ---
 
 ## References
 
-- Knuth, *Optimum binary search trees*, Acta Informatica 1(1), 1971. (The original optimisation.)
-- Yao, *Efficient dynamic programming using quadrangle inequalities*, STOC 1980. (The general condition.)
-- Aggarwal, Klawe, Moran, Shor, Wilber, *Geometric applications of a matrix-searching algorithm*, Algorithmica 2, 1987. (SMAWK.)
-- Larmore & Schieber, *On-line dynamic programming with applications to the prediction of RNA secondary structure*, J. Algorithms 12, 1991. (LARSCH.)
-- Galil & Park, *Dynamic programming with convexity, concavity and sparsity*, Theoretical Computer Science 92, 1992. (The survey that maps this space.)
+- Knuth, _Optimum binary search trees_, Acta Informatica 1(1), 1971. (The original optimisation.)
+- Yao, _Efficient dynamic programming using quadrangle inequalities_, STOC 1980. (The general condition.)
+- Aggarwal, Klawe, Moran, Shor, Wilber, _Geometric applications of a matrix-searching algorithm_, Algorithmica 2, 1987. (SMAWK.)
+- Larmore & Schieber, _On-line dynamic programming with applications to the prediction of RNA secondary structure_, J. Algorithms 12, 1991. (LARSCH.)
+- Galil & Park, _Dynamic programming with convexity, concavity and sparsity_, Theoretical Computer Science 92, 1992. (The survey that maps this space.)

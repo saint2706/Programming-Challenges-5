@@ -89,6 +89,20 @@ Where:
 
 **Note**: The space complexity is extremely low compared to storing the actual items. For example, for a 1% false positive rate, a Bloom filter requires only about **9.6 bits per element**, regardless of the size of the elements themselves.
 
+## 🏆 Optimal Solution
+
+This directory also contains a research-backed analysis of the _optimal_ solution to
+this challenge, the alternatives that lose and why, and a measured
+implementation of space-optimal filters (homogeneous ribbon, binary fuse, cuckoo).
+
+- **[OPTIMAL.md](OPTIMAL.md)** — the analysis, benchmarks and references.
+- **[`optimal_filters.py`](optimal_filters.py)** — the implementation. Run it directly to
+  reproduce the benchmarks:
+
+  ```bash
+  python optimal_filters.py
+  ```
+
 ## 🎬 Demos
 
 ### Running the Code Demo

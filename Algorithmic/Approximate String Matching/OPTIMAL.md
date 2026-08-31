@@ -24,7 +24,7 @@ fails. So the quadratic DP is asymptotically optimal, and there is no clever
 subquadratic algorithm waiting to be found.
 
 That sounds like the end of the story. It is not, because it is a statement about
-*asymptotics*, and the entire practical win here lives in the constant.
+_asymptotics_, and the entire practical win here lives in the constant.
 
 ### Myers' bit-vector algorithm
 
@@ -59,7 +59,7 @@ algorithmic advantage rather than a tax.
 
 ### What bit-parallelism cannot do
 
-Bit-packing works *because* adjacent cells differ by at most one. **Weighted
+Bit-packing works _because_ adjacent cells differ by at most one. **Weighted
 edits break that invariant**, and there is no known bit-parallel algorithm for
 the general weighted case. So `levenshtein_dp` stays as the escape hatch for
 custom costs — and it is genuinely needed, not vestigial.
@@ -72,7 +72,7 @@ invisible under unit costs, wrong under any others.)
 
 ## 2. Substring search: one bit of difference
 
-Approximate substring search is the *same* bit-parallel machinery with **one
+Approximate substring search is the _same_ bit-parallel machinery with **one
 changed boundary condition**.
 
 - **Whole-string distance:** row 0 of the DP grows `0, 1, 2, …`, because the
@@ -119,11 +119,11 @@ survivors are then verified exactly.
 
 50 000 random 4–11 character words over a 26-letter alphabet, CPython 3.11:
 
-| `k` | Linear scan | Trie automaton | SymSpell | Trie speedup | SymSpell speedup |
-| --: | --: | --: | --: | --: | --: |
-| 1 | 119 ms | 8.1 ms | 1.57 ms | **14.7×** | **76×** |
-| 2 | 162 ms | 80 ms | 1.88 ms | 2.0× | **87×** |
-| 3 | 211 ms | 231 ms | 1.75 ms | **0.9× (worse)** | **120×** |
+| `k` | Linear scan | Trie automaton | SymSpell |     Trie speedup | SymSpell speedup |
+| --: | ----------: | -------------: | -------: | ---------------: | ---------------: |
+|   1 |      119 ms |         8.1 ms |  1.57 ms |        **14.7×** |          **76×** |
+|   2 |      162 ms |          80 ms |  1.88 ms |             2.0× |          **87×** |
+|   3 |      211 ms |         231 ms |  1.75 ms | **0.9× (worse)** |         **120×** |
 
 **The trie automaton's advantage collapses as `k` grows, and at `k = 3` it is
 slower than a linear scan.** This is not an implementation artefact. Every trie
@@ -142,7 +142,7 @@ the case people most often want. Two things change the picture:
   so the shallow levels are far narrower than `26^d`. The measurement above is
   close to the adversarial case.
 - **SymSpell is flat in `k`** on the query side — its cost is the number of
-  delete-variants of the *query*, not of the dictionary — which is why it wins
+  delete-variants of the _query_, not of the dictionary — which is why it wins
   by two orders of magnitude across the board.
 
 **So the honest recommendation inverts the usual one:** for spelling correction
@@ -157,18 +157,18 @@ queries outnumber rebuilds — which for spelling correction they overwhelmingly
 
 ## 5. Non-optimal alternatives, and why each loses
 
-| Alternative | Verdict |
-| :-- | :-- |
-| **Full `O(mn)` DP with a full matrix** | Correct; uses `O(mn)` memory for no benefit when only the distance is wanted. Keep the matrix only when the alignment must be reconstructed. |
-| **Two-row DP** | The right *reference* implementation and the only way to support weighted edits. 217× slower than bit-parallel at unit costs. |
-| **BK-tree** (what the current `README` recommends) | Uses the triangle inequality to prune by distance to arbitrary pivots. Strictly dominated by the trie automaton: same `O(N)` worst case, weaker pruning, *and* it cannot share prefix work — every candidate needs a full distance computation, whereas the trie computes each shared prefix's row once. Its one advantage is generality: it works in any metric space, not just over strings. Use it for that, not for this. |
-| **N-gram / q-gram inverted index** | Filters by shared `q`-grams, then verifies. Genuinely useful at scale and the basis of production fuzzy search, but it is a *filter*, not an algorithm: recall depends on the `q`-gram threshold, and short strings have too few grams to filter on. Complementary to, not a replacement for, the above. |
-| **Ukkonen's banded DP** | `O(kn)` by computing only the diagonal band of width `2k+1`. A real improvement over the full DP and the right answer when `k` is small and bit-parallelism is unavailable. Bit-parallel already beats it at any `k` for which both apply, since its cost is independent of `k`. |
-| **Landau–Vishkin** | `O(kn)` via suffix-tree LCP jumps — asymptotically excellent, with constants so poor it is essentially never faster in practice. A theory result. |
-| **Four Russians** (Masek–Paterson) | `O(n²/log n)` by precomputing blocks. Superseded in every practical sense by bit-parallelism, which achieves the same `log`-factor win with a fraction of the machinery. |
-| **`difflib.SequenceMatcher`** | In the standard library, and computes a *different* thing — longest contiguous matching blocks, not edit distance. Its `ratio()` is not a metric and violates the triangle inequality. Fine for "how similar do these look"; wrong wherever a distance bound is needed. |
-| **Soundex / Metaphone** | Phonetic hashing, not edit distance. Solves "sounds alike", collapses distinctions that matter, and is English-specific. Different problem. |
-| **Embedding + vector search** | Semantic similarity, not orthographic. Will happily rate `car` and `automobile` as close and `apple` and `aple` as far. Different problem again. |
+| Alternative                                        | Verdict                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| :------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Full `O(mn)` DP with a full matrix**             | Correct; uses `O(mn)` memory for no benefit when only the distance is wanted. Keep the matrix only when the alignment must be reconstructed.                                                                                                                                                                                                                                                                                  |
+| **Two-row DP**                                     | The right _reference_ implementation and the only way to support weighted edits. 217× slower than bit-parallel at unit costs.                                                                                                                                                                                                                                                                                                 |
+| **BK-tree** (what the current `README` recommends) | Uses the triangle inequality to prune by distance to arbitrary pivots. Strictly dominated by the trie automaton: same `O(N)` worst case, weaker pruning, _and_ it cannot share prefix work — every candidate needs a full distance computation, whereas the trie computes each shared prefix's row once. Its one advantage is generality: it works in any metric space, not just over strings. Use it for that, not for this. |
+| **N-gram / q-gram inverted index**                 | Filters by shared `q`-grams, then verifies. Genuinely useful at scale and the basis of production fuzzy search, but it is a _filter_, not an algorithm: recall depends on the `q`-gram threshold, and short strings have too few grams to filter on. Complementary to, not a replacement for, the above.                                                                                                                      |
+| **Ukkonen's banded DP**                            | `O(kn)` by computing only the diagonal band of width `2k+1`. A real improvement over the full DP and the right answer when `k` is small and bit-parallelism is unavailable. Bit-parallel already beats it at any `k` for which both apply, since its cost is independent of `k`.                                                                                                                                              |
+| **Landau–Vishkin**                                 | `O(kn)` via suffix-tree LCP jumps — asymptotically excellent, with constants so poor it is essentially never faster in practice. A theory result.                                                                                                                                                                                                                                                                             |
+| **Four Russians** (Masek–Paterson)                 | `O(n²/log n)` by precomputing blocks. Superseded in every practical sense by bit-parallelism, which achieves the same `log`-factor win with a fraction of the machinery.                                                                                                                                                                                                                                                      |
+| **`difflib.SequenceMatcher`**                      | In the standard library, and computes a _different_ thing — longest contiguous matching blocks, not edit distance. Its `ratio()` is not a metric and violates the triangle inequality. Fine for "how similar do these look"; wrong wherever a distance bound is needed.                                                                                                                                                       |
+| **Soundex / Metaphone**                            | Phonetic hashing, not edit distance. Solves "sounds alike", collapses distinctions that matter, and is English-specific. Different problem.                                                                                                                                                                                                                                                                                   |
+| **Embedding + vector search**                      | Semantic similarity, not orthographic. Will happily rate `car` and `automobile` as close and `apple` and `aple` as far. Different problem again.                                                                                                                                                                                                                                                                              |
 
 ### Deliberately not implemented
 
@@ -179,13 +179,13 @@ characteristic vector. This turns the per-node cost from `O(m)` into `O(1)` and
 is the genuinely optimal construction. It needs a state-space enumeration and a
 transition table per `k`, which is a substantial amount of machinery for a
 constant-factor win that, per the measurements above, does not change the
-*recommendation* — SymSpell still wins at the `k` values that matter. Documented
+_recommendation_ — SymSpell still wins at the `k` values that matter. Documented
 as the frontier.
 
 **Ukkonen banding inside the trie traversal.** Restricting each node's row to
 the `2k+1` diagonal band would cut the per-node cost by roughly 2× at typical
-word lengths. It does not address the real problem, which is the *number of
-nodes visited*, not the cost per node.
+word lengths. It does not address the real problem, which is the _number of
+nodes visited_, not the cost per node.
 
 ## 6. Choosing
 
@@ -205,23 +205,23 @@ Finding near-matches in a dictionary?
 
 ## 7. Complexity summary
 
-| Operation | Time | Space | Notes |
-| :-- | :-- | :-- | :-- |
-| `levenshtein` | `O(n·⌈m/w⌉)` | `O(m)` bits | Optimal up to SETH |
-| `levenshtein_dp` | `O(mn)` | `O(min(m,n))` | Weighted edits |
-| `search` | `O(n·⌈m/w⌉)` | `O(m)` bits | Independent of `k` |
-| `FuzzyDictionary.search` | `O(V·m)`, `V` = surviving nodes | trie | `V → all nodes` as `k` grows |
-| `SymSpellIndex.search` | `O(C(m,≤k))` lookups | `O(N·C(m,≤k))` | Flat in dictionary size |
+| Operation                | Time                            | Space          | Notes                        |
+| :----------------------- | :------------------------------ | :------------- | :--------------------------- |
+| `levenshtein`            | `O(n·⌈m/w⌉)`                    | `O(m)` bits    | Optimal up to SETH           |
+| `levenshtein_dp`         | `O(mn)`                         | `O(min(m,n))`  | Weighted edits               |
+| `search`                 | `O(n·⌈m/w⌉)`                    | `O(m)` bits    | Independent of `k`           |
+| `FuzzyDictionary.search` | `O(V·m)`, `V` = surviving nodes | trie           | `V → all nodes` as `k` grows |
+| `SymSpellIndex.search`   | `O(C(m,≤k))` lookups            | `O(N·C(m,≤k))` | Flat in dictionary size      |
 
 ---
 
 ## References
 
-- Myers, *A fast bit-vector algorithm for approximate string matching based on dynamic programming*, JACM 46(3), 1999.
-- Hyyrö, *A bit-vector algorithm for computing Levenshtein and Damerau edit distances*, Nordic Journal of Computing, 2003. (The formulation implemented here.)
-- Backurs & Indyk, *Edit distance cannot be computed in strongly subquadratic time (unless SETH is false)*, STOC 2015.
-- Ukkonen, *Algorithms for approximate string matching*, Information and Control 64, 1985.
-- Schulz & Mihov, *Fast string correction with Levenshtein automata*, IJDAR 5, 2002.
-- Masek & Paterson, *A faster algorithm computing string edit distances*, JCSS 20, 1980.
-- Garbe, [*SymSpell: 1000× faster spelling correction*](https://github.com/wolfgarbe/SymSpell).
-- Navarro, *A guided tour to approximate string matching*, ACM Computing Surveys 33(1), 2001. (The survey that maps the whole field.)
+- Myers, _A fast bit-vector algorithm for approximate string matching based on dynamic programming_, JACM 46(3), 1999.
+- Hyyrö, _A bit-vector algorithm for computing Levenshtein and Damerau edit distances_, Nordic Journal of Computing, 2003. (The formulation implemented here.)
+- Backurs & Indyk, _Edit distance cannot be computed in strongly subquadratic time (unless SETH is false)_, STOC 2015.
+- Ukkonen, _Algorithms for approximate string matching_, Information and Control 64, 1985.
+- Schulz & Mihov, _Fast string correction with Levenshtein automata_, IJDAR 5, 2002.
+- Masek & Paterson, _A faster algorithm computing string edit distances_, JCSS 20, 1980.
+- Garbe, [_SymSpell: 1000× faster spelling correction_](https://github.com/wolfgarbe/SymSpell).
+- Navarro, _A guided tour to approximate string matching_, ACM Computing Surveys 33(1), 2001. (The survey that maps the whole field.)

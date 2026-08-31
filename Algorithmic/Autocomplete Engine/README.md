@@ -79,6 +79,20 @@ Let $L$ be the length of the word/prefix.
 
 _Note: Top-K involves traversing the subtree (size $N$) and sorting the results._
 
+## 🏆 Optimal Solution
+
+This directory also contains a research-backed analysis of the _optimal_ solution to
+this challenge, the alternatives that lose and why, and a measured
+implementation of O(p + k log k) top-k completion.
+
+- **[OPTIMAL.md](OPTIMAL.md)** — the analysis, benchmarks and references.
+- **[`optimal_autocomplete.py`](optimal_autocomplete.py)** — the implementation. Run it directly to
+  reproduce the benchmarks:
+
+  ```bash
+  python optimal_autocomplete.py
+  ```
+
 ## 🎬 Demos
 
 ### Generating the Animation

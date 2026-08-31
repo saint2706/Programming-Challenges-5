@@ -4,7 +4,7 @@
 with no false negatives and at most an `ε` chance of a false positive, using as
 little memory as possible.
 
-**Short answer:** a Bloom filter is *not* the optimal solution and has not been
+**Short answer:** a Bloom filter is _not_ the optimal solution and has not been
 for over a decade. For a static set, a **homogeneous ribbon filter** stores the
 set in about `1.02 × log₂(1/ε)` bits per key — within 2% of the proven lower
 bound — versus a Bloom filter's `1.44 ×`. For a set that changes, a **cuckoo
@@ -29,16 +29,16 @@ such partitions to force that many bits.
 This bound is the yardstick. At `ε = 2⁻⁸` it says **8 bits per key**. Everything
 below is scored as a multiple of it.
 
-| Structure | Bits/key at `ε = 2⁻⁸` | Overhead | Deletes | Probes per query |
-| :-- | --: | --: | :-- | :-- |
-| **Lower bound** | **8.00** | **1.00×** | — | — |
-| Homogeneous ribbon (`w=256`, slack 2%) | **8.17** | **1.02×** | no | 1 window |
-| BuRR (bumped ribbon, published) | ~8.04 | ~1.005× | no | 1–2 windows |
-| Binary fuse, 8-bit | 9.34 | 1.17× | no | 3 adjacent |
-| Xor filter, 8-bit | 9.84 | 1.23× | no | 3 scattered |
-| Classic Bloom | 11.5 | 1.44× | no | 8 scattered |
-| Cuckoo filter, 12-bit | 15.7 | 1.68× | **yes** | 2 buckets |
-| Blocked Bloom | 15.0 | 1.56× | no | **1 cache line** |
+| Structure                              | Bits/key at `ε = 2⁻⁸` |  Overhead | Deletes | Probes per query |
+| :------------------------------------- | --------------------: | --------: | :------ | :--------------- |
+| **Lower bound**                        |              **8.00** | **1.00×** | —       | —                |
+| Homogeneous ribbon (`w=256`, slack 2%) |              **8.17** | **1.02×** | no      | 1 window         |
+| BuRR (bumped ribbon, published)        |                 ~8.04 |   ~1.005× | no      | 1–2 windows      |
+| Binary fuse, 8-bit                     |                  9.34 |     1.17× | no      | 3 adjacent       |
+| Xor filter, 8-bit                      |                  9.84 |     1.23× | no      | 3 scattered      |
+| Classic Bloom                          |                  11.5 |     1.44× | no      | 8 scattered      |
+| Cuckoo filter, 12-bit                  |                  15.7 |     1.68× | **yes** | 2 buckets        |
+| Blocked Bloom                          |                  15.0 |     1.56× | no      | **1 cache line** |
 
 The measured columns come from running `python optimal_filters.py` over 200 000
 keys; they are not quoted from the papers.
@@ -65,12 +65,12 @@ A query recomputes that XOR and reports membership iff the result is zero.
 Three properties fall out at once, and no other filter has all three:
 
 1. **It cannot fail to build.** A homogeneous system is always consistent —
-   `Z = 0` solves it. Xor and fuse filters solve an *inhomogeneous* system by
+   `Z = 0` solves it. Xor and fuse filters solve an _inhomogeneous_ system by
    peeling, which fails with some probability and needs seed retries; ribbon
    construction has no failure branch at all.
 2. **The overhead is only the slack.** The table is `m` words with `m` barely
    above `n`. There is no separate "fingerprint" budget and no load-factor
-   ceiling — the space overhead *is* `m/n − 1`.
+   ceiling — the space overhead _is_ `m/n − 1`.
 3. **Everything is local.** A key's non-zero coefficients live in a window of
    `w` consecutive slots. Gaussian elimination stays inside the band, so
    construction is `O(n · w / 64)` word operations and a query touches one
@@ -84,7 +84,7 @@ perfectly while making the filter useless.
 ### An empirical finding worth stating plainly
 
 The false positive rate is **not** `2⁻ʳ`, and the parameter that controls the
-gap is not documented as sharply as it deserves to be. A query is a *guaranteed*
+gap is not documented as sharply as it deserves to be. A query is a _guaranteed_
 false positive whenever its coefficient row lies in the span of the key rows
 overlapping its window. A window of `w` slots is overlapped by roughly
 `w/(1+slack)` key rows, leaving about `slack × w` free dimensions — so the
@@ -95,14 +95,14 @@ Measured over 40 000 keys at `r = 8` (reproduce with the sweep in
 `test_ribbon_error_collapses_once_slack_times_width_clears_the_cliff`):
 
 | slack | `w` | `slack × w` | bits/key | measured fpp ÷ 2⁻⁸ |
-| --: | --: | --: | --: | --: |
-| 0.02 | 64 | 1.3 | 8.17 | **33.2** ← broken |
-| 0.02 | 128 | 2.6 | 8.19 | 1.01 |
-| 0.02 | 256 | 5.1 | 8.21 | 0.96 |
-| 0.05 | 64 | 3.2 | 8.41 | 3.99 ← bad |
-| 0.05 | 128 | 6.4 | 8.43 | 0.96 |
-| 0.10 | 64 | 6.4 | 8.81 | 0.90 |
-| 0.20 | 64 | 12.8 | 9.61 | 0.95 |
+| ----: | --: | ----------: | -------: | -----------------: |
+|  0.02 |  64 |         1.3 |     8.17 |  **33.2** ← broken |
+|  0.02 | 128 |         2.6 |     8.19 |               1.01 |
+|  0.02 | 256 |         5.1 |     8.21 |               0.96 |
+|  0.05 |  64 |         3.2 |     8.41 |         3.99 ← bad |
+|  0.05 | 128 |         6.4 |     8.43 |               0.96 |
+|  0.10 |  64 |         6.4 |     8.81 |               0.90 |
+|  0.20 |  64 |        12.8 |     9.61 |               0.95 |
 
 The cliff is sharp and sits near `slack × w ≈ 2.5`.
 
@@ -143,11 +143,11 @@ no later assignment disturbs.
 
 The "fuse" geometry is the contribution: `h₀` lands in segment `s`, `h₁` in
 `s+1`, `h₂` in `s+2`. Confining the probes to a narrow window improves locality
-*and*, less obviously, lowers the peeling threshold — which is where the space
+_and_, less obviously, lowers the peeling threshold — which is where the space
 saving over the xor filter (9.84 → 9.0 bits/key) comes from.
 
 **Failure mode worth knowing:** duplicate keys hash to identical slot triples
-under *every* seed, so peeling can never succeed and the retry loop is
+under _every_ seed, so peeling can never succeed and the retry loop is
 guaranteed to exhaust. The implementation raises `FuseConstructionError` naming
 duplicates as the likely cause rather than looping.
 
@@ -156,7 +156,7 @@ duplicates as the likely cause rather than looping.
 ## 4. When the set changes: cuckoo filter
 
 Fan, Andersen, Kaminsky and Mitzenmacher (CoNEXT 2014). Ribbon and fuse filters
-solve a global system and are strictly static. When keys must be *deleted*, the
+solve a global system and are strictly static. When keys must be _deleted_, the
 cuckoo filter is the answer; it beats a counting Bloom filter on space for any
 `ε` below roughly 3%.
 
@@ -168,7 +168,7 @@ XOR is only an involution modulo `2^k`.
 
 Two correctness traps, both handled in the implementation:
 
-- **The dropped victim.** When the eviction chain gives up it is still *holding*
+- **The dropped victim.** When the eviction chain gives up it is still _holding_
   a fingerprint that has already been removed from its bucket. Dropping it
   silently loses a key that was legitimately inserted earlier — a false
   negative, which is supposed to be impossible. A one-slot victim cache fixes
@@ -183,7 +183,7 @@ Two correctness traps, both handled in the implementation:
 ## 5. When throughput is the constraint: blocked Bloom
 
 A classic Bloom filter's `k` probes are `k` independent cache misses. A blocked
-Bloom filter picks *one* 512-bit block — one cache line — and sets all `k` bits
+Bloom filter picks _one_ 512-bit block — one cache line — and sets all `k` bits
 inside it, so a query costs a single miss. Measured at 15.0 bits/key it is the
 worst structure here on space (confining bits to one block makes the per-block
 load uneven, which costs 20–30%), and the best on throughput. It is the right
@@ -193,16 +193,16 @@ answer only when the filter does not fit in cache and queries dominate.
 
 ## 6. Non-optimal alternatives, and why each loses
 
-| Alternative | Why it is not optimal |
-| :-- | :-- |
-| **Classic Bloom filter** | `1.44×` the bound, and the 44% is structural: it comes from the bits being set independently rather than solving a system. No amount of tuning `k` and `m` removes it. Also `k` scattered cache misses per query. |
-| **Counting Bloom filter** | Supports deletes but multiplies space by 3–4× (a counter per bit instead of a bit). A cuckoo filter dominates it for any `ε` below ~3%. |
-| **Xor filter** (Graf & Lemire 2020) | 9.84 bits/key and three *scattered* probes. Binary fuse strictly supersedes it — same idea, better geometry, less space, faster construction. Included only for historical context. |
-| **Golomb-coded sequence / compressed static function** | Reaches the entropy bound in space, but queries require decoding a variable-length stream — orders of magnitude slower. Right for archival, wrong for a filter. |
-| **Perfect hash + fingerprint array** | Genuinely reaches ~`log₂(1/ε) + 1.5` bits/key and is a real contender. Loses to ribbon on construction time and on the extra indirection through the MPHF. Worth considering if an MPHF is already present for other reasons. |
-| **Quotient filter** | Cache-friendly and supports deletes and resizing, but pays ~`2.125×` for metadata bits, worse than cuckoo at comparable `ε`. Its real advantage is mergeability, which the others lack. |
-| **Sorted array + binary search** | Exact, no false positives, but `Θ(n log u)` bits — it stores the keys. Different problem. |
-| **Hash set** | Same; exact and much larger. If the set fits in memory exactly, no filter is needed. |
+| Alternative                                            | Why it is not optimal                                                                                                                                                                                                         |
+| :----------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Classic Bloom filter**                               | `1.44×` the bound, and the 44% is structural: it comes from the bits being set independently rather than solving a system. No amount of tuning `k` and `m` removes it. Also `k` scattered cache misses per query.             |
+| **Counting Bloom filter**                              | Supports deletes but multiplies space by 3–4× (a counter per bit instead of a bit). A cuckoo filter dominates it for any `ε` below ~3%.                                                                                       |
+| **Xor filter** (Graf & Lemire 2020)                    | 9.84 bits/key and three _scattered_ probes. Binary fuse strictly supersedes it — same idea, better geometry, less space, faster construction. Included only for historical context.                                           |
+| **Golomb-coded sequence / compressed static function** | Reaches the entropy bound in space, but queries require decoding a variable-length stream — orders of magnitude slower. Right for archival, wrong for a filter.                                                               |
+| **Perfect hash + fingerprint array**                   | Genuinely reaches ~`log₂(1/ε) + 1.5` bits/key and is a real contender. Loses to ribbon on construction time and on the extra indirection through the MPHF. Worth considering if an MPHF is already present for other reasons. |
+| **Quotient filter**                                    | Cache-friendly and supports deletes and resizing, but pays ~`2.125×` for metadata bits, worse than cuckoo at comparable `ε`. Its real advantage is mergeability, which the others lack.                                       |
+| **Sorted array + binary search**                       | Exact, no false positives, but `Θ(n log u)` bits — it stores the keys. Different problem.                                                                                                                                     |
+| **Hash set**                                           | Same; exact and much larger. If the set fits in memory exactly, no filter is needed.                                                                                                                                          |
 
 ### Not implemented, and why
 
@@ -244,10 +244,10 @@ The structural analysis above is unchanged; only the hash needs replacing.
 
 ## References
 
-- Carter, Floyd, Gill, Markowsky, Wegman, *Exact and approximate membership testers*, STOC 1978. (The lower bound.)
-- Bloom, *Space/time trade-offs in hash coding with allowable errors*, CACM 1970.
-- Fan, Andersen, Kaminsky, Mitzenmacher, *Cuckoo Filter: Practically Better Than Bloom*, CoNEXT 2014.
-- Graf, Lemire, *Xor Filters: Faster and Smaller Than Bloom and Cuckoo Filters*, ACM JEA 2020.
-- Graf, Lemire, [*Binary Fuse Filters: Fast and Smaller Than Xor Filters*](https://arxiv.org/abs/2201.01174), ACM JEA 2022.
-- Dillinger, Hübschle-Schneider, Sanders, Walzer, [*Fast Succinct Retrieval and Approximate Membership Using Ribbon*](https://arxiv.org/abs/2109.01892), SEA 2022 (best paper); journal version [*Ribbon: Fast Succinct Static Retrieval and Approximate Membership*](https://dl.acm.org/doi/10.1145/3785417), JACM 2025.
+- Carter, Floyd, Gill, Markowsky, Wegman, _Exact and approximate membership testers_, STOC 1978. (The lower bound.)
+- Bloom, _Space/time trade-offs in hash coding with allowable errors_, CACM 1970.
+- Fan, Andersen, Kaminsky, Mitzenmacher, _Cuckoo Filter: Practically Better Than Bloom_, CoNEXT 2014.
+- Graf, Lemire, _Xor Filters: Faster and Smaller Than Bloom and Cuckoo Filters_, ACM JEA 2020.
+- Graf, Lemire, [_Binary Fuse Filters: Fast and Smaller Than Xor Filters_](https://arxiv.org/abs/2201.01174), ACM JEA 2022.
+- Dillinger, Hübschle-Schneider, Sanders, Walzer, [_Fast Succinct Retrieval and Approximate Membership Using Ribbon_](https://arxiv.org/abs/2109.01892), SEA 2022 (best paper); journal version [_Ribbon: Fast Succinct Static Retrieval and Approximate Membership_](https://dl.acm.org/doi/10.1145/3785417), JACM 2025.
 - [BuRR reference implementation](https://github.com/lorenzhs/BuRR).

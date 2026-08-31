@@ -56,6 +56,20 @@ manim -pql visualize_dp_generic.py GenericDPDemo
 Where $N$ is the number of items and $W$ is the capacity.
 _Note: This is pseudo-polynomial time._
 
+## 🏆 Optimal Solution
+
+This directory also contains a research-backed analysis of the _optimal_ solution to
+this challenge, the alternatives that lose and why, and a measured
+implementation of a generic DP engine that derives its own space and speed optimisations.
+
+- **[OPTIMAL.md](OPTIMAL.md)** — the analysis, benchmarks and references.
+- **[`optimal_dp.py`](optimal_dp.py)** — the implementation. Run it directly to
+  reproduce the benchmarks:
+
+  ```bash
+  python optimal_dp.py
+  ```
+
 ## 🎬 Demos
 
 See the GIF above for the generated animation.
