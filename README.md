@@ -1,3 +1,5 @@
+# ABANDONED OUT OF SHAME -> MOVED TO [v6](https://github.com/saint2706/Programming-Challenges-6)
+
 # Programming Challenges 5
 
 A comprehensive collection of programming challenges across multiple domains, designed for learning, benchmarking, and AI agent testing.
